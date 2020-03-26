@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const ROUTE5CLEANSETAGHOUSE_GRANNY
 	const ROUTE5CLEANSETAGHOUSE_TEACHER
 
@@ -13,7 +13,7 @@ Route5CleanseTagHouseGrannyScript:
 	checkevent EVENT_GOT_CLEANSE_TAG
 	iftrue .GotCleanseTag
 	writetext Route5CleanseTagHouseGrannyText1
-	promptbutton
+	buttonsound
 	verbosegiveitem CLEANSE_TAG
 	iffalse .NoRoom
 	setevent EVENT_GOT_CLEANSE_TAG

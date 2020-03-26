@@ -107,7 +107,7 @@ InitMobileProfile:
 	hlcoord 0, 14
 	ld b, $2
 	ld c, $12
-	call Textbox
+	call TextBox
 	hlcoord 1, 16
 	ld de, MobileString_PersonalInfo
 	call PlaceString
@@ -144,7 +144,7 @@ asm_4815f:
 	call ClearBGPalettes
 	call Function48d30
 	pop bc
-	call ClearTilemap
+	call ClearTileMap
 	ld a, $ff
 	ret
 
@@ -254,7 +254,7 @@ Function4820d:
 	call ClearBGPalettes
 	call Function48d30
 	pop bc
-	call ClearTilemap
+	call ClearTileMap
 	ld b, SCGB_DIPLOMA
 	call GetSGBLayout
 	ld hl, wd479
@@ -354,7 +354,7 @@ Function48304:
 	ld a, $29
 .asm_4833f
 	ld [wMenuScrollPosition], a
-	farcall Mobile_OpenAndCloseMenu_HDMATransferTilemapAndAttrmap
+	farcall Mobile_OpenAndCloseMenu_HDMATransferTileMapAndAttrMap
 .asm_48348
 	call ScrollingMenu
 	ld de, $629
@@ -380,7 +380,7 @@ Function48304:
 	ld [wd003], a
 .asm_48377
 	call Function48187
-	farcall Mobile_OpenAndCloseMenu_HDMATransferTilemapAndAttrmap
+	farcall Mobile_OpenAndCloseMenu_HDMATransferTileMapAndAttrMap
 	jp Function4840c
 
 Function48383:
@@ -584,21 +584,13 @@ MenuHeader_0x48513:
 
 MenuData_0x4851b:
 	db SCROLLINGMENU_DISPLAY_ARROWS | SCROLLINGMENU_ENABLE_RIGHT | SCROLLINGMENU_ENABLE_LEFT | SCROLLINGMENU_CALL_FUNCTION1_CANCEL ; flags
-	db 6, 0 ; rows, columns
-	db SCROLLINGMENU_ITEMS_NORMAL ; item format
-	dba .Items
-	dba Function483e8
-	dba NULL
-	dba NULL
+	db 6 ; items
 
-.Items:
-	db 46
-x = 0
-rept 46
-	db x
-x = x + 1
-endr
-	db -1
+Unknown_4851d:
+	db $00, $01, $12, $2b, $45, $12, $e8, $43, $00, $00, $00, $00, $00, $00, $2e, $00, $01, $02, $03, $04
+	db $05, $06, $07, $08, $09, $0a, $0b, $0c, $0d, $0e, $0f, $10, $11, $12, $13, $14, $15, $16, $17, $18
+	db $19, $1a, $1b, $1c, $1d, $1e, $1f, $20, $21, $22, $23, $24, $25, $26, $27, $28, $29, $2a, $2b, $2c
+	db $2d, $ff
 
 Prefectures:
 Aichi:     db "あいちけん@"   ; Aichi
@@ -1006,10 +998,10 @@ Function488b9:
 	ret
 
 MobileUpArrowGFX:
-INCBIN "gfx/mobile/up_arrow.1bpp"
+INCBIN "gfx/mobile/up_arrow.2bpp"
 
 MobileDownArrowGFX:
-INCBIN "gfx/mobile/down_arrow.1bpp"
+INCBIN "gfx/mobile/down_arrow.2bpp"
 
 Function488d3:
 	call Function48283
@@ -1662,7 +1654,7 @@ Function48cdc:
 	call Function48cfd
 	pop hl
 	pop bc
-	ld de, wAttrmap - wTilemap
+	ld de, wAttrMap - wTileMap
 	add hl, de
 	inc b
 	inc b

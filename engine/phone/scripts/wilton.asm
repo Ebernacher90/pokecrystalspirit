@@ -1,5 +1,5 @@
 WiltonPhoneCalleeScript:
-	gettrainername STRING_BUFFER_3, FISHER, WILTON1
+	trainertotext FISHER, WILTON1, MEM_BUFFER_0
 	checkflag ENGINE_WILTON
 	iftrue .WantsBattle
 	farscall PhoneScript_AnswerPhone_Male
@@ -7,24 +7,24 @@ WiltonPhoneCalleeScript:
 	iftrue .NotThursday
 	checkflag ENGINE_WILTON_HAS_ITEM
 	iftrue .HasItem
-	readvar VAR_WEEKDAY
+	checkcode VAR_WEEKDAY
 	ifnotequal THURSDAY, .NotThursday
 	checktime MORN
 	iftrue WiltonThursdayMorning
 
 .NotThursday:
-	farsjump WiltonHaventFoundAnythingScript
+	farjump WiltonHaventFoundAnything
 
 .WantsBattle:
-	getlandmarkname STRING_BUFFER_5, LANDMARK_ROUTE_44
-	farsjump WiltonNotBitingScript
+	landmarktotext ROUTE_44, MEM_BUFFER_2
+	farjump WiltonNotBiting
 
 .HasItem:
-	getlandmarkname STRING_BUFFER_5, LANDMARK_ROUTE_44
-	farsjump WiltonWantThisScript
+	landmarktotext ROUTE_44, MEM_BUFFER_2
+	farjump WiltonWantThis
 
 WiltonPhoneCallerScript:
-	gettrainername STRING_BUFFER_3, FISHER, WILTON1
+	trainertotext FISHER, WILTON1, MEM_BUFFER_0
 	farscall PhoneScript_GreetPhone_Male
 	checkflag ENGINE_WILTON
 	iftrue .GenericCall
@@ -38,19 +38,19 @@ WiltonPhoneCallerScript:
 	ifequal 0, WiltonHasItem
 
 .GenericCall:
-	farsjump Phone_GenericCall_Male
+	farjump Phone_GenericCall_Male
 
 WiltonThursdayMorning:
 	setflag ENGINE_WILTON_THURSDAY_MORNING
 
 WiltonWantsBattle:
-	getlandmarkname STRING_BUFFER_5, LANDMARK_ROUTE_44
+	landmarktotext ROUTE_44, MEM_BUFFER_2
 	setflag ENGINE_WILTON
-	farsjump PhoneScript_WantsToBattle_Male
+	farjump PhoneScript_WantsToBattle_Male
 
 WiltonHasItem:
 	setflag ENGINE_WILTON_HAS_ITEM
-	getlandmarkname STRING_BUFFER_5, LANDMARK_ROUTE_44
+	landmarktotext ROUTE_44, MEM_BUFFER_2
 	clearevent EVENT_WILTON_HAS_ULTRA_BALL
 	clearevent EVENT_WILTON_HAS_GREAT_BALL
 	clearevent EVENT_WILTON_HAS_POKE_BALL
@@ -58,18 +58,18 @@ WiltonHasItem:
 	ifequal 0, .UltraBall
 	random 3
 	ifequal 0, .GreatBall
-	sjump .PokeBall
+	jump .PokeBall
 
 .UltraBall:
 	setevent EVENT_WILTON_HAS_ULTRA_BALL
-	sjump .FoundItem
+	jump .FoundItem
 
 .GreatBall:
 	setevent EVENT_WILTON_HAS_GREAT_BALL
-	sjump .FoundItem
+	jump .FoundItem
 
 .PokeBall:
 	setevent EVENT_WILTON_HAS_POKE_BALL
 
 .FoundItem:
-	farsjump PhoneScript_FoundItem_Male
+	farjump PhoneScript_FoundItem_Male

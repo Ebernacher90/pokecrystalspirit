@@ -161,8 +161,8 @@ MobileSystemSplashScreen_InitGFX:
 	lb bc, BANK(.Tiles), 104
 	call Get2bpp
 	call .LoadPals
-	call .LoadTilemap
-	call .LoadAttrmap
+	call .LoadTileMap
+	call .LoadAttrMap
 	hlbgcoord 0, 0
 	call Function16cc73
 	call Function16cc02
@@ -173,31 +173,31 @@ MobileSystemSplashScreen_InitGFX:
 
 .LoadPals:
 	ld de, wBGPals1
-	ld hl, MobileSplashScreenPalettes
+	ld hl, UnknownMobilePalettes_16c903
 	ld bc, 8
 	ld a, $5
 	call FarCopyWRAM
 	farcall ApplyPals
 	ret
 
-.LoadTilemap:
+.LoadTileMap:
 	hlcoord 0, 0
 	ld bc, 20
 	xor a
 	call ByteFill
-	ld hl, .Tilemap
+	ld hl, .TileMap
 	decoord 0, 1
 	ld bc, $0154
 	call CopyBytes
 	ret
 
-.LoadAttrmap:
-	hlcoord 0, 0, wAttrmap
+.LoadAttrMap:
+	hlcoord 0, 0, wAttrMap
 	ld bc, SCREEN_WIDTH
 	xor a
 	call ByteFill
-	ld hl, .Attrmap
-	decoord 0, 1, wAttrmap
+	ld hl, .AttrMap
+	decoord 0, 1, wAttrMap
 	ld bc, 17 * SCREEN_WIDTH
 	call CopyBytes
 	ret
@@ -205,14 +205,14 @@ MobileSystemSplashScreen_InitGFX:
 .Tiles:
 INCBIN "gfx/mobile/mobile_splash.2bpp"
 
-.Tilemap:
+.TileMap:
 INCBIN "gfx/mobile/mobile_splash.tilemap"
 
-.Attrmap:
+.AttrMap:
 INCBIN "gfx/mobile/mobile_splash.attrmap"
 
-MobileSplashScreenPalettes:
-INCLUDE "gfx/mobile/mobile_splash.pal"
+UnknownMobilePalettes_16c903:
+INCLUDE "gfx/unknown/16c903.pal"
 
 Function16c943:
 	ld a, [wd003]
@@ -237,7 +237,7 @@ Function16c943:
 	ld e, $0
 	ld a, $0
 .asm_16c969
-	ld hl, MobileSplashScreenPalettes
+	ld hl, UnknownMobilePalettes_16c903
 	call Function16cab6
 	call Function16cabb
 	ld d, a
@@ -260,7 +260,7 @@ Function16c943:
 	call Function16cadc
 
 .asm_16c991
-	ld hl, MobileSplashScreenPalettes
+	ld hl, UnknownMobilePalettes_16c903
 	call Function16cab6
 	call Function16cad8
 	ld d, a
@@ -283,7 +283,7 @@ Function16c943:
 	call Function16cb08
 
 .asm_16c9b9
-	ld hl, MobileSplashScreenPalettes
+	ld hl, UnknownMobilePalettes_16c903
 	call Function16cab6
 	call Function16cac4
 	ld d, a
@@ -669,8 +669,8 @@ Function16cc02:
 
 Function16cc18:
 	ld hl, vTiles1
-	ld de, MobileAdapterCheckGFX
-	lb bc, BANK(MobileAdapterCheckGFX), 46
+	ld de, GFX_16cca3
+	lb bc, BANK(GFX_16cca3), 46
 	call Get2bpp
 	ret
 
@@ -710,7 +710,7 @@ Function16cc5a:
 	ret
 
 Function16cc62:
-	hlcoord 0, 15, wAttrmap
+	hlcoord 0, 15, wAttrMap
 	ld bc, $0028
 	ld a, $1
 	call ByteFill
@@ -731,7 +731,7 @@ Function16cc73:
 	pop hl
 	ld a, $1
 	ldh [rVBK], a
-	decoord 0, 0, wAttrmap
+	decoord 0, 0, wAttrMap
 	call Function16cc90
 	pop af
 	ldh [rVBK], a
@@ -754,8 +754,8 @@ Function16cc90:
 	jr nz, .asm_16cc93
 	ret
 
-MobileAdapterCheckGFX:
-INCBIN "gfx/mobile/mobile_splash_check.2bpp"
+GFX_16cca3:
+INCBIN "gfx/unknown/16cca3.2bpp"
 
 Unknown_16cfa3:
 	RGB 31, 31, 31

@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const EARLSPOKEMONACADEMY_EARL
 	const EARLSPOKEMONACADEMY_YOUNGSTER1
 	const EARLSPOKEMONACADEMY_GAMEBOY_KID1
@@ -78,27 +78,27 @@ AcademyBlackboard:
 .Poison:
 	writetext AcademyPoisonText
 	waitbutton
-	sjump .Loop
+	jump .Loop
 
 .Paralysis:
 	writetext AcademyParalysisText
 	waitbutton
-	sjump .Loop
+	jump .Loop
 
 .Sleep:
 	writetext AcademySleepText
 	waitbutton
-	sjump .Loop
+	jump .Loop
 
 .Burn:
 	writetext AcademyBurnText
 	waitbutton
-	sjump .Loop
+	jump .Loop
 
 .Freeze:
 	writetext AcademyFreezeText
 	waitbutton
-	sjump .Loop
+	jump .Loop
 
 .BlackboardMenuHeader:
 	db MENU_BACKUP_TILES ; flags

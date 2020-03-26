@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const DAYCARE_GRAMPS
 	const DAYCARE_GRANNY
 
@@ -26,9 +26,9 @@ DayCareManScript_Inside:
 	checkevent EVENT_GOT_ODD_EGG
 	iftrue .AlreadyHaveOddEgg
 	writetext DayCareManText_GiveOddEgg
-	promptbutton
+	buttonsound
 	closetext
-	readvar VAR_PARTYCOUNT
+	checkcode VAR_PARTYCOUNT
 	ifequal PARTY_LENGTH, .PartyFull
 	special GiveOddEgg
 	opentext

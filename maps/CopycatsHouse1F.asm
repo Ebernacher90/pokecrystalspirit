@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const COPYCATSHOUSE1F_POKEFAN_M
 	const COPYCATSHOUSE1F_POKEFAN_F
 	const COPYCATSHOUSE1F_CLEFAIRY

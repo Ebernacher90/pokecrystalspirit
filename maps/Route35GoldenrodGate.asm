@@ -1,5 +1,5 @@
-	object_const_def ; object_event constants
-	const ROUTE35GOLDENRODGATE_RANDY
+	const_def 2 ; object constants
+	const ROUTE35GOLDENRODGATE_OFFICER
 	const ROUTE35GOLDENRODGATE_POKEFAN_F
 	const ROUTE35GOLDENRODGATE_FISHER
 
@@ -17,46 +17,46 @@ RandyScript:
 	iftrue .questcomplete
 	checkevent EVENT_GOT_KENYA
 	iftrue .alreadyhavekenya
-	writetext Route35GoldenrodGateRandyAskTakeThisMonToMyFriendText
+	writetext UnknownText_0x69ddd
 	yesorno
 	iffalse .refused
-	writetext Route35GoldenrodGateRandyThanksKidText
-	promptbutton
+	writetext UnknownText_0x69e48
+	buttonsound
 	waitsfx
-	readvar VAR_PARTYCOUNT
+	checkcode VAR_PARTYCOUNT
 	ifequal PARTY_LENGTH, .partyfull
-	writetext Route35GoldenrodGatePlayerReceivedAMonWithMailText
+	writetext UnknownText_0x69eb8
 	playsound SFX_KEY_ITEM
 	waitsfx
 	givepoke SPEAROW, 10, NO_ITEM, TRUE, GiftSpearowName, GiftSpearowOTName
 	givepokemail GiftSpearowMail
 	setevent EVENT_GOT_KENYA
 .alreadyhavekenya
-	writetext Route35GoldenrodGateRandyWeirdTreeBlockingRoadText
+	writetext UnknownText_0x69ed6
 	waitbutton
 	closetext
 	end
 
 .partyfull
-	writetext Route35GoldenrodGateRandyCantCarryAnotherMonText
+	writetext UnknownText_0x69f56
 	waitbutton
 	closetext
 	end
 
 .refused
-	writetext Route35GoldenrodGateRandyOhNeverMindThenText
+	writetext UnknownText_0x69f74
 	waitbutton
 	closetext
 	end
 
 .questcomplete
-	writetext Route35GoldenrodGateRandySomethingForYourTroubleText
-	promptbutton
+	writetext UnknownText_0x69f8b
+	buttonsound
 	verbosegiveitem HP_UP
 	iffalse .bagfull
 	setevent EVENT_GOT_HP_UP_FROM_RANDY
 .gothpup
-	writetext Route35GoldenrodGateRandyMyPalWasSnoozingRightText
+	writetext UnknownText_0x69fd9
 	waitbutton
 .bagfull
 	closetext
@@ -94,7 +94,7 @@ Route35GoldenrodGatePokefanFScript:
 Route35GoldenrodGateFisherScript:
 	jumptextfaceplayer Route35GoldenrodGateFisherText
 
-Route35GoldenrodGateRandyAskTakeThisMonToMyFriendText:
+UnknownText_0x69ddd:
 	text "Excuse me, kid!"
 	line "Can you do a guy"
 	cont "a favor?"
@@ -106,7 +106,7 @@ Route35GoldenrodGateRandyAskTakeThisMonToMyFriendText:
 	para "He's on ROUTE 31."
 	done
 
-Route35GoldenrodGateRandyThanksKidText:
+UnknownText_0x69e48:
 	text "You will? Perfect!"
 	line "Thanks, kid!"
 
@@ -118,12 +118,12 @@ Route35GoldenrodGateRandyThanksKidText:
 	line "him right away!"
 	done
 
-Route35GoldenrodGatePlayerReceivedAMonWithMailText:
+UnknownText_0x69eb8:
 	text "<PLAYER> received a"
 	line "#MON with MAIL."
 	done
 
-Route35GoldenrodGateRandyWeirdTreeBlockingRoadText:
+UnknownText_0x69ed6:
 	text "You can read it,"
 	line "but don't lose it!"
 	cont "ROUTE 31!"
@@ -136,17 +136,17 @@ Route35GoldenrodGateRandyWeirdTreeBlockingRoadText:
 	line "been cleared?"
 	done
 
-Route35GoldenrodGateRandyCantCarryAnotherMonText:
+UnknownText_0x69f56:
 	text "You can't carry"
 	line "another #MON…"
 	done
 
-Route35GoldenrodGateRandyOhNeverMindThenText:
+UnknownText_0x69f74:
 	text "Oh… Never mind,"
 	line "then…"
 	done
 
-Route35GoldenrodGateRandySomethingForYourTroubleText:
+UnknownText_0x69f8b:
 	text "Thanks, kid! You"
 	line "made the delivery"
 	cont "for me!"
@@ -155,7 +155,7 @@ Route35GoldenrodGateRandySomethingForYourTroubleText:
 	line "for your trouble!"
 	done
 
-Route35GoldenrodGateRandyMyPalWasSnoozingRightText:
+UnknownText_0x69fd9:
 	text "My pal was snooz-"
 	line "ing, right? Heh,"
 	cont "what'd I say?"

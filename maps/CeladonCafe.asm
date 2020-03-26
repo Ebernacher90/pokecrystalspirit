@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const CELADONCAFE_SUPER_NERD
 	const CELADONCAFE_FISHER1
 	const CELADONCAFE_FISHER2
@@ -94,7 +94,7 @@ CeladonCafeTrashcan:
 	giveitem LEFTOVERS
 	iffalse .PackFull
 	opentext
-	getitemname STRING_BUFFER_3, LEFTOVERS
+	itemtotext LEFTOVERS, MEM_BUFFER_0
 	writetext FoundLeftoversText
 	playsound SFX_ITEM
 	waitsfx
@@ -105,9 +105,9 @@ CeladonCafeTrashcan:
 
 .PackFull:
 	opentext
-	getitemname STRING_BUFFER_3, LEFTOVERS
+	itemtotext LEFTOVERS, MEM_BUFFER_0
 	writetext FoundLeftoversText
-	promptbutton
+	buttonsound
 	writetext NoRoomForLeftoversText
 	waitbutton
 	closetext

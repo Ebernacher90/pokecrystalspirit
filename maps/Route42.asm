@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const ROUTE42_FISHER
 	const ROUTE42_POKEFAN_M
 	const ROUTE42_SUPER_NERD
@@ -38,7 +38,7 @@ TrainerFisherTully:
 	trainer FISHER, TULLY1, EVENT_BEAT_FISHER_TULLY, FisherTullySeenText, FisherTullyBeatenText, 0, .Script
 
 .Script:
-	loadvar VAR_CALLERID, PHONE_FISHER_TULLY
+	writecode VAR_CALLERID, PHONE_FISHER_TULLY
 	endifjustbattled
 	opentext
 	checkflag ENGINE_TULLY
@@ -50,10 +50,10 @@ TrainerFisherTully:
 	checkevent EVENT_TULLY_ASKED_FOR_PHONE_NUMBER
 	iftrue .AskedAlready
 	writetext FisherTullyAfterBattleText
-	promptbutton
+	buttonsound
 	setevent EVENT_TULLY_ASKED_FOR_PHONE_NUMBER
 	scall .AskNumber1
-	sjump .AskForNumber
+	jump .AskForNumber
 
 .AskedAlready:
 	scall .AskNumber2
@@ -61,14 +61,14 @@ TrainerFisherTully:
 	askforphonenumber PHONE_FISHER_TULLY
 	ifequal PHONE_CONTACTS_FULL, .PhoneFull
 	ifequal PHONE_CONTACT_REFUSED, .NumberDeclined
-	gettrainername STRING_BUFFER_3, FISHER, TULLY1
+	trainertotext FISHER, TULLY1, MEM_BUFFER_0
 	scall .RegisteredNumber
-	sjump .NumberAccepted
+	jump .NumberAccepted
 
 .WantsBattle:
 	scall .Rematch
 	winlosstext FisherTullyBeatenText, 0
-	readmem wTullyFightCount
+	copybytetovar wTullyFightCount
 	ifequal 3, .Fight3
 	ifequal 2, .Fight2
 	ifequal 1, .Fight1
@@ -86,7 +86,7 @@ TrainerFisherTully:
 	loadtrainer FISHER, TULLY1
 	startbattle
 	reloadmapafterbattle
-	loadmem wTullyFightCount, 1
+	loadvar wTullyFightCount, 1
 	clearflag ENGINE_TULLY
 	end
 
@@ -94,7 +94,7 @@ TrainerFisherTully:
 	loadtrainer FISHER, TULLY2
 	startbattle
 	reloadmapafterbattle
-	loadmem wTullyFightCount, 2
+	loadvar wTullyFightCount, 2
 	clearflag ENGINE_TULLY
 	end
 
@@ -102,7 +102,7 @@ TrainerFisherTully:
 	loadtrainer FISHER, TULLY3
 	startbattle
 	reloadmapafterbattle
-	loadmem wTullyFightCount, 3
+	loadvar wTullyFightCount, 3
 	clearflag ENGINE_TULLY
 	end
 
@@ -119,10 +119,10 @@ TrainerFisherTully:
 	iffalse .NoRoom
 	clearflag ENGINE_TULLY_HAS_WATER_STONE
 	setevent EVENT_TULLY_GAVE_WATER_STONE
-	sjump .NumberAccepted
+	jump .NumberAccepted
 
 .NoRoom:
-	sjump .PackFull
+	jump .PackFull
 
 .AskNumber1:
 	jumpstd asknumber1m

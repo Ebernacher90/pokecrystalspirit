@@ -1,6 +1,7 @@
 LoadOverworldMonIcon:
 	ld a, e
 	call ReadMonMenuIcon
+	ld [wCurIcon], a
 	ld l, a
 	ld h, 0
 	add hl, hl
@@ -9,8 +10,7 @@ LoadOverworldMonIcon:
 	ld a, [hli]
 	ld e, a
 	ld d, [hl]
-	ld b, BANK(Icons)
-	ld c, 8
+	call GetIconBank
 	ret
 
 LoadMenuMonIcon:
@@ -175,7 +175,7 @@ InitPartyMenuIcon:
 	ld e, $10
 ; type is partymon icon
 	ld a, SPRITE_ANIM_INDEX_PARTY_MON
-	call _InitSpriteAnimStruct
+	call InitSpriteAnimStruct
 	pop af
 	ld hl, SPRITEANIMSTRUCT_TILE_ID
 	add hl, bc
@@ -222,7 +222,7 @@ NamingScreen_InitAnimatedMonIcon:
 	call GetIconGFX
 	depixel 4, 4, 4, 0
 	ld a, SPRITE_ANIM_INDEX_PARTY_MON
-	call _InitSpriteAnimStruct
+	call InitSpriteAnimStruct
 	ld hl, SPRITEANIMSTRUCT_ANIM_SEQ_ID
 	add hl, bc
 	ld [hl], SPRITE_ANIM_SEQ_NULL
@@ -237,7 +237,7 @@ MoveList_InitAnimatedMonIcon:
 	ld d, 3 * 8 + 2 ; depixel 3, 4, 2, 4
 	ld e, 4 * 8 + 4
 	ld a, SPRITE_ANIM_INDEX_PARTY_MON
-	call _InitSpriteAnimStruct
+	call InitSpriteAnimStruct
 	ld hl, SPRITEANIMSTRUCT_ANIM_SEQ_ID
 	add hl, bc
 	ld [hl], SPRITE_ANIM_SEQ_NULL
@@ -337,10 +337,16 @@ endr
 	ld d, [hl]
 	pop hl
 
-	lb bc, BANK(Icons), 8
+	call GetIconBank
 	call GetGFXUnlessMobile
 
 	pop hl
+	ret
+
+GetIconBank:
+	ld a, [wCurIcon]
+	cp CELEBI ; last mon in Icons1
+	lb bc, Bank("Mon Icons 1"), 8
 	ret
 
 GetGFXUnlessMobile:

@@ -7,101 +7,13 @@ callba EQUS "farcall"
 callab EQUS "callfar"
 
 ; macros/scripts/audio.asm
-__ EQU 0
-CC EQU 13
-
-musicheader: MACRO
-	channel_count \1
-	channel \2, \3
-ENDM
-
-sound: MACRO
-	note \1, \2
-	db \3
-	dw \4
-ENDM
-
-noise: MACRO
-	note \1, \2
-	db \3
-	db \4
-ENDM
-
-notetype: MACRO
-IF _NARG >= 2
-	note_type \1, \2 >> 4, \2 & $0f
-ELSE
-	note_type \1
-ENDC
-ENDM
-
-pitchoffset: MACRO
-	transpose \1, \2 - 1
-ENDM
-
-dutycycle EQUS "duty_cycle"
-
-intensity: MACRO
-	volume_envelope \1 >> 4, \1 & $0f
-ENDM
-
-soundinput: MACRO
-	pitch_sweep \1 >> 4, \1 & $0f
-ENDM
-
 unknownmusic0xde EQUS "sound_duty"
-sound_duty: MACRO
-	db $de
-IF _NARG == 4
-	db \1 | (\2 << 2) | (\3 << 4) | (\4 << 6)
-ELSE
-	db \1
-ENDC
-ENDM
-
-togglesfx EQUS "toggle_sfx"
-
-slidepitchto: MACRO
-	pitch_slide \1, (8 - \2), \3
-ENDM
-
-togglenoise EQUS "toggle_noise"
-
-panning: MACRO
-	force_stereo_panning ((\1 >> 4) & 1), (\1 & 1)
-ENDM
-
-tone           EQUS "pitch_offset"
-restartchannel EQUS "restart_channel"
-newsong        EQUS "new_song"
-sfxpriorityon  EQUS "sfx_priority_on"
-sfxpriorityoff EQUS "sfx_priority_off"
-
-stereopanning: MACRO
-	stereo_panning ((\1 >> 4) & 1), (\1 & 1)
-ENDM
-
-sfxtogglenoise EQUS "sfx_toggle_noise"
-setcondition   EQUS "set_condition"
-jumpif         EQUS "sound_jump_if"
-jumpchannel    EQUS "sound_jump"
-loopchannel    EQUS "sound_loop"
-callchannel    EQUS "sound_call"
-endchannel     EQUS "sound_ret"
 
 ; macros/scripts/events.asm
 
 checkmorn EQUS "checktime MORN"
 checkday  EQUS "checktime DAY"
 checknite EQUS "checktime NITE"
-
-jump           EQUS "sjump"
-farjump        EQUS "farsjump"
-priorityjump   EQUS "prioritysjump"
-ptcall         EQUS "memcall"
-ptjump         EQUS "memjump"
-ptpriorityjump EQUS "stopandsjump"
-ptcallasm      EQUS "memcallasm"
 
 if_equal        EQUS "ifequal"
 if_not_equal    EQUS "ifnotequal"
@@ -114,71 +26,21 @@ domaptrigger     EQUS "setmapscene"
 checktriggers    EQUS "checkscene"
 dotrigger        EQUS "setscene"
 
-faceperson     EQUS "faceobject"
-moveperson     EQUS "moveobject"
-writepersonxy  EQUS "writeobjectxy"
-spriteface     EQUS "turnobject"
-objectface     EQUS "turnobject"
-applymovement2 EQUS "applymovementlasttalked"
+faceperson       EQUS "faceobject"
+moveperson       EQUS "moveobject"
+writepersonxy    EQUS "writeobjectxy"
+spriteface       EQUS "turnobject"
+objectface       EQUS "turnobject"
 
-writebyte     EQUS "setval"
-addvar        EQUS "addval"
-copybytetovar EQUS "readmem"
-copyvartobyte EQUS "writemem"
-checkcode     EQUS "readvar"
-writevarcode  EQUS "writevar"
-writecode     EQUS "loadvar"
-
-MEM_BUFFER_0 EQUS "STRING_BUFFER_3"
-MEM_BUFFER_1 EQUS "STRING_BUFFER_4"
-MEM_BUFFER_2 EQUS "STRING_BUFFER_5"
-
-vartomem      EQUS "getnum"
-mapnametotext EQUS "getcurlandmarkname"
-readcoins     EQUS "getcoins"
-
-pokenamemem: MACRO
-	getmonname \2, \1
-ENDM
-
-itemtotext: MACRO
-	getitemname \2, \1
-ENDM
-
-landmarktotext: MACRO
-	getlandmarkname \2, \1
-ENDM
-
-trainertotext: MACRO
-	gettrainername \3, \1, \2
-ENDM
-
-trainerclassname: MACRO
-	gettrainerclassname \2, \1
-ENDM
-
-name: MACRO
-	getname \3, \1, \2
-ENDM
-
-stringtotext: MACRO
-	getstring \2, \1
-ENDM
-
-readmoney: MACRO
-	getmoney \2, \1
-ENDM
-
-RAM2MEM           EQUS "getnum"
+RAM2MEM           EQUS "vartomem"
 loadfont          EQUS "opentext"
 loadmenudata      EQUS "loadmenu"
 loadmenuheader    EQUS "loadmenu"
 writebackup       EQUS "closewindow"
 interpretmenu     EQUS "_2dmenu"
 interpretmenu2    EQUS "verticalmenu"
-buttonsound       EQUS "promptbutton"
 battlecheck       EQUS "randomwildmon"
-loadtrainerdata   EQUS "loadtemptrainer"
+loadtrainerdata   EQUS "loadmemtrainer"
 loadpokedata      EQUS "loadwildmon"
 returnafterbattle EQUS "reloadmapafterbattle"
 trainerstatus     EQUS "trainerflagaction"
@@ -191,9 +53,6 @@ storetext         EQUS "battletowertext"
 displaylocation   EQUS "landmarktotext"
 givepokeitem      EQUS "givepokemail"
 checkpokeitem     EQUS "checkpokemail"
-passtoengine      EQUS "autoinput"
-verbosegiveitem2  EQUS "verbosegiveitemvar"
-loadbytec2cf      EQUS "writeunusedbytebuffer"
 
 ; macros/scripts/maps.asm
 
@@ -312,13 +171,6 @@ start_asm              EQUS "text_asm"
 deciram                EQUS "text_decimal"
 interpret_data         EQUS "text_pause"
 limited_interpret_data EQUS "text_dots"
-text_waitbutton        EQUS "text_promptbutton"
-link_wait_button       EQUS "text_linkpromptbutton"
-text_linkwaitbutton    EQUS "text_linkpromptbutton"
+link_wait_button       EQUS "text_linkwaitbutton"
 current_day            EQUS "text_today"
 text_jump              EQUS "text_far"
-
-; macros/scripts/battle_anims.asm
-anim_enemyfeetobj  EQUS "anim_battlergfx_2row"
-anim_playerheadobj EQUS "anim_battlergfx_1row"
-anim_clearsprites  EQUS "anim_keepsprites"

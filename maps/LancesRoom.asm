@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const LANCESROOM_LANCE
 	const LANCESROOM_MARY
 	const LANCESROOM_OAK
@@ -12,7 +12,7 @@ LancesRoom_MapScripts:
 	callback MAPCALLBACK_TILES, .LancesRoomDoors
 
 .LockDoor:
-	prioritysjump .LancesDoorLocksBehindYou
+	priorityjump .LancesDoorLocksBehindYou
 	end
 
 .DummyScene:
@@ -44,7 +44,7 @@ LancesRoom_MapScripts:
 Script_ApproachLanceFromLeft:
 	special FadeOutMusic
 	applymovement PLAYER, MovementData_ApproachLanceFromLeft
-	sjump LancesRoomLanceScript
+	jump LancesRoomLanceScript
 
 Script_ApproachLanceFromRight:
 	special FadeOutMusic
@@ -80,7 +80,7 @@ LancesRoomLanceScript:
 	appear LANCESROOM_MARY
 	applymovement LANCESROOM_MARY, LancesRoomMovementData_MaryRushesIn
 	opentext
-	writetext LancesRoomMaryOhNoOakText
+	writetext UnknownText_0x1811dd
 	waitbutton
 	closetext
 	appear LANCESROOM_OAK
@@ -91,19 +91,19 @@ LancesRoomLanceScript:
 	turnobject LANCESROOM_OAK, UP
 	turnobject LANCESROOM_LANCE, LEFT
 	opentext
-	writetext LancesRoomOakCongratulationsText
+	writetext UnknownText_0x18121b
 	waitbutton
 	closetext
 	applymovement LANCESROOM_MARY, LancesRoomMovementData_MaryInterviewChampion
 	turnobject PLAYER, LEFT
 	opentext
-	writetext LancesRoomMaryInterviewText
+	writetext UnknownText_0x18134b
 	waitbutton
 	closetext
 	applymovement LANCESROOM_LANCE, LancesRoomMovementData_LancePositionsSelfToGuidePlayerAway
 	turnobject PLAYER, UP
 	opentext
-	writetext LancesRoomNoisyText
+	writetext UnknownText_0x18137b
 	waitbutton
 	closetext
 	follow LANCESROOM_LANCE, PLAYER
@@ -119,7 +119,7 @@ LancesRoomLanceScript:
 	applymovement LANCESROOM_MARY, LancesRoomMovementData_MaryTriesToFollow
 	showemote EMOTE_SHOCK, LANCESROOM_MARY, 15
 	opentext
-	writetext LancesRoomMaryNoInterviewText
+	writetext UnknownText_0x1813c5
 	pause 30
 	closetext
 	applymovement LANCESROOM_MARY, LancesRoomMovementData_MaryRunsBackAndForth
@@ -273,7 +273,7 @@ LanceBattleAfterText:
 	line "your #MON."
 	done
 
-LancesRoomMaryOhNoOakText:
+UnknownText_0x1811dd:
 	text "MARY: Oh, no!"
 	line "It's all over!"
 
@@ -281,7 +281,7 @@ LancesRoomMaryOhNoOakText:
 	line "weren't so slow…"
 	done
 
-LancesRoomOakCongratulationsText:
+UnknownText_0x18121b:
 	text "PROF.OAK: Ah,"
 	line "<PLAY_G>!"
 
@@ -314,13 +314,13 @@ LancesRoomOakCongratulationsText:
 	line "<PLAY_G>!"
 	done
 
-LancesRoomMaryInterviewText:
+UnknownText_0x18134b:
 	text "MARY: Let's inter-"
 	line "view the brand new"
 	cont "CHAMPION!"
 	done
 
-LancesRoomNoisyText:
+UnknownText_0x18137b:
 	text "LANCE: This is"
 	line "getting to be a"
 	cont "bit too noisy…"
@@ -329,7 +329,7 @@ LancesRoomNoisyText:
 	line "come with me?"
 	done
 
-LancesRoomMaryNoInterviewText:
+UnknownText_0x1813c5:
 	text "MARY: Oh, wait!"
 	line "We haven't done"
 	cont "the interview!"

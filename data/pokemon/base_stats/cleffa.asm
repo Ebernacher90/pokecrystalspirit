@@ -3,7 +3,7 @@
 	db  50,  25,  28,  15,  45,  55
 	;   hp  atk  def  spd  sat  sdf
 
-	db NORMAL, NORMAL ; type
+	db FAIRY, FAIRY ; type
 	db 150 ; catch rate
 	db 37 ; base exp
 	db MYSTERYBERRY, MOON_STONE ; items
@@ -12,7 +12,7 @@
 	db 10 ; step cycles to hatch
 	db 5 ; unknown 2
 	INCBIN "gfx/pokemon/cleffa/front.dimensions"
-	dw NULL, NULL ; unused (beta front/back pics)
+	db 0, 0, 0, 0 ; padding
 	db GROWTH_FAST ; growth rate
 	dn EGG_NONE, EGG_NONE ; egg groups
 

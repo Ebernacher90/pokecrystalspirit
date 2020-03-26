@@ -1,6 +1,6 @@
 UnusedTitleScreen:
 	call ClearBGPalettes
-	call ClearTilemap
+	call ClearTileMap
 	call DisableLCD
 
 ; Turn BG Map update off

@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const ROUTE25_MISTY
 	const ROUTE25_COOLTRAINER_M1
 	const ROUTE25_YOUNGSTER1
@@ -161,7 +161,7 @@ TrainerCooltrainermKevin:
 	checkevent EVENT_CLEARED_NUGGET_BRIDGE
 	iftrue .AfterNuggetBridge
 	writetext CooltrainermKevinNuggetText
-	promptbutton
+	buttonsound
 	verbosegiveitem NUGGET
 	iffalse .NoRoomForNugget
 	setevent EVENT_CLEARED_NUGGET_BRIDGE

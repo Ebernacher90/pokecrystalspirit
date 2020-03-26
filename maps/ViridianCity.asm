@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const VIRIDIANCITY_GRAMPS1
 	const VIRIDIANCITY_GRAMPS2
 	const VIRIDIANCITY_FISHER
@@ -53,7 +53,7 @@ ViridianCityDreamEaterFisher:
 	checkevent EVENT_GOT_TM42_DREAM_EATER
 	iftrue .GotDreamEater
 	writetext ViridianCityDreamEaterFisherText
-	promptbutton
+	buttonsound
 	verbosegiveitem TM_DREAM_EATER
 	iffalse .NoRoomForDreamEater
 	setevent EVENT_GOT_TM42_DREAM_EATER

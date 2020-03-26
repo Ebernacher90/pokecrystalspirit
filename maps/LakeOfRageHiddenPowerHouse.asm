@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const LAKEOFRAGEHIDDENPOWERHOUSE_FISHER
 
 LakeOfRageHiddenPowerHouse_MapScripts:
@@ -12,7 +12,7 @@ HiddenPowerGuy:
 	checkevent EVENT_GOT_TM10_HIDDEN_POWER
 	iftrue .AlreadyGotItem
 	writetext HiddenPowerGuyText1
-	promptbutton
+	buttonsound
 	verbosegiveitem TM_HIDDEN_POWER
 	iffalse .Done
 	setevent EVENT_GOT_TM10_HIDDEN_POWER

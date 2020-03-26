@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const DRAGONSHRINE_ELDER1
 	const DRAGONSHRINE_ELDER2
 	const DRAGONSHRINE_ELDER3
@@ -12,7 +12,7 @@ DragonShrine_MapScripts:
 	db 0 ; callbacks
 
 .DragonShrineTest:
-	prioritysjump .DragonShrineTestScript
+	priorityjump .DragonShrineTestScript
 	end
 
 .DummyScene:
@@ -23,11 +23,11 @@ DragonShrine_MapScripts:
 	applymovement DRAGONSHRINE_ELDER1, DragonShrineElderStepDownMovement
 	opentext
 	writetext DragonShrineElderGreetingText
-	promptbutton
+	buttonsound
 .Question1:
 	setevent EVENT_TEMPORARY_UNTIL_MAP_RELOAD_2
 	writetext DragonShrineQuestion1Text
-	promptbutton
+	buttonsound
 	loadmenu DragonShrineQuestion1_MenuHeader
 	verticalmenu
 	closewindow
@@ -39,7 +39,7 @@ DragonShrine_MapScripts:
 .Question2:
 	setevent EVENT_TEMPORARY_UNTIL_MAP_RELOAD_3
 	writetext DragonShrineQuestion2Text
-	promptbutton
+	buttonsound
 	loadmenu DragonShrineQuestion2_MenuHeader
 	verticalmenu
 	closewindow
@@ -49,7 +49,7 @@ DragonShrine_MapScripts:
 .Question3:
 	setevent EVENT_TEMPORARY_UNTIL_MAP_RELOAD_4
 	writetext DragonShrineQuestion3Text
-	promptbutton
+	buttonsound
 	loadmenu DragonShrineQuestion3_MenuHeader
 	verticalmenu
 	closewindow
@@ -59,7 +59,7 @@ DragonShrine_MapScripts:
 .Question4:
 	setevent EVENT_TEMPORARY_UNTIL_MAP_RELOAD_5
 	writetext DragonShrineQuestion4Text
-	promptbutton
+	buttonsound
 	loadmenu DragonShrineQuestion4_MenuHeader
 	verticalmenu
 	closewindow
@@ -69,7 +69,7 @@ DragonShrine_MapScripts:
 .Question5:
 	setevent EVENT_TEMPORARY_UNTIL_MAP_RELOAD_6
 	writetext DragonShrineQuestion5Text
-	promptbutton
+	buttonsound
 	loadmenu DragonShrineQuestion5_MenuHeader
 	verticalmenu
 	closewindow
@@ -80,7 +80,7 @@ DragonShrine_MapScripts:
 	checkevent EVENT_TEMPORARY_UNTIL_MAP_RELOAD_6
 	iftrue .PassedTheTest
 	writetext DragonShrineRightAnswerText
-	promptbutton
+	buttonsound
 	checkevent EVENT_TEMPORARY_UNTIL_MAP_RELOAD_5
 	iftrue .Question5
 	checkevent EVENT_TEMPORARY_UNTIL_MAP_RELOAD_4
@@ -166,7 +166,7 @@ DragonShrine_MapScripts:
 	setscene SCENE_FINISHED
 	setmapscene DRAGONS_DEN_B1F, SCENE_DRAGONSDENB1F_CLAIR_GIVES_TM
 	writetext DragonShrinePlayerReceivedRisingBadgeText
-	promptbutton
+	buttonsound
 	writetext DragonShrineRisingBadgeExplanationText
 	waitbutton
 	closetext
@@ -208,7 +208,7 @@ DragonShrineElder1Script:
 .GiveDratini:
 	writetext DragonShrineTakeThisDratiniText
 	waitbutton
-	readvar VAR_PARTYCOUNT
+	checkcode VAR_PARTYCOUNT
 	ifequal PARTY_LENGTH, .PartyFull
 	writetext DragonShrinePlayerReceivedDratiniText
 	playsound SFX_CAUGHT_MON

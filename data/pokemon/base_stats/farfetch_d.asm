@@ -1,6 +1,6 @@
 	db FARFETCH_D ; 083
 
-	db  52,  65,  55,  60,  58,  62
+	db  52,  90,  55,  60,  58,  62
 	;   hp  atk  def  spd  sat  sdf
 
 	db NORMAL, FLYING ; type
@@ -12,7 +12,7 @@
 	db 20 ; step cycles to hatch
 	db 5 ; unknown 2
 	INCBIN "gfx/pokemon/farfetch_d/front.dimensions"
-	dw NULL, NULL ; unused (beta front/back pics)
+	db 0, 0, 0, 0 ; padding
 	db GROWTH_MEDIUM_FAST ; growth rate
 	dn EGG_FLYING, EGG_GROUND ; egg groups
 

@@ -1,6 +1,6 @@
 	db ARBOK ; 024
 
-	db  60,  85,  69,  80,  65,  79
+	db  60,  95,  69,  80,  65,  79
 	;   hp  atk  def  spd  sat  sdf
 
 	db POISON, POISON ; type
@@ -12,7 +12,7 @@
 	db 20 ; step cycles to hatch
 	db 5 ; unknown 2
 	INCBIN "gfx/pokemon/arbok/front.dimensions"
-	dw NULL, NULL ; unused (beta front/back pics)
+	db 0, 0, 0, 0 ; padding
 	db GROWTH_MEDIUM_FAST ; growth rate
 	dn EGG_GROUND, EGG_DRAGON ; egg groups
 

@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const GOLDENRODDEPTSTOREROOF_CLERK
 	const GOLDENRODDEPTSTOREROOF_POKEFAN_F
 	const GOLDENRODDEPTSTOREROOF_FISHER

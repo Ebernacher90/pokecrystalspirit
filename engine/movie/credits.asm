@@ -17,7 +17,7 @@ Credits::
 	ldh [rSVBK], a
 
 	call ClearBGPalettes
-	call ClearTilemap
+	call ClearTileMap
 	call ClearSprites
 
 	ld hl, wCreditsBlankFrame2bpp
@@ -419,22 +419,22 @@ ConstructCreditsTilemap:
 	ld a, $20
 	call DrawCreditsBorder
 
-	hlcoord 0, 0, wAttrmap
+	hlcoord 0, 0, wAttrMap
 	ld bc, 4 * SCREEN_WIDTH
 	xor a
 	call ByteFill
 
-	hlcoord 0, 4, wAttrmap
+	hlcoord 0, 4, wAttrMap
 	ld bc, SCREEN_WIDTH
 	ld a, $1
 	call ByteFill
 
-	hlcoord 0, 5, wAttrmap
+	hlcoord 0, 5, wAttrMap
 	ld bc, 12 * SCREEN_WIDTH
 	ld a, $2
 	call ByteFill
 
-	hlcoord 0, 17, wAttrmap
+	hlcoord 0, 17, wAttrMap
 	ld bc, SCREEN_WIDTH
 	ld a, $1
 	call ByteFill

@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const DARKCAVEBLACKTHORNENTRANCE_PHARMACIST
 	const DARKCAVEBLACKTHORNENTRANCE_POKE_BALL1
 	const DARKCAVEBLACKTHORNENTRANCE_POKE_BALL2
@@ -14,7 +14,7 @@ DarkCaveBlackthornEntrancePharmacistScript:
 	checkevent EVENT_GOT_BLACKGLASSES_IN_DARK_CAVE
 	iftrue .GotBlackglasses
 	writetext DarkCaveBlackthornEntrancePharmacistText1
-	promptbutton
+	buttonsound
 	verbosegiveitem BLACKGLASSES
 	iffalse .PackFull
 	setevent EVENT_GOT_BLACKGLASSES_IN_DARK_CAVE
@@ -29,7 +29,7 @@ DarkCaveBlackthornEntranceRevive:
 	itemball REVIVE
 
 DarkCaveBlackthornEntranceTMSnore:
-	itemball TM_SNORE
+	itemball AWAKENING
 
 DarkCaveBlackthornEntrancePharmacistText1:
 	text "Whoa! You startled"

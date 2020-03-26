@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const OLIVINEGYM_JASMINE
 	const OLIVINEGYM_GYM_GUY
 
@@ -25,13 +25,13 @@ OlivineGymJasmineScript:
 	playsound SFX_GET_BADGE
 	waitsfx
 	setflag ENGINE_MINERALBADGE
-	readvar VAR_BADGES
+	checkcode VAR_BADGES
 	scall OlivineGymActivateRockets
 .FightDone:
 	checkevent EVENT_GOT_TM23_IRON_TAIL
 	iftrue .GotIronTail
 	writetext Jasmine_BadgeSpeech
-	promptbutton
+	buttonsound
 	verbosegiveitem TM_IRON_TAIL
 	iffalse .NoRoomForIronTail
 	setevent EVENT_GOT_TM23_IRON_TAIL
@@ -89,7 +89,7 @@ OlivineGymStatue:
 	iftrue .Beaten
 	jumpstd gymstatue1
 .Beaten:
-	gettrainername STRING_BUFFER_4, JASMINE, JASMINE1
+	trainertotext JASMINE, JASMINE1, MEM_BUFFER_1
 	jumpstd gymstatue2
 
 Jasmine_SteelTypeIntro:

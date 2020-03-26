@@ -63,40 +63,40 @@ PokecenterNurseScript:
 	iftrue .day
 	checktime NITE
 	iftrue .nite
-	sjump .ok
+	jump .ok
 
 .morn
 	checkevent EVENT_WELCOMED_TO_POKECOM_CENTER
 	iftrue .morn_comcenter
 	farwritetext NurseMornText
-	promptbutton
-	sjump .ok
+	buttonsound
+	jump .ok
 .morn_comcenter
 	farwritetext PokeComNurseMornText
-	promptbutton
-	sjump .ok
+	buttonsound
+	jump .ok
 
 .day
 	checkevent EVENT_WELCOMED_TO_POKECOM_CENTER
 	iftrue .day_comcenter
 	farwritetext NurseDayText
-	promptbutton
-	sjump .ok
+	buttonsound
+	jump .ok
 .day_comcenter
 	farwritetext PokeComNurseDayText
-	promptbutton
-	sjump .ok
+	buttonsound
+	jump .ok
 
 .nite
 	checkevent EVENT_WELCOMED_TO_POKECOM_CENTER
 	iftrue .nite_comcenter
 	farwritetext NurseNiteText
-	promptbutton
-	sjump .ok
+	buttonsound
+	jump .ok
 .nite_comcenter
 	farwritetext PokeComNurseNiteText
-	promptbutton
-	sjump .ok
+	buttonsound
+	jump .ok
 
 .ok
 	; only do this once
@@ -113,7 +113,7 @@ PokecenterNurseScript:
 	pause 10
 	special HealParty
 	playmusic MUSIC_NONE
-	setval HEALMACHINE_POKECENTER
+	writebyte HEALMACHINE_POKECENTER
 	special HealMachineAnim
 	pause 30
 	special RestartMapMusic
@@ -150,7 +150,7 @@ PokecenterNurseScript:
 	farwritetext NursePokerusText
 	waitbutton
 	closetext
-	sjump .pokerus_done
+	jump .pokerus_done
 
 .pokerus_comcenter
 	farwritetext PokeComNursePokerusText
@@ -182,7 +182,7 @@ MerchandiseShelfScript:
 
 TownMapScript:
 	opentext
-	farwritetext LookTownMapText
+	farwritetext TownMapText
 	waitbutton
 	special OverworldTownMap
 	closetext
@@ -203,7 +203,7 @@ HomepageScript:
 
 Radio1Script:
 	opentext
-	setval MAPRADIO_POKEMON_CHANNEL
+	writebyte MAPRADIO_POKEMON_CHANNEL
 	special MapRadio
 	closetext
 	end
@@ -211,7 +211,7 @@ Radio1Script:
 Radio2Script:
 ; Lucky Channel
 	opentext
-	setval MAPRADIO_LUCKY_CHANNEL
+	writebyte MAPRADIO_LUCKY_CHANNEL
 	special MapRadio
 	closetext
 	end
@@ -232,10 +232,10 @@ ElevatorButtonScript:
 	end
 
 StrengthBoulderScript:
-	farsjump AskStrengthScript
+	farjump AskStrengthScript
 
 SmashRockScript:
-	farsjump AskRockSmashScript
+	farjump AskRockSmashScript
 
 PokecenterSignScript:
 	farjumptext PokecenterSignText
@@ -244,47 +244,47 @@ MartSignScript:
 	farjumptext MartSignText
 
 DayToTextScript:
-	readvar VAR_WEEKDAY
+	checkcode VAR_WEEKDAY
 	ifequal MONDAY, .Monday
 	ifequal TUESDAY, .Tuesday
 	ifequal WEDNESDAY, .Wednesday
 	ifequal THURSDAY, .Thursday
 	ifequal FRIDAY, .Friday
 	ifequal SATURDAY, .Saturday
-	getstring STRING_BUFFER_3, .SundayText
+	stringtotext .SundayText, MEM_BUFFER_0
 	end
 .Monday:
-	getstring STRING_BUFFER_3, .MondayText
+	stringtotext .MondayText, MEM_BUFFER_0
 	end
 .Tuesday:
-	getstring STRING_BUFFER_3, .TuesdayText
+	stringtotext .TuesdayText, MEM_BUFFER_0
 	end
 .Wednesday:
-	getstring STRING_BUFFER_3, .WednesdayText
+	stringtotext .WednesdayText, MEM_BUFFER_0
 	end
 .Thursday:
-	getstring STRING_BUFFER_3, .ThursdayText
+	stringtotext .ThursdayText, MEM_BUFFER_0
 	end
 .Friday:
-	getstring STRING_BUFFER_3, .FridayText
+	stringtotext .FridayText, MEM_BUFFER_0
 	end
 .Saturday:
-	getstring STRING_BUFFER_3, .SaturdayText
+	stringtotext .SaturdayText, MEM_BUFFER_0
 	end
 .SundayText:
-	db "SUNDAY@"
+	db "Sonntag"
 .MondayText:
-	db "MONDAY@"
+	db "Montag@"
 .TuesdayText:
-	db "TUESDAY@"
+	db "Dienstag@"
 .WednesdayText:
-	db "WEDNESDAY@"
+	db "Mittwoch@"
 .ThursdayText:
-	db "THURSDAY@"
+	db "Donnerstag@"
 .FridayText:
-	db "FRIDAY@"
+	db "Freitag@"
 .SaturdayText:
-	db "SATURDAY@"
+	db "Samstag@"
 
 GoldenrodRocketsScript:
 	clearevent EVENT_GOLDENROD_CITY_ROCKET_TAKEOVER
@@ -321,24 +321,24 @@ BugContestResultsScript:
 	farwritetext ContestResults_ReadyToJudgeText
 	waitbutton
 	special BugContestJudging
-	getnum STRING_BUFFER_3
+	vartomem MEM_BUFFER_0
 	ifequal 1, BugContestResults_FirstPlace
 	ifequal 2, BugContestResults_SecondPlace
 	ifequal 3, BugContestResults_ThirdPlace
 	farwritetext ContestResults_ConsolationPrizeText
-	promptbutton
+	buttonsound
 	waitsfx
 	verbosegiveitem BERRY
 	iffalse BugContestResults_NoRoomForBerry
 
 BugContestResults_DidNotWin:
 	farwritetext ContestResults_DidNotWinText
-	promptbutton
-	sjump BugContestResults_FinishUp
+	buttonsound
+	jump BugContestResults_FinishUp
 
 BugContestResults_ReturnAfterWinnersPrize:
 	farwritetext ContestResults_JoinUsNextTimeText
-	promptbutton
+	buttonsound
 
 BugContestResults_FinishUp:
 	checkevent EVENT_LEFT_MONS_WITH_CONTEST_OFFICER
@@ -383,52 +383,52 @@ BugContestResults_CleanUp:
 
 BugContestResults_FirstPlace:
 	setevent EVENT_TEMPORARY_UNTIL_MAP_RELOAD_1
-	getitemname STRING_BUFFER_4, SUN_STONE
+	itemtotext SUN_STONE, MEM_BUFFER_1
 	farwritetext ContestResults_PlayerWonAPrizeText
 	waitbutton
 	verbosegiveitem SUN_STONE
 	iffalse BugContestResults_NoRoomForSunStone
-	sjump BugContestResults_ReturnAfterWinnersPrize
+	jump BugContestResults_ReturnAfterWinnersPrize
 
 BugContestResults_SecondPlace:
-	getitemname STRING_BUFFER_4, EVERSTONE
+	itemtotext EVERSTONE, MEM_BUFFER_1
 	farwritetext ContestResults_PlayerWonAPrizeText
 	waitbutton
 	verbosegiveitem EVERSTONE
 	iffalse BugContestResults_NoRoomForEverstone
-	sjump BugContestResults_ReturnAfterWinnersPrize
+	jump BugContestResults_ReturnAfterWinnersPrize
 
 BugContestResults_ThirdPlace:
-	getitemname STRING_BUFFER_4, GOLD_BERRY
+	itemtotext GOLD_BERRY, MEM_BUFFER_1
 	farwritetext ContestResults_PlayerWonAPrizeText
 	waitbutton
 	verbosegiveitem GOLD_BERRY
 	iffalse BugContestResults_NoRoomForGoldBerry
-	sjump BugContestResults_ReturnAfterWinnersPrize
+	jump BugContestResults_ReturnAfterWinnersPrize
 
 BugContestResults_NoRoomForSunStone:
 	farwritetext BugContestPrizeNoRoomText
-	promptbutton
+	buttonsound
 	setevent EVENT_CONTEST_OFFICER_HAS_SUN_STONE
-	sjump BugContestResults_ReturnAfterWinnersPrize
+	jump BugContestResults_ReturnAfterWinnersPrize
 
 BugContestResults_NoRoomForEverstone:
 	farwritetext BugContestPrizeNoRoomText
-	promptbutton
+	buttonsound
 	setevent EVENT_CONTEST_OFFICER_HAS_EVERSTONE
-	sjump BugContestResults_ReturnAfterWinnersPrize
+	jump BugContestResults_ReturnAfterWinnersPrize
 
 BugContestResults_NoRoomForGoldBerry:
 	farwritetext BugContestPrizeNoRoomText
-	promptbutton
+	buttonsound
 	setevent EVENT_CONTEST_OFFICER_HAS_GOLD_BERRY
-	sjump BugContestResults_ReturnAfterWinnersPrize
+	jump BugContestResults_ReturnAfterWinnersPrize
 
 BugContestResults_NoRoomForBerry:
 	farwritetext BugContestPrizeNoRoomText
-	promptbutton
+	buttonsound
 	setevent EVENT_CONTEST_OFFICER_HAS_BERRY
-	sjump BugContestResults_DidNotWin
+	jump BugContestResults_DidNotWin
 
 BugContestResults_CopyContestantsToResults:
 	checkevent EVENT_BUG_CATCHING_CONTESTANT_1A
@@ -535,7 +535,7 @@ InitializeEventsScript:
 	setevent EVENT_PLAYERS_HOUSE_2F_DOLL_2
 	setevent EVENT_PLAYERS_HOUSE_2F_BIG_DOLL
 	setevent EVENT_DECO_BED_1
-	setevent EVENT_DECO_POSTER_1
+	setevent EVENT_DECO_PLANT_4
 	setevent EVENT_GOLDENROD_TRAIN_STATION_GENTLEMAN
 	setevent EVENT_OLIVINE_GYM_JASMINE
 	setevent EVENT_BLACKTHORN_CITY_GRAMPS_NOT_BLOCKING_DRAGONS_DEN
@@ -614,7 +614,7 @@ InitializeEventsScript:
 
 AskNumber1MScript:
 	special RandomPhoneMon
-	readvar VAR_CALLERID
+	checkcode VAR_CALLERID
 	ifequal PHONE_SCHOOLBOY_JACK, .Jack
 	ifequal PHONE_SAILOR_HUEY, .Huey
 	ifequal PHONE_COOLTRAINERM_GAVEN, .Gaven
@@ -699,7 +699,7 @@ AskNumber1MScript:
 
 AskNumber2MScript:
 	special RandomPhoneMon
-	readvar VAR_CALLERID
+	checkcode VAR_CALLERID
 	ifequal PHONE_SCHOOLBOY_JACK, .Jack
 	ifequal PHONE_SAILOR_HUEY, .Huey
 	ifequal PHONE_COOLTRAINERM_GAVEN, .Gaven
@@ -786,11 +786,11 @@ RegisteredNumberMScript:
 	farwritetext RegisteredNumber1Text
 	playsound SFX_REGISTER_PHONE_NUMBER
 	waitsfx
-	promptbutton
+	buttonsound
 	end
 
 NumberAcceptedMScript:
-	readvar VAR_CALLERID
+	checkcode VAR_CALLERID
 	ifequal PHONE_SCHOOLBOY_JACK, .Jack
 	ifequal PHONE_SAILOR_HUEY, .Huey
 	ifequal PHONE_COOLTRAINERM_GAVEN, .Gaven
@@ -914,7 +914,7 @@ NumberAcceptedMScript:
 	end
 
 NumberDeclinedMScript:
-	readvar VAR_CALLERID
+	checkcode VAR_CALLERID
 	ifequal PHONE_SCHOOLBOY_JACK, .Jack
 	ifequal PHONE_SAILOR_HUEY, .Huey
 	ifequal PHONE_COOLTRAINERM_GAVEN, .Gaven
@@ -1038,7 +1038,7 @@ NumberDeclinedMScript:
 	end
 
 PhoneFullMScript:
-	readvar VAR_CALLERID
+	checkcode VAR_CALLERID
 	ifequal PHONE_SCHOOLBOY_JACK, .Jack
 	ifequal PHONE_SAILOR_HUEY, .Huey
 	ifequal PHONE_COOLTRAINERM_GAVEN, .Gaven
@@ -1162,7 +1162,7 @@ PhoneFullMScript:
 	end
 
 RematchMScript:
-	readvar VAR_CALLERID
+	checkcode VAR_CALLERID
 	ifequal PHONE_SCHOOLBOY_JACK, .Jack
 	ifequal PHONE_SAILOR_HUEY, .Huey
 	ifequal PHONE_COOLTRAINERM_GAVEN, .Gaven
@@ -1268,7 +1268,7 @@ RematchMScript:
 	end
 
 GiftMScript:
-	readvar VAR_CALLERID
+	checkcode VAR_CALLERID
 	ifequal PHONE_BIRDKEEPER_JOSE, .Jose
 	ifequal PHONE_BUG_CATCHER_WADE, .Wade
 	ifequal PHONE_SCHOOLBOY_ALAN, .Alan
@@ -1279,35 +1279,35 @@ GiftMScript:
 
 .Jose:
 	farwritetext JoseGiftText
-	promptbutton
+	buttonsound
 	end
 .Wade:
 	farwritetext WadeGiftText
-	promptbutton
+	buttonsound
 	end
 .Alan:
 	farwritetext AlanGiftText
-	promptbutton
+	buttonsound
 	end
 .Derek:
 	farwritetext DerekGiftText
-	promptbutton
+	buttonsound
 	end
 .Tully:
 	farwritetext TullyGiftText
-	promptbutton
+	buttonsound
 	end
 .Wilton:
 	farwritetext WiltonGiftText
-	promptbutton
+	buttonsound
 	end
 .Kenji:
 	farwritetext KenjiGiftText
-	promptbutton
+	buttonsound
 	end
 
 PackFullMScript:
-	readvar VAR_CALLERID
+	checkcode VAR_CALLERID
 	ifequal PHONE_SAILOR_HUEY, .Huey
 	ifequal PHONE_BIRDKEEPER_JOSE, .Jose
 	ifequal PHONE_YOUNGSTER_JOEY, .Joey
@@ -1378,7 +1378,7 @@ PackFullMScript:
 
 RematchGiftMScript:
 	opentext
-	readvar VAR_CALLERID
+	checkcode VAR_CALLERID
 	ifequal PHONE_SAILOR_HUEY, .Huey
 	ifequal PHONE_YOUNGSTER_JOEY, .Joey
 	ifequal PHONE_BIRDKEEPER_VANCE, .Vance
@@ -1386,23 +1386,23 @@ RematchGiftMScript:
 
 .Huey:
 	farwritetext HueyRematchGiftText
-	promptbutton
+	buttonsound
 	end
 .Joey:
 	farwritetext JoeyRematchGiftText
-	promptbutton
+	buttonsound
 	end
 .Vance:
 	farwritetext VanceRematchGiftText
-	promptbutton
+	buttonsound
 	end
 .Parry:
 	farwritetext ParryRematchGiftText
-	promptbutton
+	buttonsound
 	end
 
 AskNumber1FScript:
-	readvar VAR_CALLERID
+	checkcode VAR_CALLERID
 	ifequal PHONE_POKEFAN_BEVERLY, .Beverly
 	ifequal PHONE_COOLTRAINERF_BETH, .Beth
 	ifequal PHONE_COOLTRAINERF_REENA, .Reena
@@ -1438,7 +1438,7 @@ AskNumber1FScript:
 	end
 
 AskNumber2FScript:
-	readvar VAR_CALLERID
+	checkcode VAR_CALLERID
 	ifequal PHONE_POKEFAN_BEVERLY, .Beverly
 	ifequal PHONE_COOLTRAINERF_BETH, .Beth
 	ifequal PHONE_COOLTRAINERF_REENA, .Reena
@@ -1477,11 +1477,11 @@ RegisteredNumberFScript:
 	farwritetext RegisteredNumber2Text
 	playsound SFX_REGISTER_PHONE_NUMBER
 	waitsfx
-	promptbutton
+	buttonsound
 	end
 
 NumberAcceptedFScript:
-	readvar VAR_CALLERID
+	checkcode VAR_CALLERID
 	ifequal PHONE_POKEFAN_BEVERLY, .Beverly
 	ifequal PHONE_COOLTRAINERF_BETH, .Beth
 	ifequal PHONE_COOLTRAINERF_REENA, .Reena
@@ -1533,7 +1533,7 @@ NumberAcceptedFScript:
 	end
 
 NumberDeclinedFScript:
-	readvar VAR_CALLERID
+	checkcode VAR_CALLERID
 	ifequal PHONE_POKEFAN_BEVERLY, .Beverly
 	ifequal PHONE_COOLTRAINERF_BETH, .Beth
 	ifequal PHONE_COOLTRAINERF_REENA, .Reena
@@ -1585,7 +1585,7 @@ NumberDeclinedFScript:
 	end
 
 PhoneFullFScript:
-	readvar VAR_CALLERID
+	checkcode VAR_CALLERID
 	ifequal PHONE_POKEFAN_BEVERLY, .Beverly
 	ifequal PHONE_COOLTRAINERF_BETH, .Beth
 	ifequal PHONE_COOLTRAINERF_REENA, .Reena
@@ -1637,7 +1637,7 @@ PhoneFullFScript:
 	end
 
 RematchFScript:
-	readvar VAR_CALLERID
+	checkcode VAR_CALLERID
 	ifequal PHONE_COOLTRAINERF_BETH, .Beth
 	ifequal PHONE_COOLTRAINERF_REENA, .Reena
 	ifequal PHONE_PICNICKER_LIZ, .Liz
@@ -1683,7 +1683,7 @@ RematchFScript:
 	end
 
 GiftFScript:
-	readvar VAR_CALLERID
+	checkcode VAR_CALLERID
 	ifequal PHONE_POKEFAN_BEVERLY, .Beverly
 	ifequal PHONE_PICNICKER_GINA, .Gina
 	ifequal PHONE_LASS_DANA, .Dana
@@ -1691,23 +1691,23 @@ GiftFScript:
 
 .Beverly:
 	farwritetext BeverlyGiftText
-	promptbutton
+	buttonsound
 	end
 .Gina:
 	farwritetext GinaGiftText
-	promptbutton
+	buttonsound
 	end
 .Dana:
 	farwritetext DanaGiftText
-	promptbutton
+	buttonsound
 	end
 .Tiffany:
 	farwritetext TiffanyGiftText
-	promptbutton
+	buttonsound
 	end
 
 PackFullFScript:
-	readvar VAR_CALLERID
+	checkcode VAR_CALLERID
 	ifequal PHONE_POKEFAN_BEVERLY, .Beverly
 	ifequal PHONE_PICNICKER_GINA, .Gina
 	ifequal PHONE_LASS_DANA, .Dana
@@ -1741,17 +1741,17 @@ PackFullFScript:
 	end
 
 RematchGiftFScript:
-	readvar VAR_CALLERID
+	checkcode VAR_CALLERID
 	ifequal PHONE_PICNICKER_ERIN, .Erin
 
 .Erin:
 	opentext
 	farwritetext ErinRematchGiftText
-	promptbutton
+	buttonsound
 	end
 
 GymStatue1Script:
-	getcurlandmarkname STRING_BUFFER_3
+	mapnametotext MEM_BUFFER_0
 	opentext
 	farwritetext GymStatue_CityGymText
 	waitbutton
@@ -1759,10 +1759,10 @@ GymStatue1Script:
 	end
 
 GymStatue2Script:
-	getcurlandmarkname STRING_BUFFER_3
+	mapnametotext MEM_BUFFER_0
 	opentext
 	farwritetext GymStatue_CityGymText
-	promptbutton
+	buttonsound
 	farwritetext GymStatue_WinningTrainersText
 	waitbutton
 	closetext
@@ -1778,7 +1778,7 @@ ReceiveItemScript:
 ReceiveTogepiEggScript:
 	waitsfx
 	farwritetext ReceivedItemText
-	playsound SFX_GET_EGG
+	playsound SFX_GET_EGG_FROM_DAY_CARE_LADY
 	waitsfx
 	end
 
@@ -1786,7 +1786,7 @@ GameCornerCoinVendorScript:
 	faceplayer
 	opentext
 	farwritetext CoinVendor_WelcomeText
-	promptbutton
+	buttonsound
 	checkitem COIN_CASE
 	iftrue CoinVendor_IntroScript
 	farwritetext CoinVendor_NoCoinCaseText
@@ -1804,7 +1804,7 @@ CoinVendor_IntroScript:
 	closewindow
 	ifequal 1, .Buy50
 	ifequal 2, .Buy500
-	sjump .Cancel
+	jump .Cancel
 
 .Buy50:
 	checkcoins MAX_COINS - 50
@@ -1817,7 +1817,7 @@ CoinVendor_IntroScript:
 	playsound SFX_TRANSACTION
 	farwritetext CoinVendor_Buy50CoinsText
 	waitbutton
-	sjump .loop
+	jump .loop
 
 .Buy500:
 	checkcoins MAX_COINS - 500
@@ -1830,7 +1830,7 @@ CoinVendor_IntroScript:
 	playsound SFX_TRANSACTION
 	farwritetext CoinVendor_Buy500CoinsText
 	waitbutton
-	sjump .loop
+	jump .loop
 
 .NotEnoughMoney:
 	farwritetext CoinVendor_NotEnoughMoneyText

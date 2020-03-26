@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const SAFFRONMAGNETTRAINSTATION_OFFICER
 	const SAFFRONMAGNETTRAINSTATION_GYM_GUY
 	const SAFFRONMAGNETTRAINSTATION_TEACHER
@@ -18,23 +18,23 @@ SaffronMagnetTrainStationOfficerScript:
 	opentext
 	checkevent EVENT_RESTORED_POWER_TO_KANTO
 	iftrue .MagnetTrainToGoldenrod
-	writetext SaffronMagnetTrainStationOfficerTrainIsntOperatingText
+	writetext UnknownText_0x18a8a9
 	waitbutton
 	closetext
 	end
 
 .MagnetTrainToGoldenrod:
-	writetext SaffronMagnetTrainStationOfficerAreYouComingOnBoardText
+	writetext UnknownText_0x18a8dd
 	yesorno
 	iffalse .DecidedNotToRide
 	checkitem PASS
 	iffalse .PassNotInBag
-	writetext SaffronMagnetTrainStationOfficerRightThisWayText
+	writetext UnknownText_0x18a917
 	waitbutton
 	closetext
-	applymovement SAFFRONMAGNETTRAINSTATION_OFFICER, SaffronMagnetTrainStationOfficerApproachTrainDoorMovement
-	applymovement PLAYER, SaffronMagnetTrainStationPlayerApproachAndEnterTrainMovement
-	setval TRUE
+	applymovement SAFFRONMAGNETTRAINSTATION_OFFICER, MovementData_0x18a88f
+	applymovement PLAYER, MovementData_0x18a898
+	writebyte TRUE
 	special MagnetTrain
 	warpcheck
 	newloadmap MAPSETUP_TRAIN
@@ -47,23 +47,23 @@ SaffronMagnetTrainStationOfficerScript:
 	step_end
 
 .PassNotInBag:
-	writetext SaffronMagnetTrainStationOfficerYouDontHaveAPassText
+	writetext UnknownText_0x18a956
 	waitbutton
 	closetext
 	end
 
 .DecidedNotToRide:
-	writetext SaffronMagnetTrainStationOfficerHopeToSeeYouAgainText
+	writetext UnknownText_0x18a978
 	waitbutton
 	closetext
 	end
 
 Script_ArriveFromGoldenrod:
-	applymovement SAFFRONMAGNETTRAINSTATION_OFFICER, SaffronMagnetTrainStationOfficerApproachTrainDoorMovement
-	applymovement PLAYER, SaffronMagnetTrainStationPlayerLeaveTrainAndEnterStationMovement
-	applymovement SAFFRONMAGNETTRAINSTATION_OFFICER, SaffronMagnetTrainStationOfficerReturnToBoardingGateMovement
+	applymovement SAFFRONMAGNETTRAINSTATION_OFFICER, MovementData_0x18a88f
+	applymovement PLAYER, MovementData_0x18a8a1
+	applymovement SAFFRONMAGNETTRAINSTATION_OFFICER, MovementData_0x18a894
 	opentext
-	writetext SaffronMagnetTrainStationOfficerArrivedInSaffronText
+	writetext UnknownText_0x18a993
 	waitbutton
 	closetext
 	end
@@ -90,20 +90,20 @@ SaffronMagnetTrainStationTeacherScript:
 SaffronMagnetTrainStationLassScript:
 	jumptextfaceplayer SaffronMagnetTrainStationLassText
 
-SaffronMagnetTrainStationOfficerApproachTrainDoorMovement:
+MovementData_0x18a88f:
 	step UP
 	step UP
 	step RIGHT
 	turn_head LEFT
 	step_end
 
-SaffronMagnetTrainStationOfficerReturnToBoardingGateMovement:
+MovementData_0x18a894:
 	step LEFT
 	step DOWN
 	step DOWN
 	step_end
 
-SaffronMagnetTrainStationPlayerApproachAndEnterTrainMovement:
+MovementData_0x18a898:
 	step UP
 	step UP
 	step UP
@@ -114,7 +114,7 @@ SaffronMagnetTrainStationPlayerApproachAndEnterTrainMovement:
 	step UP
 	step_end
 
-SaffronMagnetTrainStationPlayerLeaveTrainAndEnterStationMovement:
+MovementData_0x18a8a1:
 	step LEFT
 	step LEFT
 	step DOWN
@@ -124,13 +124,13 @@ SaffronMagnetTrainStationPlayerLeaveTrainAndEnterStationMovement:
 	turn_head UP
 	step_end
 
-SaffronMagnetTrainStationOfficerTrainIsntOperatingText:
+UnknownText_0x18a8a9:
 	text "I'm sorry, but the"
 	line "MAGNET TRAIN isn't"
 	cont "operating now."
 	done
 
-SaffronMagnetTrainStationOfficerAreYouComingOnBoardText:
+UnknownText_0x18a8dd:
 	text "We'll soon depart"
 	line "for GOLDENROD."
 
@@ -138,7 +138,7 @@ SaffronMagnetTrainStationOfficerAreYouComingOnBoardText:
 	line "board?"
 	done
 
-SaffronMagnetTrainStationOfficerRightThisWayText:
+UnknownText_0x18a917:
 	text "May I see your"
 	line "rail PASS, please?"
 
@@ -146,17 +146,17 @@ SaffronMagnetTrainStationOfficerRightThisWayText:
 	line "way, please."
 	done
 
-SaffronMagnetTrainStationOfficerYouDontHaveAPassText:
+UnknownText_0x18a956:
 	text "Sorry, but you"
 	line "don't have a PASS."
 	done
 
-SaffronMagnetTrainStationOfficerHopeToSeeYouAgainText:
+UnknownText_0x18a978:
 	text "We hope to see you"
 	line "again."
 	done
 
-SaffronMagnetTrainStationOfficerArrivedInSaffronText:
+UnknownText_0x18a993:
 	text "We have arrived in"
 	line "SAFFRON."
 

@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const ELMSLAB_ELM
 	const ELMSLAB_ELMS_AIDE
 	const ELMSLAB_POKE_BALL1
@@ -19,7 +19,7 @@ ElmsLab_MapScripts:
 	callback MAPCALLBACK_OBJECTS, .MoveElmCallback
 
 .MeetElm:
-	prioritysjump .WalkUpToElm
+	priorityjump .WalkUpToElm
 	end
 
 .DummyScene1:
@@ -54,11 +54,11 @@ ElmsLab_MapScripts:
 	yesorno
 	iftrue .ElmGetsEmail
 	writetext ElmText_Refused
-	sjump .MustSayYes
+	jump .MustSayYes
 
 .ElmGetsEmail:
 	writetext ElmText_Accepted
-	promptbutton
+	buttonsound
 	writetext ElmText_ResearchAmbitions
 	waitbutton
 	closetext
@@ -105,10 +105,10 @@ ElmCheckEverstone:
 	iftrue ElmGiveEverstoneScript
 	checkevent EVENT_TOLD_ELM_ABOUT_TOGEPI_OVER_THE_PHONE
 	iffalse ElmCheckTogepiEgg
-	setval TOGEPI
+	writebyte TOGEPI
 	special FindPartyMonThatSpeciesYourTrainerID
 	iftrue ShowElmTogepiScript
-	setval TOGETIC
+	writebyte TOGETIC
 	special FindPartyMonThatSpeciesYourTrainerID
 	iftrue ShowElmTogepiScript
 	writetext ElmThoughtEggHatchedText
@@ -117,13 +117,13 @@ ElmCheckEverstone:
 	end
 
 ElmEggHatchedScript:
-	setval TOGEPI
+	writebyte TOGEPI
 	special FindPartyMonThatSpeciesYourTrainerID
 	iftrue ShowElmTogepiScript
-	setval TOGETIC
+	writebyte TOGETIC
 	special FindPartyMonThatSpeciesYourTrainerID
 	iftrue ShowElmTogepiScript
-	sjump ElmCheckGotEggAgain
+	jump ElmCheckGotEggAgain
 
 ElmCheckTogepiEgg:
 	checkevent EVENT_GOT_TOGEPI_EGG_FROM_ELMS_AIDE
@@ -171,19 +171,19 @@ CyndaquilPokeBallScript:
 	disappear ELMSLAB_POKE_BALL1
 	setevent EVENT_GOT_CYNDAQUIL_FROM_ELM
 	writetext ChoseStarterText
-	promptbutton
+	buttonsound
 	waitsfx
-	getmonname STRING_BUFFER_3, CYNDAQUIL
+	pokenamemem CYNDAQUIL, MEM_BUFFER_0
 	writetext ReceivedStarterText
 	playsound SFX_CAUGHT_MON
 	waitsfx
-	promptbutton
+	buttonsound
 	givepoke CYNDAQUIL, 5, BERRY
 	closetext
-	readvar VAR_FACING
+	checkcode VAR_FACING
 	ifequal RIGHT, ElmDirectionsScript
 	applymovement PLAYER, AfterCyndaquilMovement
-	sjump ElmDirectionsScript
+	jump ElmDirectionsScript
 
 TotodilePokeBallScript:
 	checkevent EVENT_GOT_A_POKEMON_FROM_ELM
@@ -201,17 +201,17 @@ TotodilePokeBallScript:
 	disappear ELMSLAB_POKE_BALL2
 	setevent EVENT_GOT_TOTODILE_FROM_ELM
 	writetext ChoseStarterText
-	promptbutton
+	buttonsound
 	waitsfx
-	getmonname STRING_BUFFER_3, TOTODILE
+	pokenamemem TOTODILE, MEM_BUFFER_0
 	writetext ReceivedStarterText
 	playsound SFX_CAUGHT_MON
 	waitsfx
-	promptbutton
+	buttonsound
 	givepoke TOTODILE, 5, BERRY
 	closetext
 	applymovement PLAYER, AfterTotodileMovement
-	sjump ElmDirectionsScript
+	jump ElmDirectionsScript
 
 ChikoritaPokeBallScript:
 	checkevent EVENT_GOT_A_POKEMON_FROM_ELM
@@ -229,17 +229,17 @@ ChikoritaPokeBallScript:
 	disappear ELMSLAB_POKE_BALL3
 	setevent EVENT_GOT_CHIKORITA_FROM_ELM
 	writetext ChoseStarterText
-	promptbutton
+	buttonsound
 	waitsfx
-	getmonname STRING_BUFFER_3, CHIKORITA
+	pokenamemem CHIKORITA, MEM_BUFFER_0
 	writetext ReceivedStarterText
 	playsound SFX_CAUGHT_MON
 	waitsfx
-	promptbutton
+	buttonsound
 	givepoke CHIKORITA, 5, BERRY
 	closetext
 	applymovement PLAYER, AfterChikoritaMovement
-	sjump ElmDirectionsScript
+	jump ElmDirectionsScript
 
 DidntChooseStarterScript:
 	writetext DidntChooseStarterText
@@ -309,7 +309,7 @@ ElmsLabHealingMachine_HealParty:
 	special StubbedTrainerRankings_Healings
 	special HealParty
 	playmusic MUSIC_NONE
-	setval HEALMACHINE_ELMS_LAB
+	writebyte HEALMACHINE_ELMS_LAB
 	special HealMachineAnim
 	pause 30
 	special RestartMapMusic
@@ -325,7 +325,7 @@ ElmAfterTheftScript:
 	writetext ElmAfterTheftText1
 	checkitem MYSTERY_EGG
 	iffalse ElmAfterTheftDoneScript
-	promptbutton
+	buttonsound
 	writetext ElmAfterTheftText2
 	waitbutton
 	takeitem MYSTERY_EGG
@@ -334,9 +334,9 @@ ElmAfterTheftScript:
 	waitbutton
 	scall ElmJumpBackScript2
 	writetext ElmAfterTheftText4
-	promptbutton
+	buttonsound
 	writetext ElmAfterTheftText5
-	promptbutton
+	buttonsound
 	setevent EVENT_GAVE_MYSTERY_EGG_TO_ELM
 	setflag ENGINE_MAIN_MENU_MOBILE_CHOICES
 	setmapscene ROUTE_29, SCENE_ROUTE29_CATCH_TUTORIAL
@@ -374,12 +374,12 @@ ShowElmTogepiScript:
 	setevent EVENT_SHOWED_TOGEPI_TO_ELM
 	opentext
 	writetext ShowElmTogepiText2
-	promptbutton
+	buttonsound
 	writetext ShowElmTogepiText3
-	promptbutton
+	buttonsound
 ElmGiveEverstoneScript:
 	writetext ElmGiveEverstoneText1
-	promptbutton
+	buttonsound
 	verbosegiveitem EVERSTONE
 	iffalse ElmScript_NoRoomForEverstone
 	writetext ElmGiveEverstoneText2
@@ -397,7 +397,7 @@ ElmScript_NoRoomForEverstone:
 
 ElmGiveMasterBallScript:
 	writetext ElmGiveMasterBallText1
-	promptbutton
+	buttonsound
 	verbosegiveitem MASTER_BALL
 	iffalse .notdone
 	setevent EVENT_GOT_MASTER_BALL_FROM_ELM
@@ -409,7 +409,7 @@ ElmGiveMasterBallScript:
 
 ElmGiveTicketScript:
 	writetext ElmGiveTicketText1
-	promptbutton
+	buttonsound
 	verbosegiveitem S_S_TICKET
 	setevent EVENT_GOT_SS_TICKET_FROM_ELM
 	writetext ElmGiveTicketText2
@@ -419,7 +419,7 @@ ElmGiveTicketScript:
 
 ElmJumpBackScript1:
 	closetext
-	readvar VAR_FACING
+	checkcode VAR_FACING
 	ifequal DOWN, ElmJumpDownScript
 	ifequal UP, ElmJumpUpScript
 	ifequal LEFT, ElmJumpLeftScript
@@ -428,7 +428,7 @@ ElmJumpBackScript1:
 
 ElmJumpBackScript2:
 	closetext
-	readvar VAR_FACING
+	checkcode VAR_FACING
 	ifequal DOWN, ElmJumpUpScript
 	ifequal UP, ElmJumpDownScript
 	ifequal LEFT, ElmJumpRightScript
@@ -472,7 +472,7 @@ AideScript_WalkPotion2:
 AideScript_GivePotion:
 	opentext
 	writetext AideText_GiveYouPotion
-	promptbutton
+	buttonsound
 	verbosegiveitem POTION
 	writetext AideText_AlwaysBusy
 	waitbutton
@@ -497,12 +497,12 @@ AideScript_WalkBalls2:
 AideScript_GiveYouBalls:
 	opentext
 	writetext AideText_GiveYouBalls
-	promptbutton
-	getitemname STRING_BUFFER_4, POKE_BALL
+	buttonsound
+	itemtotext POKE_BALL, MEM_BUFFER_1
 	scall AideScript_ReceiveTheBalls
 	giveitem POKE_BALL, 5
 	writetext AideText_ExplainBalls
-	promptbutton
+	buttonsound
 	itemnotify
 	closetext
 	setscene SCENE_ELMSLAB_NOTHING
@@ -553,7 +553,7 @@ CopScript:
 	turnobject ELMSLAB_OFFICER, LEFT
 	opentext
 	writetext ElmsLabOfficerText1
-	promptbutton
+	buttonsound
 	special NameRival
 	writetext ElmsLabOfficerText2
 	waitbutton
@@ -569,7 +569,7 @@ ElmsLabWindow:
 	iftrue .Normal
 	checkevent EVENT_ELM_CALLED_ABOUT_STOLEN_POKEMON
 	iftrue .BreakIn
-	sjump .Normal
+	jump .Normal
 
 .BreakIn:
 	writetext ElmsLabWindowText2
@@ -724,73 +724,79 @@ AfterChikoritaMovement:
 	step_end
 
 ElmText_Intro:
-	text "ELM: <PLAY_G>!"
-	line "There you are!"
+	text "LIND: <PLAY_G>!"
+	line "Da bist du ja!"
 
-	para "I needed to ask"
-	line "you a favor."
+	para "Ich wollte dich"
+	line "um etwas bitten."
 
-	para "I'm conducting new"
-	line "#MON research"
+	para "Ich bin mit neuen"
+	line "#MON Forschugen"
 
-	para "right now. I was"
-	line "wondering if you"
+	para "beschäftig. Ich"
+	line "war verwundert!"
 
-	para "could help me with"
-	line "it, <PLAY_G>."
+	para "Kannst du mir"
+	line "bitte helfen," 
+	cont "<PLAY_G>."
 
-	para "You see…"
+	para "Du siehst…"
 
-	para "I'm writing a"
-	line "paper that I want"
+	para "Ich bin ein Brief"
+	line "am schreiben für"
 
-	para "to present at a"
-	line "conference."
+	para "meine nächste"
+	line "Konferenz."
 
-	para "But there are some"
-	line "things I don't"
+	para "Aber ein paar"
+	line "Dinge verstehe"
 
-	para "quite understand"
-	line "yet."
+	para "ich jetzt noch"
+	line "nicht."
 
-	para "So!"
+	para "So! da kommst"
+	line "du jetzt ins Spiel"
+	cont "<PLAY_G>!"
 
-	para "I'd like you to"
-	line "raise a #MON"
+	para "Ich möchte das du"
+	line "ein #MON"
+	cont "grossziehst"
 
-	para "that I recently"
-	line "caught."
+	para "das ich erst vor"
+	line "kurzem gefangen"
+	cont "habe!"
 	done
 
 ElmText_Accepted:
-	text "Thanks, <PLAY_G>!"
+	text "Danke, <PLAY_G>!"
 
-	para "You're a great"
-	line "help!"
+	para "Du bist eine"
+	line "grosse Hilfe!"
 	done
 
 ElmText_Refused:
-	text "But… Please, I"
-	line "need your help!"
+	text "Aber… bitte, ich"
+	line "brauche deine"
+	cont "Hilfe, wirklich!"
 	done
 
 ElmText_ResearchAmbitions:
-	text "When I announce my"
-	line "findings, I'm sure"
+	text "Mit dir finde"
+	line "ich mit Sicherheit"
 
-	para "we'll delve a bit"
-	line "deeper into the"
+	para "heraus, was ich"
+	line "jetzt im Moment"
 
-	para "many mysteries of"
-	line "#MON."
+	para "nicht verstehe"
+	line "über #MON."
 
-	para "You can count on"
-	line "it!"
+	para "Du kannst auf"
+	line "mich zählen!"
 	done
 
 ElmText_GotAnEmail:
-	text "Oh, hey! I got an"
-	line "e-mail!"
+	text "Oh, hey! Ich habe"
+	line "eine E-Mail!"
 
 	para "<……><……><……>"
 	line "Hm… Uh-huh…"
@@ -799,167 +805,192 @@ ElmText_GotAnEmail:
 	done
 
 ElmText_MissionFromMrPokemon:
-	text "Hey, listen."
+	text "Hey, zuhören."
 
-	para "I have an acquain-"
-	line "tance called MR."
-	cont "#MON."
+	para "Ich bekam von"
+	line "jemanden namens"
+	cont "MR. #MON,"
 
-	para "He keeps finding"
-	line "weird things and"
+	para "eine E-Mail wo"
+	line "steht er hätte"
+	cont "etwas neues und"
 
-	para "raving about his"
-	line "discoveries."
+	para "sehr seltenes"
+	line "entdeckt, bei"
+	cont "seinen forschungen"
 
-	para "Anyway, I just got"
-	line "an e-mail from him"
+	para "die er momentan"
+	line "betreibt über"
+	cont "#MON aber,"
 
-	para "saying that this"
-	line "time it's real."
+	para "diesmal sagt er,"
+	line "es wäre wirklich"
+	cont "etwas neuartiges,"
 
-	para "It is intriguing,"
-	line "but we're busy"
+	para "was er noch nie"
+	line "gesehen hätte,"
+	cont "aber ich und meine"
 
-	para "with our #MON"
-	line "research…"
+	para "beiden Assistenten"
+	line "sind beschäftig"
+	cont "mit #MON"
 
-	para "Wait!"
+	para "Forschung, Hmm."
+	line "Warte! I weiss!"
 
-	para "I know!"
-
-	para "<PLAY_G>, can you"
-	line "go in our place?"
+	para "<PLAY_G>, kannst"
+	line "du für uns gehen?"
 	done
 
 ElmText_ChooseAPokemon:
-	text "I want you to"
-	line "raise one of the"
+	text "Ich gebe dir auch"
+	line "eins unser gerade"
+	cont "entdeckten neuen"
 
-	para "#MON contained"
-	line "in these BALLS."
+	para "#MON die in den"
+	line "3 #bälle"
+	cont "sind <PLAY_G>!" 
 
-	para "You'll be that"
-	line "#MON's first"
-	cont "partner, <PLAY_G>!"
+	para "Du solltest dir"
+	line "ein #MON"
+	cont "Partner zuerst"
 
-	para "Go on. Pick one!"
+	para "aussuchen,"
+	line "<PLAY_G>! Los hol"
+	cont "dir dein erstes"
+	
+	para "#MON! Für"
+	line "deine Reise zu"
+	cont "Mr. #MON!"
 	done
 
 ElmText_LetYourMonBattleIt:
-	text "If a wild #MON"
-	line "appears, let your"
-	cont "#MON battle it!"
+	text "Wenn ein wildes"
+	line "#MON erscheint,"
+	cont "kämpfe gegen es!"
 	done
 
 LabWhereGoingText:
-	text "ELM: Wait! Where"
-	line "are you going?"
+	text "LIND: Warte! Was"
+	line "tust du da?"
 	done
 
 TakeCyndaquilText:
-	text "ELM: You'll take"
-	line "CYNDAQUIL, the"
-	cont "fire #MON?"
+	text "LIND: Willst du"
+	line "Feurigel, das"
+	cont "Feuer #MON?"
 	done
 
 TakeTotodileText:
-	text "ELM: Do you want"
-	line "TOTODILE, the"
-	cont "water #MON?"
+	text "LIND: Willst du"
+	line "Karnimani, das"
+	cont "Wasser #MON?"
 	done
 
 TakeChikoritaText:
-	text "ELM: So, you like"
-	line "CHIKORITA, the"
-	cont "grass #MON?"
+	text "LIND: Willst du"
+	line "Endivie, das"
+	cont "Pflanzen #MON?"
 	done
 
 DidntChooseStarterText:
-	text "ELM: Think it over"
-	line "carefully."
+	text "LIND: Denke sehr"
+	line "gut nach."
 
-	para "Your partner is"
-	line "important."
+	para "Deine Partner Wahl"
+	line "ist wichtig."
 	done
 
 ChoseStarterText:
-	text "ELM: I think"
-	line "that's a great"
-	cont "#MON too!"
+	text "LIND: Ich denke"
+	line "das ist ein gutes"
+	cont "#MON!"
 	done
 
 ReceivedStarterText:
-	text "<PLAYER> received"
+	text "<PLAYER> erhält"
 	line "@"
 	text_ram wStringBuffer3
 	text "!"
 	done
 
 ElmDirectionsText1:
-	text "MR.#MON lives a"
-	line "little bit beyond"
+	text "MR.#MON lebt"
+	line "ein kleines Stück"
 
-	para "CHERRYGROVE, the"
-	line "next city over."
+	para "hinter der"
+	line "nächsten Stadt."
 
-	para "It's almost a"
-	line "direct route"
+	para "Es ist die direkte"
+	line "Route entlang."
 
-	para "there, so you"
-	line "can't miss it."
+	para "Du kannst dich"
+	line "fast nicht"
+	cont "verlaufen!"
 
-	para "But just in case,"
-	line "here's my phone"
+	para "Zur Sicherheit,"
+	line "hier ist meine"
 
-	para "number. Call me if"
-	line "anything comes up!"
+	para "telefonnummer,"
+	line "viel Erfolg!"
 	done
 
 ElmDirectionsText2:
-	text "If your #MON is"
-	line "hurt, you should"
+	text "Sollte dein #-"
+	line "Mon verletzt sein,"
 
-	para "heal it with this"
-	line "machine."
+	para "dann heile es mit"
+	line "dieser Maschine."
 
-	para "Feel free to use"
-	line "it anytime."
+	para "Fühl dich so frei"
+	line "sie jederzeit zu"
+	cont "bunutzen wann du"
+	
+	para "willst."
 	done
 
 ElmDirectionsText3:
-	text "<PLAY_G>, I'm"
-	line "counting on you!"
+	text "<PLAY_G>, Ich"
+	line "zähle auf dich!"
 	done
 
 GotElmsNumberText:
-	text "<PLAYER> got ELM's"
-	line "phone number."
+	text "<PLAYER> erhält"
+	line "LIND's geheime"
+	cont "Telefonnummer!"
 	done
 
 ElmDescribesMrPokemonText:
-	text "MR.#MON goes"
-	line "everywhere and"
-	cont "finds rarities."
+	text "MR.#MON geht"
+	line "überall hin und"
+	cont "findet seltenes"
 
-	para "Too bad they're"
-	line "just rare and"
-	cont "not very useful…"
+	para "Zeug, nur sehr"
+	line "schade, dass sie"
+	cont "nur selten sind,"
+	
+	para "aber nicht sehr"
+	line "sinnvoll sind!"
 	done
 
 ElmPokeBallText:
-	text "It contains a"
-	line "#MON caught by"
-	cont "PROF.ELM."
+	text "Es enthält ein"
+	line "#MON das von"
+	cont "PROF.LIND gefangen"
+	
+	para "wurde, es ist sehr"
+	line "selten und"
+	cont "mysteriös!!!"
 	done
 
 ElmsLabHealingMachineText1:
-	text "I wonder what this"
-	line "does?"
+	text "Ich frage mich"
+	line "wofür dies ist?"
 	done
 
 ElmsLabHealingMachineText2:
-	text "Would you like to"
-	line "heal your #MON?"
+	text "Möchtest du deine"
+	line "#MON heilen?"
 	done
 
 ElmAfterTheftText1:
@@ -1216,15 +1247,20 @@ ElmsLabSignpostText_Egg:
 	done
 
 AideText_GiveYouPotion:
-	text "<PLAY_G>, I want"
-	line "you to have this"
-	cont "for your errand."
+	text "<PLAY_G>, Ich"
+	line "möchte das du dies"
+	cont "für deine Reise"
+	
+	para "von mir bekommst!"
 	done
 
 AideText_AlwaysBusy:
-	text "There are only two"
-	line "of us, so we're"
-	cont "always busy."
+	text "Wir sind nur zu"
+	line "zweit, deswegen"
+	cont "sind wir immer"
+	
+	para "und immer nur"
+	line "beschäftigt!"
 	done
 
 AideText_TheftTestimony:

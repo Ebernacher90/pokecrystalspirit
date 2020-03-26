@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const FASTSHIP1F_SAILOR1
 	const FASTSHIP1F_SAILOR2
 	const FASTSHIP1F_SAILOR3
@@ -16,7 +16,7 @@ FastShip1F_MapScripts:
 	end
 
 .EnterFastShip:
-	prioritysjump .EnterFastShipScript
+	priorityjump .EnterFastShipScript
 	end
 
 .DummyScene2:
@@ -87,7 +87,7 @@ FastShip1FSailor1Script:
 	end
 
 .LetThePlayerOut:
-	readvar VAR_FACING
+	checkcode VAR_FACING
 	ifequal RIGHT, .YouAreFacingRight
 	applymovement FASTSHIP1F_SAILOR1, MovementData_0x7520e
 	applymovement PLAYER, MovementData_0x75235

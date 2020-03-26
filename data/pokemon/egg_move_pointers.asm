@@ -118,7 +118,11 @@ EggMovePointers::
 	dw NoEggMoves
 	dw GoldeenEggMoves
 	dw NoEggMoves
+if _CRYSTAL
 	dw NoEggMoves
+else
+	dw StaryuEggMoves
+endc
 	dw NoEggMoves
 	dw MrMimeEggMoves
 	dw ScytherEggMoves
@@ -141,7 +145,7 @@ EggMovePointers::
 	dw KabutoEggMoves
 	dw NoEggMoves
 	dw AerodactylEggMoves
-	dw SnorlaxEggMoves
+	dw NoEggMoves
 	dw NoEggMoves
 	dw NoEggMoves
 	dw NoEggMoves
@@ -250,3 +254,4 @@ EggMovePointers::
 	dw NoEggMoves
 	dw NoEggMoves
 	dw NoEggMoves
+	dw MunchlaxEggMoves

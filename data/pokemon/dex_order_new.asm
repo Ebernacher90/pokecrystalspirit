@@ -225,6 +225,7 @@ NewPokedexOrder:
 	db KABUTO
 	db KABUTOPS
 	db AERODACTYL
+	db MUNCHLAX
 	db SNORLAX
 	db BULBASAUR
 	db IVYSAUR

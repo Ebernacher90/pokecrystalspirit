@@ -9,13 +9,14 @@ _BillsPC:
 	ld a, [wPartyCount]
 	and a
 	ret nz
-	ld hl, .PCGottaHavePokemonText
-	call MenuTextboxBackup
+	ld hl, .Text_GottaHavePokemon
+	call MenuTextBoxBackup
 	scf
 	ret
 
-.PCGottaHavePokemonText:
-	text_far _PCGottaHavePokemonText
+.Text_GottaHavePokemon:
+	; You gotta have #MON to call!
+	text_far UnknownText_0x1c1006
 	text_end
 
 .LogIn:
@@ -27,15 +28,16 @@ _BillsPC:
 	ld a, [hl]
 	push af
 	set NO_TEXT_SCROLL, [hl]
-	ld hl, .PCWhatText
+	ld hl, .Text_What
 	call PrintText
 	pop af
 	ld [wOptions], a
 	call LoadFontsBattleExtra
 	ret
 
-.PCWhatText:
-	text_far _PCWhatText
+.Text_What:
+	; What?
+	text_far UnknownText_0x1c1024
 	text_end
 
 .LogOut:
@@ -110,7 +112,7 @@ BillsPC_MovePKMNMenu:
 	call LoadStandardMenuHeader
 	farcall IsAnyMonHoldingMail
 	jr nc, .no_mail
-	ld hl, .PCMonHoldingMailText
+	ld hl, .Text_MonHoldingMail
 	call PrintText
 	jr .quit
 
@@ -126,8 +128,9 @@ BillsPC_MovePKMNMenu:
 	and a
 	ret
 
-.PCMonHoldingMailText:
-	text_far _PCMonHoldingMailText
+.Text_MonHoldingMail:
+	; There is a #MON holding MAIL. Please remove the MAIL.
+	text_far UnknownText_0x1c102b
 	text_end
 
 BillsPC_DepositMenu:
@@ -149,23 +152,25 @@ Unreferenced_Functione512:
 	ret
 
 .no_mon
-	ld hl, .PCNoSingleMonText
-	call MenuTextboxBackup
+	ld hl, .Text_NoMon
+	call MenuTextBoxBackup
 	scf
 	ret
 
 .only_one_mon
-	ld hl, .PCCantDepositLastMonText
-	call MenuTextboxBackup
+	ld hl, .Text_ItsYourLastMon
+	call MenuTextBoxBackup
 	scf
 	ret
 
-.PCNoSingleMonText:
-	text_far _PCNoSingleMonText
+.Text_NoMon:
+	; You don't have a single #MON!
+	text_far UnknownText_0x1c1062
 	text_end
 
-.PCCantDepositLastMonText:
-	text_far _PCCantDepositLastMonText
+.Text_ItsYourLastMon:
+	; You can't deposit your last #MON!
+	text_far UnknownText_0x1c1080
 	text_end
 
 CheckCurPartyMonFainted:
@@ -214,13 +219,14 @@ Unreferenced_Functione56d:
 	ret
 
 .asm_e576
-	ld hl, PCCantTakeText
-	call MenuTextboxBackup
+	ld hl, UnknownText_0xe57e
+	call MenuTextBoxBackup
 	scf
 	ret
 
-PCCantTakeText:
-	text_far _PCCantTakeText
+UnknownText_0xe57e:
+	; You can't take any more #MON.
+	text_far UnknownText_0x1c10a2
 	text_end
 
 BillsPC_ChangeBoxMenu:
@@ -240,10 +246,10 @@ ClearPCItemScreen:
 	call ByteFill
 	hlcoord 0, 0
 	lb bc, 10, 18
-	call Textbox
+	call TextBox
 	hlcoord 0, 12
 	lb bc, 4, 18
-	call Textbox
+	call TextBox
 	call WaitBGMap2
 	call SetPalettes ; load regular palettes?
 	ret
@@ -261,7 +267,7 @@ CopyBoxmonToTempMon:
 	call CloseSRAM
 	ret
 
-Unreferenced_LoadBoxMonListing:
+Unreferenced_Functione5d9:
 	ld a, [wCurBox]
 	cp b
 	jr z, .same_box
@@ -284,11 +290,11 @@ Unreferenced_LoadBoxMonListing:
 .okay
 	call GetSRAMBank
 	ld a, [hl]
-	ld bc, sBoxMons - sBox
+	ld bc, 1 + MONS_PER_BOX + 1
 	add hl, bc
 	ld b, a
 	ld c, $0
-	ld de, wBoxPartialData
+	ld de, wc608
 	ld a, b
 	and a
 	jr z, .empty_box
@@ -296,7 +302,7 @@ Unreferenced_LoadBoxMonListing:
 	push hl
 	push bc
 	ld a, c
-	ld bc, sBoxMon1Species - sBoxMons
+	ld bc, 0
 	add hl, bc
 	ld bc, BOXMON_STRUCT_LENGTH
 	call AddNTimes
@@ -311,7 +317,7 @@ Unreferenced_LoadBoxMonListing:
 	push hl
 	push bc
 	ld a, c
-	ld bc, sBoxMonNicknames - sBoxMons
+	ld bc, MONS_PER_BOX * (BOXMON_STRUCT_LENGTH + NAME_LENGTH)
 	add hl, bc
 	call SkipNames
 	call CopyBytes

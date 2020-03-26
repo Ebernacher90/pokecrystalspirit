@@ -70,7 +70,7 @@ BattleCommand_Present:
 	call CallBattleCore
 	call BattleCommand_SwitchTurn
 	ld hl, RegainedHealthText
-	call StdBattleTextbox
+	call StdBattleTextBox
 	call BattleCommand_SwitchTurn
 	call UpdateOpponentInParty
 	jr .do_animation
@@ -81,7 +81,7 @@ BattleCommand_Present:
 	jr nc, .do_animation
 	call AnimateFailedMove
 	ld hl, RefusedGiftText
-	call StdBattleTextbox
+	call StdBattleTextBox
 .do_animation
 	jp EndMoveEffect
 

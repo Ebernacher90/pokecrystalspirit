@@ -20,7 +20,7 @@ BattleCommand_Spikes:
 	call AnimateCurrentMove
 
 	ld hl, SpikesText
-	jp StdBattleTextbox
+	jp StdBattleTextBox
 
 .failed
 	jp FailMove

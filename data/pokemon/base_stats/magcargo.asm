@@ -1,6 +1,6 @@
 	db MAGCARGO ; 219
 
-	db  50,  50, 120,  30,  80,  80
+	db  60,  50, 120,  30,  90,  80
 	;   hp  atk  def  spd  sat  sdf
 
 	db FIRE, ROCK ; type
@@ -12,7 +12,7 @@
 	db 20 ; step cycles to hatch
 	db 5 ; unknown 2
 	INCBIN "gfx/pokemon/magcargo/front.dimensions"
-	dw NULL, NULL ; unused (beta front/back pics)
+	db 0, 0, 0, 0 ; padding
 	db GROWTH_MEDIUM_FAST ; growth rate
 	dn EGG_INDETERMINATE, EGG_INDETERMINATE ; egg groups
 

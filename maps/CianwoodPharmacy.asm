@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const CIANWOODPHARMACY_PHARMACIST
 
 CianwoodPharmacy_MapScripts:
@@ -18,7 +18,7 @@ CianwoodPharmacist:
 	checkevent EVENT_JASMINE_EXPLAINED_AMPHYS_SICKNESS
 	iffalse .Mart
 	writetext PharmacistGiveSecretpotionText
-	promptbutton
+	buttonsound
 	giveitem SECRETPOTION
 	writetext ReceivedSecretpotionText
 	playsound SFX_KEY_ITEM

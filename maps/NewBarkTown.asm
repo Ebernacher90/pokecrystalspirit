@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const NEWBARKTOWN_TEACHER
 	const NEWBARKTOWN_FISHER
 	const NEWBARKTOWN_SILVER
@@ -187,76 +187,103 @@ Movement_SilverReturnsToTheShadows_NBT:
 	step_end
 
 Text_GearIsImpressive:
-	text "Wow, your #GEAR"
-	line "is impressive!"
+	text "Wow, dein Handy"
+	line "ist das neuste"
+	cont "was es gibt, auf"
 
-	para "Did your mom get"
-	line "it for you?"
+	para "dem #MARKT. Hat"
+	line "deine Mama es dir,"
+	cont "zum Geburstag"
+	
+	para "gekauft?"
 	done
 
 Text_WaitPlayer:
-	text "Wait, <PLAY_G>!"
+	text "Warte, <PLAY_G>!"
 	done
 
 Text_WhatDoYouThinkYoureDoing:
-	text "What do you think"
-	line "you're doing?"
+	text "Was denkst du,"
+	line "tust du hier?"
 	done
 
 Text_ItsDangerousToGoAlone:
-	text "It's dangerous to"
-	line "go out without a"
-	cont "#MON!"
+	text "Es ist sehr, sehr"
+	line "gefährlich ohne"
+	cont "ein eigenes #-"
+	
+	para "MON! Das Dorf zu"
+	line "verlassen, es"
+	cont "könnten dich"
+	
+	para "Wilde #MON"
+	line "aus dem hohen"
 
-	para "Wild #MON"
-	line "jump out of the"
-
-	para "grass on the way"
-	line "to the next town."
+	para "Gras, auf dem Weg"
+	line "angreifen zum"
+	cont "nächsten Dorf!"
+	
+	para "Du solltest"
+	line "unbedingt ein"
+	cont "eigenes haben!"
 	done
 
 Text_YourMonIsAdorable:
-	text "Oh! Your #MON"
-	line "is adorable!"
-	cont "I wish I had one!"
+	text "Dein neues #MON"
+	line "ist sehr hübsch"
+	cont "und süss, ach ich"
+	
+	para "wünschte ich"
+	line "auch eins zu"
+	cont "meinem Schutz!"
 	done
 
 Text_TellMomIfLeaving:
 	text "Hi, <PLAY_G>!"
-	line "Leaving again?"
+	line "gehst verlässt?"
+	cont "du uns schon?"
 
-	para "You should tell"
-	line "your mom if you"
-	cont "are leaving."
+	para "Du solltest es"
+	line "vorher deiner"
+	cont "Mama wissen lassen"
+	
+	para "bevor du unser"
+	line "Dorf verlässt,"
+	cont "nur zur Sicherheit"
 	done
 
 Text_CallMomOnGear:
-	text "Call your mom on"
-	line "your #GEAR to"
+	text "Ruf deine Mama an"
+	line "mit deinem Handy!"
 
-	para "let her know how"
-	line "you're doing."
+	para "du musst ab und"
+	line "zu, sie wissen."
+	cont "lassen wie es dir"
+	
+	para "geht, damit sich"
+	line "deine Mama keine"
+	cont "Sorgen macht."
 	done
 
 Text_ElmDiscoveredNewMon:
 	text "Yo, <PLAYER>!"
 
-	para "I hear PROF.ELM"
-	line "discovered some"
-	cont "new #MON."
+	para "Ich hörte PROF."
+	line "Lind erforscht"
+	cont "neue #MON."
 	done
 
 NewBarkTownRivalText1:
 	text "<……>"
 
-	para "So this is the"
-	line "famous ELM #MON"
-	cont "LAB…"
+	para "So das ist das"
+	line "Legendäre Lind"
+	cont "#MON LABOR…"
 	done
 
 NewBarkTownRivalText2:
-	text "…What are you"
-	line "staring at?"
+	text "…Was starst du"
+	line "mich so blöd an?"
 	done
 
 NewBarkTownSignText:
@@ -268,15 +295,16 @@ NewBarkTownSignText:
 	done
 
 NewBarkTownPlayersHouseSignText:
-	text "<PLAYER>'s House"
+	text "<PLAYER>'s Haus"
 	done
 
 NewBarkTownElmsLabSignText:
-	text "ELM #MON LAB"
+	text "LIND'S #MON"
+	line "LABOR"
 	done
 
 NewBarkTownElmsHouseSignText:
-	text "ELM'S HOUSE"
+	text "LIND'S HAUS"
 	done
 
 NewBarkTown_MapEvents:

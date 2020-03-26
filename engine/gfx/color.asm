@@ -103,7 +103,7 @@ InitPartyMenuPalettes:
 	ld hl, PalPacket_PartyMenu + 1
 	call CopyFourPalettes
 	call InitPartyMenuOBPals
-	call WipeAttrmap
+	call WipeAttrMap
 	ret
 
 ; SGB layout for SCGB_PARTY_MENU_HP_PALS
@@ -284,7 +284,7 @@ Unreferenced_Function8bec:
 	ld a, [wEnemyLightScreenCount] ; col
 	ld c, a
 	ld a, [wEnemyReflectCount] ; row
-	hlcoord 0, 0, wAttrmap
+	hlcoord 0, 0, wAttrMap
 	ld de, SCREEN_WIDTH
 .loop
 	and a
@@ -320,8 +320,8 @@ ApplyMonOrTrainerPals:
 .load_palettes
 	ld de, wBGPals1
 	call LoadPalette_White_Col1_Col2_Black
-	call WipeAttrmap
-	call ApplyAttrmap
+	call WipeAttrMap
+	call ApplyAttrMap
 	call ApplyPals
 	ret
 
@@ -359,7 +359,7 @@ ApplyHPBarPals:
 .PartyMenu:
 	ld e, c
 	inc e
-	hlcoord 11, 1, wAttrmap
+	hlcoord 11, 1, wAttrMap
 	ld bc, 2 * SCREEN_WIDTH
 	ld a, [wCurPartyMon]
 .loop
@@ -437,8 +437,8 @@ LoadMailPalettes:
 	ld a, BANK(wBGPals1)
 	call FarCopyWRAM
 	call ApplyPals
-	call WipeAttrmap
-	call ApplyAttrmap
+	call WipeAttrMap
+	call ApplyAttrMap
 	ret
 
 .MailPals:
@@ -453,8 +453,8 @@ Unreferenced_Function95f0:
 	ld a, BANK(wBGPals1)
 	call FarCopyWRAM
 	call ApplyPals
-	call WipeAttrmap
-	call ApplyAttrmap
+	call WipeAttrMap
+	call ApplyAttrMap
 	ret
 
 .Palette:
@@ -590,8 +590,8 @@ ResetBGPals:
 	pop af
 	ret
 
-WipeAttrmap:
-	hlcoord 0, 0, wAttrmap
+WipeAttrMap:
+	hlcoord 0, 0, wAttrMap
 	ld bc, SCREEN_WIDTH * SCREEN_HEIGHT
 	xor a
 	call ByteFill
@@ -605,7 +605,7 @@ ApplyPals:
 	call FarCopyWRAM
 	ret
 
-ApplyAttrmap:
+ApplyAttrMap:
 	ldh a, [rLCDC]
 	bit rLCDC_ENABLE, a
 	jr z, .UpdateVBank1
@@ -622,7 +622,7 @@ ApplyAttrmap:
 	ret
 
 .UpdateVBank1:
-	hlcoord 0, 0, wAttrmap
+	hlcoord 0, 0, wAttrMap
 	debgcoord 0, 0
 	ld b, SCREEN_HEIGHT
 	ld a, $1
@@ -659,7 +659,7 @@ CGB_ApplyPartyMenuHPPals:
 	ld a, [de]
 	inc a
 	ld e, a
-	hlcoord 11, 2, wAttrmap
+	hlcoord 11, 2, wAttrMap
 	ld bc, 2 * SCREEN_WIDTH
 	ld a, [wSGBPals]
 .loop
@@ -1075,23 +1075,23 @@ SGBBorder_MorePalPushing:
 	ld a, $e4
 	ldh [rBGP], a
 	ld de, vTiles1
-	ld bc, (6 + SCREEN_WIDTH + 6) * 5 * 2
+	ld bc, 20 tiles
 	call CopyData
-	ld b, SCREEN_HEIGHT
+	ld b, 18
 .loop
 	push bc
-	ld bc, 6 * 2
+	ld bc, $c
 	call CopyData
-	ld bc, SCREEN_WIDTH * 2
+	ld bc, $28
 	call ClearBytes
-	ld bc, 6 * 2
+	ld bc, $c
 	call CopyData
 	pop bc
 	dec b
 	jr nz, .loop
-	ld bc, (6 + SCREEN_WIDTH + 6) * 5 * 2
+	ld bc, $140
 	call CopyData
-	ld bc, $100
+	ld bc, Start
 	call ClearBytes
 	ld bc, 16 palettes
 	call CopyData
@@ -1195,7 +1195,6 @@ SGBBorderMap:
 INCBIN "gfx/sgb/sgb_border.bin"
 
 SGBBorderPalettes:
-; assumed to come after SGBBorderMap
 INCLUDE "gfx/sgb/sgb_border.pal"
 
 SGBBorder:

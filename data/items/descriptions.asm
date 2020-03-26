@@ -5,7 +5,7 @@ ItemDescriptions:
 	dw BrightpowderDesc
 	dw GreatBallDesc
 	dw PokeBallDesc
-	dw TeruSama1Desc
+	dw TownMapDesc
 	dw BicycleDesc
 	dw MoonStoneDesc
 	dw AntidoteDesc
@@ -24,7 +24,7 @@ ItemDescriptions:
 	dw FireStoneDesc
 	dw ThunderStoneDesc
 	dw WaterStoneDesc
-	dw TeruSama2Desc
+	dw BigNuggetDesc
 	dw HPUpDesc
 	dw ProteinDesc
 	dw IronDesc
@@ -44,18 +44,18 @@ ItemDescriptions:
 	dw SuperRepelDesc
 	dw MaxRepelDesc
 	dw DireHitDesc
-	dw TeruSama3Desc
+	dw SweetHeartDesc
 	dw FreshWaterDesc
 	dw SodaPopDesc
 	dw LemonadeDesc
 	dw XAttackDesc
-	dw TeruSama4Desc
+	dw LavaCookieDesc
 	dw XDefendDesc
 	dw XSpeedDesc
 	dw XSpecialDesc
 	dw CoinCaseDesc
 	dw ItemfinderDesc
-	dw TeruSama5Desc
+	dw PokeFluteDesc
 	dw ExpShareDesc
 	dw OldRodDesc
 	dw GoodRodDesc
@@ -89,7 +89,7 @@ ItemDescriptions:
 	dw BigMushroomDesc
 	dw SilverPowderDesc
 	dw BluApricornDesc
-	dw TeruSama6Desc
+	dw DuskBallDesc
 	dw AmuletCoinDesc
 	dw YlwApricornDesc
 	dw GrnApricornDesc
@@ -188,7 +188,7 @@ ItemDescriptions:
 	dw MorphMailDesc
 	dw BlueSkyMailDesc
 	dw MusicMailDesc
-	dw MirageMailDesc
+	dw MewMailDesc
 	dw TeruSama25Desc
 	dw TeruSama26Desc
 	dw TeruSama26Desc
@@ -276,9 +276,10 @@ PokeBallDesc:
 	db   "An item for catch-"
 	next "ing #MON.@"
 
-TeruSama1Desc:
-	db   "?@"
-
+TownMapDesc:
+    db   "A map that shows"
+    next "your location.@"
+    
 BicycleDesc:
 	db   "A collapsible bike"
 	next "for fast movement.@"
@@ -351,8 +352,9 @@ WaterStoneDesc:
 	db   "Evolves certain"
 	next "kinds of #MON.@"
 
-TeruSama2Desc:
-	db   "?@"
+BigNuggetDesc:
+	db   "Made of pure gold"
+	next "Sell very high.@"
 
 HPUpDesc:
 	db   "Raises the HP of"
@@ -430,8 +432,9 @@ DireHitDesc:
 	db   "Ups critical hit"
 	next "ratio. (1 BTL)@"
 
-TeruSama3Desc:
-	db   "?@"
+SweetHeartDesc:
+	db   "Restores #MON"
+	next "HP by 20.@"
 
 FreshWaterDesc:
 	db   "Restores #MON"
@@ -449,8 +452,9 @@ XAttackDesc:
 	db   "Raises ATTACK."
 	next "(1 BTL)@"
 
-TeruSama4Desc:
-	db   "?@"
+LavaCookieDesc:
+	db   "Eliminates all"
+	next "status problems.@"
 
 XDefendDesc:
 	db   "Raises DEFENSE."
@@ -472,8 +476,9 @@ ItemfinderDesc:
 	db   "Checks for unseen"
 	next "items in the area.@"
 
-TeruSama5Desc:
-	db   "?@"
+PokeFluteDesc:
+	db   "A Flute that when"
+	next "played awake MONs.@"
 
 ExpShareDesc:
 	db   "Shares battle EXP."
@@ -605,8 +610,9 @@ SilverPowderDesc:
 BluApricornDesc:
 	db   "A blue APRICORN.@"
 
-TeruSama6Desc:
-	db   "?@"
+DuskBallDesc:
+	db   "A BALL for night-"
+	next "time or caves.@"
 
 AmuletCoinDesc:
 	db   "Doubles monetary"
@@ -906,7 +912,7 @@ SunStoneDesc:
 	next "kinds of #MON.@"
 
 PolkadotBowDesc:
-	db   "Powers up normal-"
+	db   "Powers up fairy-"
 	next "type moves. (HOLD)@"
 
 TeruSama22Desc:
@@ -978,7 +984,7 @@ MusicMailDesc:
 	db   "NATU-print MAIL."
 	next "(HOLD)@"
 
-MirageMailDesc:
+MewMailDesc:
 	db   "MEW-print MAIL."
 	next "(HOLD)@"
 
@@ -1008,3 +1014,4 @@ TeruSama32Desc:
 
 TeruSama33Desc:
 	db   "?@"
+	

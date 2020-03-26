@@ -1,11 +1,11 @@
 ToddPhoneCalleeScript:
-	gettrainername STRING_BUFFER_3, CAMPER, TODD1
+	trainertotext CAMPER, TODD1, MEM_BUFFER_0
 	checkflag ENGINE_TODD
 	iftrue .WantsBattle
 	farscall PhoneScript_AnswerPhone_Male
 	checkflag ENGINE_TODD_SATURDAY_MORNING
 	iftrue .NotSaturday
-	readvar VAR_WEEKDAY
+	checkcode VAR_WEEKDAY
 	ifnotequal SATURDAY, .NotSaturday
 	checktime MORN
 	iftrue ToddSaturdayMorning
@@ -13,17 +13,17 @@ ToddPhoneCalleeScript:
 .NotSaturday:
 	checkflag ENGINE_GOLDENROD_DEPT_STORE_SALE_IS_ON
 	iftrue .SaleOn
-	farsjump ToddNoItemScript
+	farjump UnknownScript_0xa0958
 
 .WantsBattle:
-	getlandmarkname STRING_BUFFER_5, LANDMARK_ROUTE_34
-	farsjump ToddForwardScript
+	landmarktotext ROUTE_34, MEM_BUFFER_2
+	farjump UnknownScript_0xa0a64
 
 .SaleOn:
-	farsjump ToddHurryScript
+	farjump UnknownScript_0xa0b04
 
 ToddPhoneCallerScript:
-	gettrainername STRING_BUFFER_3, CAMPER, TODD1
+	trainertotext CAMPER, TODD1, MEM_BUFFER_0
 	farscall PhoneScript_GreetPhone_Male
 	checkflag ENGINE_TODD
 	iftrue .TryForSale
@@ -41,19 +41,19 @@ ToddPhoneCallerScript:
 .NoGoldenrod:
 	farscall PhoneScript_Random3
 	ifequal 0, ToddFoundRare
-	farsjump Phone_GenericCall_Male
+	farjump Phone_GenericCall_Male
 
 ToddSaturdayMorning:
 	setflag ENGINE_TODD_SATURDAY_MORNING
 
 ToddWantsBattle:
-	getlandmarkname STRING_BUFFER_5, LANDMARK_ROUTE_34
+	landmarktotext ROUTE_34, MEM_BUFFER_2
 	setflag ENGINE_TODD
-	farsjump PhoneScript_WantsToBattle_Male
+	farjump PhoneScript_WantsToBattle_Male
 
 ToddFoundRare:
-	farsjump Phone_CheckIfUnseenRare_Male
+	farjump Phone_CheckIfUnseenRare_Male
 
 ToddDeptStoreSale:
 	setflag ENGINE_GOLDENROD_DEPT_STORE_SALE_IS_ON
-	farsjump ToddItemScript
+	farjump UnknownScript_0xa0644

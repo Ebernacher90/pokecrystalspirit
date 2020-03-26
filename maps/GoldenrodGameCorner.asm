@@ -1,11 +1,4 @@
-GOLDENRODGAMECORNER_TM25_COINS EQU 5500
-GOLDENRODGAMECORNER_TM14_COINS EQU 5500
-GOLDENRODGAMECORNER_TM38_COINS EQU 5500
-GOLDENRODGAMECORNER_ABRA_COINS      EQU 100
-GOLDENRODGAMECORNER_CUBONE_COINS    EQU 800
-GOLDENRODGAMECORNER_WOBBUFFET_COINS EQU 1500
-
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const GOLDENRODGAMECORNER_CLERK
 	const GOLDENRODGAMECORNER_RECEPTIONIST1
 	const GOLDENRODGAMECORNER_RECEPTIONIST2
@@ -30,7 +23,7 @@ GoldenrodGameCorner_MapScripts:
 	iffalse .finish
 	checkitem COIN_CASE
 	iffalse .move_tutor_inside
-	readvar VAR_WEEKDAY
+	checkcode VAR_WEEKDAY
 	ifequal WEDNESDAY, .move_tutor_outside
 	ifequal SATURDAY, .move_tutor_outside
 .move_tutor_inside
@@ -72,40 +65,46 @@ GoldenrodGameCornerTMVendor_LoopScript:
 	ifequal 1, .Thunder
 	ifequal 2, .Blizzard
 	ifequal 3, .FireBlast
-	sjump GoldenrodGameCornerPrizeVendor_CancelPurchaseScript
+	jump GoldenrodGameCornerPrizeVendor_CancelPurchaseScript
 
 .Thunder:
-	checkcoins GOLDENRODGAMECORNER_TM25_COINS
+	checkitem TM_THUNDER
+	iftrue GoldenrodGameCornerPrizeVendor_AlreadyHaveTMScript
+	checkcoins 5500
 	ifequal HAVE_LESS, GoldenrodGameCornerPrizeVendor_NotEnoughCoinsScript
-	getitemname STRING_BUFFER_3, TM_THUNDER
+	itemtotext TM_THUNDER, MEM_BUFFER_0
 	scall GoldenrodGameCornerPrizeVendor_ConfirmPurchaseScript
 	iffalse GoldenrodGameCornerPrizeVendor_CancelPurchaseScript
 	giveitem TM_THUNDER
 	iffalse GoldenrodGameCornerPrizeMonVendor_NoRoomForPrizeScript
-	takecoins GOLDENRODGAMECORNER_TM25_COINS
-	sjump GoldenrodGameCornerTMVendor_FinishScript
+	takecoins 5500
+	jump GoldenrodGameCornerTMVendor_FinishScript
 
 .Blizzard:
-	checkcoins GOLDENRODGAMECORNER_TM14_COINS
+	checkitem TM_BLIZZARD
+	iftrue GoldenrodGameCornerPrizeVendor_AlreadyHaveTMScript
+	checkcoins 5500
 	ifequal HAVE_LESS, GoldenrodGameCornerPrizeVendor_NotEnoughCoinsScript
-	getitemname STRING_BUFFER_3, TM_BLIZZARD
+	itemtotext TM_BLIZZARD, MEM_BUFFER_0
 	scall GoldenrodGameCornerPrizeVendor_ConfirmPurchaseScript
 	iffalse GoldenrodGameCornerPrizeVendor_CancelPurchaseScript
 	giveitem TM_BLIZZARD
 	iffalse GoldenrodGameCornerPrizeMonVendor_NoRoomForPrizeScript
-	takecoins GOLDENRODGAMECORNER_TM14_COINS
-	sjump GoldenrodGameCornerTMVendor_FinishScript
+	takecoins 5500
+	jump GoldenrodGameCornerTMVendor_FinishScript
 
 .FireBlast:
-	checkcoins GOLDENRODGAMECORNER_TM38_COINS
+	checkitem TM_FIRE_BLAST
+	iftrue GoldenrodGameCornerPrizeVendor_AlreadyHaveTMScript
+	checkcoins 5500
 	ifequal HAVE_LESS, GoldenrodGameCornerPrizeVendor_NotEnoughCoinsScript
-	getitemname STRING_BUFFER_3, TM_FIRE_BLAST
+	itemtotext TM_FIRE_BLAST, MEM_BUFFER_0
 	scall GoldenrodGameCornerPrizeVendor_ConfirmPurchaseScript
 	iffalse GoldenrodGameCornerPrizeVendor_CancelPurchaseScript
 	giveitem TM_FIRE_BLAST
 	iffalse GoldenrodGameCornerPrizeMonVendor_NoRoomForPrizeScript
-	takecoins GOLDENRODGAMECORNER_TM38_COINS
-	sjump GoldenrodGameCornerTMVendor_FinishScript
+	takecoins 5500
+	jump GoldenrodGameCornerTMVendor_FinishScript
 
 GoldenrodGameCornerPrizeVendor_ConfirmPurchaseScript:
 	writetext GoldenrodGameCornerPrizeVendorConfirmPrizeText
@@ -117,7 +116,12 @@ GoldenrodGameCornerTMVendor_FinishScript:
 	playsound SFX_TRANSACTION
 	writetext GoldenrodGameCornerPrizeVendorHereYouGoText
 	waitbutton
-	sjump GoldenrodGameCornerTMVendor_LoopScript
+	jump GoldenrodGameCornerTMVendor_LoopScript
+	
+GoldenrodGameCornerPrizeVendor_AlreadyHaveTMScript:
+	writetext GoldenrodGameCornerPrizeVendor_AlreadyHaveTMText
+	waitbutton
+	jump GoldenrodGameCornerTMVendor_LoopScript
 
 GoldenrodGameCornerPrizeVendor_NotEnoughCoinsScript:
 	writetext GoldenrodGameCornerPrizeVendorNeedMoreCoinsText
@@ -170,64 +174,64 @@ GoldenrodGameCornerPrizeMonVendorScript:
 	loadmenu .MenuHeader
 	verticalmenu
 	closewindow
-	ifequal 1, .Abra
-	ifequal 2, .Cubone
-	ifequal 3, .Wobbuffet
-	sjump GoldenrodGameCornerPrizeVendor_CancelPurchaseScript
+	ifequal 1, .abra
+	ifequal 2, .cubone
+	ifequal 3, .wobbuffet
+	jump GoldenrodGameCornerPrizeVendor_CancelPurchaseScript
 
-.Abra:
-	checkcoins GOLDENRODGAMECORNER_ABRA_COINS
+.abra
+	checkcoins 100
 	ifequal HAVE_LESS, GoldenrodGameCornerPrizeVendor_NotEnoughCoinsScript
-	readvar VAR_PARTYCOUNT
+	checkcode VAR_PARTYCOUNT
 	ifequal PARTY_LENGTH, GoldenrodGameCornerPrizeMonVendor_NoRoomForPrizeScript
-	getmonname STRING_BUFFER_3, ABRA
+	pokenamemem ABRA, MEM_BUFFER_0
 	scall GoldenrodGameCornerPrizeVendor_ConfirmPurchaseScript
 	iffalse GoldenrodGameCornerPrizeVendor_CancelPurchaseScript
 	waitsfx
 	playsound SFX_TRANSACTION
 	writetext GoldenrodGameCornerPrizeVendorHereYouGoText
 	waitbutton
-	setval ABRA
+	writebyte ABRA
 	special GameCornerPrizeMonCheckDex
 	givepoke ABRA, 5
-	takecoins GOLDENRODGAMECORNER_ABRA_COINS
-	sjump .loop
+	takecoins 100
+	jump .loop
 
-.Cubone:
-	checkcoins GOLDENRODGAMECORNER_CUBONE_COINS
+.cubone
+	checkcoins 800
 	ifequal HAVE_LESS, GoldenrodGameCornerPrizeVendor_NotEnoughCoinsScript
-	readvar VAR_PARTYCOUNT
+	checkcode VAR_PARTYCOUNT
 	ifequal PARTY_LENGTH, GoldenrodGameCornerPrizeMonVendor_NoRoomForPrizeScript
-	getmonname STRING_BUFFER_3, CUBONE
+	pokenamemem CUBONE, MEM_BUFFER_0
 	scall GoldenrodGameCornerPrizeVendor_ConfirmPurchaseScript
 	iffalse GoldenrodGameCornerPrizeVendor_CancelPurchaseScript
 	waitsfx
 	playsound SFX_TRANSACTION
 	writetext GoldenrodGameCornerPrizeVendorHereYouGoText
 	waitbutton
-	setval CUBONE
+	writebyte CUBONE
 	special GameCornerPrizeMonCheckDex
 	givepoke CUBONE, 15
-	takecoins GOLDENRODGAMECORNER_CUBONE_COINS
-	sjump .loop
+	takecoins 800
+	jump .loop
 
-.Wobbuffet:
-	checkcoins GOLDENRODGAMECORNER_WOBBUFFET_COINS
+.wobbuffet
+	checkcoins 1500
 	ifequal HAVE_LESS, GoldenrodGameCornerPrizeVendor_NotEnoughCoinsScript
-	readvar VAR_PARTYCOUNT
+	checkcode VAR_PARTYCOUNT
 	ifequal PARTY_LENGTH, GoldenrodGameCornerPrizeMonVendor_NoRoomForPrizeScript
-	getmonname STRING_BUFFER_3, WOBBUFFET
+	pokenamemem WOBBUFFET, MEM_BUFFER_0
 	scall GoldenrodGameCornerPrizeVendor_ConfirmPurchaseScript
 	iffalse GoldenrodGameCornerPrizeVendor_CancelPurchaseScript
 	waitsfx
 	playsound SFX_TRANSACTION
 	writetext GoldenrodGameCornerPrizeVendorHereYouGoText
 	waitbutton
-	setval WOBBUFFET
+	writebyte WOBBUFFET
 	special GameCornerPrizeMonCheckDex
 	givepoke WOBBUFFET, 15
-	takecoins GOLDENRODGAMECORNER_WOBBUFFET_COINS
-	sjump .loop
+	takecoins 1500
+	jump .loop
 
 .MenuHeader:
 	db MENU_BACKUP_TILES ; flags
@@ -301,14 +305,14 @@ GoldenrodGameCornerSlotsMachineScript:
 	random 6
 	ifequal 0, GoldenrodGameCornerLuckySlotsMachineScript
 	refreshscreen
-	setval FALSE
+	writebyte FALSE
 	special SlotMachine
 	closetext
 	end
 
 GoldenrodGameCornerLuckySlotsMachineScript:
 	refreshscreen
-	setval TRUE
+	writebyte TRUE
 	special SlotMachine
 	closetext
 	end
@@ -341,6 +345,11 @@ GoldenrodGameCornerPrizeVendorConfirmPrizeText:
 GoldenrodGameCornerPrizeVendorHereYouGoText:
 	text "Here you go!"
 	done
+	
+GoldenrodGameCornerPrizeVendor_AlreadyHaveTMText:
+	text "But you already"
+	line "have that TM!"
+	done
 
 GoldenrodGameCornerPrizeVendorNeedMoreCoinsText:
 	text "Sorry! You need"
@@ -364,29 +373,14 @@ GoldenrodGameCornerPrizeVendorNoCoinCaseText:
 	done
 
 GoldenrodGameCornerPharmacistText:
-if DEF(_CRYSTAL_AU)
-	text "This machine looks"
-	line "the same as the"
-	cont "others."
-	done
-else
 	text "I always play this"
 	line "slot machine. It"
 
 	para "pays out more than"
 	line "others, I think."
 	done
-endc
 
 GoldenrodGameCornerPokefanM1Text:
-if DEF(_CRYSTAL_AU)
-	text "These machines"
-	line "seem different"
-
-	para "from the ones at"
-	line "CELADON CITY!"
-	done
-else
 	text "I just love this"
 	line "new slot machine."
 
@@ -394,28 +388,16 @@ else
 	line "challenge than the"
 	cont "ones in CELADON."
 	done
-endc
 
 GoldenrodGameCornerCooltrainerMText:
-if DEF(_CRYSTAL_AU)
-	text "Nothing is certain"
-	line "in this area."
-	done
-else
 	text "Life is a gamble."
 	line "I'm going to flip"
 	cont "cards till I drop!"
 	done
-endc
 
 GoldenrodGameCornerPokefanFText:
 	text "Card flip…"
 
-if DEF(_CRYSTAL_AU)
-	para "Different from the"
-	line "other machines."
-	done
-else
 	para "I prefer it over"
 	line "the slots because"
 
@@ -425,7 +407,6 @@ else
 	para "But the payout is"
 	line "much lower."
 	done
-endc
 
 GoldenrodGameCornerCooltrainerFText:
 	text "I won't quit until"
@@ -444,12 +425,6 @@ GoldenrodGameCornerGentlemanText:
 	done
 
 GoldenrodGameCornerPokefanM2Text:
-if DEF(_CRYSTAL_AU)
-	text "COIN CASE? I threw"
-	line "it away in the"
-	cont "UNDERGROUND."
-	done
-else
 	text "I couldn't win at"
 	line "the slots, and I"
 
@@ -462,7 +437,6 @@ else
 	para "COIN CASE in the"
 	line "UNDERGROUND."
 	done
-endc
 
 MoveTutorInsideText:
 	text "Wahahah! The coins"

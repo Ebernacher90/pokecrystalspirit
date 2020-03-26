@@ -26,7 +26,7 @@ MomTriesToBuySomething::
 
 .Script:
 	callasm .ASMFunction
-	farsjump Script_ReceivePhoneCall
+	farjump Script_ReceivePhoneCall
 
 .ASMFunction:
 	call MomBuysItem_DeductFunds
@@ -39,13 +39,13 @@ MomTriesToBuySomething::
 .ok
 	ld a, PHONE_MOM
 	ld [wCurCaller], a
-	ld bc, wCallerContact
-	ld hl, PHONE_CONTACT_TRAINER_CLASS
+	ld bc, wEngineBuffer2
+	ld hl, 0
 	add hl, bc
-	ld [hl], TRAINER_NONE
+	ld [hl], 0
 	inc hl
-	ld [hl], PHONE_MOM
-	ld hl, PHONE_CONTACT_SCRIPT2_BANK
+	ld [hl], 1
+	ld hl, wPhoneScriptPointer - wEngineBuffer2
 	add hl, bc
 	ld a, BANK(Mom_GetScriptPointer)
 	ld [hli], a
@@ -147,7 +147,7 @@ Mom_GiveItemOrDoll:
 	ld [wCurItem], a
 	ld a, 1
 	ld [wItemQuantityChangeBuffer], a
-	ld hl, wNumPCItems
+	ld hl, wPCItems
 	call ReceiveItem
 	ret
 
@@ -163,17 +163,17 @@ Mom_GetScriptPointer:
 	ret
 
 .ItemScript:
-	writetext MomHiHowAreYouText
-	writetext MomFoundAnItemText
-	writetext MomBoughtWithYourMoneyText
-	writetext MomItsInPCText
+	writetext _MomText_HiHowAreYou
+	writetext _MomText_FoundAnItem
+	writetext _MomText_BoughtWithYourMoney
+	writetext _MomText_ItsInPC
 	end
 
 .DollScript:
-	writetext MomHiHowAreYouText
-	writetext MomFoundADollText
-	writetext MomBoughtWithYourMoneyText
-	writetext MomItsInYourRoomText
+	writetext _MomText_HiHowAreYou
+	writetext _MomText_FoundADoll
+	writetext _MomText_BoughtWithYourMoney
+	writetext _MomText_ItsInRoom
 	end
 
 GetItemFromMom:
@@ -206,28 +206,34 @@ INCLUDE "data/items/mom_phone.asm"
 
 	db 0, 0, 0 ; unused
 
-MomHiHowAreYouText:
-	text_far _MomHiHowAreYouText
+_MomText_HiHowAreYou:
+	; Hi,  ! How are you?
+	text_far UnknownText_0x1bc615
 	text_end
 
-MomFoundAnItemText:
-	text_far _MomFoundAnItemText
+_MomText_FoundAnItem:
+	; I found a useful item shopping, so
+	text_far UnknownText_0x1bc62a
 	text_end
 
-MomBoughtWithYourMoneyText:
-	text_far _MomBoughtWithYourMoneyText
+_MomText_BoughtWithYourMoney:
+	; I bought it with your money. Sorry!
+	text_far UnknownText_0x1bc64e
 	text_end
 
-MomItsInPCText:
-	text_far _MomItsInPCText
+_MomText_ItsInPC:
+	; It's in your PC. You'll like it!
+	text_far UnknownText_0x1bc673
 	text_end
 
-MomFoundADollText:
-	text_far _MomFoundADollText
+_MomText_FoundADoll:
+	; While shopping today, I saw this adorable doll, so
+	text_far UnknownText_0x1bc693
 	text_end
 
-MomItsInYourRoomText:
-	text_far _MomItsInYourRoomText
+_MomText_ItsInRoom:
+	; It's in your room. You'll love it!
+	text_far UnknownText_0x1bc6c7
 	text_end
 
 	db 0 ; unused

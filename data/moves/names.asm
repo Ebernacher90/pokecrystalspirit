@@ -31,7 +31,7 @@ MoveNames::
 	db "HORN ATTACK@"
 	db "FURY ATTACK@"
 	db "HORN DRILL@"
-	db "TACKLE@"
+	db "Tackle@"
 	db "BODY SLAM@"
 	db "WRAP@"
 	db "TAKE DOWN@"
@@ -250,3 +250,4 @@ MoveNames::
 	db "ROCK SMASH@"
 	db "WHIRLPOOL@"
 	db "BEAT UP@"
+	db "Lake@"

@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const ROUTE29_COOLTRAINER_M1
 	const ROUTE29_YOUNGSTER
 	const ROUTE29_TEACHER1
@@ -31,7 +31,7 @@ Route29_MapScripts:
 	return
 
 .DoesTuscanyAppear:
-	readvar VAR_WEEKDAY
+	checkcode VAR_WEEKDAY
 	ifnotequal TUESDAY, .TuscanyDisappears
 	appear ROUTE29_TUSCANY
 	return
@@ -105,7 +105,7 @@ Script_RefusedTutorial2:
 CatchingTutorialDudeScript:
 	faceplayer
 	opentext
-	readvar VAR_BOXSPACE
+	checkcode VAR_BOXSPACE
 	ifequal 0, .BoxFull
 	checkevent EVENT_LEARNED_TO_CATCH_POKEMON
 	iftrue .BoxFull
@@ -169,16 +169,16 @@ TuscanyScript:
 	opentext
 	checkevent EVENT_GOT_PINK_BOW_FROM_TUSCANY
 	iftrue TuscanyTuesdayScript
-	readvar VAR_WEEKDAY
+	checkcode VAR_WEEKDAY
 	ifnotequal TUESDAY, TuscanyNotTuesdayScript
 	checkevent EVENT_MET_TUSCANY_OF_TUESDAY
 	iftrue .MetTuscany
 	writetext MeetTuscanyText
-	promptbutton
+	buttonsound
 	setevent EVENT_MET_TUSCANY_OF_TUESDAY
 .MetTuscany:
 	writetext TuscanyGivesGiftText
-	promptbutton
+	buttonsound
 	verbosegiveitem PINK_BOW
 	iffalse TuscanyDoneScript
 	setevent EVENT_GOT_PINK_BOW_FROM_TUSCANY
@@ -247,59 +247,77 @@ DudeMovementData2b:
 	step_end
 
 CatchingTutorialBoxFullText:
-	text "#MON hide in"
-	line "the grass. Who"
+	text "#MON verstecken"
+	line "sich im hohen"
+	cont "Gras. Du weisst"
 
-	para "knows when they'll"
-	line "pop out…"
+	para "nie wann sie dich"
+	line "anspringen und"
+	cont "dich angreifen!"
 	done
 
 CatchingTutorialIntroText:
-	text "I've seen you a"
-	line "couple times. How"
+	text "Ich habe dich hier"
+	line "schon oft gesehen,"
 
-	para "many #MON have"
-	line "you caught?"
+	para "wie viele #MON"
+	line "hast du schon"
+	cont "gefangen?"
 
-	para "Would you like me"
-	line "to show you how to"
-	cont "catch #MON?"
+	para "Willst du das ich"
+	line "dir zeige wie man"
+	cont "#MON fängt?"
 	done
 
 CatchingTutorialDebriefText:
-	text "That's how you do"
-	line "it."
+	text "So fängst du sie!"
 
-	para "If you weaken them"
-	line "first, #MON are"
-	cont "easier to catch."
+	para "Wenn du sie zuerst"
+	line "schwächst, sind"
+	cont "sie einfacher zu"
+	
+	para "fangen und wenn"
+	line "du sie in einen"
+	cont "Status versetzt,"
+	
+	para "sind sie noch"
+	line "einfacher zu"
+	cont "fangen!"
 	done
 
 CatchingTutorialDeclinedText:
-	text "Oh. Fine, then."
+	text "Oh. Okay dann"
+	line "nicht!"
 
-	para "Anyway, if you"
-	line "want to catch"
+	para "Aber wenn du"
+	line "lernen willst"
+	cont "wie man"
 
-	para "#MON, you have"
-	line "to walk a lot."
+	para "#MON fängt,"
+	line "dann sprich mich"
+	cont "erneut an."
 	done
 
 CatchingTutorialRepeatText:
-	text "Huh? You want me"
-	line "to show you how to"
-	cont "catch #MON?"
+	text "Huh? Du wilst das"
+	line "ich dir zeige wie"
+	cont "man #MON,"
+	
+	para "fängt? Dann sieh"
+	line "genau zu!"
 	done
 
 Route29YoungsterText:
-	text "Yo. How are your"
-	line "#MON?"
+	text "Yo. Wie geht's"
+	line "deinen #MON?"
 
-	para "If they're weak"
-	line "and not ready for"
+	para "Sind sie zu"
+	line "schwach und nicht"
+	cont "stark genug für"
 
-	para "battle, keep out"
-	line "of the grass."
+	para "kämpfe, dann"
+	line "meide das hohe"
+	cont "Gras!"
 	done
 
 Route29TeacherText:

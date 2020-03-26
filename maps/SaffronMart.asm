@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const SAFFRONMART_CLERK
 	const SAFFRONMART_COOLTRAINER_M
 	const SAFFRONMART_COOLTRAINER_F

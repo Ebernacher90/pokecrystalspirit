@@ -21,7 +21,7 @@
 	const TILESET_LIGHTHOUSE           ; 13
 	const TILESET_PLAYERS_ROOM         ; 14
 	const TILESET_POKECOM_CENTER       ; 15
-	const TILESET_BATTLE_TOWER_INSIDE  ; 16
+	const TILESET_BATTLE_TOWER         ; 16
 	const TILESET_TOWER                ; 17
 	const TILESET_CAVE                 ; 18
 	const TILESET_PARK                 ; 19
@@ -36,6 +36,10 @@
 	const TILESET_KABUTO_WORD_ROOM     ; 22
 	const TILESET_OMANYTE_WORD_ROOM    ; 23
 	const TILESET_AERODACTYL_WORD_ROOM ; 24
+	const TILESET_MUSEUM               ; 25
+	const TILESET_UNDERGROUND1         ; 26
+	const TILESET_GATE1                ; 27
+	const TILESET_MOBLINS_CAVE		   ; 28
 
 ; bg palette values (see gfx/tilesets/*_palette_map.asm)
 ; TilesetBGPalette indexes (see gfx/tilesets/bg_tiles.pal)

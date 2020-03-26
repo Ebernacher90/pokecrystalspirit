@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const ROUTE26_COOLTRAINER_M1
 	const ROUTE26_COOLTRAINER_M2
 	const ROUTE26_COOLTRAINER_F1
@@ -28,7 +28,7 @@ TrainerCooltrainermGaven3:
 	trainer COOLTRAINERM, GAVEN3, EVENT_BEAT_COOLTRAINERM_GAVEN, CooltrainermGaven3SeenText, CooltrainermGaven3BeatenText, 0, .Script
 
 .Script:
-	loadvar VAR_CALLERID, PHONE_COOLTRAINERM_GAVEN
+	writecode VAR_CALLERID, PHONE_COOLTRAINERM_GAVEN
 	endifjustbattled
 	opentext
 	checkflag ENGINE_GAVEN
@@ -38,10 +38,10 @@ TrainerCooltrainermGaven3:
 	checkevent EVENT_GAVEN_ASKED_FOR_PHONE_NUMBER
 	iftrue .AskedAlready
 	writetext CooltrainermGavenAfterText
-	promptbutton
+	buttonsound
 	setevent EVENT_GAVEN_ASKED_FOR_PHONE_NUMBER
 	scall .AskNumber1
-	sjump .AskForNumber
+	jump .AskForNumber
 
 .AskedAlready:
 	scall .AskNumber2
@@ -49,14 +49,14 @@ TrainerCooltrainermGaven3:
 	askforphonenumber PHONE_COOLTRAINERM_GAVEN
 	ifequal PHONE_CONTACTS_FULL, .PhoneFull
 	ifequal PHONE_CONTACT_REFUSED, .NumberDeclined
-	gettrainername STRING_BUFFER_3, COOLTRAINERM, GAVEN3
+	trainertotext COOLTRAINERM, GAVEN3, MEM_BUFFER_0
 	scall .RegisteredNumber
-	sjump .NumberAccepted
+	jump .NumberAccepted
 
 .WantsBattle:
 	scall .Rematch
 	winlosstext CooltrainermGaven3BeatenText, 0
-	readmem wGavenFightCount
+	copybytetovar wGavenFightCount
 	ifequal 2, .Fight2
 	ifequal 1, .Fight1
 	ifequal 0, .LoadFight0
@@ -70,7 +70,7 @@ TrainerCooltrainermGaven3:
 	loadtrainer COOLTRAINERM, GAVEN3
 	startbattle
 	reloadmapafterbattle
-	loadmem wGavenFightCount, 1
+	loadvar wGavenFightCount, 1
 	clearflag ENGINE_GAVEN
 	end
 
@@ -78,7 +78,7 @@ TrainerCooltrainermGaven3:
 	loadtrainer COOLTRAINERM, GAVEN1
 	startbattle
 	reloadmapafterbattle
-	loadmem wGavenFightCount, 2
+	loadvar wGavenFightCount, 2
 	clearflag ENGINE_GAVEN
 	end
 
@@ -132,7 +132,7 @@ TrainerCooltrainerfBeth1:
 	trainer COOLTRAINERF, BETH1, EVENT_BEAT_COOLTRAINERF_BETH, CooltrainerfBeth1SeenText, CooltrainerfBeth1BeatenText, 0, .Script
 
 .Script:
-	loadvar VAR_CALLERID, PHONE_COOLTRAINERF_BETH
+	writecode VAR_CALLERID, PHONE_COOLTRAINERF_BETH
 	endifjustbattled
 	opentext
 	checkflag ENGINE_BETH
@@ -142,10 +142,10 @@ TrainerCooltrainerfBeth1:
 	checkevent EVENT_BETH_ASKED_FOR_PHONE_NUMBER
 	iftrue .AskedAlready
 	writetext CooltrainerfBethAfterText
-	promptbutton
+	buttonsound
 	setevent EVENT_BETH_ASKED_FOR_PHONE_NUMBER
 	scall .AskNumber1
-	sjump .AskForNumber
+	jump .AskForNumber
 
 .AskedAlready:
 	scall .AskNumber2
@@ -153,14 +153,14 @@ TrainerCooltrainerfBeth1:
 	askforphonenumber PHONE_COOLTRAINERF_BETH
 	ifequal PHONE_CONTACTS_FULL, .PhoneFull
 	ifequal PHONE_CONTACT_REFUSED, .NumberDeclined
-	gettrainername STRING_BUFFER_3, COOLTRAINERF, BETH1
+	trainertotext COOLTRAINERF, BETH1, MEM_BUFFER_0
 	scall .RegisteredNumber
-	sjump .NumberAccepted
+	jump .NumberAccepted
 
 .WantsBattle:
 	scall .Rematch
 	winlosstext CooltrainerfBeth1BeatenText, 0
-	readmem wBethFightCount
+	copybytetovar wBethFightCount
 	ifequal 2, .Fight2
 	ifequal 1, .Fight1
 	ifequal 0, .LoadFight0
@@ -174,7 +174,7 @@ TrainerCooltrainerfBeth1:
 	loadtrainer COOLTRAINERF, BETH1
 	startbattle
 	reloadmapafterbattle
-	loadmem wBethFightCount, 1
+	loadvar wBethFightCount, 1
 	clearflag ENGINE_BETH
 	end
 
@@ -182,7 +182,7 @@ TrainerCooltrainerfBeth1:
 	loadtrainer COOLTRAINERF, BETH2
 	startbattle
 	reloadmapafterbattle
-	loadmem wBethFightCount, 2
+	loadvar wBethFightCount, 2
 	clearflag ENGINE_BETH
 	end
 

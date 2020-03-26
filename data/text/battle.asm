@@ -414,8 +414,9 @@ BecameConfusedText:
 	text "<TARGET>"
 	line "became confused!"
 	prompt
+; ItemHealedConfusion
 
-BattleText_ItemHealedConfusion:
+BattleText_ItemHealedConfusion: ; ItemHealedConfusion
 	text "A @"
 	text_ram wStringBuffer1
 	text " rid"
@@ -819,7 +820,7 @@ SubFadedText:
 	line "SUBSTITUTE faded!"
 	prompt
 
-MimicLearnedMoveText:
+LearnedMoveText:
 	text "<USER>"
 	line "learned"
 	cont "@"

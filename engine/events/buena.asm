@@ -70,12 +70,12 @@ BuenaPrize:
 	ld [wMenuSelection], a
 	call Buena_PlacePrizeMenuBox
 	call Buena_DisplayBlueCardBalance
-	ld hl, .BuenaAskWhichPrizeText
+	ld hl, .Text_AskWhichPrize
 	call PrintText
 	jr .okay
 
 .loop
-	ld hl, .BuenaAskWhichPrizeText
+	ld hl, .Text_AskWhichPrize
 	call BuenaPrintText
 
 .okay
@@ -89,7 +89,7 @@ BuenaPrize:
 	ld a, [hl]
 	ld [wNamedObjectIndexBuffer], a
 	call GetItemName
-	ld hl, .BuenaIsThatRightText
+	ld hl, .Text_IsThatRight
 	call BuenaPrintText
 	call YesNoBox
 	jr c, .loop
@@ -121,17 +121,17 @@ BuenaPrize:
 	jr .Purchase
 
 .InsufficientBalance:
-	ld hl, .BuenaNotEnoughPointsText
+	ld hl, .Text_NotEnoughPoints
 	jr .print
 
 .BagFull:
-	ld hl, .BuenaNoRoomText
+	ld hl, .Text_NoRoom
 	jr .print
 
 .Purchase:
 	ld de, SFX_TRANSACTION
 	call PlaySFX
-	ld hl, .BuenaHereYouGoText
+	ld hl, .Text_HereYouGo
 
 .print
 	call BuenaPrintText
@@ -140,34 +140,40 @@ BuenaPrize:
 .done
 	call CloseWindow
 	call CloseWindow
-	ld hl, .BuenaComeAgainText
+	ld hl, .Text_PleaseComeBackAgain
 	call PrintText
 	call JoyWaitAorB
 	call PlayClickSFX
 	ret
 
-.BuenaAskWhichPrizeText:
-	text_far _BuenaAskWhichPrizeText
+.Text_AskWhichPrize:
+	; Which prize would you like?
+	text_far UnknownText_0x1c589f
 	text_end
 
-.BuenaIsThatRightText:
-	text_far _BuenaIsThatRightText
+.Text_IsThatRight:
+	; ? Is that right?
+	text_far UnknownText_0x1c58bc
 	text_end
 
-.BuenaHereYouGoText:
-	text_far _BuenaHereYouGoText
+.Text_HereYouGo:
+	; Here you go!
+	text_far UnknownText_0x1c58d1
 	text_end
 
-.BuenaNotEnoughPointsText:
-	text_far _BuenaNotEnoughPointsText
+.Text_NotEnoughPoints:
+	; You don't have enough points.
+	text_far UnknownText_0x1c58e0
 	text_end
 
-.BuenaNoRoomText:
-	text_far _BuenaNoRoomText
+.Text_NoRoom:
+	; You have no room for it.
+	text_far UnknownText_0x1c58ff
 	text_end
 
-.BuenaComeAgainText:
-	text_far _BuenaComeAgainText
+.Text_PleaseComeBackAgain:
+	; Oh. Please come back again!
+	text_far UnknownText_0x1c591a
 	text_end
 
 Buena_DisplayBlueCardBalance:
@@ -257,7 +263,7 @@ Buena_PrizeMenu:
 .MenuData:
 	db SCROLLINGMENU_DISPLAY_ARROWS ; flags
 	db 4, 13 ; rows, columns
-	db SCROLLINGMENU_ITEMS_NORMAL ; item format
+	db 1 ; spacing
 	dba .indices
 	dba .prizeitem
 	dba .prizepoints

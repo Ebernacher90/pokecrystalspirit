@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const VICTORYROAD_SILVER
 	const VICTORYROAD_POKE_BALL1
 	const VICTORYROAD_POKE_BALL2
@@ -66,7 +66,7 @@ VictoryRoadRivalNext:
 	startbattle
 	dontrestartmapmusic
 	reloadmapafterbattle
-	sjump .AfterBattle
+	jump .AfterBattle
 
 .GotTotodile:
 	winlosstext VictoryRoadRivalDefeatText, VictoryRoadRivalVictoryText
@@ -75,7 +75,7 @@ VictoryRoadRivalNext:
 	startbattle
 	dontrestartmapmusic
 	reloadmapafterbattle
-	sjump .AfterBattle
+	jump .AfterBattle
 
 .GotChikorita:
 	winlosstext VictoryRoadRivalDefeatText, VictoryRoadRivalVictoryText
@@ -84,7 +84,7 @@ VictoryRoadRivalNext:
 	startbattle
 	dontrestartmapmusic
 	reloadmapafterbattle
-	sjump .AfterBattle
+	jump .AfterBattle
 
 .AfterBattle:
 	playmusic MUSIC_RIVAL_AFTER

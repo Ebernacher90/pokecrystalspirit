@@ -1,5 +1,5 @@
 Script_ForcedMovement::
-	readvar VAR_FACING
+	checkcode VAR_FACING
 	ifequal DOWN, .down
 	ifequal UP, .up
 	ifequal LEFT, .left

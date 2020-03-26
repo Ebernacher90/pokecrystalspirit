@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const GOLDENRODDEPTSTORE5F_CLERK
 	const GOLDENRODDEPTSTORE5F_LASS
 	const GOLDENRODDEPTSTORE5F_MIKE
@@ -13,7 +13,7 @@ GoldenrodDeptStore5F_MapScripts:
 	callback MAPCALLBACK_OBJECTS, .CheckIfSunday
 
 .CheckIfSunday:
-	readvar VAR_WEEKDAY
+	checkcode VAR_WEEKDAY
 	ifequal SUNDAY, .yes
 	disappear GOLDENRODDEPTSTORE5F_RECEPTIONIST
 	return
@@ -25,77 +25,58 @@ GoldenrodDeptStore5F_MapScripts:
 GoldenrodDeptStore5FClerkScript:
 	faceplayer
 	opentext
-	checkevent EVENT_GOT_TM02_HEADBUTT
-	iftrue .headbutt
-	checkevent EVENT_GOT_TM08_ROCK_SMASH
-	iftrue .onlyrocksmash
-	sjump .neither
-
-.headbutt
-	checkevent EVENT_GOT_TM08_ROCK_SMASH
-	iftrue .both
-	sjump .onlyheadbutt
-
-.neither
-	pokemart MARTTYPE_STANDARD, MART_GOLDENROD_5F_1
-	closetext
-	end
-
-.onlyheadbutt
-	pokemart MARTTYPE_STANDARD, MART_GOLDENROD_5F_2
-	closetext
-	end
-
-.onlyrocksmash
-	pokemart MARTTYPE_STANDARD, MART_GOLDENROD_5F_3
-	closetext
-	end
-
-.both
-	pokemart MARTTYPE_STANDARD, MART_GOLDENROD_5F_4
+	pokemart MARTTYPE_STANDARD, MART_GOLDENROD_5F
 	closetext
 	end
 
 GoldenrodDeptStore5FReceptionistScript:
 	faceplayer
 	opentext
-	readvar VAR_WEEKDAY
+	checkcode VAR_WEEKDAY
 	ifnotequal SUNDAY, .EventIsOver
 	checkflag ENGINE_GOLDENROD_DEPT_STORE_TM27_RETURN
 	iftrue .EventIsOver
 	special GetFirstPokemonHappiness
-	writetext GoldenrodDeptStore5FReceptionistOhYourMonDotDotDotText
-	promptbutton
+	writetext UnknownText_0x56143
+	buttonsound
 	ifgreater 150 - 1, .VeryHappy
 	ifgreater 50 - 1, .SomewhatHappy
-	sjump .NotVeryHappy
+	jump .NotVeryHappy
 
 .VeryHappy:
-	writetext GoldenrodDeptStore5FReceptionistThisMoveShouldBePerfectText
-	promptbutton
+	writetext UnknownText_0x5615a
+	buttonsound
+	checkitem TM_RETURN
+	iftrue .AlreadyGotTM
 	verbosegiveitem TM_RETURN
-	iffalse .Done
 	setflag ENGINE_GOLDENROD_DEPT_STORE_TM27_RETURN
 	closetext
 	end
 
 .SomewhatHappy:
-	writetext GoldenrodDeptStore5FReceptionistItsAdorableText
+	writetext UnknownText_0x561a6
 	waitbutton
 	closetext
 	end
 
 .NotVeryHappy:
-	writetext GoldenrodDeptStore5FReceptionistItLooksEvilHowAboutThisTMText
-	promptbutton
+	writetext UnknownText_0x561d8
+	buttonsound
+	checkitem TM_FRUSTRATION
+	iftrue .AlreadyGotTM
 	verbosegiveitem TM_FRUSTRATION
-	iffalse .Done
 	setflag ENGINE_GOLDENROD_DEPT_STORE_TM27_RETURN
+	closetext
+	end
+	
+.AlreadyGotTM:
+	writetext GoldenrodDeptStore5FAlreadyGotTMText
+	waitbutton
 	closetext
 	end
 
 .EventIsOver:
-	writetext GoldenrodDeptStore5FReceptionistThereAreTMsPerfectForMonText
+	writetext UnknownText_0x56202
 	waitbutton
 .Done:
 	closetext
@@ -106,14 +87,14 @@ Carrie:
 	opentext
 	special GameboyCheck
 	ifnotequal GBCHECK_CGB, .NotGBC ; This is a dummy check from Gold/Silver
-	writetext GoldenrodDeptStore5FCarrieMysteryGiftExplanationText
+	writetext UnknownText_0x56241
 	waitbutton
 	closetext
 	special UnlockMysteryGift
 	end
 
 .NotGBC:
-	writetext GoldenrodDeptStore5FCarrieMysteryGiftRequiresGBCText
+	writetext UnknownText_0x56279
 	waitbutton
 	closetext
 	end
@@ -138,12 +119,12 @@ GoldenrodDeptStore5FDirectory:
 GoldenrodDeptStore5FElevatorButton:
 	jumpstd elevatorbutton
 
-GoldenrodDeptStore5FReceptionistOhYourMonDotDotDotText:
+UnknownText_0x56143:
 	text "Hello. Oh, your"
 	line "#MON…"
 	done
 
-GoldenrodDeptStore5FReceptionistThisMoveShouldBePerfectText:
+UnknownText_0x5615a:
 	text "It's very attached"
 	line "to you."
 
@@ -152,28 +133,33 @@ GoldenrodDeptStore5FReceptionistThisMoveShouldBePerfectText:
 	cont "pair like you."
 	done
 
-GoldenrodDeptStore5FReceptionistItsAdorableText:
+UnknownText_0x561a6:
 	text "It's adorable!"
 
 	para "You should teach"
 	line "it good TM moves."
 	done
 
-GoldenrodDeptStore5FReceptionistItLooksEvilHowAboutThisTMText:
+UnknownText_0x561d8:
 	text "It looks evil. How"
 	line "about this TM for"
 	cont "it?"
 	done
 
-GoldenrodDeptStore5FReceptionistThereAreTMsPerfectForMonText:
+UnknownText_0x56202:
 	text "There are sure to"
 	line "be TMs that are"
 
 	para "just perfect for"
 	line "your #MON."
 	done
+	
+GoldenrodDeptStore5FAlreadyGotTMText:
+	text "Oh, you already"
+	line "have this TM..."
+	done
 
-GoldenrodDeptStore5FCarrieMysteryGiftExplanationText:
+UnknownText_0x56241:
 	text "MYSTERY GIFT."
 
 	para "With just a"
@@ -181,7 +167,7 @@ GoldenrodDeptStore5FCarrieMysteryGiftExplanationText:
 	cont "get a gift."
 	done
 
-GoldenrodDeptStore5FCarrieMysteryGiftRequiresGBCText:
+UnknownText_0x56279:
 	text "The MYSTERY GIFT"
 	line "option requires a"
 	cont "Game Boy Color."

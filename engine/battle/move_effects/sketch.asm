@@ -110,7 +110,7 @@ BattleCommand_Sketch:
 	call AnimateCurrentMove
 
 	ld hl, SketchedText
-	jp StdBattleTextbox
+	jp StdBattleTextBox
 
 .fail
 	call AnimateFailedMove

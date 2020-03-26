@@ -484,3 +484,20 @@ SECTION "Map Scripts 25", ROMX
 
 INCLUDE "maps/SilverCaveOutside.asm"
 INCLUDE "maps/Route10North.asm"
+INCLUDE "maps/GlobalTerminalOutside.asm"
+INCLUDE "maps/GlobalTerminal1F.asm"
+INCLUDE "maps/PowerPlant1F.asm"
+INCLUDE "maps/PowerPlant2F.asm"
+INCLUDE "maps/PewterMuseum1F.asm"
+INCLUDE "maps/PewterMuseum2F.asm"
+
+SECTION "Map Scripts 26", ROMX
+
+INCLUDE "maps/CeruleanCave1F.asm"
+INCLUDE "maps/CeruleanCave2F.asm"
+INCLUDE "maps/OlivineCave1F.asm"
+INCLUDE "maps/OlivineCaveB1F.asm"
+INCLUDE "maps/MoblinsHideout.asm"
+INCLUDE "maps/FantasticIdyll.asm"
+INCLUDE "maps/UndergroundPathRoute7.asm"
+INCLUDE "maps/UndergroundPathWestEast.asm"

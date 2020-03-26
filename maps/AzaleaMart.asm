@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const AZALEAMART_CLERK
 	const AZALEAMART_COOLTRAINER_M
 	const AZALEAMART_BUG_CATCHER

@@ -747,7 +747,7 @@ DoAnimFrame:
 	ret
 
 .IntroSuicune
-	ld a, [wIntroSceneTimer]
+	ld a, [wcf65]
 	and a
 	jr nz, .asm_8d645
 	ret

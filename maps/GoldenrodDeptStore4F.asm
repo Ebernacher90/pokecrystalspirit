@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const GOLDENRODDEPTSTORE4F_CLERK
 	const GOLDENRODDEPTSTORE4F_COOLTRAINER_M
 	const GOLDENRODDEPTSTORE4F_BUG_CATCHER

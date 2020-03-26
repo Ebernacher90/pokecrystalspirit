@@ -140,6 +140,12 @@ SECTION "Extra Songs 2", ROMX
 
 INCLUDE "audio/music/postcredits.asm"
 
+SECTION "New Songs", ROMX
+
+INCLUDE "audio/music/route47.asm"
+INCLUDE "audio/music/sevennationarmy.asm"
+INCLUDE "audio/music/lostwoods.asm"
+
 
 SECTION "Sound Effects", ROMX
 

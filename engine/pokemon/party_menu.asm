@@ -246,10 +246,10 @@ PlacePartyMonLevel:
 	jr nc, .ThreeDigits
 	ld a, "<LV>"
 	ld [hli], a
-	lb bc, PRINTNUM_LEFTALIGN | 1, 2
+	lb bc, PRINTNUM_RIGHTALIGN | 1, 2
 	; jr .okay
 .ThreeDigits:
-	lb bc, PRINTNUM_LEFTALIGN | 1, 3
+	lb bc, PRINTNUM_RIGHTALIGN | 1, 3
 ; .okay
 	call PrintNum
 
@@ -712,7 +712,7 @@ PartyMenuSelect:
 PrintPartyMenuText:
 	hlcoord 0, 14
 	lb bc, 2, 18
-	call Textbox
+	call TextBox
 	ld a, [wPartyCount]
 	and a
 	jr nz, .haspokemon
@@ -792,55 +792,65 @@ PrintPartyMenuActionText:
 
 .MenuActionTexts:
 ; entries correspond to PARTYMENUTEXT_* constants
-	dw .CuredOfPoisonText
-	dw .BurnWasHealedText
-	dw .WasDefrostedText
-	dw .WokeUpText
-	dw .RidOfParalysisText
-	dw .RecoveredSomeHPText
-	dw .HealthReturnedText
-	dw .RevitalizedText
-	dw .GrewToLevelText
-	dw .CameToItsSensesText
+	dw .Text_CuredOfPoison
+	dw .Text_BurnWasHealed
+	dw .Text_Defrosted
+	dw .Text_WokeUp
+	dw .Text_RidOfParalysis
+	dw .Text_RecoveredSomeHP
+	dw .Text_HealthReturned
+	dw .Text_Revitalized
+	dw .Text_GrewToLevel
+	dw .Text_CameToItsSenses
 
-.RecoveredSomeHPText:
-	text_far _RecoveredSomeHPText
+.Text_RecoveredSomeHP:
+	; recovered @ HP!
+	text_far UnknownText_0x1bc0a2
 	text_end
 
-.CuredOfPoisonText:
-	text_far _CuredOfPoisonText
+.Text_CuredOfPoison:
+	; 's cured of poison.
+	text_far UnknownText_0x1bc0bb
 	text_end
 
-.RidOfParalysisText:
-	text_far _RidOfParalysisText
+.Text_RidOfParalysis:
+	; 's rid of paralysis.
+	text_far UnknownText_0x1bc0d2
 	text_end
 
-.BurnWasHealedText:
-	text_far _BurnWasHealedText
+.Text_BurnWasHealed:
+	; 's burn was healed.
+	text_far UnknownText_0x1bc0ea
 	text_end
 
-.WasDefrostedText:
-	text_far _WasDefrostedText
+.Text_Defrosted:
+	; was defrosted.
+	text_far UnknownText_0x1bc101
 	text_end
 
-.WokeUpText:
-	text_far _WokeUpText
+.Text_WokeUp:
+	; woke up.
+	text_far UnknownText_0x1bc115
 	text_end
 
-.HealthReturnedText:
-	text_far _HealthReturnedText
+.Text_HealthReturned:
+	; 's health returned.
+	text_far UnknownText_0x1bc123
 	text_end
 
-.RevitalizedText:
-	text_far _RevitalizedText
+.Text_Revitalized:
+	; is revitalized.
+	text_far UnknownText_0x1bc13a
 	text_end
 
-.GrewToLevelText:
-	text_far _GrewToLevelText
+.Text_GrewToLevel:
+	; grew to level @ !@ @
+	text_far UnknownText_0x1bc14f
 	text_end
 
-.CameToItsSensesText:
-	text_far _CameToItsSensesText
+.Text_CameToItsSenses:
+	; came to its senses.
+	text_far UnknownText_0x1bc16e
 	text_end
 
 .PrintText:

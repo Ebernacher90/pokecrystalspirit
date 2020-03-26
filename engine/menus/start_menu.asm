@@ -1,14 +1,14 @@
 ; StartMenu.Items indexes
 	const_def
-	const STARTMENUITEM_POKEDEX  ; 0
-	const STARTMENUITEM_POKEMON  ; 1
-	const STARTMENUITEM_PACK     ; 2
-	const STARTMENUITEM_STATUS   ; 3
-	const STARTMENUITEM_SAVE     ; 4
-	const STARTMENUITEM_OPTION   ; 5
-	const STARTMENUITEM_EXIT     ; 6
-	const STARTMENUITEM_POKEGEAR ; 7
-	const STARTMENUITEM_QUIT     ; 8
+	const STARTMENUITEM_POKEDEX     ; 0
+	const STARTMENUITEM_POKEMON     ; 1
+	const STARTMENUITEM_PACK        ; 2
+	const STARTMENUITEM_STATUS      ; 3
+	const STARTMENUITEM_SICHERN     ; 4
+	const STARTMENUITEM_OPTION      ; 5
+	const STARTMENUITEM_EXIT        ; 6
+	const STARTMENUITEM_POKEGEAR    ; 7
+	const STARTMENUITEM_QUIT        ; 8
 
 StartMenu::
 	call ClearWindowData
@@ -33,7 +33,7 @@ StartMenu::
 	call DrawVariableLengthMenuBox
 	call .DrawBugContestStatusBox
 	call SafeUpdateSprites
-	call _OpenAndCloseMenu_HDMATransferTilemapAndAttrmap
+	call _OpenAndCloseMenu_HDMATransferTileMapAndAttrMap
 	farcall LoadFonts_NoOAMUpdate
 	call .DrawBugContestStatus
 	call UpdateTimePals
@@ -180,21 +180,21 @@ StartMenu::
 	dw StartMenu_Pokemon,  .PartyString,    .PartyDesc
 	dw StartMenu_Pack,     .PackString,     .PackDesc
 	dw StartMenu_Status,   .StatusString,   .StatusDesc
-	dw StartMenu_Save,     .SaveString,     .SaveDesc
+	dw StartMenu_Sichern,  .SichernString,  .SichernDesc
 	dw StartMenu_Option,   .OptionString,   .OptionDesc
 	dw StartMenu_Exit,     .ExitString,     .ExitDesc
 	dw StartMenu_Pokegear, .PokegearString, .PokegearDesc
 	dw StartMenu_Quit,     .QuitString,     .QuitDesc
 
-.PokedexString:  db "#DEX@"
-.PartyString:    db "#MON@"
-.PackString:     db "PACK@"
-.StatusString:   db "<PLAYER>@"
-.SaveString:     db "SAVE@"
-.OptionString:   db "OPTION@"
-.ExitString:     db "EXIT@"
-.PokegearString: db "<POKE>GEAR@"
-.QuitString:     db "QUIT@"
+.PokedexString:     db "#DEX@"
+.PartyString:       db "#MON@"
+.PackString:        db "Beutel@"
+.StatusString:      db "<PLAYER>@"
+.SichernString:     db "Sichern@"
+.OptionString:      db "Option@"
+.ExitString:        db "Zurück@"
+.PokegearString:    db "<POKE>COM@"
+.QuitString:        db "QUIT@"
 
 .PokedexDesc:
 	db   "#MON"
@@ -216,9 +216,9 @@ StartMenu::
 	db   "Your own"
 	next "status@"
 
-.SaveDesc:
-	db   "Save your"
-	next "progress@"
+.SichernDesc:
+	db   "Speichere"
+	next "das Spiel@"
 
 .OptionDesc:
 	db   "Change"
@@ -330,7 +330,7 @@ endr
 	bit STATUSFLAGS2_BUG_CONTEST_TIMER_F, [hl]
 	ld a, STARTMENUITEM_QUIT
 	jr nz, .write
-	ld a, STARTMENUITEM_SAVE
+	ld a, STARTMENUITEM_SICHERN
 .write
 	call .AppendMenuList
 .no_save
@@ -379,7 +379,7 @@ endr
 	hlcoord 0, 13
 	ld b, 3
 	ld c, 8
-	jp TextboxPalette
+	jp TextBoxPalette
 
 .IsMenuAccountOn:
 	ld a, [wOptions2]
@@ -411,7 +411,7 @@ StartMenu_Exit:
 StartMenu_Quit:
 ; Retire from the bug catching contest.
 
-	ld hl, .StartMenuContestEndText
+	ld hl, .EndTheContestText
 	call StartMenuYesNo
 	jr c, .DontEndContest
 	ld a, BANK(BugCatchingContestReturnToGateScript)
@@ -424,11 +424,11 @@ StartMenu_Quit:
 	ld a, 0
 	ret
 
-.StartMenuContestEndText:
-	text_far _StartMenuContestEndText
+.EndTheContestText:
+	text_far UnknownText_0x1c1a6c
 	text_end
 
-StartMenu_Save:
+StartMenu_Sichern:
 ; Save the game.
 
 	call BufferScreen

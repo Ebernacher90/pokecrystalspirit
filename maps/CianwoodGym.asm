@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const CIANWOODGYM_CHUCK
 	const CIANWOODGYM_BLACK_BELT1
 	const CIANWOODGYM_BLACK_BELT2
@@ -47,7 +47,7 @@ CianwoodGymChuckScript:
 	playsound SFX_GET_BADGE
 	waitsfx
 	setflag ENGINE_STORMBADGE
-	readvar VAR_BADGES
+	checkcode VAR_BADGES
 	scall CianwoodGymActivateRockets
 .FightDone:
 	checkevent EVENT_GOT_TM01_DYNAMICPUNCH
@@ -57,7 +57,7 @@ CianwoodGymChuckScript:
 	setevent EVENT_BEAT_BLACKBELT_NOB
 	setevent EVENT_BEAT_BLACKBELT_LUNG
 	writetext ChuckExplainBadgeText
-	promptbutton
+	buttonsound
 	verbosegiveitem TM_DYNAMICPUNCH
 	iffalse .BagFull
 	setevent EVENT_GOT_TM01_DYNAMICPUNCH
@@ -136,7 +136,7 @@ CianwoodGymStatue:
 	iftrue .Beaten
 	jumpstd gymstatue1
 .Beaten:
-	gettrainername STRING_BUFFER_4, CHUCK, CHUCK1
+	trainertotext CHUCK, CHUCK1, MEM_BUFFER_1
 	jumpstd gymstatue2
 
 CianwoodGymMovement_ChuckChucksBoulder:

@@ -13,7 +13,7 @@ const_value = 1
 	const MAGNAPLANT
 	const TROPICPLANT
 	const JUMBOPLANT
-	const TOWN_MAP_POSTER
+	const TOWN_MAP_D
 	const FAMICOM
 	const SUPER_NES
 	const NINTENDO_64
@@ -62,8 +62,8 @@ ENDM
 ; decorations:
 ; - DecorationAttributes (see data/decorations/attributes.asm)
 ; - DecorationIDs (see data/decorations/decorations.asm)
-	const_def 1
-	enum_start
+const_value = 1
+__enum__ = 0
 ; FindOwnedBeds.beds values (see engine/overworld/decorations.asm)
 	const BEDS
 	deco  FEATHERY_BED
@@ -121,7 +121,7 @@ ENDM
 	deco  GEODUDE_DOLL
 	deco  MACHOP_DOLL
 	deco  TENTACOOL_DOLL
-NUM_NON_TROPHY_DECOS EQU __enum__
+NUM_NON_TROPHY_DECOS = __enum__
 	deco  GOLD_TROPHY_DOLL
 	deco  SILVER_TROPHY_DOLL
-NUM_DECOS EQU __enum__
+NUM_DECOS = __enum__

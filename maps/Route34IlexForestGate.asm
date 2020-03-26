@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const ROUTE34ILEXFORESTGATE_TEACHER1
 	const ROUTE34ILEXFORESTGATE_BUTTERFREE
 	const ROUTE34ILEXFORESTGATE_LASS
@@ -48,7 +48,7 @@ Route34IlexForestGateTeacherScript:
 	checkevent EVENT_GOT_TM12_SWEET_SCENT
 	iftrue .GotSweetScent
 	writetext Route34IlexForestGateTeacherText
-	promptbutton
+	buttonsound
 	verbosegiveitem TM_SWEET_SCENT
 	iffalse .NoRoom
 	setevent EVENT_GOT_TM12_SWEET_SCENT
@@ -61,7 +61,7 @@ Route34IlexForestGateTeacherScript:
 
 .ForestIsRestless:
 	writetext Route34IlexForestGateTeacher_ForestIsRestless
-	promptbutton
+	buttonsound
 	closetext
 	end
 

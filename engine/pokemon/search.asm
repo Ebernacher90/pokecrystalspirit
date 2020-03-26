@@ -113,7 +113,7 @@ CheckOwnMonAnywhere:
 	jr z, .loopbox
 
 	; Load the box.
-	ld hl, BoxAddressTable
+	ld hl, BoxAddressTable1
 	ld b, 0
 	add hl, bc
 	add hl, bc
@@ -216,7 +216,7 @@ CheckOwnMon:
 
 	ld hl, wPlayerName
 
-rept NAME_LENGTH_JAPANESE - 2 ; should be PLAYER_NAME_LENGTH - 2
+rept NAME_LENGTH_JAPANESE + -2 ; should be PLAYER_NAME_LENGTH + -2
 	ld a, [de]
 	cp [hl]
 	jr nz, .notfound
@@ -244,7 +244,7 @@ endr
 	scf
 	ret
 
-BoxAddressTable:
+BoxAddressTable1:
 	dba sBox1
 	dba sBox2
 	dba sBox3

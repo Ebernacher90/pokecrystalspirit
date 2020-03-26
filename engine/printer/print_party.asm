@@ -1,29 +1,29 @@
-PRINTPARTY_HP EQU "◀" ; $71
+PRINTPARTY_HP EQUS "\"◀\"" ; $71
 
 PrintPage1:
 	hlcoord 0, 0
-	decoord 0, 0, wPrinterTilemapBuffer
+	decoord 0, 0, wPrinterTileMapBuffer
 	ld bc, 17 * SCREEN_WIDTH
 	call CopyBytes
-	hlcoord 17, 1, wPrinterTilemapBuffer
+	hlcoord 17, 1, wPrinterTileMapBuffer
 	ld a, $62
 	ld [hli], a
 	inc a
 	ld [hl], a
-	hlcoord 17, 2, wPrinterTilemapBuffer
+	hlcoord 17, 2, wPrinterTileMapBuffer
 	ld a, $64
 	ld [hli], a
 	inc a
 	ld [hl], a
-	hlcoord 1, 9, wPrinterTilemapBuffer
+	hlcoord 1, 9, wPrinterTileMapBuffer
 	ld a, " "
 	ld [hli], a
 	ld [hl], a
-	hlcoord 1, 10, wPrinterTilemapBuffer
+	hlcoord 1, 10, wPrinterTileMapBuffer
 	ld a, $61
 	ld [hli], a
 	ld [hl], a
-	hlcoord 2, 11, wPrinterTilemapBuffer
+	hlcoord 2, 11, wPrinterTileMapBuffer
 	lb bc, 5, 18
 	call ClearBox
 	ld a, [wTempSpecies]
@@ -36,9 +36,9 @@ PrintPage1:
 	farcall GetDexEntryPagePointer
 	pop af
 	ld a, b
-	hlcoord 1, 11, wPrinterTilemapBuffer
+	hlcoord 1, 11, wPrinterTileMapBuffer
 	call nz, FarString
-	hlcoord 19, 0, wPrinterTilemapBuffer
+	hlcoord 19, 0, wPrinterTileMapBuffer
 	ld [hl], $35
 	ld de, SCREEN_WIDTH
 	add hl, de
@@ -52,26 +52,26 @@ PrintPage1:
 	ret
 
 PrintPage2:
-	hlcoord 0, 0, wPrinterTilemapBuffer
+	hlcoord 0, 0, wPrinterTileMapBuffer
 	ld bc, 8 * SCREEN_WIDTH
 	ld a, " "
 	call ByteFill
-	hlcoord 0, 0, wPrinterTilemapBuffer
+	hlcoord 0, 0, wPrinterTileMapBuffer
 	ld a, $36
 	ld b, 6
 	call .FillColumn
-	hlcoord 19, 0, wPrinterTilemapBuffer
+	hlcoord 19, 0, wPrinterTileMapBuffer
 	ld a, $37
 	ld b, 6
 	call .FillColumn
-	hlcoord 0, 6, wPrinterTilemapBuffer
+	hlcoord 0, 6, wPrinterTileMapBuffer
 	ld [hl], $38
 	inc hl
 	ld a, $39
 	ld bc, SCREEN_HEIGHT
 	call ByteFill
 	ld [hl], $3a
-	hlcoord 0, 7, wPrinterTilemapBuffer
+	hlcoord 0, 7, wPrinterTileMapBuffer
 	ld bc, SCREEN_WIDTH
 	ld a, $32
 	call ByteFill
@@ -84,7 +84,7 @@ PrintPage2:
 	ld c, 2 ; get page 2
 	farcall GetDexEntryPagePointer
 	pop af
-	hlcoord 1, 1, wPrinterTilemapBuffer
+	hlcoord 1, 1, wPrinterTileMapBuffer
 	ld a, b
 	call nz, FarString
 	ret
@@ -132,7 +132,7 @@ GBPrinterString_PrinterError4:
 
 PrintPartyMonPage1:
 	call ClearBGPalettes
-	call ClearTilemap
+	call ClearTileMap
 	call ClearSprites
 	xor a
 	ldh [hBGMapMode], a
@@ -159,7 +159,7 @@ PrintPartyMonPage1:
 	hlcoord 0, 7
 	ld b, 9
 	ld c, 18
-	call Textbox
+	call TextBox
 	hlcoord 8, 2
 	ld a, [wTempMonLevel]
 	call PrintLevel_Force3Digits
@@ -231,7 +231,7 @@ PrintPartyMonPage1:
 
 PrintPartyMonPage2:
 	call ClearBGPalettes
-	call ClearTilemap
+	call ClearTileMap
 	call ClearSprites
 	xor a
 	ldh [hBGMapMode], a
@@ -242,7 +242,7 @@ PrintPartyMonPage2:
 	hlcoord 0, 0
 	ld b, 15
 	ld c, 18
-	call Textbox
+	call TextBox
 	ld bc, SCREEN_WIDTH
 	decoord 0, 0
 	hlcoord 0, 1

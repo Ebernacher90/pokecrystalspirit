@@ -2,7 +2,7 @@ MANIA_OT_ID EQU 00518
 
 GiveShuckle:
 ; Adding to the party.
-	xor a ; PARTYMON
+	xor a
 	ld [wMonType], a
 
 ; Level 15 Shuckle.

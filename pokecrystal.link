@@ -1,7 +1,6 @@
 ROM0
 	org $0000
 	"NULL"
-	org $0000
 	"rst0"
 	org $0008
 	"rst8"
@@ -44,10 +43,9 @@ ROMX $06
 ROMX $07
 	"Roofs"
 	"Tileset Data 2"
-	"Extra Songs 1"
 ROMX $08
-	"Clock Reset"
 	"Tileset Data 3"
+	"Clock Reset"
 	"Egg Moves"
 ROMX $09
 	"bank9"
@@ -55,6 +53,7 @@ ROMX $0a
 	"bankA"
 ROMX $0b
 	"bankB"
+	"Extra Songs 1"
 ROMX $0c
 	"Tileset Data 4"
 ROMX $0d
@@ -108,7 +107,7 @@ ROMX $24
 	"bank24"
 ROMX $25
 	"Maps"
-	"Events"
+	"Battle Weather Images"
 ROMX $26
 	"Map Scripts 11"
 ROMX $27
@@ -127,6 +126,7 @@ ROMX $2d
 	"Tileset Data 5"
 ROMX $2e
 	"bank2E"
+	"Events"
 ROMX $2f
 	"Phone Scripts 2"
 ROMX $30
@@ -167,11 +167,15 @@ ROMX $3e
 ROMX $3f
 	"bank3F"
 ROMX $40
-	"mobile40"
+	"mobile_40"
+	"tetsuji"
+	"bank40_2"
+	"ascii 10186f"
+	"bank40_3"
 ROMX $41
 	"bank41"
 ROMX $42
-	"mobile42"
+	"Mobile 42"
 	"Intro Logo"
 	"Credits"
 ROMX $43
@@ -179,9 +183,11 @@ ROMX $43
 ROMX $44
 	"Mobile Adapter SDK"
 ROMX $45
-	"mobile45"
+	"Mobile 45"
+	"Mobile Stadium"
 ROMX $46
-	"mobile46"
+	"Mobile 46"
+	"Mobile 46 ASCII"
 ROMX $47
 	"Battle Tower"
 ROMX $48
@@ -193,7 +199,6 @@ ROMX $49
 	"Unown Pic Pointers"
 	"Pics 2"
 ROMX $4a
-	"Trainer Pic Pointers"
 	"Pics 3"
 ROMX $4b
 	"Pics 4"
@@ -228,10 +233,10 @@ ROMX $59
 ROMX $5a
 	"Pics 19"
 ROMX $5b
-	"bank5B"
+	"Trainer Pic Pointers"
 	"Pics 20"
 ROMX $5c
-	"mobile5C"
+	"Mobile 5C"
 	"Pics 21"
 ROMX $5d
 	"Crystal Phone Text 2"
@@ -240,10 +245,10 @@ ROMX $5e
 	"UpdateBattleHUDs"
 	"Songs 5"
 	"Crystal Sound Effects"
-	"mobile5E"
+	"Mobile 5E"
 	"Pics 23"
 ROMX $5f
-	"mobile5F"
+	"Mobile 5F"
 	"Pics 24"
 ROMX $60
 	"Map Scripts 13"
@@ -314,7 +319,7 @@ WRAM0
 	align 8
 	"Sprites"
 	"Tilemap"
-	"Miscellaneous"
+	"Battle"
 	"Overworld Map"
 	"Video"
 WRAMX 1
@@ -326,7 +331,6 @@ WRAMX 2
 WRAMX 3
 	"Battle Tower RAM"
 WRAMX 5
-	align 8
 	"GBC Video"
 	org $d300
 	"Battle Animations"
@@ -357,11 +361,7 @@ SRAM $02
 	"Boxes 1-7"
 SRAM $03
 	"Boxes 8-14"
-SRAM $04
-	"SRAM Mobile 1"
 SRAM $05
-	"SRAM Mobile 2"
-SRAM $06
-	"SRAM Mobile 3"
+	"SRAM Mobile"
 HRAM
 	"HRAM"

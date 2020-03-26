@@ -110,7 +110,7 @@ endr
 .spawn_object
 	depixel 6, 3, 4, 4
 	ld a, SPRITE_ANIM_INDEX_DUMMY_GAME
-	call InitSpriteAnimStruct
+	call _InitSpriteAnimStruct
 	ld a, 5
 	ld [wDummyGameNumberTriesRemaining], a
 	ld hl, wJumptableIndex
@@ -304,7 +304,7 @@ DummyGame_CheckMatch:
 	call DummyGame_Card2Coord
 	call DummyGame_PlaceCard
 
-	ld hl, DummyGameDarnText
+	ld hl, DummyGameText_Darn
 	call PrintText
 	ret
 
@@ -313,19 +313,21 @@ DummyGame_CheckMatch:
 	push bc
 	hlcoord 2, 13
 	call DummyGame_PlaceCard
-	ld hl, DummyGameYeahText
+	ld hl, DummyGameText_Yeah
 	pop bc
 	inc bc
 	inc bc
 	inc bc
 	ret
 
-DummyGameYeahText:
-	text_far _DummyGameYeahText
+DummyGameText_Yeah:
+	; , yeah!
+	text_far UnknownText_0x1c1a5b
 	text_end
 
-DummyGameDarnText:
-	text_far _DummyGameDarnText
+DummyGameText_Darn:
+	; Darn…
+	text_far UnknownText_0x1c1a65
 	text_end
 
 DummyGame_InitBoard:

@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const GOLDENRODPOKECENTER1F_NURSE
 	const GOLDENRODPOKECENTER1F_LINK_RECEPTIONIST
 	const GOLDENRODPOKECENTER1F_GAMEBOY_KID
@@ -14,7 +14,7 @@ GoldenrodPokecenter1FNurseScript:
 	jumpstd pokecenternurse
 
 GoldenrodPokecenter1F_GSBallSceneLeft:
-	setval BATTLETOWERACTION_CHECKMOBILEEVENT
+	writebyte BATTLETOWERACTION_CHECKMOBILEEVENT
 	special BattleTowerAction
 	ifequal MOBILE_EVENT_OBJECT_GS_BALL, .gsball
 	end
@@ -27,18 +27,18 @@ GoldenrodPokecenter1F_GSBallSceneLeft:
 	disappear GOLDENRODPOKECENTER1F_LINK_RECEPTIONIST
 	appear GOLDENRODPOKECENTER1F_LINK_RECEPTIONIST
 	playmusic MUSIC_SHOW_ME_AROUND
-	applymovement GOLDENRODPOKECENTER1F_LINK_RECEPTIONIST, GoldenrodPokeCenter1FLinkReceptionistApproachPlayerAtLeftDoorwayTileMovement
+	applymovement GOLDENRODPOKECENTER1F_LINK_RECEPTIONIST, MovementData_0x6105a
 	turnobject PLAYER, UP
 	opentext
-	writetext GoldenrodPokeCenter1FLinkReceptionistPleaseAcceptGSBallText
+	writetext UnknownText_0x622f0
 	waitbutton
 	verbosegiveitem GS_BALL
 	setevent EVENT_GOT_GS_BALL_FROM_POKECOM_CENTER
 	setevent EVENT_CAN_GIVE_GS_BALL_TO_KURT
-	writetext GoldenrodPokeCenter1FLinkReceptionistPleaseDoComeAgainText
+	writetext UnknownText_0x62359
 	waitbutton
 	closetext
-	applymovement GOLDENRODPOKECENTER1F_LINK_RECEPTIONIST, GoldenrodPokeCenter1FLinkReceptionistWalkToStairsFromLeftDoorwayTileMovement
+	applymovement GOLDENRODPOKECENTER1F_LINK_RECEPTIONIST, MovementData_0x61060
 	special RestartMapMusic
 	disappear GOLDENRODPOKECENTER1F_LINK_RECEPTIONIST
 	playsound SFX_EXIT_BUILDING
@@ -46,7 +46,7 @@ GoldenrodPokecenter1F_GSBallSceneLeft:
 	end
 
 GoldenrodPokecenter1F_GSBallSceneRight:
-	setval BATTLETOWERACTION_CHECKMOBILEEVENT
+	writebyte BATTLETOWERACTION_CHECKMOBILEEVENT
 	special BattleTowerAction
 	ifequal MOBILE_EVENT_OBJECT_GS_BALL, .gsball
 	end
@@ -59,18 +59,18 @@ GoldenrodPokecenter1F_GSBallSceneRight:
 	disappear GOLDENRODPOKECENTER1F_LINK_RECEPTIONIST
 	appear GOLDENRODPOKECENTER1F_LINK_RECEPTIONIST
 	playmusic MUSIC_SHOW_ME_AROUND
-	applymovement GOLDENRODPOKECENTER1F_LINK_RECEPTIONIST, GoldenrodPokeCenter1FLinkReceptionistApproachPlayerAtRightDoorwayTileMovement
+	applymovement GOLDENRODPOKECENTER1F_LINK_RECEPTIONIST, MovementData_0x61065
 	turnobject PLAYER, UP
 	opentext
-	writetext GoldenrodPokeCenter1FLinkReceptionistPleaseAcceptGSBallText
+	writetext UnknownText_0x622f0
 	waitbutton
 	verbosegiveitem GS_BALL
 	setevent EVENT_GOT_GS_BALL_FROM_POKECOM_CENTER
 	setevent EVENT_CAN_GIVE_GS_BALL_TO_KURT
-	writetext GoldenrodPokeCenter1FLinkReceptionistPleaseDoComeAgainText
+	writetext UnknownText_0x62359
 	waitbutton
 	closetext
-	applymovement GOLDENRODPOKECENTER1F_LINK_RECEPTIONIST, GoldenrodPokeCenter1FLinkReceptionistWalkToStairsFromRightDoorwayTileMovement
+	applymovement GOLDENRODPOKECENTER1F_LINK_RECEPTIONIST, MovementData_0x6106c
 	special RestartMapMusic
 	disappear GOLDENRODPOKECENTER1F_LINK_RECEPTIONIST
 	playsound SFX_EXIT_BUILDING
@@ -86,38 +86,38 @@ GoldenrodPokecenter1FLassScript:
 GoldenrodPokecenter1FPokefanF:
 	faceplayer
 	opentext
-	writetext GoldenrodPokecenter1FPokefanFDoYouHaveEonMailText
+	writetext UnknownText_0x623fb
 	waitbutton
-	writetext GoldenrodPokecenter1FAskGiveAwayAnEonMailText
+	writetext UnknownText_0x6248c
 	yesorno
 	iffalse .NoEonMail
 	takeitem EON_MAIL
 	iffalse .NoEonMail
-	writetext GoldenrodPokecenter1FPlayerGaveAwayTheEonMailText
+	writetext UnknownText_0x62549
 	waitbutton
-	writetext GoldenrodPokecenter1FPokefanFThisIsForYouText
+	writetext UnknownText_0x624a4
 	waitbutton
 	verbosegiveitem REVIVE
 	iffalse .NoRoom
-	writetext GoldenrodPokecenter1FPokefanFDaughterWillBeDelightedText
+	writetext UnknownText_0x624e9
 	waitbutton
 	closetext
 	end
 
 .NoEonMail:
-	writetext GoldenrodPokecenter1FPokefanFTooBadText
+	writetext UnknownText_0x62509
 	waitbutton
 	closetext
 	end
 
 .NoRoom:
 	giveitem EON_MAIL
-	writetext GoldenrodPokecenter1FPokefanFAnotherTimeThenText
+	writetext UnknownText_0x6252a
 	waitbutton
 	closetext
 	end
 
-GoldenrodPokeCenter1FLinkReceptionistApproachPlayerAtLeftDoorwayTileMovement:
+MovementData_0x6105a:
 	step UP
 	step RIGHT
 	step RIGHT
@@ -125,14 +125,14 @@ GoldenrodPokeCenter1FLinkReceptionistApproachPlayerAtLeftDoorwayTileMovement:
 	turn_head DOWN
 	step_end
 
-GoldenrodPokeCenter1FLinkReceptionistWalkToStairsFromLeftDoorwayTileMovement:
+MovementData_0x61060:
 	step LEFT
 	step LEFT
 	step LEFT
 	step DOWN
 	step_end
 
-GoldenrodPokeCenter1FLinkReceptionistApproachPlayerAtRightDoorwayTileMovement:
+MovementData_0x61065:
 	step UP
 	step RIGHT
 	step RIGHT
@@ -141,7 +141,7 @@ GoldenrodPokeCenter1FLinkReceptionistApproachPlayerAtRightDoorwayTileMovement:
 	turn_head DOWN
 	step_end
 
-GoldenrodPokeCenter1FLinkReceptionistWalkToStairsFromRightDoorwayTileMovement:
+MovementData_0x6106c:
 	step LEFT
 	step LEFT
 	step LEFT
@@ -715,7 +715,7 @@ GoldenrodPokecenter1FLassText:
 	line "the toughest."
 	done
 
-GoldenrodPokeCenter1FLinkReceptionistPleaseAcceptGSBallText:
+UnknownText_0x622f0:
 	text "<PLAYER>, isn't it?"
 
 	para "Congratulations!"
@@ -727,7 +727,7 @@ GoldenrodPokeCenter1FLinkReceptionistPleaseAcceptGSBallText:
 	para "Please accept it!"
 	done
 
-GoldenrodPokeCenter1FLinkReceptionistPleaseDoComeAgainText:
+UnknownText_0x62359:
 	text "Please do come"
 	line "again!"
 	done
@@ -754,7 +754,7 @@ UnknownText_0x623c7:
 	line "operation yet…"
 	done
 
-GoldenrodPokecenter1FPokefanFDoYouHaveEonMailText:
+UnknownText_0x623fb:
 	text "Oh my, your pack"
 	line "looks so heavy!"
 
@@ -769,12 +769,12 @@ GoldenrodPokecenter1FPokefanFDoYouHaveEonMailText:
 	line "one, can't you?"
 	done
 
-GoldenrodPokecenter1FAskGiveAwayAnEonMailText:
+UnknownText_0x6248c:
 	text "Give away an EON"
 	line "MAIL?"
 	done
 
-GoldenrodPokecenter1FPokefanFThisIsForYouText:
+UnknownText_0x624a4:
 	text "Oh, that's great!"
 	line "Thank you, honey!"
 
@@ -782,22 +782,22 @@ GoldenrodPokecenter1FPokefanFThisIsForYouText:
 	line "you in return!"
 	done
 
-GoldenrodPokecenter1FPokefanFDaughterWillBeDelightedText:
+UnknownText_0x624e9:
 	text "My daughter will"
 	line "be delighted!"
 	done
 
-GoldenrodPokecenter1FPokefanFTooBadText:
+UnknownText_0x62509:
 	text "Oh? You don't have"
 	line "one? Too bad."
 	done
 
-GoldenrodPokecenter1FPokefanFAnotherTimeThenText:
+UnknownText_0x6252a:
 	text "Oh… Well, another"
 	line "time, then."
 	done
 
-GoldenrodPokecenter1FPlayerGaveAwayTheEonMailText:
+UnknownText_0x62549:
 	text "<PLAYER> gave away"
 	line "the EON MAIL."
 	done

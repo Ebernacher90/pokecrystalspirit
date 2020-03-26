@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const BLUESHOUSE_DAISY
 
 BluesHouse_MapScripts:
@@ -9,7 +9,7 @@ BluesHouse_MapScripts:
 DaisyScript:
 	faceplayer
 	opentext
-	readvar VAR_HOUR
+	checkcode VAR_HOUR
 	ifequal 15, .ThreePM
 	writetext DaisyHelloText
 	waitbutton
@@ -39,7 +39,7 @@ DaisyScript:
 	opentext
 	writetext GroomedMonLooksContentText
 	special PlayCurMonCry
-	promptbutton
+	buttonsound
 	writetext DaisyAllDoneText
 	waitbutton
 	closetext

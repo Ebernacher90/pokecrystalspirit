@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const MANIASHOUSE_ROCKER
 
 ManiasHouse_MapScripts:
@@ -19,7 +19,7 @@ ManiaScript:
 	special GiveShuckle
 	iffalse .partyfull
 	writetext ManiaText_TakeCareOfShuckle
-	promptbutton
+	buttonsound
 	waitsfx
 	writetext ManiaText_GotShuckle
 	playsound SFX_KEY_ITEM

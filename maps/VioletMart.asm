@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const VIOLETMART_CLERK
 	const VIOLETMART_GRANNY
 	const VIOLETMART_COOLTRAINER_M

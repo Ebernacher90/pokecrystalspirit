@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const VIOLETPOKECENTER1F_NURSE
 	const VIOLETPOKECENTER1F_GAMEBOY_KID
 	const VIOLETPOKECENTER1F_GENTLEMAN
@@ -18,23 +18,23 @@ VioletPokecenter1F_ElmsAideScript:
 	opentext
 	checkevent EVENT_REFUSED_TO_TAKE_EGG_FROM_ELMS_AIDE
 	iftrue .SecondTimeAsking
-	writetext VioletPokecenterElmsAideFavorText
+	writetext UnknownText_0x69555
 .AskTakeEgg:
 	yesorno
 	iffalse .RefusedEgg
-	readvar VAR_PARTYCOUNT
+	checkcode VAR_PARTYCOUNT
 	ifequal PARTY_LENGTH, .PartyFull
 	giveegg TOGEPI, 5
-	getstring STRING_BUFFER_4, .eggname
+	stringtotext .eggname, MEM_BUFFER_1
 	scall .AideGivesEgg
 	setevent EVENT_GOT_TOGEPI_EGG_FROM_ELMS_AIDE
 	clearevent EVENT_ELMS_AIDE_IN_LAB
 	clearevent EVENT_TOGEPI_HATCHED
 	setmapscene ROUTE_32, SCENE_ROUTE32_OFFER_SLOWPOKETAIL
-	writetext VioletPokecenterElmsAideGiveEggText
+	writetext UnknownText_0x695c5
 	waitbutton
 	closetext
-	readvar VAR_FACING
+	checkcode VAR_FACING
 	ifequal UP, .AideWalksAroundPlayer
 	turnobject PLAYER, DOWN
 	applymovement VIOLETPOKECENTER1F_ELMS_AIDE, MovementData_AideWalksStraightOutOfPokecenter
@@ -60,21 +60,21 @@ VioletPokecenter1F_ElmsAideScript:
 	end
 
 .PartyFull:
-	writetext VioletCityElmsAideFullPartyText
+	writetext UnknownText_0x69693
 	waitbutton
 	closetext
 	end
 
 .RefusedEgg:
-	writetext VioletPokecenterElmsAideRefuseText
+	writetext UnknownText_0x696f2
 	waitbutton
 	closetext
 	setevent EVENT_REFUSED_TO_TAKE_EGG_FROM_ELMS_AIDE
 	end
 
 .SecondTimeAsking:
-	writetext VioletPokecenterElmsAideAskEggText
-	sjump .AskTakeEgg
+	writetext UnknownText_0x69712
+	jump .AskTakeEgg
 
 VioletPokecenter1FGameboyKidScript:
 	jumptextfaceplayer VioletPokecenter1FGameboyKidText
@@ -103,7 +103,7 @@ MovementData_AideFinishesLeavingPokecenter:
 	step DOWN
 	step_end
 
-VioletPokecenterElmsAideFavorText:
+UnknownText_0x69555:
 	text "<PLAY_G>, long"
 	line "time, no see."
 
@@ -117,7 +117,7 @@ VioletPokecenterElmsAideFavorText:
 	line "#MON EGG?"
 	done
 
-VioletPokecenterElmsAideGiveEggText:
+UnknownText_0x695c5:
 	text "We discovered that"
 	line "a #MON will not"
 
@@ -137,7 +137,7 @@ VioletPokecenterElmsAideGiveEggText:
 	cont "hatches!"
 	done
 
-VioletCityElmsAideFullPartyText:
+UnknownText_0x69693:
 	text "Oh, no. You can't"
 	line "carry any more"
 	cont "#MON with you."
@@ -147,18 +147,17 @@ VioletCityElmsAideFullPartyText:
 	cont "room for the EGG."
 	done
 
-VioletPokecenterElmsAideRefuseText:
+UnknownText_0x696f2:
 	text "B-but… PROF.ELM"
 	line "asked for you…"
 	done
 
-VioletPokecenterElmsAideAskEggText:
+UnknownText_0x69712:
 	text "<PLAY_G>, will you"
 	line "take the EGG?"
 	done
 
-; unused
-VioletPokecenterFarawayLinkText:
+UnknownText_0x6972d:
 	text "I've been thinking"
 	line "it'd be great to"
 
@@ -169,8 +168,7 @@ VioletPokecenterFarawayLinkText:
 	line "far away."
 	done
 
-; unused
-VioletPokecenterMobileAdapterText:
+UnknownText_0x69791:
 	text "I just battled a"
 	line "friend in CIANWOOD"
 	cont "over a link."

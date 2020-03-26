@@ -19,12 +19,12 @@ FillBoxWithByte::
 	jr nz, .row
 	ret
 
-ClearTilemap::
-; Fill wTilemap with blank tiles.
+ClearTileMap::
+; Fill wTileMap with blank tiles.
 
 	hlcoord 0, 0
 	ld a, " "
-	ld bc, wTilemapEnd - wTilemap
+	ld bc, wTileMapEnd - wTileMap
 	call ByteFill
 
 	; Update the BG Map.
@@ -35,23 +35,23 @@ ClearTilemap::
 
 ClearScreen::
 	ld a, PAL_BG_TEXT
-	hlcoord 0, 0, wAttrmap
+	hlcoord 0, 0, wAttrMap
 	ld bc, SCREEN_WIDTH * SCREEN_HEIGHT
 	call ByteFill
-	jr ClearTilemap
+	jr ClearTileMap
 
-Textbox::
+TextBox::
 ; Draw a text box at hl with room for b lines of c characters each.
 ; Places a border around the textbox, then switches the palette to the
 ; text black-and-white scheme.
 	push bc
 	push hl
-	call TextboxBorder
+	call TextBoxBorder
 	pop hl
 	pop bc
-	jr TextboxPalette
+	jr TextBoxPalette
 
-TextboxBorder::
+TextBoxBorder::
 	; Top
 	push hl
 	ld a, "┌"
@@ -97,9 +97,9 @@ TextboxBorder::
 	jr nz, .loop
 	ret
 
-TextboxPalette::
+TextBoxPalette::
 ; Fill text box width c height b at hl with pal 7
-	ld de, wAttrmap - wTilemap
+	ld de, wAttrMap - wTileMap
 	add hl, de
 	inc b
 	inc b
@@ -121,12 +121,12 @@ TextboxPalette::
 	jr nz, .col
 	ret
 
-SpeechTextbox::
+SpeechTextBox::
 ; Standard textbox.
 	hlcoord TEXTBOX_X, TEXTBOX_Y
 	ld b, TEXTBOX_INNERH
 	ld c, TEXTBOX_INNERW
-	jp Textbox
+	jp TextBox
 
 TestText::
 	text "ゲームフりーク！"
@@ -140,7 +140,7 @@ RadioTerminator::
 	text_end
 
 PrintText::
-	call SetUpTextbox
+	call SetUpTextBox
 BuenaPrintText::
 	push hl
 	hlcoord TEXTBOX_INNERX, TEXTBOX_INNERY
@@ -148,14 +148,14 @@ BuenaPrintText::
 	call ClearBox
 	pop hl
 
-PrintTextboxText::
+PrintTextBoxText::
 	bccoord TEXTBOX_INNERX, TEXTBOX_INNERY
 	call PlaceHLTextAtBC
 	ret
 
-SetUpTextbox::
+SetUpTextBox::
 	push hl
-	call SpeechTextbox
+	call SpeechTextBox
 	call UpdateSprites
 	call ApplyTilemap
 	pop hl
@@ -235,46 +235,7 @@ ENDM
 	dict "<USER>",    PlaceMoveUsersName
 	dict "<ENEMY>",   PlaceEnemysName
 	dict "<PLAY_G>",  PlaceGenderedPlayerName
-	dict "ﾟ",         .place ; should be .diacritic
-	dict "ﾞ",         .place ; should be .diacritic
-	jr .not_diacritic
-
-.diacritic
-	ld b, a
-	call Diacritic
-	jp NextChar
-
-.not_diacritic
-	cp FIRST_REGULAR_TEXT_CHAR
-	jr nc, .place
-
-	cp "パ"
-	jr nc, .handakuten
-
-.dakuten
-	cp FIRST_HIRAGANA_DAKUTEN_CHAR
-	jr nc, .hiragana_dakuten
-	add "カ" - "ガ"
-	jr .katakana_dakuten
-.hiragana_dakuten
-	add "か" - "が"
-.katakana_dakuten
-	ld b, "ﾞ" ; dakuten
-	call Diacritic
-	jr .place
-
-.handakuten
-	cp "ぱ"
-	jr nc, .hiragana_handakuten
-	add "ハ" - "パ"
-	jr .katakana_handakuten
-.hiragana_handakuten
-	add "は" - "ぱ"
-.katakana_handakuten
-	ld b, "ﾟ" ; handakuten
-	call Diacritic
-
-.place
+	
 	ld [hli], a
 	call PrintLetterDelay
 	jp NextChar
@@ -422,7 +383,7 @@ LineFeedChar::
 CarriageReturnChar::
 	pop hl
 	push de
-	ld bc, -wTilemap + $10000
+	ld bc, -wTileMap + $10000
 	add hl, bc
 	ld de, -SCREEN_WIDTH
 	ld c, 1
@@ -478,7 +439,7 @@ Paragraph::
 
 .linkbattle
 	call Text_WaitBGMap
-	call PromptButton
+	call ButtonSound
 	hlcoord TEXTBOX_INNERX, TEXTBOX_INNERY
 	lb bc, TEXTBOX_INNERH - 1, TEXTBOX_INNERW
 	call ClearBox
@@ -499,7 +460,7 @@ _ContText::
 	call Text_WaitBGMap
 
 	push de
-	call PromptButton
+	call ButtonSound
 	pop de
 
 	ld a, [wLinkMode]
@@ -545,7 +506,7 @@ PromptText::
 
 .ok
 	call Text_WaitBGMap
-	call PromptButton
+	call ButtonSound
 	ld a, [wLinkMode]
 	cp LINK_COLOSSEUM
 	jr z, DoneText
@@ -648,15 +609,15 @@ PokeFluteTerminatorCharacter::
 	text_end
 
 PlaceHLTextAtBC::
-	ld a, [wTextboxFlags]
+	ld a, [wTextBoxFlags]
 	push af
 	set NO_TEXT_DELAY_F, a
-	ld [wTextboxFlags], a
+	ld [wTextBoxFlags], a
 
 	call DoTextUntilTerminator
 
 	pop af
-	ld [wTextboxFlags], a
+	ld [wTextBoxFlags], a
 	ret
 
 DoTextUntilTerminator::
@@ -686,29 +647,29 @@ DoTextUntilTerminator::
 
 TextCommands::
 ; entries correspond to TX_* constants (see macros/scripts/text.asm)
-	dw TextCommand_START              ; TX_START
-	dw TextCommand_RAM                ; TX_RAM
-	dw TextCommand_BCD                ; TX_BCD
-	dw TextCommand_MOVE               ; TX_MOVE
-	dw TextCommand_BOX                ; TX_BOX
-	dw TextCommand_LOW                ; TX_LOW
-	dw TextCommand_PROMPT_BUTTON      ; TX_PROMPT_BUTTON
-	dw TextCommand_SCROLL             ; TX_SCROLL
-	dw TextCommand_START_ASM          ; TX_START_ASM
-	dw TextCommand_NUM                ; TX_NUM
-	dw TextCommand_PAUSE              ; TX_PAUSE
-	dw TextCommand_SOUND              ; TX_SOUND_DEX_FANFARE_50_79
-	dw TextCommand_DOTS               ; TX_DOTS
-	dw TextCommand_LINK_PROMPT_BUTTON ; TX_LINK_PROMPT_BUTTON
-	dw TextCommand_SOUND              ; TX_SOUND_DEX_FANFARE_20_49
-	dw TextCommand_SOUND              ; TX_SOUND_ITEM
-	dw TextCommand_SOUND              ; TX_SOUND_CAUGHT_MON
-	dw TextCommand_SOUND              ; TX_SOUND_DEX_FANFARE_80_109
-	dw TextCommand_SOUND              ; TX_SOUND_FANFARE
-	dw TextCommand_SOUND              ; TX_SOUND_SLOT_MACHINE_START
-	dw TextCommand_STRINGBUFFER       ; TX_STRINGBUFFER
-	dw TextCommand_DAY                ; TX_DAY
-	dw TextCommand_FAR                ; TX_FAR
+	dw TextCommand_START            ; TX_START
+	dw TextCommand_RAM              ; TX_RAM
+	dw TextCommand_BCD              ; TX_BCD
+	dw TextCommand_MOVE             ; TX_MOVE
+	dw TextCommand_BOX              ; TX_BOX
+	dw TextCommand_LOW              ; TX_LOW
+	dw TextCommand_WAIT_BUTTON      ; TX_WAIT_BUTTON
+	dw TextCommand_SCROLL           ; TX_SCROLL
+	dw TextCommand_START_ASM        ; TX_START_ASM
+	dw TextCommand_NUM              ; TX_NUM
+	dw TextCommand_PAUSE            ; TX_PAUSE
+	dw TextCommand_SOUND            ; TX_SOUND_DEX_FANFARE_50_79
+	dw TextCommand_DOTS             ; TX_DOTS
+	dw TextCommand_LINK_WAIT_BUTTON ; TX_LINK_WAIT_BUTTON
+	dw TextCommand_SOUND            ; TX_SOUND_DEX_FANFARE_20_49
+	dw TextCommand_SOUND            ; TX_SOUND_ITEM
+	dw TextCommand_SOUND            ; TX_SOUND_CAUGHT_MON
+	dw TextCommand_SOUND            ; TX_SOUND_DEX_FANFARE_80_109
+	dw TextCommand_SOUND            ; TX_SOUND_FANFARE
+	dw TextCommand_SOUND            ; TX_SOUND_SLOT_MACHINE_START
+	dw TextCommand_STRINGBUFFER     ; TX_STRINGBUFFER
+	dw TextCommand_DAY              ; TX_DAY
+	dw TextCommand_FAR              ; TX_FAR
 
 TextCommand_START::
 ; text_start
@@ -822,7 +783,7 @@ TextCommand_BOX::
 	push hl
 	ld h, d
 	ld l, e
-	call Textbox
+	call TextBox
 	pop hl
 	ret
 
@@ -834,22 +795,22 @@ TextCommand_LOW::
 	bccoord TEXTBOX_INNERX, TEXTBOX_INNERY + 2
 	ret
 
-TextCommand_PROMPT_BUTTON::
-; text_promptbutton
+TextCommand_WAIT_BUTTON::
+; text_waitbutton
 ; wait for button press
 ; show arrow
 ; [06]
 
 	ld a, [wLinkMode]
 	cp LINK_COLOSSEUM
-	jp z, TextCommand_LINK_PROMPT_BUTTON
+	jp z, TextCommand_LINK_WAIT_BUTTON
 	cp LINK_MOBILE
-	jp z, TextCommand_LINK_PROMPT_BUTTON
+	jp z, TextCommand_LINK_WAIT_BUTTON
 
 	push hl
 	call LoadBlinkingCursor
 	push bc
-	call PromptButton
+	call ButtonSound
 	pop bc
 	call UnloadBlinkingCursor
 	pop hl
@@ -896,7 +857,7 @@ TextCommand_NUM::
 	ld a, b
 	and $f0
 	swap a
-	set PRINTNUM_LEFTALIGN_F, a
+	set PRINTNUM_RIGHTALIGN_F, a
 	ld b, a
 	call PrintNum
 	ld b, h
@@ -1005,13 +966,13 @@ TextCommand_DOTS::
 	pop hl
 	ret
 
-TextCommand_LINK_PROMPT_BUTTON::
-; text_linkpromptbutton
+TextCommand_LINK_WAIT_BUTTON::
+; text_linkwaitbutton
 ; wait for key down
 ; display arrow
 	push hl
 	push bc
-	call PromptButton
+	call ButtonSound
 	pop bc
 	pop hl
 	ret

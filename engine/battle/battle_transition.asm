@@ -585,7 +585,7 @@ StartTrainerBattle_LoadPokeBallGraphics:
 
 	xor a
 	ldh [hBGMapMode], a
-	hlcoord 0, 0, wAttrmap
+	hlcoord 0, 0, wAttrMap
 	ld bc, SCREEN_HEIGHT * SCREEN_WIDTH
 	inc b
 	inc c
@@ -709,7 +709,18 @@ INCLUDE "gfx/overworld/trainer_battle_day.pal"
 INCLUDE "gfx/overworld/trainer_battle_nite.pal"
 
 .loadpokeballgfx
+	ld de, TeamRocketTransition
 	ld a, [wOtherTrainerClass]
+	cp GRUNTM
+	ret z
+	cp GRUNTF
+	ret z
+	cp EXECUTIVEM
+	ret z
+	cp EXECUTIVEF
+	ret z
+	cp SCIENTIST
+	ret z
 	ld de, PokeBallTransition
 	ret
 
@@ -733,6 +744,27 @@ opt b.X ; . = 0, X = 1
 	bigdw %..XXXX....XXXX..
 	bigdw %....XXXXXXXX....
 	bigdw %......XXXX......
+popo
+
+TeamRocketTransition
+pusho
+opt b.X ; . = 0, X = 1
+    bigdw %XXXXXXXXXXXX....
+    bigdw %XXXXXXXXXXXXXX..
+    bigdw %XXXXXXXXXXXXXXX.
+    bigdw %XXXXXXXXXXXXXXX.
+    bigdw %XXXXX......XXXXX
+    bigdw %XXXXX.......XXXX
+    bigdw %XXXXX......XXXXX
+    bigdw %XXXXXXXXXXXXXXX.
+    bigdw %XXXXXXXXXXXXXXX.
+    bigdw %XXXXXXXXXXXXXX..
+    bigdw %XXXXXXXXXXXXX...
+    bigdw %XXXXX....XXXXX..
+    bigdw %XXXXX....XXXXX..
+    bigdw %XXXXX.....XXXXX.
+    bigdw %XXXXX......XXXXX
+    bigdw %XXXXX......XXXXX
 popo
 
 WipeLYOverrides:

@@ -108,3 +108,7 @@ OverworldSprites:
 	overworld_sprite EnteiSpriteGFX, 4, STILL_SPRITE, PAL_OW_RED
 	overworld_sprite RaikouSpriteGFX, 4, STILL_SPRITE, PAL_OW_RED
 	overworld_sprite StandingYoungsterSpriteGFX, 12, STANDING_SPRITE, PAL_OW_BLUE
+	overworld_sprite AquaSpriteGFX, 12, STANDING_SPRITE, PAL_OW_BLUE
+	overworld_sprite MagmaSpriteGFX, 12, STANDING_SPRITE, PAL_OW_RED
+	overworld_sprite KetteSpriteGFX, 12, STANDING_SPRITE, PAL_OW_GREEN
+	overworld_sprite KettenhundSpriteGFX, 12, STANDING_SPRITE, PAL_OW_BLUE

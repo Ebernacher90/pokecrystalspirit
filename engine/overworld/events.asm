@@ -418,7 +418,7 @@ RunSceneScript:
 	ld a, [hli]
 	ld h, [hl]
 	ld l, a
-rept SCENE_SCRIPT_SIZE
+rept 4
 	add hl, de
 endr
 
@@ -560,7 +560,7 @@ TryObjectEvent:
 	ld de, 3
 	ld hl, .pointers
 	call IsInArray
-	jr nc, .nope
+	jr nc, .nope_bugged
 	pop bc
 
 	inc hl
@@ -569,7 +569,7 @@ TryObjectEvent:
 	ld l, a
 	jp hl
 
-.nope
+.nope_bugged
 	; pop bc
 	xor a
 	ret
@@ -602,8 +602,8 @@ TryObjectEvent:
 	ld h, [hl]
 	ld l, a
 	call GetMapScriptsBank
-	ld de, wItemBallData
-	ld bc, wItemBallDataEnd - wItemBallData
+	ld de, wEngineBuffer1
+	ld bc, 2
 	call FarCopyBytes
 	ld a, PLAYEREVENT_ITEMBALL
 	scf
@@ -638,7 +638,7 @@ TryBGEvent:
 	ret
 
 .is_bg_event:
-	ld a, [wCurBGEventType]
+	ld a, [wEngineBuffer3]
 	ld hl, .bg_events
 	rst JumpTable
 	ret
@@ -675,7 +675,7 @@ TryBGEvent:
 
 .read
 	call PlayTalkObject
-	ld hl, wCurBGEventScriptAddr
+	ld hl, wEngineBuffer4
 	ld a, [hli]
 	ld h, [hl]
 	ld l, a
@@ -689,8 +689,8 @@ TryBGEvent:
 	jp nz, .dontread
 	call PlayTalkObject
 	call GetMapScriptsBank
-	ld de, wHiddenItemData
-	ld bc, wHiddenItemDataEnd - wHiddenItemData
+	ld de, wEngineBuffer1
+	ld bc, 3
 	call FarCopyBytes
 	ld a, BANK(HiddenItemScript)
 	ld hl, HiddenItemScript
@@ -702,8 +702,8 @@ TryBGEvent:
 	call CheckBGEventFlag
 	jr nz, .dontread
 	call GetMapScriptsBank
-	ld de, wHiddenItemData
-	ld bc, wHiddenItemDataEnd - wHiddenItemData
+	ld de, wEngineBuffer1
+	ld bc, 3
 	call FarCopyBytes
 	jr .dontread
 
@@ -734,7 +734,7 @@ TryBGEvent:
 	ret
 
 CheckBGEventFlag:
-	ld hl, wCurBGEventScriptAddr
+	ld hl, wEngineBuffer4
 	ld a, [hli]
 	ld h, [hl]
 	ld l, a
@@ -759,41 +759,40 @@ PlayerMovement:
 	ret
 
 .pointers
-; entries correspond to PLAYERMOVEMENT_* constants
-	dw .normal
-	dw .warp
-	dw .turn
-	dw .force_turn
-	dw .finish
-	dw .continue
-	dw .exit_water
-	dw .jump
+	dw .zero
+	dw .one
+	dw .two
+	dw .three
+	dw .four
+	dw .five
+	dw .six
+	dw .seven
 
-.normal:
-.finish:
+.zero
+.four
 	xor a
 	ld c, a
 	ret
 
-.jump:
+.seven
 	call ret_968d7 ; mobile
 	xor a
 	ld c, a
 	ret
 
-.warp:
-	ld a, PLAYEREVENT_WARP
+.one
+	ld a, 5
 	ld c, a
 	scf
 	ret
 
-.turn:
-	ld a, PLAYEREVENT_JOYCHANGEFACING
+.two
+	ld a, 9
 	ld c, a
 	scf
 	ret
 
-.force_turn:
+.three
 ; force the player to move in some direction
 	ld a, BANK(Script_ForcedMovement)
 	ld hl, Script_ForcedMovement
@@ -803,8 +802,8 @@ PlayerMovement:
 	scf
 	ret
 
-.continue:
-.exit_water:
+.five
+.six
 	ld a, -1
 	ld c, a
 	and a
@@ -842,24 +841,24 @@ CheckMenuOW:
 
 StartMenuScript:
 	callasm StartMenu
-	sjump StartMenuCallback
+	jump StartMenuCallback
 
 SelectMenuScript:
 	callasm SelectMenu
-	sjump SelectMenuCallback
+	jump SelectMenuCallback
 
 StartMenuCallback:
 SelectMenuCallback:
-	readmem hMenuReturn
+	copybytetovar hMenuReturn
 	ifequal HMENURETURN_SCRIPT, .Script
 	ifequal HMENURETURN_ASM, .Asm
 	end
 
 .Script:
-	memjump wQueuedScriptBank
+	ptjump wQueuedScriptBank
 
 .Asm:
-	memcallasm wQueuedScriptBank
+	ptcallasm wQueuedScriptBank
 	end
 
 CountStep:
@@ -924,13 +923,13 @@ CountStep:
 	ret
 
 .hatch
-	ld a, PLAYEREVENT_HATCH
+	ld a, 8
 	scf
 	ret
 
 ; unused
 .unreferenced
-	ld a, PLAYEREVENT_WHITEOUT
+	ld a, 7
 	scf
 	ret
 
@@ -1077,7 +1076,7 @@ LoadScriptBDE::
 
 TryTileCollisionEvent::
 	call GetFacingTileCoord
-	ld [wFacingTileID], a
+	ld [wEngineBuffer1], a
 	ld c, a
 	farcall CheckFacingTileForStdScript
 	jr c, .done
@@ -1088,21 +1087,21 @@ TryTileCollisionEvent::
 	jr .done
 
 .whirlpool
-	ld a, [wFacingTileID]
+	ld a, [wEngineBuffer1]
 	call CheckWhirlpoolTile
 	jr nz, .waterfall
 	farcall TryWhirlpoolOW
 	jr .done
 
 .waterfall
-	ld a, [wFacingTileID]
+	ld a, [wEngineBuffer1]
 	call CheckWaterfallTile
 	jr nz, .headbutt
 	farcall TryWaterfallOW
 	jr .done
 
 .headbutt
-	ld a, [wFacingTileID]
+	ld a, [wEngineBuffer1]
 	call CheckHeadbuttTreeTile
 	jr nz, .surf
 	farcall TryHeadbuttOW
@@ -1509,20 +1508,20 @@ CmdQueue_Type4:
 
 .zero
 	ldh a, [hSCY]
-	ld hl, CMDQUEUE_04
+	ld hl, 4
 	add hl, bc
 	ld [hl], a
 	call CmdQueueAnonJT_Increment
 .one
-	ld hl, CMDQUEUE_ADDR
+	ld hl, 1
 	add hl, bc
 	ld a, [hl]
 	dec a
 	ld [hl], a
 	jr z, .finish
-	and 1
+	and $1
 	jr z, .add
-	ld hl, CMDQUEUE_02
+	ld hl, 2
 	add hl, bc
 	ldh a, [hSCY]
 	sub [hl]
@@ -1530,7 +1529,7 @@ CmdQueue_Type4:
 	ret
 
 .add
-	ld hl, CMDQUEUE_02
+	ld hl, 2
 	add hl, bc
 	ldh a, [hSCY]
 	add [hl]
@@ -1538,7 +1537,7 @@ CmdQueue_Type4:
 	ret
 
 .finish
-	ld hl, CMDQUEUE_04
+	ld hl, 4
 	add hl, bc
 	ld a, [hl]
 	ldh [hSCY], a
@@ -1561,7 +1560,7 @@ CmdQueue_Type3:
 	jr z, .PlayerNotFacingDown
 	call CmdQueueAnonJT_Increment
 
-	ld hl, CMDQUEUE_02
+	ld hl, 2
 	add hl, bc
 	ld a, [hl]
 	ld [wd173], a
@@ -1572,7 +1571,7 @@ CmdQueue_Type3:
 	jr z, .PlayerNotFacingDown
 	call CmdQueueAnonJT_Decrement
 
-	ld hl, CMDQUEUE_03
+	ld hl, 3
 	add hl, bc
 	ld a, [hl]
 	ld [wd173], a
@@ -1581,7 +1580,7 @@ CmdQueue_Type3:
 .PlayerNotFacingDown:
 	ld a, $7f
 	ld [wd173], a
-	ld hl, CMDQUEUE_05
+	ld hl, 5
 	add hl, bc
 	ld [hl], 0
 	ret
@@ -1627,7 +1626,7 @@ CmdQueue_StoneTable:
 	jr c, .fall_down_hole
 
 .next
-	ld hl, OBJECT_LENGTH
+	ld hl, OBJECT_STRUCT_LENGTH
 	add hl, de
 	ld d, h
 	ld e, l

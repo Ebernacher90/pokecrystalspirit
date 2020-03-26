@@ -204,7 +204,7 @@ EvolveAfterBattle_MasterLoop:
 	ld hl, wPartyMonNicknames
 	call GetNick
 	call CopyName1
-	ld hl, EvolvingText
+	ld hl, Text_WhatEvolving
 	call PrintText
 
 	ld c, 50
@@ -227,7 +227,7 @@ EvolveAfterBattle_MasterLoop:
 	pop af
 	jp c, CancelEvolution
 
-	ld hl, CongratulationsYourPokemonText
+	ld hl, Text_CongratulationsYourPokemon
 	call PrintText
 
 	pop hl
@@ -240,8 +240,8 @@ EvolveAfterBattle_MasterLoop:
 	call GetPokemonName
 
 	push hl
-	ld hl, EvolvedIntoText
-	call PrintTextboxText
+	ld hl, Text_EvolvedIntoPKMN
+	call PrintTextBoxText
 	farcall StubbedTrainerRankings_MonsEvolved
 
 	ld de, MUSIC_NONE
@@ -253,7 +253,7 @@ EvolveAfterBattle_MasterLoop:
 	ld c, 40
 	call DelayFrames
 
-	call ClearTilemap
+	call ClearTileMap
 	call UpdateSpeciesNameIfNotNicknamed
 	call GetBaseData
 
@@ -296,6 +296,7 @@ EvolveAfterBattle_MasterLoop:
 	ld [wTempSpecies], a
 	xor a
 	ld [wMonType], a
+	call LearnEvolutionMove
 	call LearnLevelMoves
 	ld a, [wTempSpecies]
 	dec a
@@ -343,6 +344,46 @@ EvolveAfterBattle_MasterLoop:
 	and a
 	call nz, RestartMapMusic
 	ret
+	
+LearnEvolutionMove:
+	ld a, [wTempSpecies]
+	ld [wCurPartySpecies], a
+	dec a
+	ld c, a
+	ld b, 0
+	ld hl, EvolutionMoves
+	add hl, bc
+	ld a, [hl]
+	and a
+	ret z
+
+	push hl
+	ld d, a
+	ld hl, wPartyMon1Moves
+	ld a, [wCurPartyMon]
+	ld bc, PARTYMON_STRUCT_LENGTH
+	call AddNTimes
+
+	ld b, NUM_MOVES
+.check_move
+	ld a, [hli]
+	cp d
+	jr z, .has_move
+	dec b
+	jr nz, .check_move
+
+	ld a, d
+	ld [wPutativeTMHMMove], a
+	ld [wNamedObjectIndexBuffer], a
+	call GetMoveName
+	call CopyName1
+	predef LearnMove
+	ld a, [wCurPartySpecies]
+	ld [wTempSpecies], a
+
+.has_move
+	pop hl
+	ret
 
 UpdateSpeciesNameIfNotNicknamed:
 	ld a, [wCurSpecies]
@@ -377,9 +418,9 @@ UpdateSpeciesNameIfNotNicknamed:
 	jp CopyBytes
 
 CancelEvolution:
-	ld hl, StoppedEvolvingText
+	ld hl, Text_StoppedEvolving
 	call PrintText
-	call ClearTilemap
+	call ClearTileMap
 	pop hl
 	jp EvolveAfterBattle_MasterLoop
 
@@ -394,20 +435,24 @@ IsMonHoldingEverstone:
 	pop hl
 	ret
 
-CongratulationsYourPokemonText:
-	text_far _CongratulationsYourPokemonText
+Text_CongratulationsYourPokemon:
+	; Congratulations! Your @ @
+	text_far UnknownText_0x1c4b92
 	text_end
 
-EvolvedIntoText:
-	text_far _EvolvedIntoText
+Text_EvolvedIntoPKMN:
+	; evolved into @ !
+	text_far UnknownText_0x1c4baf
 	text_end
 
-StoppedEvolvingText:
-	text_far _StoppedEvolvingText
+Text_StoppedEvolving:
+	; Huh? @ stopped evolving!
+	text_far UnknownText_0x1c4bc5
 	text_end
 
-EvolvingText:
-	text_far _EvolvingText
+Text_WhatEvolving:
+	; What? @ is evolving!
+	text_far UnknownText_0x1c4be3
 	text_end
 
 LearnLevelMoves:

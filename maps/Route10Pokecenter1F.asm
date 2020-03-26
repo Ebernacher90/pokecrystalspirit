@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const ROUTE10POKECENTER1F_NURSE
 	const ROUTE10POKECENTER1F_GENTLEMAN
 	const ROUTE10POKECENTER1F_GYM_GUY

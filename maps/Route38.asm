@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const ROUTE38_STANDING_YOUNGSTER1
 	const ROUTE38_LASS
 	const ROUTE38_STANDING_YOUNGSTER2
@@ -38,7 +38,7 @@ TrainerLassDana1:
 	trainer LASS, DANA1, EVENT_BEAT_LASS_DANA, LassDana1SeenText, LassDana1BeatenText, 0, .Script
 
 .Script
-	loadvar VAR_CALLERID, PHONE_LASS_DANA
+	writecode VAR_CALLERID, PHONE_LASS_DANA
 	endifjustbattled
 	opentext
 	checkflag ENGINE_DANA
@@ -49,11 +49,11 @@ TrainerLassDana1:
 	iftrue .NumberAccepted
 	checkevent EVENT_DANA_ASKED_FOR_PHONE_NUMBER
 	iftrue .SecondTimeAsking
-	writetext LassDanaMoomooMilkText
-	promptbutton
+	writetext UnknownText_0x1a20ec
+	buttonsound
 	setevent EVENT_DANA_ASKED_FOR_PHONE_NUMBER
 	scall .AskNumber1F
-	sjump .AskForPhoneNumber
+	jump .AskForPhoneNumber
 
 .SecondTimeAsking:
 	scall .AskNumber2F
@@ -61,14 +61,14 @@ TrainerLassDana1:
 	askforphonenumber PHONE_LASS_DANA
 	ifequal PHONE_CONTACTS_FULL, .PhoneFull
 	ifequal PHONE_CONTACT_REFUSED, .DeclinedPhoneNumber
-	gettrainername STRING_BUFFER_3, LASS, DANA1
+	trainertotext LASS, DANA1, MEM_BUFFER_0
 	scall .RegisteredPhoneNumber
-	sjump .NumberAccepted
+	jump .NumberAccepted
 
 .DanaRematch:
 	scall .Rematch
 	winlosstext LassDana1BeatenText, 0
-	readmem wDanaFightCount
+	copybytetovar wDanaFightCount
 	ifequal 4, .Fight4
 	ifequal 3, .Fight3
 	ifequal 2, .Fight2
@@ -90,7 +90,7 @@ TrainerLassDana1:
 	loadtrainer LASS, DANA1
 	startbattle
 	reloadmapafterbattle
-	loadmem wDanaFightCount, 1
+	loadvar wDanaFightCount, 1
 	clearflag ENGINE_DANA
 	end
 
@@ -98,7 +98,7 @@ TrainerLassDana1:
 	loadtrainer LASS, DANA2
 	startbattle
 	reloadmapafterbattle
-	loadmem wDanaFightCount, 2
+	loadvar wDanaFightCount, 2
 	clearflag ENGINE_DANA
 	end
 
@@ -106,7 +106,7 @@ TrainerLassDana1:
 	loadtrainer LASS, DANA3
 	startbattle
 	reloadmapafterbattle
-	loadmem wDanaFightCount, 3
+	loadvar wDanaFightCount, 3
 	clearflag ENGINE_DANA
 	end
 
@@ -114,7 +114,7 @@ TrainerLassDana1:
 	loadtrainer LASS, DANA4
 	startbattle
 	reloadmapafterbattle
-	loadmem wDanaFightCount, 4
+	loadvar wDanaFightCount, 4
 	clearflag ENGINE_DANA
 	end
 
@@ -131,10 +131,10 @@ TrainerLassDana1:
 	iffalse .NoRoomForThunderstone
 	clearflag ENGINE_DANA_HAS_THUNDERSTONE
 	setevent EVENT_DANA_GAVE_THUNDERSTONE
-	sjump .NumberAccepted
+	jump .NumberAccepted
 
 .NoRoomForThunderstone:
-	sjump .PackFull
+	jump .PackFull
 
 .AskNumber1F:
 	jumpstd asknumber1f
@@ -176,7 +176,7 @@ TrainerSchoolboyChad1:
 	trainer SCHOOLBOY, CHAD1, EVENT_BEAT_SCHOOLBOY_CHAD, SchoolboyChad1SeenText, SchoolboyChad1BeatenText, 0, .Script
 
 .Script
-	loadvar VAR_CALLERID, PHONE_SCHOOLBOY_CHAD
+	writecode VAR_CALLERID, PHONE_SCHOOLBOY_CHAD
 	endifjustbattled
 	opentext
 	checkflag ENGINE_CHAD
@@ -185,11 +185,11 @@ TrainerSchoolboyChad1:
 	iftrue .HaveChadsNumber
 	checkevent EVENT_CHAD_ASKED_FOR_PHONE_NUMBER
 	iftrue .SecondTimeAsking
-	writetext SchoolboyChadSoManyTestsText
-	promptbutton
+	writetext UnknownText_0x1a200e
+	buttonsound
 	setevent EVENT_CHAD_ASKED_FOR_PHONE_NUMBER
 	scall .AskPhoneNumber1
-	sjump .AskToRegisterNumber
+	jump .AskToRegisterNumber
 
 .SecondTimeAsking:
 	scall .AskPhoneNumber2
@@ -197,14 +197,14 @@ TrainerSchoolboyChad1:
 	askforphonenumber PHONE_SCHOOLBOY_CHAD
 	ifequal PHONE_CONTACTS_FULL, .PhoneFull
 	ifequal PHONE_CONTACT_REFUSED, .SaidNo
-	gettrainername STRING_BUFFER_3, SCHOOLBOY, CHAD1
+	trainertotext SCHOOLBOY, CHAD1, MEM_BUFFER_0
 	scall .RegisteredChad
-	sjump .HaveChadsNumber
+	jump .HaveChadsNumber
 
 .ChadRematch:
 	scall .Rematch
 	winlosstext SchoolboyChad1BeatenText, 0
-	readmem wChadFightCount
+	copybytetovar wChadFightCount
 	ifequal 4, .Fight4
 	ifequal 3, .Fight3
 	ifequal 2, .Fight2
@@ -226,7 +226,7 @@ TrainerSchoolboyChad1:
 	loadtrainer SCHOOLBOY, CHAD1
 	startbattle
 	reloadmapafterbattle
-	loadmem wChadFightCount, 1
+	loadvar wChadFightCount, 1
 	clearflag ENGINE_CHAD
 	end
 
@@ -234,7 +234,7 @@ TrainerSchoolboyChad1:
 	loadtrainer SCHOOLBOY, CHAD2
 	startbattle
 	reloadmapafterbattle
-	loadmem wChadFightCount, 2
+	loadvar wChadFightCount, 2
 	clearflag ENGINE_CHAD
 	end
 
@@ -242,7 +242,7 @@ TrainerSchoolboyChad1:
 	loadtrainer SCHOOLBOY, CHAD3
 	startbattle
 	reloadmapafterbattle
-	loadmem wChadFightCount, 3
+	loadvar wChadFightCount, 3
 	clearflag ENGINE_CHAD
 	end
 
@@ -250,7 +250,7 @@ TrainerSchoolboyChad1:
 	loadtrainer SCHOOLBOY, CHAD4
 	startbattle
 	reloadmapafterbattle
-	loadmem wChadFightCount, 4
+	loadvar wChadFightCount, 4
 	clearflag ENGINE_CHAD
 	end
 
@@ -350,7 +350,7 @@ SchoolboyChad1BeatenText:
 	line "enough, I guess."
 	done
 
-SchoolboyChadSoManyTestsText:
+UnknownText_0x1a200e:
 	text "I have to take so"
 	line "many tests, I"
 
@@ -376,7 +376,7 @@ LassDana1BeatenText:
 	line "battle that way."
 	done
 
-LassDanaMoomooMilkText:
+UnknownText_0x1a20ec:
 	text "I know something"
 	line "good!"
 

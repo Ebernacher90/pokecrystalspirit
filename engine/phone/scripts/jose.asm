@@ -1,5 +1,5 @@
 JosePhoneCalleeScript:
-	gettrainername STRING_BUFFER_3, BIRD_KEEPER, JOSE2
+	trainertotext BIRD_KEEPER, JOSE2, MEM_BUFFER_0
 	checkflag ENGINE_JOSE
 	iftrue .WantsBattle
 	farscall PhoneScript_AnswerPhone_Male
@@ -7,24 +7,24 @@ JosePhoneCalleeScript:
 	iftrue .NotSaturday
 	checkflag ENGINE_JOSE_HAS_STAR_PIECE
 	iftrue .HasItem
-	readvar VAR_WEEKDAY
+	checkcode VAR_WEEKDAY
 	ifnotequal SATURDAY, .NotSaturday
 	checktime NITE
 	iftrue JoseSaturdayNight
 
 .NotSaturday:
-	farsjump JoseHangUpScript
+	farjump UnknownScript_0xa0920
 
 .WantsBattle:
-	getlandmarkname STRING_BUFFER_5, LANDMARK_ROUTE_27
-	farsjump JoseReminderScript
+	landmarktotext ROUTE_27, MEM_BUFFER_2
+	farjump UnknownScript_0xa0a41
 
 .HasItem:
-	getlandmarkname STRING_BUFFER_5, LANDMARK_ROUTE_27
-	farsjump JoseReminderScript
+	landmarktotext ROUTE_27, MEM_BUFFER_2
+	farjump UnknownScript_0xa0a41
 
 JosePhoneCallerScript:
-	gettrainername STRING_BUFFER_3, BIRD_KEEPER, JOSE2
+	trainertotext BIRD_KEEPER, JOSE2, MEM_BUFFER_0
 	farscall PhoneScript_GreetPhone_Male
 	checkflag ENGINE_JOSE
 	iftrue .Generic
@@ -40,20 +40,20 @@ JosePhoneCallerScript:
 .Generic:
 	farscall PhoneScript_Random3
 	ifequal 0, JoseFoundRare
-	farsjump Phone_GenericCall_Male
+	farjump Phone_GenericCall_Male
 
 JoseSaturdayNight:
 	setflag ENGINE_JOSE_SATURDAY_NIGHT
 
 JoseWantsBattle:
-	getlandmarkname STRING_BUFFER_5, LANDMARK_ROUTE_27
+	landmarktotext ROUTE_27, MEM_BUFFER_2
 	setflag ENGINE_JOSE
-	farsjump PhoneScript_WantsToBattle_Male
+	farjump PhoneScript_WantsToBattle_Male
 
 JoseFoundRare:
-	farsjump Phone_CheckIfUnseenRare_Male
+	farjump Phone_CheckIfUnseenRare_Male
 
 JoseHasStarPiece:
 	setflag ENGINE_JOSE_HAS_STAR_PIECE
-	getlandmarkname STRING_BUFFER_5, LANDMARK_ROUTE_27
-	farsjump PhoneScript_FoundItem_Male
+	landmarktotext ROUTE_27, MEM_BUFFER_2
+	farjump PhoneScript_FoundItem_Male

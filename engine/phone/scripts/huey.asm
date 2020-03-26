@@ -1,25 +1,25 @@
 HueyPhoneCalleeScript:
-	gettrainername STRING_BUFFER_3, SAILOR, HUEY1
+	trainertotext SAILOR, HUEY1, MEM_BUFFER_0
 	checkflag ENGINE_HUEY
 	iftrue .WantsBattle
 	farscall PhoneScript_AnswerPhone_Male
 	checkflag ENGINE_HUEY_WEDNESDAY_NIGHT
 	iftrue .NotWednesday
-	readvar VAR_WEEKDAY
+	checkcode VAR_WEEKDAY
 	ifnotequal WEDNESDAY, .NotWednesday
 	checktime NITE
 	iftrue HueyWednesdayNight
 
 .NotWednesday:
 	special RandomPhoneMon
-	farsjump HueyHangUpScript
+	farjump UnknownScript_0xa0908
 
 .WantsBattle:
-	getlandmarkname STRING_BUFFER_5, LANDMARK_LIGHTHOUSE
-	farsjump HueyWantsBattleScript
+	landmarktotext LIGHTHOUSE, MEM_BUFFER_2
+	farjump HueyWantsBattleScript
 
 HueyPhoneCallerScript:
-	gettrainername STRING_BUFFER_3, SAILOR, HUEY1
+	trainertotext SAILOR, HUEY1, MEM_BUFFER_0
 	farscall PhoneScript_GreetPhone_Male
 	checkflag ENGINE_HUEY
 	iftrue .Flavor
@@ -30,12 +30,12 @@ HueyPhoneCallerScript:
 	ifequal 1, HueyWantsBattle
 
 .Flavor:
-	farsjump PhoneScript_MonFlavorText
+	farjump PhoneScript_MonFlavorText
 
 HueyWednesdayNight:
 	setflag ENGINE_HUEY_WEDNESDAY_NIGHT
 
 HueyWantsBattle:
-	getlandmarkname STRING_BUFFER_5, LANDMARK_LIGHTHOUSE
+	landmarktotext LIGHTHOUSE, MEM_BUFFER_2
 	setflag ENGINE_HUEY
-	farsjump PhoneScript_WantsToBattle_Male
+	farjump PhoneScript_WantsToBattle_Male

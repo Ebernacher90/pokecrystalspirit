@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const CHERRYGROVECITY_GRAMPS
 	const CHERRYGROVECITY_SILVER
 	const CHERRYGROVECITY_TEACHER
@@ -29,7 +29,7 @@ CherrygroveCityGuideGent:
 	writetext GuideGentIntroText
 	yesorno
 	iffalse .No
-	sjump .Yes
+	jump .Yes
 .Yes:
 	writetext GuideGentTourText1
 	waitbutton
@@ -66,12 +66,12 @@ CherrygroveCityGuideGent:
 	turnobject PLAYER, RIGHT
 	opentext
 	writetext GuideGentGiftText
-	promptbutton
-	getstring STRING_BUFFER_4, .mapcardname
+	buttonsound
+	stringtotext .mapcardname, MEM_BUFFER_1
 	scall .JumpstdReceiveItem
 	setflag ENGINE_MAP_CARD
 	writetext GotMapCardText
-	promptbutton
+	buttonsound
 	writetext GuideGentPokegearText
 	waitbutton
 	closetext
@@ -120,34 +120,34 @@ CherrygroveSilverSceneNorth:
 	winlosstext SilverCherrygroveWinText, SilverCherrygroveLossText
 	setlasttalked CHERRYGROVECITY_SILVER
 	loadtrainer RIVAL1, RIVAL1_1_TOTODILE
-	loadvar VAR_BATTLETYPE, BATTLETYPE_CANLOSE
+	writecode VAR_BATTLETYPE, BATTLETYPE_CANLOSE
 	startbattle
 	dontrestartmapmusic
 	reloadmap
 	iftrue .AfterVictorious
-	sjump .AfterYourDefeat
+	jump .AfterYourDefeat
 
 .Totodile:
 	winlosstext SilverCherrygroveWinText, SilverCherrygroveLossText
 	setlasttalked CHERRYGROVECITY_SILVER
 	loadtrainer RIVAL1, RIVAL1_1_CHIKORITA
-	loadvar VAR_BATTLETYPE, BATTLETYPE_CANLOSE
+	writecode VAR_BATTLETYPE, BATTLETYPE_CANLOSE
 	startbattle
 	dontrestartmapmusic
 	reloadmap
 	iftrue .AfterVictorious
-	sjump .AfterYourDefeat
+	jump .AfterYourDefeat
 
 .Chikorita:
 	winlosstext SilverCherrygroveWinText, SilverCherrygroveLossText
 	setlasttalked CHERRYGROVECITY_SILVER
 	loadtrainer RIVAL1, RIVAL1_1_CYNDAQUIL
-	loadvar VAR_BATTLETYPE, BATTLETYPE_CANLOSE
+	writecode VAR_BATTLETYPE, BATTLETYPE_CANLOSE
 	startbattle
 	dontrestartmapmusic
 	reloadmap
 	iftrue .AfterVictorious
-	sjump .AfterYourDefeat
+	jump .AfterYourDefeat
 
 .AfterVictorious:
 	playmusic MUSIC_RIVAL_AFTER
@@ -155,7 +155,7 @@ CherrygroveSilverSceneNorth:
 	writetext CherrygroveRivalText_YouWon
 	waitbutton
 	closetext
-	sjump .FinishRival
+	jump .FinishRival
 
 .AfterYourDefeat:
 	playmusic MUSIC_RIVAL_AFTER
@@ -212,7 +212,7 @@ MysticWaterGuy:
 	checkevent EVENT_GOT_MYSTIC_WATER_IN_CHERRYGROVE
 	iftrue .After
 	writetext MysticWaterGuyTextBefore
-	promptbutton
+	buttonsound
 	verbosegiveitem MYSTIC_WATER
 	iffalse .Exit
 	setevent EVENT_GOT_MYSTIC_WATER_IN_CHERRYGROVE

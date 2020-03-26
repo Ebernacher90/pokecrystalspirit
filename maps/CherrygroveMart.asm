@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const CHERRYGROVEMART_CLERK
 	const CHERRYGROVEMART_COOLTRAINER_M
 	const CHERRYGROVEMART_YOUNGSTER

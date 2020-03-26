@@ -12,7 +12,7 @@ RuinsOfAlphAerodactylChamber_MapScripts:
 	end
 
 .OpenWall:
-	prioritysjump .WallOpenScript
+	priorityjump .WallOpenScript
 	end
 
 .DummyScene:
@@ -47,7 +47,7 @@ RuinsOfAlphAerodactylChamber_MapScripts:
 
 RuinsOfAlphAerodactylChamberPuzzle:
 	refreshscreen
-	setval UNOWNPUZZLE_AERODACTYL
+	writebyte UNOWNPUZZLE_AERODACTYL
 	special UnownPuzzle
 	closetext
 	iftrue .PuzzleComplete
@@ -81,7 +81,7 @@ RuinsOfAlphAerodactylChamberDescriptionSign:
 RuinsOfAlphAerodactylChamberWallPatternLeft:
 	opentext
 	writetext RuinsOfAlphAerodactylChamberWallPatternLeftText
-	setval UNOWNWORDS_LIGHT
+	writebyte UNOWNWORDS_LIGHT
 	special DisplayUnownWords
 	closetext
 	end
@@ -91,7 +91,7 @@ RuinsOfAlphAerodactylChamberWallPatternRight:
 	iftrue .WallOpen
 	opentext
 	writetext RuinsOfAlphAerodactylChamberWallPatternRightText
-	setval UNOWNWORDS_LIGHT
+	writebyte UNOWNWORDS_LIGHT
 	special DisplayUnownWords
 	closetext
 	end

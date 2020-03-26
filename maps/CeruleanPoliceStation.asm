@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const CERULEANPOLICESTATION_FISHING_GURU
 	const CERULEANPOLICESTATION_POKEFAN_F
 	const CERULEANPOLICESTATION_DIGLETT

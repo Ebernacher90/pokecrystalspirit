@@ -61,8 +61,7 @@ INCLUDE "engine/pokemon/mon_menu.asm"
 INCLUDE "engine/overworld/select_menu.asm"
 INCLUDE "engine/events/elevator.asm"
 INCLUDE "engine/events/bug_contest/contest.asm"
-INCLUDE "engine/events/repel.asm"
-INCLUDE "engine/events/hidden_item.asm"
+INCLUDE "engine/events/misc_scripts_2.asm"
 INCLUDE "engine/events/std_collision.asm"
 INCLUDE "engine/events/bug_contest/judging.asm"
 INCLUDE "engine/events/pokerus/apply_pokerus_tick.asm"
@@ -88,6 +87,7 @@ INCLUDE "engine/events/daycare.asm"
 INCLUDE "engine/events/print_unown.asm"
 INCLUDE "engine/events/print_photo.asm"
 INCLUDE "engine/pokemon/breeding.asm"
+INCLUDE "gfx/tilesets.asm"
 
 
 SECTION "Roofs", ROMX
@@ -262,9 +262,9 @@ INCLUDE "data/pokemon/base_stats.asm"
 INCLUDE "data/pokemon/names.asm"
 INCLUDE "data/pokemon/unused_pic_banks.asm"
 
-UnusedEggFrontpic::
+UnknownEggPic::
 ; Another egg pic. This is shifted up a few pixels.
-INCBIN "gfx/pokemon/egg/unused_front.2bpp.lz"
+INCBIN "gfx/unknown/unknown_egg.2bpp.lz"
 
 
 SECTION "Crystal Phone Text", ROMX
@@ -332,6 +332,10 @@ INCLUDE "engine/rtc/timeset.asm"
 INCLUDE "engine/pokegear/pokegear.asm"
 INCLUDE "engine/events/fish.asm"
 INCLUDE "engine/games/slot_machine.asm"
+
+SECTION "Battle Weather Images", ROMX
+
+INCLUDE "gfx/weather_images.asm"
 
 
 SECTION "Phone Scripts 1", ROMX
@@ -518,8 +522,6 @@ INCLUDE "engine/events/npc_trade.asm"
 INCLUDE "engine/events/mom_phone.asm"
 
 
-SECTION "mobile40", ROMX
-
 INCLUDE "mobile/mobile_40.asm"
 
 
@@ -534,7 +536,7 @@ INCLUDE "mobile/mobile_41.asm"
 INCLUDE "engine/gfx/load_overworld_font.asm"
 
 
-SECTION "mobile42", ROMX
+SECTION "Mobile 42", ROMX
 
 INCLUDE "mobile/mobile_42.asm"
 
@@ -551,15 +553,8 @@ INCLUDE "engine/movie/unused_title.asm"
 INCLUDE "engine/movie/title.asm"
 
 
-SECTION "mobile45", ROMX
-
 INCLUDE "mobile/mobile_45.asm"
-INCLUDE "mobile/mobile_45_sprite_engine.asm"
-INCLUDE "mobile/mobile_45_2.asm"
-INCLUDE "mobile/mobile_45_stadium.asm"
 
-
-SECTION "mobile46", ROMX
 
 INCLUDE "mobile/mobile_46.asm"
 
@@ -575,7 +570,7 @@ INCLUDE "mobile/mobile_5b.asm"
 INCLUDE "engine/link/link_trade.asm"
 
 
-SECTION "mobile5C", ROMX
+SECTION "Mobile 5C", ROMX
 
 INCLUDE "mobile/mobile_5c.asm"
 
@@ -604,12 +599,12 @@ SECTION "UpdateBattleHUDs", ROMX
 INCLUDE "engine/battle/update_battle_huds.asm"
 
 
-SECTION "mobile5E", ROMX
+SECTION "Mobile 5E", ROMX
 
 INCLUDE "mobile/mobile_5e.asm"
 
 
-SECTION "mobile5F", ROMX
+SECTION "Mobile 5F", ROMX
 
 INCLUDE "mobile/mobile_5f.asm"
 
@@ -720,10 +715,8 @@ INCLUDE "engine/events/odd_egg.asm"
 
 SECTION "Mobile Stadium 2", ROMX
 
-if DEF(_CRYSTAL_AU)
-INCBIN "mobile/stadium/stadium2_au.bin"
-elif DEF(_CRYSTAL11)
-INCBIN "mobile/stadium/stadium2_11.bin"
+if DEF(_CRYSTAL11)
+INCBIN "mobile/stadium/stadium2_2.bin"
 else
-INCBIN "mobile/stadium/stadium2.bin"
+INCBIN "mobile/stadium/stadium2_1.bin"
 endc

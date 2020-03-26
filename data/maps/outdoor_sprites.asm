@@ -29,6 +29,7 @@ OutdoorSprites:
 	dw NewBarkGroupSprites
 	dw SaffronGroupSprites
 	dw CherrygroveGroupSprites
+	dw GlobalTerminalSprites
 
 PalletGroupSprites:
 	db SPRITE_SUICUNE
@@ -455,6 +456,7 @@ AzaleaGroupSprites:
 	db SPRITE_FRUIT_TREE
 	db SPRITE_SLOWPOKE
 
+GlobalTerminalSprites:
 GoldenrodGroupSprites:
 	db SPRITE_SUICUNE
 	db SPRITE_SILVER_TROPHY
@@ -667,3 +669,4 @@ CableClubGroupSprites:
 	db SPRITE_FISHING_GURU
 	db SPRITE_POKE_BALL
 	db SPRITE_POKEDEX
+	

@@ -1,8 +1,8 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const MOUNTMORTARB1F_POKE_BALL1
 	const MOUNTMORTARB1F_POKE_BALL2
 	const MOUNTMORTARB1F_BOULDER
-	const MOUNTMORTARB1F_KIYO
+	const MOUNTMORTARB1F_BLACK_BELT
 	const MOUNTMORTARB1F_POKE_BALL3
 	const MOUNTMORTARB1F_POKE_BALL4
 	const MOUNTMORTARB1F_POKE_BALL5
@@ -19,34 +19,34 @@ MountMortarB1FKiyoScript:
 	iftrue .GotTyrogue
 	checkevent EVENT_BEAT_BLACKBELT_KIYO
 	iftrue .BeatKiyo
-	writetext MountMortarB1FKiyoIntroText
+	writetext UnknownText_0x7e24d
 	waitbutton
 	closetext
-	winlosstext MountMortarB1FKiyoWinText, 0
+	winlosstext UnknownText_0x7e2a9, 0
 	loadtrainer BLACKBELT_T, KIYO
 	startbattle
 	reloadmapafterbattle
 	setevent EVENT_BEAT_BLACKBELT_KIYO
 	opentext
 .BeatKiyo:
-	writetext MountMortarB1FTyrogueRewardText
-	promptbutton
+	writetext UnknownText_0x7e2c0
+	buttonsound
 	waitsfx
-	readvar VAR_PARTYCOUNT
+	checkcode VAR_PARTYCOUNT
 	ifequal PARTY_LENGTH, .NoRoom
-	writetext MountMortarB1FReceiveMonText
+	writetext UnknownText_0x7e355
 	playsound SFX_CAUGHT_MON
 	waitsfx
 	givepoke TYROGUE, 10
 	setevent EVENT_GOT_TYROGUE_FROM_KIYO
 .GotTyrogue:
-	writetext MountMortarB1FKiyoGotTyrogueText
+	writetext UnknownText_0x7e36a
 	waitbutton
 	closetext
 	end
 
 .NoRoom:
-	writetext MountMortarB1FKiyoFullPartyText
+	writetext UnknownText_0x7e3df
 	waitbutton
 	closetext
 	end
@@ -72,7 +72,7 @@ MountMortarB1FPPUp:
 MountMortarB1FHiddenMaxRevive:
 	hiddenitem MAX_REVIVE, EVENT_MOUNT_MORTAR_B1F_HIDDEN_MAX_REVIVE
 
-MountMortarB1FKiyoIntroText:
+UnknownText_0x7e24d:
 	text "Hey!"
 
 	para "I am the KARATE"
@@ -87,12 +87,12 @@ MountMortarB1FKiyoIntroText:
 	para "Hwaaarggh!"
 	done
 
-MountMortarB1FKiyoWinText:
+UnknownText_0x7e2a9:
 	text "Waaaarggh!"
 	line "I'm beaten!"
 	done
 
-MountMortarB1FTyrogueRewardText:
+UnknownText_0x7e2c0:
 	text "I… I'm crushed…"
 
 	para "My training is"
@@ -108,12 +108,12 @@ MountMortarB1FTyrogueRewardText:
 	line "fighting #MON."
 	done
 
-MountMortarB1FReceiveMonText:
+UnknownText_0x7e355:
 	text "<PLAYER> received"
 	line "TYROGUE."
 	done
 
-MountMortarB1FKiyoGotTyrogueText:
+UnknownText_0x7e36a:
 	text "TYROGUE is a"
 	line "fighting-type."
 
@@ -127,7 +127,7 @@ MountMortarB1FKiyoGotTyrogueText:
 	para "Farewell!"
 	done
 
-MountMortarB1FKiyoFullPartyText:
+UnknownText_0x7e3df:
 	text "You have no room"
 	line "in your party!"
 	done

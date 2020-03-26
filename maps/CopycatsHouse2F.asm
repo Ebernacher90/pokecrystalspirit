@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const COPYCATSHOUSE2F_COPYCAT1 ; if player is male
 	const COPYCATSHOUSE2F_DODRIO
 	const COPYCATSHOUSE2F_FAIRYDOLL ; lost item
@@ -17,7 +17,7 @@ CopycatsHouse2F_MapScripts:
 	iftrue .Female
 	disappear COPYCATSHOUSE2F_COPYCAT2
 	appear COPYCATSHOUSE2F_COPYCAT1
-	sjump .Done
+	jump .Done
 .Female:
 	disappear COPYCATSHOUSE2F_COPYCAT1
 	appear COPYCATSHOUSE2F_COPYCAT2
@@ -37,7 +37,7 @@ Copycat:
 	applymovement COPYCATSHOUSE2F_COPYCAT1, CopycatSpinAroundMovementData
 	faceplayer
 	variablesprite SPRITE_COPYCAT, SPRITE_CHRIS
-	sjump .Default_Merge_1
+	jump .Default_Merge_1
 
 .Default_Female_1:
 	applymovement COPYCATSHOUSE2F_COPYCAT2, CopycatSpinAroundMovementData
@@ -51,7 +51,7 @@ Copycat:
 	checkflag ENGINE_PLAYER_IS_FEMALE
 	iftrue .Default_Female_2a
 	writetext CopycatText_Male_1
-	sjump .Default_Merge_2a
+	jump .Default_Merge_2a
 
 .Default_Female_2a:
 	writetext CopycatText_Female_1
@@ -61,7 +61,7 @@ Copycat:
 	checkflag ENGINE_PLAYER_IS_FEMALE
 	iftrue .Default_Female_3a
 	applymovement COPYCATSHOUSE2F_COPYCAT1, CopycatSpinAroundMovementData
-	sjump .Default_Merge_3a
+	jump .Default_Merge_3a
 
 .Default_Female_3a:
 	applymovement COPYCATSHOUSE2F_COPYCAT2, CopycatSpinAroundMovementData
@@ -80,7 +80,7 @@ Copycat:
 	checkflag ENGINE_PLAYER_IS_FEMALE
 	iftrue .Default_Female_2b
 	writetext CopycatText_Male_2
-	sjump .Default_Merge_2b
+	jump .Default_Merge_2b
 
 .Default_Female_2b:
 	writetext CopycatText_Female_2
@@ -90,7 +90,7 @@ Copycat:
 	checkflag ENGINE_PLAYER_IS_FEMALE
 	iftrue .Default_Female_3b
 	applymovement COPYCATSHOUSE2F_COPYCAT1, CopycatSpinAroundMovementData
-	sjump .Default_Merge_3b
+	jump .Default_Merge_3b
 
 .Default_Female_3b:
 	applymovement COPYCATSHOUSE2F_COPYCAT2, CopycatSpinAroundMovementData
@@ -108,17 +108,17 @@ Copycat:
 .ReturnLostItem:
 	opentext
 	writetext CopycatText_GiveDoll
-	promptbutton
+	buttonsound
 	takeitem LOST_ITEM
 	setevent EVENT_RETURNED_LOST_ITEM_TO_COPYCAT
 	clearevent EVENT_COPYCATS_HOUSE_2F_DOLL
-	sjump .GivePass
+	jump .GivePass
 
 .TryGivePassAgain:
 	opentext
 .GivePass:
 	writetext CopycatText_GivePass
-	promptbutton
+	buttonsound
 	verbosegiveitem PASS
 	iffalse .Cancel
 	setevent EVENT_GOT_PASS_FROM_COPYCAT
@@ -133,7 +133,7 @@ Copycat:
 	applymovement COPYCATSHOUSE2F_COPYCAT1, CopycatSpinAroundMovementData
 	faceplayer
 	variablesprite SPRITE_COPYCAT, SPRITE_CHRIS
-	sjump .GotPass_Merge_1
+	jump .GotPass_Merge_1
 
 .GotPass_Female_1:
 	applymovement COPYCATSHOUSE2F_COPYCAT2, CopycatSpinAroundMovementData
@@ -145,7 +145,7 @@ Copycat:
 	checkflag ENGINE_PLAYER_IS_FEMALE
 	iftrue .GotPass_Female_2
 	writetext CopycatText_Male_3
-	sjump .GotPass_Merge_2
+	jump .GotPass_Merge_2
 
 .GotPass_Female_2:
 	writetext CopycatText_Female_3
@@ -155,7 +155,7 @@ Copycat:
 	checkflag ENGINE_PLAYER_IS_FEMALE
 	iftrue .GotPass_Female_3
 	applymovement COPYCATSHOUSE2F_COPYCAT1, CopycatSpinAroundMovementData
-	sjump .GotPass_Merge_3
+	jump .GotPass_Merge_3
 
 .GotPass_Female_3:
 	applymovement COPYCATSHOUSE2F_COPYCAT2, CopycatSpinAroundMovementData
@@ -174,7 +174,7 @@ CopycatsDodrio:
 	opentext
 	writetext CopycatsDodrioText1
 	cry DODRIO
-	promptbutton
+	buttonsound
 	writetext CopycatsDodrioText2
 	waitbutton
 	closetext

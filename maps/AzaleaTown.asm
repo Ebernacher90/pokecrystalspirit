@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const AZALEATOWN_AZALEA_ROCKET1
 	const AZALEATOWN_GRAMPS
 	const AZALEATOWN_TEACHER
@@ -43,7 +43,7 @@ AzaleaTownRivalBattleScene1:
 	appear AZALEATOWN_SILVER
 	applymovement AZALEATOWN_SILVER, AzaleaTownRivalBattleApproachMovement1
 	turnobject PLAYER, DOWN
-	sjump AzaleaTownRivalBattleScript
+	jump AzaleaTownRivalBattleScript
 
 AzaleaTownRivalBattleScene2:
 	turnobject PLAYER, RIGHT
@@ -70,7 +70,7 @@ AzaleaTownRivalBattleScript:
 	startbattle
 	dontrestartmapmusic
 	reloadmapafterbattle
-	sjump .AfterBattle
+	jump .AfterBattle
 
 .Totodile:
 	winlosstext AzaleaTownRivalWinText, AzaleaTownRivalLossText
@@ -79,7 +79,7 @@ AzaleaTownRivalBattleScript:
 	startbattle
 	dontrestartmapmusic
 	reloadmapafterbattle
-	sjump .AfterBattle
+	jump .AfterBattle
 
 .Chikorita:
 	winlosstext AzaleaTownRivalWinText, AzaleaTownRivalLossText
@@ -88,7 +88,7 @@ AzaleaTownRivalBattleScript:
 	startbattle
 	dontrestartmapmusic
 	reloadmapafterbattle
-	sjump .AfterBattle
+	jump .AfterBattle
 
 .AfterBattle:
 	playmusic MUSIC_RIVAL_AFTER
@@ -157,10 +157,10 @@ AzaleaTownCelebiScene:
 	applymovement PLAYER, AzaleaTownPlayerLeavesKurtsHouseMovement
 	opentext
 	writetext AzaleaTownKurtText1
-	promptbutton
+	buttonsound
 	turnobject AZALEATOWN_KURT_OUTSIDE, RIGHT
 	writetext AzaleaTownKurtText2
-	promptbutton
+	buttonsound
 	writetext AzaleaTownKurtText3
 	waitbutton
 	verbosegiveitem GS_BALL

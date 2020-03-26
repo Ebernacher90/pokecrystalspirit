@@ -124,16 +124,14 @@ DisplayDexEntry:
 	jr z, .skip_height
 	push hl
 	push de
-; Print the height, with two of the four digits in front of the decimal point
 	ld hl, sp+$0
 	ld d, h
 	ld e, l
 	hlcoord 12, 7
-	lb bc, 2, (2 << 4) | 4
+	lb bc, 2, PRINTNUM_MONEY | 4
 	call PrintNum
-; Replace the decimal point with a ft symbol
 	hlcoord 14, 7
-	ld [hl], $5e
+	ld [hl], $5e ; ft symbol
 	pop af
 	pop hl
 
@@ -150,12 +148,11 @@ DisplayDexEntry:
 	or d
 	jr z, .skip_weight
 	push de
-; Print the weight, with four of the five digits in front of the decimal point
 	ld hl, sp+$0
 	ld d, h
 	ld e, l
 	hlcoord 11, 9
-	lb bc, 2, (4 << 4) | 5
+	lb bc, 2, PRINTNUM_RIGHTALIGN | 5
 	call PrintNum
 	pop de
 

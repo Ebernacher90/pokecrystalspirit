@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const CIANWOODCITY_STANDING_YOUNGSTER
 	const CIANWOODCITY_POKEFAN_M
 	const CIANWOODCITY_LASS
@@ -86,7 +86,7 @@ CianwoodCityChucksWife:
 	checkevent EVENT_GOT_HM02_FLY
 	iftrue .GotFly
 	writetext ChucksWifeEasierToFlyText
-	promptbutton
+	buttonsound
 	checkevent EVENT_BEAT_CHUCK
 	iftrue .BeatChuck
 	writetext ChucksWifeBeatChuckText
@@ -96,12 +96,12 @@ CianwoodCityChucksWife:
 
 .BeatChuck:
 	writetext ChucksWifeGiveHMText
-	promptbutton
+	buttonsound
 	verbosegiveitem HM_FLY
 	iffalse .Done
 	setevent EVENT_GOT_HM02_FLY
 	writetext ChucksWifeFlySpeechText
-	promptbutton
+	buttonsound
 .GotFly:
 	writetext ChucksWifeChubbyText
 	waitbutton

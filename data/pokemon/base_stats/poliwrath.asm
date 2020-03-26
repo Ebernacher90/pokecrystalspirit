@@ -1,6 +1,6 @@
 	db POLIWRATH ; 062
 
-	db  90,  85,  95,  70,  70,  90
+	db  90,  95,  95,  70,  70,  90
 	;   hp  atk  def  spd  sat  sdf
 
 	db WATER, FIGHTING ; type
@@ -12,7 +12,7 @@
 	db 20 ; step cycles to hatch
 	db 5 ; unknown 2
 	INCBIN "gfx/pokemon/poliwrath/front.dimensions"
-	dw NULL, NULL ; unused (beta front/back pics)
+	db 0, 0, 0, 0 ; padding
 	db GROWTH_MEDIUM_SLOW ; growth rate
 	dn EGG_WATER_1, EGG_WATER_1 ; egg groups
 

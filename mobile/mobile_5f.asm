@@ -11,7 +11,7 @@ Function17c000:
 
 	ld hl, HaveWantMap
 	decoord 0, 0
-	bccoord 0, 0, wAttrmap
+	bccoord 0, 0, wAttrMap
 
 	ld a, SCREEN_HEIGHT
 .y
@@ -68,7 +68,7 @@ Function17c000:
 	ld bc, $80 tiles
 	call CopyBytes
 
-	ld hl, HaveWantGFX + $80 tiles
+	ld hl, HaveWantGFX + $800
 	ld de, vTiles1
 	ld bc, $10 tiles
 	call CopyBytes
@@ -289,13 +289,13 @@ Function17d0f3:
 	farcall GetCaughtGender
 	ld a, c
 	ld [wOTTrademonCaughtData], a
-	call SpeechTextbox
+	call SpeechTextBox
 	call FadeToMenu
 	farcall Function10804d
 	farcall Function17d1f1
 	ld a, $1
 	ld [wForceEvolution], a
-	ld a, LINK_TRADECENTER
+	ld a, $2
 	ld [wLinkMode], a
 	farcall EvolvePokemon
 	xor a
@@ -520,7 +520,7 @@ Function17d2ce:
 .asm_17d2e2
 	call Function17d314
 	ret c
-	call SpeechTextbox
+	call SpeechTextBox
 	call FadeToMenu
 	ldh a, [rSVBK]
 	push af
@@ -625,7 +625,7 @@ Function17d370:
 	call CopyBytes
 	xor a
 	ldh [rVBK], a
-	ld hl, PostalMarkGFX
+	ld hl, GFX_17eb7e
 	ld de, vTiles2 tile $60
 	ld bc, 1 tiles
 	call CopyBytes
@@ -677,7 +677,7 @@ Function17d405:
 	push af
 	ld a, $5
 	ldh [rSVBK], a
-	ld hl, PokemonNewsPalettes
+	ld hl, Palette_17eff6
 	ld de, wBGPals1
 	ld bc, 8 palettes
 	call CopyBytes
@@ -712,13 +712,13 @@ Jumptable_17d483:
 	dw Function17e427
 
 Function17d48d:
-	ld hl, PokemonNewsPalettes
+	ld hl, Palette_17eff6
 	ld de, wc608
 	ld bc, $40
 	call CopyBytes
-	ld hl, PokemonNewsTileAttrmap
+	ld hl, TileAttrmap_17eb8e
 	decoord 0, 0
-	bccoord 0, 0, wAttrmap
+	bccoord 0, 0, wAttrMap
 	ld a, $12
 .asm_17d4a4
 	push af
@@ -1378,7 +1378,7 @@ Function17d85d:
 	xor a
 	ld [wcf66], a
 	farcall Function118329
-	ld a, [wMobileErrorCodeBuffer]
+	ld a, [wc300]
 	and a
 	jr z, .asm_17d8fe
 	cp $a
@@ -1412,7 +1412,7 @@ Function17d902:
 	xor a
 	ld [wcf66], a
 	farcall Function11837a
-	ld a, [wMobileErrorCodeBuffer]
+	ld a, [wc300]
 	and a
 	jr z, .asm_17d936
 	cp $a
@@ -1610,7 +1610,7 @@ endr
 Unknown_17da94:
 x = 0
 rept 8
-	db $ff ^ (1 << x)
+	db (1 << x) ^ $ff
 x = x + 1
 endr
 
@@ -2664,7 +2664,7 @@ Function17e165:
 	pop hl
 	jr c, .asm_17e195
 	push hl
-	ld hl, wNumPCItems
+	ld hl, wPCItems
 	call CheckItem
 	pop hl
 	jr c, .asm_17e195
@@ -2870,11 +2870,11 @@ Function17e2a7:
 	xor a
 	ld [wcf66], a
 	farcall Function118233
-	ld de, PostalMarkGFX
+	ld de, GFX_17eb7e
 	ld hl, vTiles2 tile $60
-	lb bc, BANK(PostalMarkGFX), 1
+	lb bc, BANK(GFX_17eb7e), 1
 	call Get2bpp
-	ld a, [wMobileErrorCodeBuffer]
+	ld a, [wc300]
 	and a
 	jr z, .asm_17e2d8
 	cp $a
@@ -3286,7 +3286,7 @@ Function17e5af:
 	ld h, a
 	bccoord 0, 0
 	add hl, bc
-	ld bc, $ffec
+	ld bc, hFFEC
 	add hl, bc
 	ld a, [wMobileInactivityTimerSeconds]
 	ld c, a
@@ -3486,7 +3486,7 @@ Function17e691:
 
 .asm_17e6c7
 	pop hl
-	bccoord 0, 0, wAttrmap
+	bccoord 0, 0, wAttrMap
 	add hl, bc
 	ld [hl], a
 	pop hl
@@ -3509,7 +3509,7 @@ Function17e6de:
 	ld l, a
 	ld a, [wc709]
 	ld h, a
-	decoord 0, 0, wAttrmap
+	decoord 0, 0, wAttrMap
 	add hl, de
 	pop af
 	ld b, $7
@@ -3530,14 +3530,45 @@ Function17e6de:
 PokemonNewsGFX:
 INCBIN "gfx/mobile/pokemon_news.2bpp"
 
-PostalMarkGFX:
-INCBIN "gfx/font/postal_mark.2bpp"
+GFX_17eb7e:
+INCBIN "gfx/unknown/17eb7e.2bpp"
 
-PokemonNewsTileAttrmap:
-INCBIN "gfx/mobile/pokemon_news.bin"
+TileAttrmap_17eb8e:
+INCBIN "gfx/unknown/17eb8e.attrmap"
 
-PokemonNewsPalettes:
-INCLUDE "gfx/mobile/pokemon_news.pal"
+Palette_17eff6:
+	RGB 24,  9,  8
+	RGB  4,  9, 18
+	RGB 18, 18, 12
+	RGB  0,  0,  0
+	RGB 24, 24, 18
+	RGB 18, 18, 12
+	RGB  4,  9, 18
+	RGB  0,  0,  0
+	RGB 31, 31, 31
+	RGB 23, 11, 10
+	RGB 13,  6,  5
+	RGB  0,  0,  0
+	RGB 31, 31, 31
+	RGB 15, 25,  5
+	RGB 10, 20,  0
+	RGB  0,  0,  0
+	RGB 31, 31, 31
+	RGB 20, 28, 20
+	RGB 10, 18, 15
+	RGB  0,  0,  0
+	RGB 31, 31, 31
+	RGB 22, 22, 12
+	RGB 17, 12,  5
+	RGB  0,  0,  0
+	RGB  5,  5, 16
+	RGB  8, 19, 28
+	RGB  0,  0,  0
+	RGB 31, 31, 31
+	RGB 31, 31, 31
+	RGB 27, 24,  0
+	RGB 24, 16,  3
+	RGB  0,  0,  0
 
 RunMobileScript::
 	ld a, $6
@@ -3584,8 +3615,8 @@ _RunMobileScript:
 	dw Function17f220 ; 5
 	dw Function17f27b ; 6
 	dw Function17f2cb ; 7
-	dw MobileScript_PlayerName ; 8
-	dw MobileScript_Prefecture ; 9
+	dw Function17f2ff ; 8
+	dw Function17f334 ; 9
 	dw Function17f382 ; a
 	dw Function17f3c9 ; b
 	dw Function17f3f0 ; c
@@ -4037,7 +4068,7 @@ Function17f2cb:
 	and a
 	ret
 
-MobileScript_PlayerName:
+Function17f2ff:
 	pop hl
 	push bc
 	ld a, [hli]
@@ -4049,7 +4080,7 @@ MobileScript_PlayerName:
 	ldh [rSVBK], a
 	ld hl, wPlayerName
 	ld de, wc608
-	ld bc, NAME_LENGTH_JAPANESE
+	ld bc, $6
 	call CopyBytes
 	ld a, $4
 	ldh [rSVBK], a
@@ -4066,7 +4097,7 @@ MobileScript_PlayerName:
 	and a
 	ret
 
-MobileScript_Prefecture:
+Function17f334:
 	pop hl
 	push bc
 	ld a, [hli]
@@ -4087,9 +4118,9 @@ MobileScript_Prefecture:
 	jr .asm_17f35d
 
 .asm_17f355
-	ld a, BANK(s5_b2f3)
+	ld a, $5
 	call GetSRAMBank
-	ld a, [s5_b2f3]
+	ld a, [$b2f3]
 
 .asm_17f35d
 	ld c, a
@@ -4130,9 +4161,9 @@ Function17f382:
 	jr .asm_17f3ab
 
 .asm_17f3a3
-	ld a, BANK(s5_b2f4)
+	ld a, $5
 	call GetSRAMBank
-	ld de, s5_b2f4
+	ld de, $b2f4
 
 .asm_17f3ab
 	ld a, PRINTNUM_LEADINGZEROS | 2
@@ -4164,7 +4195,7 @@ Function17f3c9:
 	push hl
 	ld hl, wc708
 	ld de, wcd36
-	ld bc, 12
+	ld bc, $c
 	call CopyBytes
 	pop bc
 	pop de
@@ -4219,7 +4250,7 @@ Function17f41d:
 	push af
 	ld l, c
 	ld h, b
-	ld bc, -wTilemap + $10000
+	ld bc, -wTileMap + $10000
 	add hl, bc
 	ld de, -SCREEN_WIDTH
 	ld c, $1
@@ -4449,7 +4480,7 @@ DisplayMobileError:
 	ld a, [wc303]
 	bit 7, a
 	jr nz, .quit
-	farcall HDMATransferAttrmapAndTilemapToWRAMBank3
+	farcall HDMATransferAttrMapAndTileMapToWRAMBank3
 	jr .loop
 
 .quit
@@ -4457,35 +4488,35 @@ DisplayMobileError:
 	ret
 
 .deinit
-	ld a, [wMobileErrorCodeBuffer]
+	ld a, [wc300]
 	cp $22
 	jr z, .asm_17f597
 	cp $31
 	jr z, .asm_17f58a
 	cp $33
 	ret nz
-	ld a, [wMobileErrorCodeBuffer + 1]
+	ld a, [wc301]
 	cp $1
 	ret nz
-	ld a, [wMobileErrorCodeBuffer + 2]
+	ld a, [wc302]
 	cp $2
 	ret nz
 	jr .asm_17f5a1
 
 .asm_17f58a
-	ld a, [wMobileErrorCodeBuffer + 1]
+	ld a, [wc301]
 	cp $3
 	ret nz
-	ld a, [wMobileErrorCodeBuffer + 2]
+	ld a, [wc302]
 	and a
 	ret nz
 	jr .asm_17f5a1
 
 .asm_17f597
-	ld a, [wMobileErrorCodeBuffer + 1]
+	ld a, [wc301]
 	and a
 	ret nz
-	ld a, [wMobileErrorCodeBuffer + 2]
+	ld a, [wc302]
 	and a
 	ret nz
 
@@ -4514,7 +4545,7 @@ Function17f5c3:
 
 Function17f5d2:
 	call Function17f5e4
-	farcall HDMATransferAttrmapAndTilemapToWRAMBank3
+	farcall HDMATransferAttrMapAndTileMapToWRAMBank3
 	call SetPalettes
 	ld a, $1
 	ld [wc303], a
@@ -4533,7 +4564,7 @@ Function17f5e4:
 	ld bc, SCREEN_WIDTH * SCREEN_HEIGHT
 	call ByteFill
 	ld a, $6
-	hlcoord 0, 0, wAttrmap
+	hlcoord 0, 0, wAttrMap
 	ld bc, SCREEN_WIDTH * SCREEN_HEIGHT
 	call ByteFill
 	hlcoord 2, 1
@@ -4545,7 +4576,7 @@ Function17f5e4:
 	ld c, $10
 	call Function3eea
 	hlcoord 3, 2
-	ld de, MobileCommunicationErrorText
+	ld de, String_17f6dc
 	call PlaceString
 	call Function17ff3c
 	jr nc, .asm_17f632
@@ -4553,7 +4584,7 @@ Function17f5e4:
 	call Function17f6b7
 
 .asm_17f632
-	ld a, [wMobileErrorCodeBuffer]
+	ld a, [wc300]
 	cp $d0
 	jr nc, .asm_17f684
 	cp $10
@@ -4563,12 +4594,12 @@ Function17f5e4:
 	jr nc, .asm_17f679
 	ld e, a
 	ld d, $0
-	ld hl, MobileErrorCodeTable
+	ld hl, Table_17f706
 	add hl, de
 	add hl, de
-	ld a, [wMobileErrorCodeBuffer + 1]
+	ld a, [wc301]
 	ld e, a
-	ld a, [wMobileErrorCodeBuffer + 2]
+	ld a, [wc302]
 	ld d, a
 	ld a, [hli]
 	ld c, a
@@ -4633,17 +4664,17 @@ Function17f5e4:
 	ret
 
 Table_17f699:
-	dw MobileErrorCode_101_000_Text
-	dw MobileErrorCode_101_001_Text
-	dw MobileErrorCode_101_002_Text
-	dw MobileErrorCode_101_003_Text
-	dw MobileErrorCode_101_004_Text
-	dw MobileErrorCode_101_005_Text
-	dw MobileErrorCode_101_006_Text
-	dw MobileErrorCode_101_007_Text
-	dw MobileErrorCode_101_008_Text
-	dw MobileErrorCode_101_009_Text
-	dw MobileErrorCode_101_009_Text
+	dw String_17fedf
+	dw String_17fdd9
+	dw String_17fdd9
+	dw String_17fe03
+	dw String_17fd84
+	dw String_17fe63
+	dw String_17fdb2
+	dw String_17fe4b
+	dw String_17fe03
+	dw String_17fe03
+	dw String_17fe03
 
 Palette_17f6af:
 	RGB  5,  5, 16
@@ -4652,13 +4683,13 @@ Palette_17f6af:
 	RGB 31, 31, 31
 
 Function17f6b7:
-	ld a, [wMobileErrorCodeBuffer]
+	ld a, [wc300]
 	call .bcd_two_digits
 	inc hl
-	ld a, [wMobileErrorCodeBuffer + 2]
+	ld a, [wc302]
 	and $f
 	call .bcd_digit
-	ld a, [wMobileErrorCodeBuffer + 1]
+	ld a, [wc301]
 	call .bcd_two_digits
 	ret
 
@@ -4675,7 +4706,7 @@ Function17f6b7:
 	ld [hli], a
 	ret
 
-MobileCommunicationErrorText:
+String_17f6dc:
 	db "つうしんエラー　　　ー@"
 
 String_17f6e8:
@@ -4684,161 +4715,159 @@ String_17f6e8:
 	next "かくにん　してください"
 	db   "@"
 
-MobileErrorCodeTable:
-	dw MobileErrorCodes_10
-	dw MobileErrorCodes_11
-	dw MobileErrorCodes_12
-	dw MobileErrorCodes_13
-	dw MobileErrorCodes_14
-	dw MobileErrorCodes_15
-	dw MobileErrorCodes_16
-	dw MobileErrorCodes_17
-	dw MobileErrorCodes_20
-	dw MobileErrorCodes_20
-	dw MobileErrorCodes_20
-	dw MobileErrorCodes_20
-	dw MobileErrorCodes_20
-	dw MobileErrorCodes_20
-	dw MobileErrorCodes_20
-	dw MobileErrorCodes_20
-	dw MobileErrorCodes_20
-	dw MobileErrorCodes_21
-	dw MobileErrorCodes_22
-	dw MobileErrorCodes_23
-	dw MobileErrorCodes_24
-	dw MobileErrorCodes_25
-	dw MobileErrorCodes_26
-	dw MobileErrorCodes_30
-	dw MobileErrorCodes_30
-	dw MobileErrorCodes_30
-	dw MobileErrorCodes_30
-	dw MobileErrorCodes_30
-	dw MobileErrorCodes_30
-	dw MobileErrorCodes_30
-	dw MobileErrorCodes_30
-	dw MobileErrorCodes_30
-	dw MobileErrorCodes_30
-	dw MobileErrorCodes_31
-	dw MobileErrorCodes_32
-	dw MobileErrorCodes_33
+Table_17f706:
+	dw Unknown_17f74e
+	dw Unknown_17f753
+	dw Unknown_17f758
+	dw Unknown_17f75d
+	dw Unknown_17f762
+	dw Unknown_17f767
+	dw Unknown_17f778
+	dw Unknown_17f77d
+	dw Unknown_17f782
+	dw Unknown_17f782
+	dw Unknown_17f782
+	dw Unknown_17f782
+	dw Unknown_17f782
+	dw Unknown_17f782
+	dw Unknown_17f782
+	dw Unknown_17f782
+	dw Unknown_17f782
+	dw Unknown_17f787
+	dw Unknown_17f78c
+	dw Unknown_17f791
+	dw Unknown_17f796
+	dw Unknown_17f79b
+	dw Unknown_17f7a0
+	dw Unknown_17f7a5
+	dw Unknown_17f7a5
+	dw Unknown_17f7a5
+	dw Unknown_17f7a5
+	dw Unknown_17f7a5
+	dw Unknown_17f7a5
+	dw Unknown_17f7a5
+	dw Unknown_17f7a5
+	dw Unknown_17f7a5
+	dw Unknown_17f7a5
+	dw Unknown_17f7ea
+	dw Unknown_17f7ff
+	dw Unknown_17f844
 
-MobileErrorCodes_10: db 1
-	dw $000, MobileErrorCode_10_000_Text
+Unknown_17f74e: db 1
+	dbbw $0, $0, String_17f891
 
-MobileErrorCodes_11: db 1
-	dw $000, MobileErrorCode_11_000_Text
+Unknown_17f753: db 1
+	dbbw $0, $0, String_17f8d1
 
-MobileErrorCodes_12: db 1
-	dw $000, MobileErrorCode_12_000_Text
+Unknown_17f758: db 1
+	dbbw $0, $0, String_17f913
 
-MobileErrorCodes_13: db 1
-	dw $000, MobileErrorCode_13_000_Text
+Unknown_17f75d: db 1
+	dbbw $0, $0, String_17f8d1
 
-MobileErrorCodes_14: db 1
-	dw $000, MobileErrorCode_14_000_Text
+Unknown_17f762: db 1
+	dbbw $0, $0, String_17fa71
 
-MobileErrorCodes_15: db 4
-	dw $000, MobileErrorCode_15_000_Text
-	dw $001, MobileErrorCode_15_001_Text
-	dw $002, MobileErrorCode_15_002_Text
-	dw $003, MobileErrorCode_15_003_Text
+Unknown_17f767: db 4
+	dbbw $0, $0, String_17f946
+	dbbw $1, $0, String_17f946
+	dbbw $2, $0, String_17f946
+	dbbw $3, $0, String_17f946
 
-MobileErrorCodes_16: db 1
-	dw $000, MobileErrorCode_CommuncationErrorText
+Unknown_17f778: db 1
+	dbbw $0, $0, String_17f98e
 
-MobileErrorCodes_17: db 1
-	dw $000, MobileErrorCode_CommuncationErrorText
+Unknown_17f77d: db 1
+	dbbw $0, $0, String_17f98e
 
-MobileErrorCodes_20: db 1
-	dw $000, MobileErrorCode_CommuncationErrorText
+Unknown_17f782: db 1
+	dbbw $0, $0, String_17f98e
 
-MobileErrorCodes_21: db 1
-	dw $000, MobileErrorCode_CommuncationErrorText
+Unknown_17f787: db 1
+	dbbw $0, $0, String_17f98e
 
-MobileErrorCodes_22: db 1
-	dw $000, MobileErrorCode_22_000_Text
+Unknown_17f78c: db 1
+	dbbw $0, $0, String_17f9d0
 
-MobileErrorCodes_23: db 1
-	dw $000, MobileErrorCode_23_000_Text
+Unknown_17f791: db 1
+	dbbw $0, $0, String_17fa14
 
-MobileErrorCodes_24: db 1
-	dw $000, MobileErrorCode_ServerConnectionFailedText
+Unknown_17f796: db 1
+	dbbw $0, $0, String_17fcbf
 
-MobileErrorCodes_25: db 1
-	dw $000, MobileErrorCode_25_000_Text
+Unknown_17f79b: db 1
+	dbbw $0, $0, String_17fa71
 
-MobileErrorCodes_26: db 1
-	dw $000, MobileErrorCode_26_000_Text
+Unknown_17f7a0: db 1
+	dbbw $0, $0, String_17fbfe
 
-MobileErrorCodes_30: db 17
-	dw $000, MobileErrorCode_CommuncationErrorText
-	dw $221, MobileErrorCode_ServerConnectionFailedText
-	dw $421, MobileErrorCode_ServerConnectionFailedText
-	dw $450, MobileErrorCode_30_450_Text
-	dw $451, MobileErrorCode_ServerConnectionFailedText
-	dw $452, MobileErrorCode_ServerConnectionFailedText
-	dw $500, MobileErrorCode_CommuncationErrorText
-	dw $501, MobileErrorCode_CommuncationErrorText
-	dw $502, MobileErrorCode_CommuncationErrorText
-	dw $503, MobileErrorCode_CommuncationErrorText
-	dw $504, MobileErrorCode_CommuncationErrorText
-	dw $550, MobileErrorCode_30_550_Text
-	dw $551, MobileErrorCode_30_551_Text
-	dw $552, MobileErrorCode_ServerConnectionFailedText
-	dw $553, MobileErrorCode_30_553_Text
-	dw $554, MobileErrorCode_ServerConnectionFailedText
-	dw -1, MobileErrorCode_ServerConnectionFailedText
+Unknown_17f7a5: db 17
+	dbbw $0, $0, String_17f98e
+	dbbw $21, $2, String_17fcbf
+	dbbw $21, $4, String_17fcbf
+	dbbw $50, $4, String_17faf9
+	dbbw $51, $4, String_17fcbf
+	dbbw $52, $4, String_17fcbf
+	dbbw $0, $5, String_17f98e
+	dbbw $1, $5, String_17f98e
+	dbbw $2, $5, String_17f98e
+	dbbw $3, $5, String_17f98e
+	dbbw $4, $5, String_17f98e
+	dbbw $50, $5, String_17faf9
+	dbbw $51, $5, String_17faf9
+	dbbw $52, $5, String_17fcbf
+	dbbw $53, $5, String_17faf9
+	dbbw $54, $5, String_17fcbf
+	dbbw $ff, $ff, String_17fcbf
 
-MobileErrorCodes_31: db 5
-	dw $000, MobileErrorCode_CommuncationErrorText
-	dw $002, MobileErrorCode_31_002_Text
-	dw $003, MobileErrorCode_31_003_Text
-	dw $004, MobileErrorCode_CommuncationErrorText
-	dw -1, MobileErrorCode_ServerConnectionFailedText
+Unknown_17f7ea: db 5
+	dbbw $0, $0, String_17f98e
+	dbbw $2, $0, String_17fb2a
+	dbbw $3, $0, String_17fb6e
+	dbbw $4, $0, String_17f98e
+	dbbw $ff, $ff, String_17fcbf
 
-MobileErrorCodes_32: db 17
-	dw $000, MobileErrorCode_CommuncationErrorText
-	dw $301, MobileErrorCode_CommuncationErrorText
-	dw $302, MobileErrorCode_CommuncationErrorText
-	dw $400, MobileErrorCode_CommuncationErrorText
-	dw $401, MobileErrorCode_CommuncationErrorText
-	dw $403, MobileErrorCode_32_403_Text
-	dw $404, MobileErrorCode_32_404_Text
-	dw $405, MobileErrorCode_CommuncationErrorText
-	dw $406, MobileErrorCode_CommuncationErrorText
-	dw $407, MobileErrorCode_CommuncationErrorText
-	dw $408, MobileErrorCode_32_408_Text
-	dw $500, MobileErrorCode_ServerErrorText
-	dw $501, MobileErrorCode_CommuncationErrorText
-	dw $502, MobileErrorCode_ServerErrorText
-	dw $503, MobileErrorCode_32_503_Text
-	dw $504, MobileErrorCode_ServerErrorText
-	dw -1, MobileErrorCode_ServerErrorText
+Unknown_17f7ff: db 17
+	dbbw $0, $0, String_17f98e
+	dbbw $1, $3, String_17f98e
+	dbbw $2, $3, String_17f98e
+	dbbw $0, $4, String_17f98e
+	dbbw $1, $4, String_17f98e
+	dbbw $3, $4, String_17fbb6
+	dbbw $4, $4, String_17fbb6
+	dbbw $5, $4, String_17f98e
+	dbbw $6, $4, String_17f98e
+	dbbw $7, $4, String_17f98e
+	dbbw $8, $4, String_17fbfe
+	dbbw $0, $5, String_17fa49
+	dbbw $1, $5, String_17f98e
+	dbbw $2, $5, String_17fa49
+	dbbw $3, $5, String_17fab0
+	dbbw $4, $5, String_17fa49
+	dbbw $ff, $ff, String_17fa49
 
-MobileErrorCodes_33: db 19
-	dw $101, MobileErrorCode_33_101_Text
-	dw $102, MobileErrorCode_33_102_Text
-	dw $103, MobileErrorCode_33_103_Text
-	dw $104, MobileErrorCode_33_104_Text
-	dw $105, MobileErrorCode_33_105_Text
-	dw $106, MobileErrorCode_33_106_Text
-	dw $201, MobileErrorCode_33_201_Text
-	dw $202, MobileErrorCode_CommuncationErrorText
-	dw $203, MobileErrorCode_33_203_Text
-	dw $204, MobileErrorCode_CommuncationErrorText
-	dw $205, MobileErrorCode_ServerErrorText
-	dw $206, MobileErrorCode_33_206_Text
-	dw $299, MobileErrorCode_33_299_Text
-	dw $301, MobileErrorCode_ServerErrorText
-	dw $401, MobileErrorCode_ServerErrorText
-	dw $402, MobileErrorCode_ServerErrorText
-	dw $403, MobileErrorCode_ServerErrorText
-	dw $404, MobileErrorCode_ServerErrorText
-	dw -1, MobileErrorCode_ServerErrorText
+Unknown_17f844: db 19
+	dbbw $1, $1, String_17fc3e
+	dbbw $2, $1, String_17fc88
+	dbbw $3, $1, String_17fcff
+	dbbw $4, $1, String_17fd84
+	dbbw $5, $1, String_17fd84
+	dbbw $6, $1, String_17fd47
+	dbbw $1, $2, String_17fb6e
+	dbbw $2, $2, String_17f98e
+	dbbw $3, $2, String_17fd84
+	dbbw $4, $2, String_17f98e
+	dbbw $5, $2, String_17fa49
+	dbbw $6, $2, String_17fd84
+	dbbw $99, $2, String_17fc88
+	dbbw $1, $3, String_17fa49
+	dbbw $1, $4, String_17fa49
+	dbbw $2, $4, String_17fa49
+	dbbw $3, $4, String_17fa49
+	dbbw $4, $4, String_17fa49
+	dbbw $ff, $ff, String_17fa49
 
-MobileErrorCode_10_000_Text:
-; The Mobile Adapter is not properly plugged in.
-; Ensure you have taken a good look at and properly followed the instructions.
+String_17f891:
 	db   "モバイルアダプタが　ただしく"
 	next "さしこまれていません"
 	next "とりあつかいせつめいしょを"
@@ -4846,10 +4875,7 @@ MobileErrorCode_10_000_Text:
 	next "さしこんで　ください"
 	db   "@"
 
-MobileErrorCode_11_000_Text:
-MobileErrorCode_13_000_Text:
-; Could not connect because either the phone cannot make the call, or the telephone line is busy.
-; Please wait for a while and call again.
+String_17f8d1:
 	db   "でんわが　うまく　かけられないか"
 	next "でんわかいせんが　こんでいるので"
 	next "つうしん　できません"
@@ -4857,22 +4883,14 @@ MobileErrorCode_13_000_Text:
 	next "かけなおして　ください"
 	db   "@"
 
-MobileErrorCode_12_000_Text:
-; As the telephone line is busy, the phone was not able to gather enough information (?)
-; Please wait for a while and call again.
+String_17f913:
 	db   "でんわかいせんが　こんでいるため"
 	next "でんわが　かけられません"
 	next "しばらく　まって"
 	next "かけなおして　ください"
 	db   "@"
 
-MobileErrorCode_15_000_Text:
-MobileErrorCode_15_001_Text:
-MobileErrorCode_15_002_Text:
-MobileErrorCode_15_003_Text:
-; There is an error with the Mobile Adapter.
-; Please wait for a little while before calling again.
-; If the problem persists, please contact the Mobile Support Center.
+String_17f946:
 	db   "モバイルアダプタの　エラーです"
 	next "しばらく　まって"
 	next "かけなおして　ください"
@@ -4881,10 +4899,7 @@ MobileErrorCode_15_003_Text:
 	next "おといあわせください"
 	db   "@"
 
-MobileErrorCode_CommuncationErrorText:
-; Communication error.
-; Please wait a moment, and then try again.
-; If the issue persists, please contact the Mobile Support Center.
+String_17f98e:
 	db   "つうしんエラーです"
 	next "しばらく　まって"
 	next "かけなおして　ください"
@@ -4893,9 +4908,7 @@ MobileErrorCode_CommuncationErrorText:
 	next "おといあわせください"
 	db   "@"
 
-MobileErrorCode_22_000_Text:
-; There is a mistake either with the login password, or the login ID.
-; Please confirm the password, wait for a while, and try again.
+String_17f9d0:
 	db   "ログインパスワードか"
 	next "ログイン　アイディーに"
 	next "まちがいがあります"
@@ -4904,9 +4917,7 @@ MobileErrorCode_22_000_Text:
 	next "かけなおして　ください"
 	db   "@"
 
-MobileErrorCode_23_000_Text:
-; The call was ended.
-; Please see the instruction manual, wait a moment, and try again.
+String_17fa14:
 	db   "でんわが　きれました"
 	next "とりあつかいせつめいしょを"
 	next "ごらんのうえ"
@@ -4914,19 +4925,14 @@ MobileErrorCode_23_000_Text:
 	next "かけなおして　ください"
 	db   "@"
 
-MobileErrorCode_ServerErrorText:
-; There was a communication error with the mobile center.
-; Please wait a moment and then try again.
+String_17fa49:
 	db   "モバイルセンターの"
 	next "つうしんエラーです"
 	next "しばらくまって"
 	next "かけなおして　ください"
 	db   "@"
 
-MobileErrorCode_14_000_Text:
-MobileErrorCode_25_000_Text:
-; The Mobile Adapter's details have expired and the information is not correct.
-; Please use the Mobile Trainer to repeat the initial registration (process).
+String_17fa71:
 	db   "モバイルアダプタに"
 	next "とうろくされた　じょうほうが"
 	next "ただしく　ありません"
@@ -4934,10 +4940,7 @@ MobileErrorCode_25_000_Text:
 	next "しょきとうろくを　してください"
 	db   "@"
 
-MobileErrorCode_32_503_Text:
-; Could not connect because the Mobile Center is busy.
-; Please wait a moment and try again.
-; For details, please see the instruction manual.
+String_17fab0:
 	db   "モバイルセンターが"
 	next "こんでいて　つながりません"
 	next "しばらくまって"
@@ -4946,21 +4949,14 @@ MobileErrorCode_32_503_Text:
 	next "せつめいしょを　ごらんください"
 	db   "@"
 
-MobileErrorCode_30_450_Text:
-MobileErrorCode_30_550_Text:
-MobileErrorCode_30_551_Text:
-MobileErrorCode_30_553_Text:
-; There is a mistake with the email address of the addressee.
-; Please replace with a / the correct email address.
+String_17faf9:
 	db   "あてさき　メールアドレスに"
 	next "まちがいがあります"
 	next "ただしい　メールアドレスを"
 	next "いれなおしてください"
 	db   "@"
 
-MobileErrorCode_31_002_Text:
-; There is a mistake with the email address.
-; Please see the instruction manual, and use the Mobile Trainer to repeat the initial registration (process).
+String_17fb2a:
 	db   "メールアドレスに"
 	next "まちがいが　あります"
 	next "とりあつかいせつめいしょを"
@@ -4969,10 +4965,7 @@ MobileErrorCode_31_002_Text:
 	next "しょきとうろくを　してください"
 	db   "@"
 
-MobileErrorCode_31_003_Text:
-MobileErrorCode_33_201_Text:
-; There is either an error with the login password, or an error with the Mobile Center.
-; Please confirm the password, wait a moment, and then try again.
+String_17fb6e:
 	db   "ログインパスワードに"
 	next "まちがいが　あるか"
 	next "モバイルセンターの　エラーです"
@@ -4981,11 +4974,7 @@ MobileErrorCode_33_201_Text:
 	next "かけなおして　ください"
 	db   "@"
 
-MobileErrorCode_32_403_Text:
-MobileErrorCode_32_404_Text:
-; Cannot read data.
-; Please wait a moment, and then try again.
-; If the issue persists, please contact the Mobile Support Center.
+String_17fbb6:
 	db   "データの　よみこみが　できません"
 	next "しばらくまって"
 	next "かけなおして　ください"
@@ -4994,12 +4983,7 @@ MobileErrorCode_32_404_Text:
 	next "おといあわせください"
 	db   "@"
 
-MobileErrorCode_26_000_Text:
-MobileErrorCode_32_408_Text:
-; Out of time.
-; The call was ended.
-; Please try again.
-; For details, please see the instruction manual.
+String_17fbfe:
 	db   "じかんぎれです"
 	next "でんわが　きれました"
 	next "でんわを　かけなおしてください"
@@ -5007,9 +4991,7 @@ MobileErrorCode_32_408_Text:
 	next "せつめいしょを　ごらんください"
 	db   "@"
 
-MobileErrorCode_33_101_Text:
-; The service cannot be used if payments for usage fees are late.
-; For details, please see the instruction manual.
+String_17fc3e:
 	db   "ごりよう　りょうきんの　"
 	next "おしはらいが　おくれたばあいには"
 	next "ごりようが　できなくなります"
@@ -5017,19 +4999,14 @@ MobileErrorCode_33_101_Text:
 	next "せつめいしょを　ごらんください"
 	db   "@"
 
-MobileErrorCode_33_102_Text:
-MobileErrorCode_33_299_Text:
-; Your access to this service has been restricted. Service cannot be used.
-; For details, please see the instruction manual.
+String_17fc88:
 	db   "おきゃくさまの　ごつごうにより"
 	next "ごりようできません"
 	next "くわしくは　とりあつかい"
 	next "せつめいしょを　ごらんください"
 	db   "@"
 
-MobileErrorCode_ServerConnectionFailedText:
-; The telephone line is busy. Due to this error, the Mobile Center cannot communicate.
-; Please wait for a little while and call again.
+String_17fcbf:
 	db   "でんわかいせんが　こんでいるか"
 	next "モバイルセンターの　エラーで"
 	next "つうしんが　できません"
@@ -5037,9 +5014,7 @@ MobileErrorCode_ServerConnectionFailedText:
 	next "かけなおして　ください"
 	db   "@"
 
-MobileErrorCode_33_103_Text:
-; Service cannot be used this month because usage fees have exceeded conditions.
-; For details, please see the instruction manual.
+String_17fcff:
 	db   "ごりよう　りょうきんが"
 	next "じょうげんを　こえているため"
 	next "こんげつは　ごりようできません"
@@ -5047,9 +5022,7 @@ MobileErrorCode_33_103_Text:
 	next "せつめいしょを　ごらんください"
 	db   "@"
 
-MobileErrorCode_33_106_Text:
-; Cannot communicate because the Mobile Center is currently undergoing maintenance.
-; Please wait a moment, then try again.
+String_17fd47:
 	db   "げんざい　モバイルセンターの"
 	next "てんけんを　しているので"
 	next "つうしんが　できません"
@@ -5057,41 +5030,26 @@ MobileErrorCode_33_106_Text:
 	next "かけなおして　ください"
 	db   "@"
 
-MobileErrorCode_33_104_Text:
-MobileErrorCode_33_105_Text:
-MobileErrorCode_33_203_Text:
-MobileErrorCode_33_206_Text:
-MobileErrorCode_101_004_Text:
-; Cannot read data.
-; For details, please see the instruction manual.
+String_17fd84:
 	db   "データの　よみこみが　できません"
 	next "くわしくは　とりあつかい"
 	next "せつめいしょを　ごらんください"
 	db   "@"
 
-MobileErrorCode_101_006_Text:
-; Call ended because more than 3 minutes elapsed with no input.
+String_17fdb2:
 	db   "３ぷん　いじょう　なにも"
 	next "にゅうりょく　しなかったので"
 	next "でんわが　きれました"
 	db   "@"
 
-MobileErrorCode_101_001_Text:
-MobileErrorCode_101_002_Text:
-; Could not connect properly.
-; Please try again from the beginning (of the process).
+String_17fdd9:
 	db   "つうしんが　うまく"
 	next "できませんでした"
 	next "もういちど　はじめから"
 	next "やりなおしてください"
 	db   "@"
 
-MobileErrorCode_101_003_Text:
-MobileErrorCode_101_008_Text:
-MobileErrorCode_101_009_Text:
-; Cannot read data.
-; Please wait a moment, then try again.
-; If the issue persists, please contact the Mobile Support Center.
+String_17fe03:
 	db   "データの　よみこみが　できません"
 	next "しばらくまって"
 	next "かけなおして　ください"
@@ -5100,15 +5058,12 @@ MobileErrorCode_101_009_Text:
 	next "おといあわせください"
 	db   "@"
 
-MobileErrorCode_101_007_Text:
-; Call ended due to long waiting time.
+String_17fe4b:
 	db   "まちじかんが　ながいので"
 	next "でんわが　きれました"
 	db   "@"
 
-MobileErrorCode_101_005_Text:
-; (Your adapter's) type differs from the other user’s Mobile Adapter.
-; For details, please see the instruction manual.
+String_17fe63:
 	db   "あいての　モバイルアダプタと"
 	next "タイプが　ちがいます"
 	next "くわしくは　とりあつかい"
@@ -5116,8 +5071,6 @@ MobileErrorCode_101_005_Text:
 	db   "@"
 
 String_17fe9a: ; unused
-; Cannot send your save data because Pokémon News is being updated.
-; Please send your save data after loading new Pokémon News.
 	db   "ポケモンニュースが"
 	next "あたらしくなっているので"
 	next "レポートを　おくれません"
@@ -5125,9 +5078,7 @@ String_17fe9a: ; unused
 	next "よみこみを　さきに　してください"
 	db   "@"
 
-MobileErrorCode_101_000_Text:
-; Either bad communication status, or the other user called was the incorrect user.
-; Please confirm and try again.
+String_17fedf:
 	db   "つうしんの　じょうきょうが"
 	next "よくないか　かけるあいてが"
 	next "まちがっています"
@@ -5151,23 +5102,23 @@ Function17ff23:
 
 Function17ff3c:
 	nop
-	ld a, [wMobileErrorCodeBuffer]
+	ld a, [wc300]
 	cp $d0
 	ret c
 	hlcoord 10, 2
 	ld de, String_17ff68
 	call PlaceString
-	ld a, [wMobileErrorCodeBuffer]
+	ld a, [wc300]
 	push af
 	sub $d0
 	inc a
-	ld [wMobileErrorCodeBuffer], a
+	ld [wc300], a
 	hlcoord 14, 2
-	ld de, wMobileErrorCodeBuffer
+	ld de, wc300
 	lb bc, PRINTNUM_LEADINGZEROS | 1, 3
 	call PrintNum
 	pop af
-	ld [wMobileErrorCodeBuffer], a
+	ld [wc300], a
 	and a
 	ret
 

@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const ROUTE2NUGGETHOUSE_FISHER
 
 Route2NuggetHouse_MapScripts:
@@ -12,7 +12,7 @@ Route2NuggetHouseFisherScript:
 	checkevent EVENT_GOT_NUGGET_FROM_GUY
 	iftrue .GotNugget
 	writetext Route2NuggetHouseFisherText
-	promptbutton
+	buttonsound
 	verbosegiveitem NUGGET
 	iffalse .NoRoom
 	setevent EVENT_GOT_NUGGET_FROM_GUY

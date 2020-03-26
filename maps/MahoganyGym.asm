@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const MAHOGANYGYM_PRYCE
 	const MAHOGANYGYM_BUENA1
 	const MAHOGANYGYM_ROCKER1
@@ -30,7 +30,7 @@ MahoganyGymPryceScript:
 	playsound SFX_GET_BADGE
 	waitsfx
 	setflag ENGINE_GLACIERBADGE
-	readvar VAR_BADGES
+	checkcode VAR_BADGES
 	scall MahoganyGymActivateRockets
 .FightDone:
 	checkevent EVENT_GOT_TM16_ICY_WIND
@@ -41,7 +41,7 @@ MahoganyGymPryceScript:
 	setevent EVENT_BEAT_BOARDER_BRAD
 	setevent EVENT_BEAT_BOARDER_DOUGLAS
 	writetext PryceText_GlacierBadgeSpeech
-	promptbutton
+	buttonsound
 	verbosegiveitem TM_ICY_WIND
 	iffalse MahoganyGym_NoRoomForIcyWind
 	setevent EVENT_GOT_TM16_ICY_WIND
@@ -144,7 +144,7 @@ MahoganyGymStatue:
 	iftrue .Beaten
 	jumpstd gymstatue1
 .Beaten:
-	gettrainername STRING_BUFFER_4, PRYCE, PRYCE1
+	trainertotext PRYCE, PRYCE1, MEM_BUFFER_1
 	jumpstd gymstatue2
 
 PryceText_Intro:

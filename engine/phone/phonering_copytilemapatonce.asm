@@ -23,7 +23,7 @@ PhoneRing_CopyTilemapAtOnce:
 	di
 	ld a, BANK(vBGMap2)
 	ldh [rVBK], a
-	hlcoord 0, 0, wAttrmap
+	hlcoord 0, 0, wAttrMap
 	call .CopyTilemapAtOnce
 	ld a, BANK(vBGMap0)
 	ldh [rVBK], a
@@ -56,7 +56,7 @@ PhoneRing_CopyTilemapAtOnce:
 rept SCREEN_WIDTH / 2
 	pop de
 .loop\@
-	ldh a, [c]
+	ld a, [$ff00+c]
 	and b
 	jr nz, .loop\@
 	ld [hl], e

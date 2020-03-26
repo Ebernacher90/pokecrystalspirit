@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const BLACKTHORNCITY_SUPER_NERD1
 	const BLACKTHORNCITY_SUPER_NERD2
 	const BLACKTHORNCITY_GRAMPS1
@@ -21,7 +21,7 @@ BlackthornCity_MapScripts:
 	return
 
 .Santos:
-	readvar VAR_WEEKDAY
+	checkcode VAR_WEEKDAY
 	ifequal SATURDAY, .SantosAppears
 	disappear BLACKTHORNCITY_SANTOS
 	return
@@ -90,16 +90,16 @@ SantosScript:
 	opentext
 	checkevent EVENT_GOT_SPELL_TAG_FROM_SANTOS
 	iftrue .Saturday
-	readvar VAR_WEEKDAY
+	checkcode VAR_WEEKDAY
 	ifnotequal SATURDAY, .NotSaturday
 	checkevent EVENT_MET_SANTOS_OF_SATURDAY
 	iftrue .MetSantos
 	writetext MeetSantosText
-	promptbutton
+	buttonsound
 	setevent EVENT_MET_SANTOS_OF_SATURDAY
 .MetSantos:
 	writetext SantosGivesGiftText
-	promptbutton
+	buttonsound
 	verbosegiveitem SPELL_TAG
 	iffalse .Done
 	setevent EVENT_GOT_SPELL_TAG_FROM_SANTOS

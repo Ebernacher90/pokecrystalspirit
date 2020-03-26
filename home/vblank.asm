@@ -131,7 +131,7 @@ VBlank0::
 	ld [wTextDelayFrames], a
 .ok2
 
-	call UpdateJoypad
+	call Joypad
 
 	ld a, BANK(_UpdateSound)
 	rst Bankswitch
@@ -196,13 +196,13 @@ VBlank1::
 	xor a
 	ldh [rIF], a
 	; enable lcd stat
-	ld a, 1 << LCD_STAT
+	ld a, %10 ; lcd stat
 	ldh [rIE], a
 	; rerequest serial int if applicable (still disabled)
 	; request lcd stat
 	ld a, b
-	and 1 << SERIAL
-	or 1 << LCD_STAT
+	and %1000 ; serial
+	or %10 ; lcd stat
 	ldh [rIF], a
 
 	ei
@@ -220,7 +220,7 @@ VBlank1::
 	xor a
 	ldh [rIF], a
 	; enable ints besides joypad
-	ld a, IE_DEFAULT
+	ld a, %1111 ; serial timer lcdstat vblank
 	ldh [rIE], a
 	; rerequest ints
 	ld a, b
@@ -279,7 +279,7 @@ VBlank3::
 	push af
 	xor a
 	ldh [rIF], a
-	ld a, 1 << LCD_STAT
+	ld a, %10 ; lcd stat
 	ldh [rIE], a
 	ldh [rIF], a
 
@@ -302,7 +302,7 @@ VBlank3::
 	xor a
 	ldh [rIF], a
 	; enable ints besides joypad
-	ld a, IE_DEFAULT
+	ld a, %1111 ; serial timer lcdstat vblank
 	ldh [rIE], a
 	; request ints
 	ld a, b
@@ -325,7 +325,7 @@ VBlank4::
 
 	call hTransferVirtualOAM
 
-	call UpdateJoypad
+	call Joypad
 
 	xor a
 	ld [wVBlankOccurred], a
@@ -364,11 +364,11 @@ VBlank5::
 	xor a
 	ld [wVBlankOccurred], a
 
-	call UpdateJoypad
+	call Joypad
 
 	xor a
 	ldh [rIF], a
-	ld a, 1 << LCD_STAT
+	ld a, %10 ; lcd stat
 	ldh [rIE], a
 	; request lcd stat
 	ldh [rIF], a
@@ -384,7 +384,7 @@ VBlank5::
 	xor a
 	ldh [rIF], a
 	; enable ints besides joypad
-	ld a, IE_DEFAULT
+	ld a, %1111 ; serial timer lcdstat vblank
 	ldh [rIE], a
 	ret
 

@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const ELMSHOUSE_ELMS_WIFE
 	const ELMSHOUSE_ELMS_SON
 
@@ -20,27 +20,31 @@ ElmsHouseBookshelf:
 	jumpstd difficultbookshelf
 
 ElmsWifeText:
-	text "Hi, <PLAY_G>! My"
-	line "husband's always"
+	text "Hi, <PLAY_G>!"
+	line "mein Ehemann ist"
+	
+	para "so beschäftigt!"
+	line "Es ist okay wenn"
+	
+	para "er neue unbekannte"
+	line "#MON fängt."
 
-	para "so busy--I hope"
-	line "he's OK."
-
-	para "When he's caught"
-	line "up in his #MON"
-
-	para "research, he even"
-	line "forgets to eat."
+	para "Dann untersucht"
+	line "er sie, dabei ver-"
+	cont "gisst er sogar das"
+	
+	para "Essen was ich ihm"
+	line "extra zubereite!"
 	done
 
 ElmsSonText:
-	text "When I grow up,"
-	line "I'm going to help"
-	cont "my dad!"
+	text "Wenn ich grösser"
+	line "bin, will ich"
+	cont "meinen Dad helfen!"
 
-	para "I'm going to be a"
-	line "great #MON"
-	cont "professor!"
+	para "Ich werde bestimmt"
+	line "ein grossartiger"
+	cont "#MON Forscher!"
 	done
 
 ElmsHouseLabFoodText:

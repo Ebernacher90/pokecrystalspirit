@@ -497,10 +497,10 @@ ScrollingMenu_GetListItemCoordAndFunctionArgs:
 	ld h, [hl]
 	ld l, a
 	inc hl ; items
-	ld a, [wMenuData_ScrollingMenuItemFormat]
-	cp SCROLLINGMENU_ITEMS_NORMAL
+	ld a, [wMenuData_ScrollingMenuSpacing]
+	cp 1
 	jr z, .got_spacing
-	cp SCROLLINGMENU_ITEMS_QUANTITY
+	cp 2
 	jr z, .pointless_jump
 .pointless_jump
 	add hl, de

@@ -1,8 +1,8 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const MAHOGANYMART1F_PHARMACIST
 	const MAHOGANYMART1F_BLACK_BELT
 	const MAHOGANYMART1F_LANCE
-	const MAHOGANYMART1F_DRAGONITE
+	const MAHOGANYMART1F_DRAGON
 	const MAHOGANYMART1F_GRANNY
 
 MahoganyMart1F_MapScripts:
@@ -17,7 +17,7 @@ MahoganyMart1F_MapScripts:
 	end
 
 .LanceUncoversStaircase:
-	prioritysjump MahoganyMart1FLanceUncoversStaircaseScript
+	priorityjump MahoganyMart1FLanceUncoversStaircaseScript
 	end
 
 .MahoganyMart1FStaircase:
@@ -63,27 +63,27 @@ MahoganyMart1FBlackBeltScript:
 MahoganyMart1FLanceUncoversStaircaseScript:
 	pause 15
 	opentext
-	writetext MahoganyMart1FLanceDragoniteHyperBeamText
+	writetext UnknownText_0x6c52a
 	pause 15
 	closetext
 	playsound SFX_TACKLE
-	applymovement MAHOGANYMART1F_DRAGONITE, MahoganyMart1FDragoniteTackleMovement
-	applymovement MAHOGANYMART1F_BLACK_BELT, MahoganyMart1FBlackBeltKnockedBackMovement
+	applymovement MAHOGANYMART1F_DRAGON, MovementData_0x6c3f6
+	applymovement MAHOGANYMART1F_BLACK_BELT, MovementData_0x6c3fb
 	pause 15
-	disappear MAHOGANYMART1F_DRAGONITE
+	disappear MAHOGANYMART1F_DRAGON
 	pause 15
-	applymovement MAHOGANYMART1F_LANCE, MahoganyMart1FLanceApproachPlayerMovement
+	applymovement MAHOGANYMART1F_LANCE, MovementData_0x6c407
 	opentext
-	writetext MahoganyMart1FLanceRadioText
+	writetext UnknownText_0x6c549
 	waitbutton
 	closetext
 	follow MAHOGANYMART1F_LANCE, PLAYER
-	applymovement MAHOGANYMART1F_LANCE, MahoganyMart1FLanceApproachPharmacistMovement
-	applymovement MAHOGANYMART1F_PHARMACIST, MahoganyMart1FPharmacistShovedAsideMovement
-	applymovement MAHOGANYMART1F_LANCE, MahoganyMart1FLanceApproachHiddenStairsMovement
+	applymovement MAHOGANYMART1F_LANCE, MovementData_0x6c40a
+	applymovement MAHOGANYMART1F_PHARMACIST, MovementData_0x6c403
+	applymovement MAHOGANYMART1F_LANCE, MovementData_0x6c40e
 	stopfollow
 	opentext
-	writetext MahoganyMart1FLanceStairsText
+	writetext UnknownText_0x6c59e
 	waitbutton
 	showemote EMOTE_SHOCK, MAHOGANYMART1F_PHARMACIST, 10
 	playsound SFX_FAINT
@@ -93,10 +93,10 @@ MahoganyMart1FLanceUncoversStaircaseScript:
 	setevent EVENT_UNCOVERED_STAIRCASE_IN_MAHOGANY_MART
 	turnobject MAHOGANYMART1F_LANCE, LEFT
 	opentext
-	writetext MahoganyMart1FLanceSplitUpText
+	writetext UnknownText_0x6c5ba
 	waitbutton
 	closetext
-	applymovement MAHOGANYMART1F_LANCE, MahoganyMart1FLanceGoDownStairsMovement
+	applymovement MAHOGANYMART1F_LANCE, MovementData_0x6c412
 	playsound SFX_EXIT_BUILDING
 	disappear MAHOGANYMART1F_LANCE
 	setscene SCENE_MAHOGANYMART1F_NOTHING
@@ -110,14 +110,14 @@ MahoganyMart1FGrannyScript:
 	closetext
 	end
 
-MahoganyMart1FDragoniteTackleMovement:
+MovementData_0x6c3f6:
 	fix_facing
 	big_step LEFT
 	big_step RIGHT
 	remove_fixed_facing
 	step_end
 
-MahoganyMart1FBlackBeltKnockedBackMovement:
+MovementData_0x6c3fb:
 	fix_facing
 	big_step LEFT
 	remove_fixed_facing
@@ -127,30 +127,30 @@ MahoganyMart1FBlackBeltKnockedBackMovement:
 	turn_head RIGHT
 	step_end
 
-MahoganyMart1FPharmacistShovedAsideMovement:
+MovementData_0x6c403:
 	fix_facing
 	big_step LEFT
 	remove_fixed_facing
 	step_end
 
-MahoganyMart1FLanceApproachPlayerMovement:
+MovementData_0x6c407:
 	slow_step LEFT
 	turn_head DOWN
 	step_end
 
-MahoganyMart1FLanceApproachPharmacistMovement:
+MovementData_0x6c40a:
 	slow_step RIGHT
 	slow_step UP
 	slow_step UP
 	step_end
 
-MahoganyMart1FLanceApproachHiddenStairsMovement:
+MovementData_0x6c40e:
 	slow_step UP
 	slow_step RIGHT
 	slow_step RIGHT
 	step_end
 
-MahoganyMart1FLanceGoDownStairsMovement:
+MovementData_0x6c412:
 	slow_step RIGHT
 	step_end
 
@@ -189,12 +189,12 @@ MahoganyMart1FBlackBeltText_LanceEntered:
 	line "#MON are tough…"
 	done
 
-MahoganyMart1FLanceDragoniteHyperBeamText:
+UnknownText_0x6c52a:
 	text "LANCE: DRAGONITE,"
 	line "HYPER BEAM."
 	done
 
-MahoganyMart1FLanceRadioText:
+UnknownText_0x6c549:
 	text "What took you,"
 	line "<PLAY_G>?"
 
@@ -205,12 +205,12 @@ MahoganyMart1FLanceRadioText:
 	line "from here."
 	done
 
-MahoganyMart1FLanceStairsText:
+UnknownText_0x6c59e:
 	text "The stairs are"
 	line "right here."
 	done
 
-MahoganyMart1FLanceSplitUpText:
+UnknownText_0x6c5ba:
 	text "LANCE: <PLAY_G>, we"
 	line "should split up to"
 

@@ -19,8 +19,7 @@ BASE_UNKNOWN_1   EQUS "(wBaseUnknown1 - wCurBaseData)"
 BASE_EGG_STEPS   EQUS "(wBaseEggSteps - wCurBaseData)"
 BASE_UNKNOWN_2   EQUS "(wBaseUnknown2 - wCurBaseData)"
 BASE_PIC_SIZE    EQUS "(wBasePicSize - wCurBaseData)"
-BASE_FRONTPIC    EQUS "(wBaseUnusedFrontpic - wCurBaseData)"
-BASE_BACKPIC     EQUS "(wBaseUnusedBackpic - wCurBaseData)"
+BASE_PADDING     EQUS "(wBasePadding - wCurBaseData)"
 BASE_GROWTH_RATE EQUS "(wBaseGrowthRate - wCurBaseData)"
 BASE_EGG_GROUPS  EQUS "(wBaseEggGroups - wCurBaseData)"
 BASE_TMHM        EQUS "(wBaseTMHM - wCurBaseData)"
@@ -124,7 +123,7 @@ MONS_PER_BOX EQU 20
 NUM_BOXES    EQU 14
 
 ; hall of fame
-HOF_MON_LENGTH EQU 1 + 2 + 2 + 1 + (MON_NAME_LENGTH - 1) ; species, id, dvs, level, nick
+HOF_MON_LENGTH EQU 1 + 2 + 2 +1 + (MON_NAME_LENGTH + -1) ; species, id, dvs, level, nick
 HOF_LENGTH EQU 1 + HOF_MON_LENGTH * PARTY_LENGTH + 1 ; win count, party, terminator
 NUM_HOF_TEAMS EQU 30
 
@@ -153,7 +152,7 @@ NUM_HOF_TEAMS EQU 30
 NUM_GRASSMON EQU 7 ; data/wild/*_grass.asm table size
 NUM_WATERMON EQU 3 ; data/wild/*_water.asm table size
 
-GRASS_WILDDATA_LENGTH EQU 2 + (1 + NUM_GRASSMON * 2) * 3
+GRASS_WILDDATA_LENGTH EQU 2 + (1 + NUM_GRASSMON * 2) * 3 
 WATER_WILDDATA_LENGTH EQU 2 + (1 + NUM_WATERMON * 2) * 1
 FISHGROUP_DATA_LENGTH EQU 1 + 2 * 3
 
@@ -188,12 +187,12 @@ const_value = 1
 	const HAPPINESS_FAINTED           ; 06
 	const HAPPINESS_POISONFAINT       ; 07
 	const HAPPINESS_BEATENBYSTRONGFOE ; 08
-	const HAPPINESS_OLDERCUT1         ; 09
-	const HAPPINESS_OLDERCUT2         ; 0a
-	const HAPPINESS_OLDERCUT3         ; 0b
-	const HAPPINESS_YOUNGCUT1         ; 0c
-	const HAPPINESS_YOUNGCUT2         ; 0d
-	const HAPPINESS_YOUNGCUT3         ; 0e
+	const HAPPINESS_YOUNGCUT1         ; 09
+	const HAPPINESS_YOUNGCUT2         ; 0a
+	const HAPPINESS_YOUNGCUT3         ; 0b
+	const HAPPINESS_OLDERCUT1         ; 0c
+	const HAPPINESS_OLDERCUT2         ; 0d
+	const HAPPINESS_OLDERCUT3         ; 0e
 	const HAPPINESS_BITTERPOWDER      ; 0f
 	const HAPPINESS_ENERGYROOT        ; 10
 	const HAPPINESS_REVIVALHERB       ; 11

@@ -2,8 +2,8 @@ LoadSpecialMapPalette:
 	ld a, [wMapTileset]
 	cp TILESET_POKECOM_CENTER
 	jr z, .pokecom_2f
-	cp TILESET_BATTLE_TOWER_INSIDE
-	jr z, .battle_tower_inside
+	cp TILESET_BATTLE_TOWER
+	jr z, .battle_tower
 	cp TILESET_ICE_PATH
 	jr z, .ice_path
 	cp TILESET_HOUSE
@@ -12,6 +12,10 @@ LoadSpecialMapPalette:
 	jr z, .radio_tower
 	cp TILESET_MANSION
 	jr z, .mansion_mobile
+	cp TILESET_MUSEUM
+	jr z, .museum
+	cp TILESET_MOBLINS_CAVE
+	jr z, .moblins_cave
 	jr .do_nothing
 
 .pokecom_2f
@@ -19,8 +23,8 @@ LoadSpecialMapPalette:
 	scf
 	ret
 
-.battle_tower_inside
-	call LoadBattleTowerInsidePalette
+.battle_tower
+	call LoadBattleTowerPalette
 	scf
 	ret
 
@@ -47,6 +51,16 @@ LoadSpecialMapPalette:
 	call LoadMansionPalette
 	scf
 	ret
+	
+.museum
+        call LoadMuseumPalette
+        scf
+        ret
+
+.moblins_cave
+		call LoadMoblinsCavePalette
+		scf
+		ret
 
 .do_nothing
 	and a
@@ -63,16 +77,16 @@ LoadPokeComPalette:
 PokeComPalette:
 INCLUDE "gfx/tilesets/pokecom_center.pal"
 
-LoadBattleTowerInsidePalette:
+LoadBattleTowerPalette:
 	ld a, BANK(wBGPals1)
 	ld de, wBGPals1
-	ld hl, BattleTowerInsidePalette
+	ld hl, BattleTowerPalette
 	ld bc, 8 palettes
 	call FarCopyWRAM
 	ret
 
-BattleTowerInsidePalette:
-INCLUDE "gfx/tilesets/battle_tower_inside.pal"
+BattleTowerPalette:
+INCLUDE "gfx/tilesets/battle_tower.pal"
 
 LoadIcePathPalette:
 	ld a, BANK(wBGPals1)
@@ -135,3 +149,25 @@ LoadMansionPalette:
 
 MansionPalette2:
 INCLUDE "gfx/tilesets/mansion_2.pal"
+	
+LoadMuseumPalette:
+	    ld a, BANK(wBGPals1)
+	    ld de, wBGPals1
+	    ld hl, MuseumPalette
+	    ld bc, 8 palettes
+	    call FarCopyWRAM
+	    ret
+	
+MuseumPalette:
+INCLUDE "gfx/tilesets/museum.pal"
+
+LoadMoblinsCavePalette:
+	    ld a, BANK(wBGPals1)
+	    ld de, wBGPals1
+	    ld hl, MoblinsCavePalette
+	    ld bc, 8 palettes
+	    call FarCopyWRAM
+	    ret
+
+MoblinsCavePalette:
+INCLUDE "gfx/tilesets/moblins_cave.pal"

@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const ICEPATHB2FMAHOGANYSIDE_BOULDER1
 	const ICEPATHB2FMAHOGANYSIDE_BOULDER2
 	const ICEPATHB2FMAHOGANYSIDE_BOULDER3

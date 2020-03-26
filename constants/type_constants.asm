@@ -15,8 +15,8 @@ PHYSICAL EQU const_value
 	const ROCK
 	const BIRD
 	const BUG
-	const GHOST
 	const STEEL
+	const DARK
 
 UNUSED_TYPES EQU const_value
 	const TYPE_10
@@ -28,7 +28,7 @@ UNUSED_TYPES EQU const_value
 	const TYPE_16
 	const TYPE_17
 	const TYPE_18
-	const CURSE_TYPE
+	const CURSE_T
 UNUSED_TYPES_END EQU const_value
 
 SPECIAL EQU const_value
@@ -36,10 +36,12 @@ SPECIAL EQU const_value
 	const WATER
 	const GRASS
 	const ELECTRIC
-	const PSYCHIC_TYPE
+	const PSYCHIC
 	const ICE
 	const DRAGON
-	const DARK
+    const GHOST
+	const FAIRY
+	
 TYPES_END EQU const_value
 
 NUM_TYPES EQU TYPES_END + UNUSED_TYPES - UNUSED_TYPES_END

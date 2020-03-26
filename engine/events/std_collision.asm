@@ -26,4 +26,4 @@ CheckFacingTileForStdScript::
 INCLUDE "data/events/collision_stdscripts.asm"
 
 Script_JumpStdFromRAM:
-	sjump wJumpStdScriptBuffer
+	jump wJumpStdScriptBuffer

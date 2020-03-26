@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const ROUTE27SANDSTORMHOUSE_GRANNY
 
 Route27SandstormHouse_MapScripts:
@@ -13,13 +13,13 @@ SandstormHouseWoman:
 	iftrue .AlreadyGotItem
 	special GetFirstPokemonHappiness
 	writetext SandstormHouseWomanText1
-	promptbutton
+	buttonsound
 	ifgreater 150 - 1, .Loyal
-	sjump .Disloyal
+	jump .Disloyal
 
 .Loyal:
 	writetext SandstormHouseWomanLoyalText
-	promptbutton
+	buttonsound
 	verbosegiveitem TM_SANDSTORM
 	iffalse .Done
 	setevent EVENT_GOT_TM37_SANDSTORM

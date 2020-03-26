@@ -699,5 +699,8 @@ KRIS EQU __enum__
 
 	trainerclass MYSTICALMAN ; 43
 	const EUSINE
+	
+	trainerclass AQUA_GRUNT ; 44
+	const SAHIT
 
 NUM_TRAINER_CLASSES EQU __enum__

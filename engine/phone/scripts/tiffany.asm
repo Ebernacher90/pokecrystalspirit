@@ -1,5 +1,5 @@
 TiffanyPhoneCalleeScript:
-	gettrainername STRING_BUFFER_3, PICNICKER, TIFFANY3
+	trainertotext PICNICKER, TIFFANY3, MEM_BUFFER_0
 	checkflag ENGINE_TIFFANY
 	iftrue .WantsBattle
 	farscall PhoneScript_AnswerPhone_Female
@@ -7,24 +7,24 @@ TiffanyPhoneCalleeScript:
 	iftrue .NotTuesday
 	checkflag ENGINE_TIFFANY_HAS_PINK_BOW
 	iftrue .HasItem
-	readvar VAR_WEEKDAY
+	checkcode VAR_WEEKDAY
 	ifnotequal TUESDAY, .NotTuesday
 	checktime DAY
 	iftrue TiffanyTuesdayAfternoon
 
 .NotTuesday:
-	farsjump TiffanyNoItemScript
+	farjump UnknownScript_0xa09a0
 
 .WantsBattle:
-	getlandmarkname STRING_BUFFER_5, LANDMARK_ROUTE_43
-	farsjump TiffanyAsleepScript
+	landmarktotext ROUTE_43, MEM_BUFFER_2
+	farjump UnknownScript_0xa0a8c
 
 .HasItem:
-	getlandmarkname STRING_BUFFER_5, LANDMARK_ROUTE_43
-	farsjump TiffanyHurryScript
+	landmarktotext ROUTE_43, MEM_BUFFER_2
+	farjump UnknownScript_0xa0ae5
 
 TiffanyPhoneCallerScript:
-	gettrainername STRING_BUFFER_3, PICNICKER, TIFFANY3
+	trainertotext PICNICKER, TIFFANY3, MEM_BUFFER_0
 	farscall PhoneScript_Random4
 	ifequal 0, TiffanysFamilyMembers
 	farscall PhoneScript_GreetPhone_Female
@@ -46,15 +46,15 @@ TiffanyPhoneCallerScript:
 	ifequal 0, TiffanyHasPinkBow
 
 .Generic:
-	farsjump Phone_GenericCall_Female
+	farjump Phone_GenericCall_Female
 
 TiffanyTuesdayAfternoon:
 	setflag ENGINE_TIFFANY_TUESDAY_AFTERNOON
 
 TiffanyWantsBattle:
-	getlandmarkname STRING_BUFFER_5, LANDMARK_ROUTE_43
+	landmarktotext ROUTE_43, MEM_BUFFER_2
 	setflag ENGINE_TIFFANY
-	farsjump PhoneScript_WantsToBattle_Female
+	farjump PhoneScript_WantsToBattle_Female
 
 TiffanysFamilyMembers:
 	random 6
@@ -66,33 +66,33 @@ TiffanysFamilyMembers:
 	ifequal 5, .Brother
 
 .Grandma:
-	getstring STRING_BUFFER_4, GrandmaString
-	sjump .PoorClefairy
+	stringtotext GrandmaString, MEM_BUFFER_1
+	jump .PoorClefairy
 
 .Grandpa:
-	getstring STRING_BUFFER_4, GrandpaString
-	sjump .PoorClefairy
+	stringtotext GrandpaString, MEM_BUFFER_1
+	jump .PoorClefairy
 
 .Mom:
-	getstring STRING_BUFFER_4, MomString
-	sjump .PoorClefairy
+	stringtotext MomString, MEM_BUFFER_1
+	jump .PoorClefairy
 
 .Dad:
-	getstring STRING_BUFFER_4, DadString
-	sjump .PoorClefairy
+	stringtotext DadString, MEM_BUFFER_1
+	jump .PoorClefairy
 
 .Sister:
-	getstring STRING_BUFFER_4, SisterString
-	sjump .PoorClefairy
+	stringtotext SisterString, MEM_BUFFER_1
+	jump .PoorClefairy
 
 .Brother:
-	getstring STRING_BUFFER_4, BrotherString
-	sjump .PoorClefairy
+	stringtotext BrotherString, MEM_BUFFER_1
+	jump .PoorClefairy
 
 .PoorClefairy:
-	farsjump TiffanyItsAwful
+	farjump TiffanyItsAwful
 
 TiffanyHasPinkBow:
 	setflag ENGINE_TIFFANY_HAS_PINK_BOW
-	getlandmarkname STRING_BUFFER_5, LANDMARK_ROUTE_43
-	farsjump PhoneScript_FoundItem_Female
+	landmarktotext ROUTE_43, MEM_BUFFER_2
+	farjump PhoneScript_FoundItem_Female

@@ -114,7 +114,7 @@ BattleCommand_Encore:
 .finish_move
 	call AnimateCurrentMove
 	ld hl, GotAnEncoreText
-	jp StdBattleTextbox
+	jp StdBattleTextBox
 
 .failed
 	jp PrintDidntAffect2

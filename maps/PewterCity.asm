@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const PEWTERCITY_COOLTRAINER_F
 	const PEWTERCITY_BUG_CATCHER
 	const PEWTERCITY_GRAMPS
@@ -27,7 +27,7 @@ PewterCityGrampsScript:
 	checkevent EVENT_GOT_SILVER_WING
 	iftrue .GotSilverWing
 	writetext PewterCityGrampsText
-	promptbutton
+	buttonsound
 	verbosegiveitem SILVER_WING
 	setevent EVENT_GOT_SILVER_WING
 	closetext
@@ -153,12 +153,14 @@ PewterCityWelcomeSignText:
 PewterCity_MapEvents:
 	db 0, 0 ; filler
 
-	db 5 ; warp events
+	db 7 ; warp events
 	warp_event 29, 13, PEWTER_NIDORAN_SPEECH_HOUSE, 1
 	warp_event 16, 17, PEWTER_GYM, 1
 	warp_event 23, 17, PEWTER_MART, 2
 	warp_event 13, 25, PEWTER_POKECENTER_1F, 1
 	warp_event  7, 29, PEWTER_SNOOZE_SPEECH_HOUSE, 1
+	warp_event 11,  7, PEWTER_MUSEUM_1F, 2
+	warp_event 19,  5, PEWTER_MUSEUM_1F, 4
 
 	db 0 ; coord events
 

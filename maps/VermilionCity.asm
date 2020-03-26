@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const VERMILIONCITY_TEACHER
 	const VERMILIONCITY_GRAMPS
 	const VERMILIONCITY_MACHOP
@@ -42,17 +42,17 @@ VermilionSnorlax:
 	opentext
 	special SnorlaxAwake
 	iftrue .Awake
-	writetext VermilionCitySnorlaxSleepingText
+	writetext UnknownText_0x1aab64
 	waitbutton
 	closetext
 	end
 
 .Awake:
-	writetext VermilionCityRadioNearSnorlaxText
+	writetext UnknownText_0x1aab84
 	pause 15
 	cry SNORLAX
 	closetext
-	loadvar VAR_BATTLETYPE, BATTLETYPE_FORCEITEM
+	writecode VAR_BATTLETYPE, BATTLETYPE_FORCEITEM
 	loadwildmon SNORLAX, 50
 	startbattle
 	disappear VERMILIONCITY_BIG_SNORLAX
@@ -65,35 +65,35 @@ VermilionGymBadgeGuy:
 	opentext
 	checkevent EVENT_GOT_HP_UP_FROM_VERMILION_GUY
 	iftrue .AlreadyGotItem
-	readvar VAR_BADGES
+	checkcode VAR_BADGES
 	ifequal NUM_BADGES, .AllBadges
 	ifgreater 13, .MostBadges
 	ifgreater 9, .SomeBadges
-	writetext VermilionCityBadgeGuyTrainerText
+	writetext UnknownText_0x1aabc8
 	waitbutton
 	closetext
 	end
 
 .SomeBadges:
-	writetext VermilionCityBadgeGuySomeBadgesText
+	writetext UnknownText_0x1aac2b
 	waitbutton
 	closetext
 	end
 
 .MostBadges:
-	writetext VermilionCityBadgeGuyMostBadgesText
+	writetext UnknownText_0x1aac88
 	waitbutton
 	closetext
 	end
 
 .AllBadges:
-	writetext VermilionCityBadgeGuyAllBadgesText
-	promptbutton
+	writetext UnknownText_0x1aacf3
+	buttonsound
 	verbosegiveitem HP_UP
 	iffalse .Done
 	setevent EVENT_GOT_HP_UP_FROM_VERMILION_GUY
 .AlreadyGotItem:
-	writetext VermilionCityBadgeGuyBattleEdgeText
+	writetext UnknownText_0x1aad4a
 	waitbutton
 .Done:
 	closetext
@@ -163,12 +163,12 @@ VermilionCitySuperNerdText:
 	cont "#MON GYM."
 	done
 
-VermilionCitySnorlaxSleepingText:
+UnknownText_0x1aab64:
 	text "SNORLAX is snoring"
 	line "peacefully…"
 	done
 
-VermilionCityRadioNearSnorlaxText:
+UnknownText_0x1aab84:
 	text "The #GEAR was"
 	line "placed near the"
 	cont "sleeping SNORLAX…"
@@ -178,7 +178,7 @@ VermilionCityRadioNearSnorlaxText:
 	para "SNORLAX woke up!"
 	done
 
-VermilionCityBadgeGuyTrainerText:
+UnknownText_0x1aabc8:
 	text "Skilled trainers"
 	line "gather in KANTO."
 
@@ -189,7 +189,7 @@ VermilionCityBadgeGuyTrainerText:
 	line "to defeat."
 	done
 
-VermilionCityBadgeGuySomeBadgesText:
+UnknownText_0x1aac2b:
 	text "You've started to"
 	line "collect KANTO GYM"
 	cont "BADGES?"
@@ -199,7 +199,7 @@ VermilionCityBadgeGuySomeBadgesText:
 	cont "here are tough?"
 	done
 
-VermilionCityBadgeGuyMostBadgesText:
+UnknownText_0x1aac88:
 	text "I guess you'll be"
 	line "finished with your"
 
@@ -211,7 +211,7 @@ VermilionCityBadgeGuyMostBadgesText:
 	cont "BADGES."
 	done
 
-VermilionCityBadgeGuyAllBadgesText:
+UnknownText_0x1aacf3:
 	text "Congratulations!"
 
 	para "You got all the"
@@ -221,7 +221,7 @@ VermilionCityBadgeGuyAllBadgesText:
 	line "for your efforts."
 	done
 
-VermilionCityBadgeGuyBattleEdgeText:
+UnknownText_0x1aad4a:
 	text "Having a variety"
 	line "of #MON types"
 

@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const OLIVINEPORT_SAILOR1
 	const OLIVINEPORT_SAILOR2
 	const OLIVINEPORT_SAILOR3
@@ -18,7 +18,7 @@ OlivinePort_MapScripts:
 	end
 
 .LeaveFastShip:
-	prioritysjump .LeaveFastShipScript
+	priorityjump .LeaveFastShipScript
 	end
 
 .LeaveFastShipScript:
@@ -34,7 +34,7 @@ OlivinePortSailorAtGangwayScript:
 	opentext
 	checkevent EVENT_TEMPORARY_UNTIL_MAP_RELOAD_1
 	iftrue OlivinePortAlreadyRodeScript
-	writetext OlivinePortSailorGetOnBoardText
+	writetext UnknownText_0x74a55
 	waitbutton
 	closetext
 	turnobject OLIVINEPORT_SAILOR1, DOWN
@@ -67,7 +67,7 @@ OlivinePortSailorAtGangwayScript:
 	end
 
 OlivinePortAlreadyRodeScript:
-	writetext OlivinePortCantBoardText
+	writetext UnknownText_0x74a80
 	waitbutton
 	closetext
 	end
@@ -82,43 +82,43 @@ OlivinePortWalkUpToShipScript:
 	opentext
 	checkevent EVENT_FAST_SHIP_FIRST_TIME
 	iffalse .FirstTime
-	readvar VAR_WEEKDAY
+	checkcode VAR_WEEKDAY
 	ifequal SUNDAY, .NextShipMonday
 	ifequal SATURDAY, .NextShipMonday
 	ifequal TUESDAY, .NextShipFriday
 	ifequal WEDNESDAY, .NextShipFriday
 	ifequal THURSDAY, .NextShipFriday
 .FirstTime:
-	writetext OlivinePortAskBoardText
+	writetext UnknownText_0x74a9c
 	yesorno
 	iffalse OlivinePortNotRidingMoveAwayScript
-	writetext OlivinePortAskTicketText
-	promptbutton
+	writetext UnknownText_0x74ada
+	buttonsound
 	checkitem S_S_TICKET
 	iffalse .NoTicket
-	writetext OlivinePortFlashTicketText
+	writetext UnknownText_0x74b11
 	waitbutton
 	closetext
 	setevent EVENT_TEMPORARY_UNTIL_MAP_RELOAD_2
 	applymovement PLAYER, MovementData_0x74a37
-	sjump OlivinePortSailorAtGangwayScript
+	jump OlivinePortSailorAtGangwayScript
 
 .NoTicket:
-	writetext OlivinePortNoTicketText
+	writetext UnknownText_0x74b41
 	waitbutton
 	closetext
 	applymovement PLAYER, MovementData_0x74a34
 	end
 
 .NextShipMonday:
-	writetext OlivinePortMondayShipText
+	writetext UnknownText_0x74ba8
 	waitbutton
 	closetext
 	applymovement PLAYER, MovementData_0x74a34
 	end
 
 .NextShipFriday:
-	writetext OlivinePortFridayShipText
+	writetext UnknownText_0x74bce
 	waitbutton
 	closetext
 	applymovement PLAYER, MovementData_0x74a34
@@ -128,13 +128,13 @@ OlivinePortWalkUpToShipScript:
 	end
 
 OlivinePortNotRidingScript:
-	writetext OlivinePortComeAgainText
+	writetext UnknownText_0x74af6
 	waitbutton
 	closetext
 	end
 
 OlivinePortNotRidingMoveAwayScript:
-	writetext OlivinePortComeAgainText
+	writetext UnknownText_0x74af6
 	waitbutton
 	closetext
 	applymovement PLAYER, MovementData_0x74a34
@@ -147,47 +147,47 @@ OlivinePortSailorAfterHOFScript:
 	iftrue OlivinePortAlreadyRodeScript
 	checkevent EVENT_FAST_SHIP_FIRST_TIME
 	iffalse .FirstTime
-	readvar VAR_WEEKDAY
+	checkcode VAR_WEEKDAY
 	ifequal SUNDAY, .NextShipMonday
 	ifequal SATURDAY, .NextShipMonday
 	ifequal TUESDAY, .NextShipFriday
 	ifequal WEDNESDAY, .NextShipFriday
 	ifequal THURSDAY, .NextShipFriday
 .FirstTime:
-	writetext OlivinePortAskBoardText
+	writetext UnknownText_0x74a9c
 	yesorno
 	iffalse OlivinePortNotRidingScript
-	writetext OlivinePortAskTicketText
-	promptbutton
+	writetext UnknownText_0x74ada
+	buttonsound
 	checkitem S_S_TICKET
 	iffalse .NoTicket
-	writetext OlivinePortFlashTicketText
+	writetext UnknownText_0x74b11
 	waitbutton
 	closetext
 	setevent EVENT_TEMPORARY_UNTIL_MAP_RELOAD_2
-	readvar VAR_FACING
+	checkcode VAR_FACING
 	ifequal RIGHT, .Right
 	applymovement PLAYER, MovementData_0x74a3f
-	sjump OlivinePortSailorAtGangwayScript
+	jump OlivinePortSailorAtGangwayScript
 
 .Right:
 	applymovement PLAYER, MovementData_0x74a49
-	sjump OlivinePortSailorAtGangwayScript
+	jump OlivinePortSailorAtGangwayScript
 
 .NoTicket:
-	writetext OlivinePortNoTicketText
+	writetext UnknownText_0x74b41
 	waitbutton
 	closetext
 	end
 
 .NextShipMonday:
-	writetext OlivinePortMondayShipText
+	writetext UnknownText_0x74ba8
 	waitbutton
 	closetext
 	end
 
 .NextShipFriday:
-	writetext OlivinePortFridayShipText
+	writetext UnknownText_0x74bce
 	waitbutton
 	closetext
 	end
@@ -283,18 +283,18 @@ MovementData_0x74a49:
 	step DOWN
 	step_end
 
-OlivinePortSailorGetOnBoardText:
+UnknownText_0x74a55:
 	text "We're departing"
 	line "soon. Please get"
 	cont "on board."
 	done
 
-OlivinePortCantBoardText:
+UnknownText_0x74a80:
 	text "Sorry. You can't"
 	line "board now."
 	done
 
-OlivinePortAskBoardText:
+UnknownText_0x74a9c:
 	text "Welcome to FAST"
 	line "SHIP S.S.AQUA."
 
@@ -302,17 +302,17 @@ OlivinePortAskBoardText:
 	line "ing today?"
 	done
 
-OlivinePortAskTicketText:
+UnknownText_0x74ada:
 	text "May I see your"
 	line "S.S.TICKET?"
 	done
 
-OlivinePortComeAgainText:
+UnknownText_0x74af6:
 	text "We hope to see you"
 	line "again!"
 	done
 
-OlivinePortFlashTicketText:
+UnknownText_0x74b11:
 	text "<PLAYER> flashed"
 	line "the S.S.TICKET."
 
@@ -320,7 +320,7 @@ OlivinePortFlashTicketText:
 	line "Thank you!"
 	done
 
-OlivinePortNoTicketText:
+UnknownText_0x74b41:
 	text "<PLAYER> tried to"
 	line "show the S.S."
 	cont "TICKET…"
@@ -334,12 +334,12 @@ OlivinePortNoTicketText:
 	line "S.S.TICKET."
 	done
 
-OlivinePortMondayShipText:
+UnknownText_0x74ba8:
 	text "The FAST SHIP will"
 	line "sail next Monday."
 	done
 
-OlivinePortFridayShipText:
+UnknownText_0x74bce:
 	text "The FAST SHIP will"
 	line "sail next Friday."
 	done

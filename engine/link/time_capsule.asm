@@ -24,7 +24,6 @@ ValidateOTTrademon:
 	ld hl, MON_LEVEL
 	add hl, bc
 	ld a, [hl]
-	cp MAX_LEVEL + 1
 	jr nc, .abnormal
 	ld a, [wLinkMode]
 	cp LINK_TIMECAPSULE

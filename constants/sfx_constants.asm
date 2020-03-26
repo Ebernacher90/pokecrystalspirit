@@ -150,8 +150,8 @@
 	const SFX_FANFARE_2                   ; 92
 	const SFX_REGISTER_PHONE_NUMBER       ; 93
 	const SFX_3RD_PLACE                   ; 94
-	const SFX_GET_EGG_UNUSED              ; 95
-	const SFX_GET_EGG                     ; 96
+	const SFX_GET_EGG_FROM_DAY_CARE_MAN   ; 95
+	const SFX_GET_EGG_FROM_DAY_CARE_LADY  ; 96
 	const SFX_MOVE_DELETED                ; 97
 	const SFX_2ND_PLACE                   ; 98
 	const SFX_1ST_PLACE                   ; 99
@@ -192,7 +192,7 @@
 
 ; new to Crystal
 	const SFX_GLASS_TING                  ; bc
-	const SFX_GLASS_TING_2                ; bd
+	const SFX_GLASS_TING_2                 ; bd
 	const SFX_INTRO_UNOWN_1               ; be
 	const SFX_INTRO_UNOWN_2               ; bf
 	const SFX_INTRO_UNOWN_3               ; c0

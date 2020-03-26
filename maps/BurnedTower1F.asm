@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const BURNEDTOWER1F_ROCK
 	const BURNEDTOWER1F_EUSINE
 	const BURNEDTOWER1F_SILVER
@@ -15,7 +15,7 @@ BurnedTower1F_MapScripts:
 	callback MAPCALLBACK_TILES, .HoleAndLadder
 
 .EusineScene:
-	prioritysjump .MeetEusine
+	priorityjump .MeetEusine
 	end
 
 .DummyScene1:
@@ -70,7 +70,7 @@ BurnedTowerRivalBattleScript:
 	startbattle
 	dontrestartmapmusic
 	reloadmapafterbattle
-	sjump .returnfrombattle
+	jump .returnfrombattle
 
 .totodile
 	winlosstext BurnedTowerSilver_WinText, BurnedTowerSilver_LossText
@@ -79,7 +79,7 @@ BurnedTowerRivalBattleScript:
 	startbattle
 	dontrestartmapmusic
 	reloadmapafterbattle
-	sjump .returnfrombattle
+	jump .returnfrombattle
 
 .chikorita
 	winlosstext BurnedTowerSilver_WinText, BurnedTowerSilver_LossText
@@ -88,7 +88,7 @@ BurnedTowerRivalBattleScript:
 	startbattle
 	dontrestartmapmusic
 	reloadmapafterbattle
-	sjump .returnfrombattle
+	jump .returnfrombattle
 
 .returnfrombattle
 	playmusic MUSIC_RIVAL_AFTER

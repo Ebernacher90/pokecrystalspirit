@@ -1,24 +1,24 @@
 ReenaPhoneCalleeScript:
-	gettrainername STRING_BUFFER_3, COOLTRAINERF, REENA1
+	trainertotext COOLTRAINERF, REENA1, MEM_BUFFER_0
 	checkflag ENGINE_REENA
 	iftrue .WantsBattle
 	farscall PhoneScript_AnswerPhone_Female
 	checkflag ENGINE_REENA_SUNDAY_MORNING
 	iftrue .NotSunday
-	readvar VAR_WEEKDAY
+	checkcode VAR_WEEKDAY
 	ifnotequal SUNDAY, .NotSunday
 	checktime MORN
 	iftrue ReenaSundayMorning
 
 .NotSunday:
-	farsjump ReenaForwardScript
+	farjump UnknownScript_0xa0928
 
 .WantsBattle:
-	getlandmarkname STRING_BUFFER_5, LANDMARK_ROUTE_27
-	farsjump ReenaHurryScript
+	landmarktotext ROUTE_27, MEM_BUFFER_2
+	farjump UnknownScript_0xa0a46
 
 ReenaPhoneCallerScript:
-	gettrainername STRING_BUFFER_3, COOLTRAINERF, REENA1
+	trainertotext COOLTRAINERF, REENA1, MEM_BUFFER_0
 	farscall PhoneScript_GreetPhone_Female
 	checkflag ENGINE_REENA
 	iftrue .Generic
@@ -28,12 +28,12 @@ ReenaPhoneCallerScript:
 	ifequal 0, ReenaWantsBattle
 
 .Generic:
-	farsjump Phone_GenericCall_Female
+	farjump Phone_GenericCall_Female
 
 ReenaSundayMorning:
 	setflag ENGINE_REENA_SUNDAY_MORNING
 
 ReenaWantsBattle:
-	getlandmarkname STRING_BUFFER_5, LANDMARK_ROUTE_27
+	landmarktotext ROUTE_27, MEM_BUFFER_2
 	setflag ENGINE_REENA
-	farsjump PhoneScript_WantsToBattle_Female
+	farjump PhoneScript_WantsToBattle_Female

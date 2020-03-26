@@ -113,31 +113,31 @@ _CGB_BattleColors:
 	call ApplyPals
 _CGB_FinishBattleScreenLayout:
 	call InitPartyMenuBGPal7
-	hlcoord 0, 0, wAttrmap
+	hlcoord 0, 0, wAttrMap
 	ld bc, SCREEN_WIDTH * SCREEN_HEIGHT
 	ld a, PAL_BATTLE_BG_ENEMY_HP
 	call ByteFill
-	hlcoord 0, 4, wAttrmap
+	hlcoord 0, 4, wAttrMap
 	lb bc, 8, 10
 	ld a, PAL_BATTLE_BG_PLAYER
 	call FillBoxCGB
-	hlcoord 10, 0, wAttrmap
+	hlcoord 10, 0, wAttrMap
 	lb bc, 7, 10
 	ld a, PAL_BATTLE_BG_ENEMY
 	call FillBoxCGB
-	hlcoord 0, 0, wAttrmap
+	hlcoord 0, 0, wAttrMap
 	lb bc, 4, 10
 	ld a, PAL_BATTLE_BG_ENEMY_HP
 	call FillBoxCGB
-	hlcoord 10, 7, wAttrmap
+	hlcoord 10, 7, wAttrMap
 	lb bc, 5, 10
 	ld a, PAL_BATTLE_BG_PLAYER_HP
 	call FillBoxCGB
-	hlcoord 10, 11, wAttrmap
+	hlcoord 10, 11, wAttrMap
 	lb bc, 1, 9
 	ld a, PAL_BATTLE_BG_EXP
 	call FillBoxCGB
-	hlcoord 0, 12, wAttrmap
+	hlcoord 0, 12, wAttrMap
 	ld bc, 6 * SCREEN_WIDTH
 	ld a, PAL_BATTLE_BG_TEXT
 	call ByteFill
@@ -146,7 +146,7 @@ _CGB_FinishBattleScreenLayout:
 	ld bc, 6 palettes
 	ld a, BANK(wOBPals1)
 	call FarCopyWRAM
-	call ApplyAttrmap
+	call ApplyAttrMap
 	ret
 
 InitPartyMenuBGPal7:
@@ -214,34 +214,34 @@ _CGB_StatsScreenHPPals:
 	ld bc, 3 palettes ; pink, green, and blue page palettes
 	ld a, BANK(wBGPals1)
 	call FarCopyWRAM
-	call WipeAttrmap
+	call WipeAttrMap
 
-	hlcoord 0, 0, wAttrmap
+	hlcoord 0, 0, wAttrMap
 	lb bc, 8, SCREEN_WIDTH
 	ld a, $1 ; mon palette
 	call FillBoxCGB
 
-	hlcoord 10, 16, wAttrmap
+	hlcoord 10, 16, wAttrMap
 	ld bc, 10
 	ld a, $2 ; exp palette
 	call ByteFill
 
-	hlcoord 13, 5, wAttrmap
+	hlcoord 13, 5, wAttrMap
 	lb bc, 2, 2
 	ld a, $3 ; pink page palette
 	call FillBoxCGB
 
-	hlcoord 15, 5, wAttrmap
+	hlcoord 15, 5, wAttrMap
 	lb bc, 2, 2
 	ld a, $4 ; green page palette
 	call FillBoxCGB
 
-	hlcoord 17, 5, wAttrmap
+	hlcoord 17, 5, wAttrMap
 	lb bc, 2, 2
 	ld a, $5 ; blue page palette
 	call FillBoxCGB
 
-	call ApplyAttrmap
+	call ApplyAttrMap
 	call ApplyPals
 	ld a, $1
 	ldh [hCGBPalUpdate], a
@@ -269,8 +269,8 @@ _CGB_Pokedex:
 	call GetMonPalettePointer
 	call LoadPalette_White_Col1_Col2_Black ; mon palette
 .got_palette
-	call WipeAttrmap
-	hlcoord 1, 1, wAttrmap
+	call WipeAttrMap
+	hlcoord 1, 1, wAttrMap
 	lb bc, 7, 7
 	ld a, $1 ; green question mark palette
 	call FillBoxCGB
@@ -280,7 +280,7 @@ _CGB_Pokedex:
 	ld bc, 1 palettes
 	ld a, BANK(wOBPals1)
 	call FarCopyWRAM
-	call ApplyAttrmap
+	call ApplyAttrMap
 	call ApplyPals
 	ld a, $1
 	ldh [hCGBPalUpdate], a
@@ -309,13 +309,13 @@ _CGB_BillsPC:
 	call GetPlayerOrMonPalettePointer
 	call LoadPalette_White_Col1_Col2_Black
 .Resume:
-	call WipeAttrmap
-	hlcoord 1, 4, wAttrmap
+	call WipeAttrMap
+	hlcoord 1, 4, wAttrMap
 	lb bc, 7, 7
 	ld a, $1
 	call FillBoxCGB
 	call InitPartyMenuOBPals
-	call ApplyAttrmap
+	call ApplyAttrMap
 	call ApplyPals
 	ld a, $1
 	ldh [hCGBPalUpdate], a
@@ -331,13 +331,13 @@ _CGB_BillsPC:
 	call GetPlayerOrMonPalettePointer
 	call LoadPalette_White_Col1_Col2_Black
 .asm_901a
-	call WipeAttrmap
-	hlcoord 1, 1, wAttrmap
+	call WipeAttrMap
+	hlcoord 1, 1, wAttrMap
 	lb bc, 7, 7
 	ld a, $1
 	call FillBoxCGB
 	call InitPartyMenuOBPals
-	call ApplyAttrmap
+	call ApplyAttrMap
 	call ApplyPals
 	ld a, $1
 	ldh [hCGBPalUpdate], a
@@ -354,13 +354,13 @@ _CGB_PokedexUnownMode:
 	ld a, [wCurPartySpecies]
 	call GetMonPalettePointer
 	call LoadPalette_White_Col1_Col2_Black
-	call WipeAttrmap
-	hlcoord 7, 5, wAttrmap
+	call WipeAttrMap
+	hlcoord 7, 5, wAttrMap
 	lb bc, 7, 7
 	ld a, $1
 	call FillBoxCGB
 	call InitPartyMenuOBPals
-	call ApplyAttrmap
+	call ApplyAttrMap
 	call ApplyPals
 	ld a, $1
 	ldh [hCGBPalUpdate], a
@@ -372,48 +372,48 @@ _CGB_SlotMachine:
 	ld bc, 16 palettes
 	ld a, BANK(wBGPals1)
 	call FarCopyWRAM
-	call WipeAttrmap
-	hlcoord 0, 2, wAttrmap
+	call WipeAttrMap
+	hlcoord 0, 2, wAttrMap
 	lb bc, 10, 3
 	ld a, $2
 	call FillBoxCGB
-	hlcoord 17, 2, wAttrmap
+	hlcoord 17, 2, wAttrMap
 	lb bc, 10, 3
 	ld a, $2
 	call FillBoxCGB
-	hlcoord 0, 4, wAttrmap
+	hlcoord 0, 4, wAttrMap
 	lb bc, 6, 3
 	ld a, $3
 	call FillBoxCGB
-	hlcoord 17, 4, wAttrmap
+	hlcoord 17, 4, wAttrMap
 	lb bc, 6, 3
 	ld a, $3
 	call FillBoxCGB
-	hlcoord 0, 6, wAttrmap
+	hlcoord 0, 6, wAttrMap
 	lb bc, 2, 3
 	ld a, $4
 	call FillBoxCGB
-	hlcoord 17, 6, wAttrmap
+	hlcoord 17, 6, wAttrMap
 	lb bc, 2, 3
 	ld a, $4
 	call FillBoxCGB
-	hlcoord 4, 2, wAttrmap
+	hlcoord 4, 2, wAttrMap
 	lb bc, 2, 12
 	ld a, $1
 	call FillBoxCGB
-	hlcoord 3, 2, wAttrmap
+	hlcoord 3, 2, wAttrMap
 	lb bc, 10, 1
 	ld a, $1
 	call FillBoxCGB
-	hlcoord 16, 2, wAttrmap
+	hlcoord 16, 2, wAttrMap
 	lb bc, 10, 1
 	ld a, $1
 	call FillBoxCGB
-	hlcoord 0, 12, wAttrmap
+	hlcoord 0, 12, wAttrMap
 	ld bc, $78
 	ld a, $7
 	call ByteFill
-	call ApplyAttrmap
+	call ApplyAttrMap
 	call ApplyPals
 	ld a, $1
 	ldh [hCGBPalUpdate], a
@@ -422,16 +422,16 @@ _CGB_SlotMachine:
 _CGB_BetaTitleScreen:
 	ld hl, PalPacket_BetaTitleScreen + 1
 	call CopyFourPalettes
-	call WipeAttrmap
+	call WipeAttrMap
 	ld de, wOBPals1
 	ld a, PREDEFPAL_PACK
 	call GetPredefPal
 	call LoadHLPaletteIntoDE
-	hlcoord 0, 6, wAttrmap
+	hlcoord 0, 6, wAttrMap
 	lb bc, 12, SCREEN_WIDTH
 	ld a, $1
 	call FillBoxCGB
-	call ApplyAttrmap
+	call ApplyAttrMap
 	call ApplyPals
 	ld a, $1
 	ldh [hCGBPalUpdate], a
@@ -461,7 +461,7 @@ _CGB_GSIntro:
 	ld bc, 2 palettes
 	ld a, BANK(wOBPals1)
 	call FarCopyWRAM
-	call WipeAttrmap
+	call WipeAttrMap
 	ret
 
 .ShellderLaprasBGPalette:
@@ -491,7 +491,7 @@ _CGB_GSIntro:
 	ld a, PREDEFPAL_GS_INTRO_JIGGLYPUFF_PIKACHU_OB
 	call GetPredefPal
 	call LoadHLPaletteIntoDE
-	call WipeAttrmap
+	call WipeAttrMap
 	ret
 
 .StartersCharizardScene:
@@ -501,7 +501,7 @@ _CGB_GSIntro:
 	ld a, PREDEFPAL_GS_INTRO_STARTERS_TRANSITION
 	call GetPredefPal
 	call LoadHLPaletteIntoDE
-	call WipeAttrmap
+	call WipeAttrMap
 	ret
 
 _CGB_BetaPoker:
@@ -511,8 +511,8 @@ _CGB_BetaPoker:
 	ld a, BANK(wBGPals1)
 	call FarCopyWRAM
 	call ApplyPals
-	call WipeAttrmap
-	call ApplyAttrmap
+	call WipeAttrMap
+	call ApplyAttrMap
 	ret
 
 _CGB_Diploma:
@@ -524,8 +524,8 @@ _CGB_Diploma:
 
 	ld hl, PalPacket_Diploma + 1
 	call CopyFourPalettes
-	call WipeAttrmap
-	call ApplyAttrmap
+	call WipeAttrMap
+	call ApplyAttrMap
 	ret
 
 _CGB_MapPals:
@@ -540,7 +540,7 @@ _CGB_PartyMenu:
 	call InitPartyMenuBGPal0
 	call InitPartyMenuBGPal7
 	call InitPartyMenuOBPals
-	call ApplyAttrmap
+	call ApplyAttrMap
 	ret
 
 _CGB_Evolution:
@@ -570,8 +570,8 @@ _CGB_Evolution:
 	call FarCopyWRAM
 
 .got_palette
-	call WipeAttrmap
-	call ApplyAttrmap
+	call WipeAttrMap
+	call ApplyAttrMap
 	call ApplyPals
 	ld a, $1
 	ldh [hCGBPalUpdate], a
@@ -598,8 +598,8 @@ _CGB_GSTitleScreen:
 _CGB0d:
 	ld hl, PalPacket_Diploma + 1
 	call CopyFourPalettes
-	call WipeAttrmap
-	call ApplyAttrmap
+	call WipeAttrMap
+	call ApplyAttrMap
 	ret
 
 _CGB_UnownPuzzle:
@@ -620,8 +620,8 @@ _CGB_UnownPuzzle:
 	ld [hl], a
 	pop af
 	ldh [rSVBK], a
-	call WipeAttrmap
-	call ApplyAttrmap
+	call WipeAttrMap
+	call ApplyAttrMap
 	ret
 
 _CGB_TrainerCard:
@@ -655,7 +655,7 @@ _CGB_TrainerCard:
 	call LoadHLPaletteIntoDE
 
 	; fill screen with opposite-gender palette for the card border
-	hlcoord 0, 0, wAttrmap
+	hlcoord 0, 0, wAttrMap
 	ld bc, SCREEN_WIDTH * SCREEN_HEIGHT
 	ld a, [wPlayerGender]
 	and a
@@ -665,7 +665,7 @@ _CGB_TrainerCard:
 .got_gender
 	call ByteFill
 	; fill trainer sprite area with same-gender palette
-	hlcoord 14, 1, wAttrmap
+	hlcoord 14, 1, wAttrMap
 	lb bc, 7, 5
 	ld a, [wPlayerGender]
 	and a
@@ -675,33 +675,33 @@ _CGB_TrainerCard:
 .got_gender2
 	call FillBoxCGB
 	; top-right corner still uses the border's palette
-	hlcoord 18, 1, wAttrmap
+	hlcoord 18, 1, wAttrMap
 	ld [hl], $1
-	hlcoord 2, 11, wAttrmap
+	hlcoord 2, 11, wAttrMap
 	lb bc, 2, 4
 	ld a, $1 ; falkner
 	call FillBoxCGB
-	hlcoord 6, 11, wAttrmap
+	hlcoord 6, 11, wAttrMap
 	lb bc, 2, 4
 	ld a, $2 ; bugsy
 	call FillBoxCGB
-	hlcoord 10, 11, wAttrmap
+	hlcoord 10, 11, wAttrMap
 	lb bc, 2, 4
 	ld a, $3 ; whitney
 	call FillBoxCGB
-	hlcoord 14, 11, wAttrmap
+	hlcoord 14, 11, wAttrMap
 	lb bc, 2, 4
 	ld a, $4 ; morty
 	call FillBoxCGB
-	hlcoord 2, 14, wAttrmap
+	hlcoord 2, 14, wAttrMap
 	lb bc, 2, 4
 	ld a, $5 ; chuck
 	call FillBoxCGB
-	hlcoord 6, 14, wAttrmap
+	hlcoord 6, 14, wAttrMap
 	lb bc, 2, 4
 	ld a, $6 ; jasmine
 	call FillBoxCGB
-	hlcoord 10, 14, wAttrmap
+	hlcoord 10, 14, wAttrMap
 	lb bc, 2, 4
 	ld a, $7 ; pryce
 	call FillBoxCGB
@@ -710,7 +710,7 @@ _CGB_TrainerCard:
 	and a
 	push af
 	jr z, .got_gender3
-	hlcoord 14, 14, wAttrmap
+	hlcoord 14, 14, wAttrMap
 	lb bc, 2, 4
 	ld a, $1
 	call FillBoxCGB
@@ -721,9 +721,9 @@ _CGB_TrainerCard:
 	inc c
 .got_gender4
 	ld a, c
-	hlcoord 18, 1, wAttrmap
+	hlcoord 18, 1, wAttrMap
 	ld [hl], a
-	call ApplyAttrmap
+	call ApplyAttrMap
 	call ApplyPals
 	ld a, $1
 	ldh [hCGBPalUpdate], a
@@ -742,12 +742,12 @@ _CGB_MoveList:
 	ld bc, HPBarPals
 	add hl, bc
 	call LoadPalette_White_Col1_Col2_Black
-	call WipeAttrmap
-	hlcoord 11, 1, wAttrmap
+	call WipeAttrMap
+	hlcoord 11, 1, wAttrMap
 	lb bc, 2, 9
 	ld a, $1
 	call FillBoxCGB
-	call ApplyAttrmap
+	call ApplyAttrMap
 	call ApplyPals
 	ld a, $1
 	ldh [hCGBPalUpdate], a
@@ -756,8 +756,8 @@ _CGB_MoveList:
 _CGB_BetaPikachuMinigame:
 	ld hl, PalPacket_BetaPikachuMinigame + 1
 	call CopyFourPalettes
-	call WipeAttrmap
-	call ApplyAttrmap
+	call WipeAttrMap
+	call ApplyAttrMap
 	call ApplyPals
 	ld a, $1
 	ldh [hCGBPalUpdate], a
@@ -768,8 +768,8 @@ _CGB_PokedexSearchOption:
 	ld a, PREDEFPAL_POKEDEX
 	call GetPredefPal
 	call LoadHLPaletteIntoDE
-	call WipeAttrmap
-	call ApplyAttrmap
+	call WipeAttrMap
+	call ApplyAttrMap
 	call ApplyPals
 	ld a, $1
 	ldh [hCGBPalUpdate], a
@@ -796,28 +796,28 @@ _CGB_PackPals:
 	ld bc, 8 palettes ; 6 palettes?
 	ld a, BANK(wBGPals1)
 	call FarCopyWRAM
-	call WipeAttrmap
-	hlcoord 0, 0, wAttrmap
+	call WipeAttrMap
+	hlcoord 0, 0, wAttrMap
 	lb bc, 1, 10
 	ld a, $1
 	call FillBoxCGB
-	hlcoord 10, 0, wAttrmap
+	hlcoord 10, 0, wAttrMap
 	lb bc, 1, 10
 	ld a, $2
 	call FillBoxCGB
-	hlcoord 7, 2, wAttrmap
+	hlcoord 7, 2, wAttrMap
 	lb bc, 9, 1
 	ld a, $3
 	call FillBoxCGB
-	hlcoord 0, 7, wAttrmap
+	hlcoord 0, 7, wAttrMap
 	lb bc, 3, 5
 	ld a, $4
 	call FillBoxCGB
-	hlcoord 0, 3, wAttrmap
+	hlcoord 0, 3, wAttrMap
 	lb bc, 3, 5
 	ld a, $5
 	call FillBoxCGB
-	call ApplyAttrmap
+	call ApplyAttrMap
 	call ApplyPals
 	ld a, $1
 	ldh [hCGBPalUpdate], a
@@ -832,7 +832,7 @@ INCLUDE "gfx/pack/pack_f.pal"
 _CGB_Pokepic:
 	call _CGB_MapPals
 	ld de, SCREEN_WIDTH
-	hlcoord 0, 0, wAttrmap
+	hlcoord 0, 0, wAttrMap
 	ld a, [wMenuBorderTopCoord]
 .loop
 	and a
@@ -860,22 +860,22 @@ _CGB_Pokepic:
 	ld c, a
 	ld a, $0
 	call FillBoxCGB
-	call ApplyAttrmap
+	call ApplyAttrMap
 	ret
 
 _CGB_MagnetTrain:
 	ld hl, PalPacket_MagnetTrain + 1
 	call CopyFourPalettes
-	call WipeAttrmap
-	hlcoord 0, 4, wAttrmap
+	call WipeAttrMap
+	hlcoord 0, 4, wAttrMap
 	lb bc, 10, SCREEN_WIDTH
 	ld a, $2
 	call FillBoxCGB
-	hlcoord 0, 6, wAttrmap
+	hlcoord 0, 6, wAttrMap
 	lb bc, 6, SCREEN_WIDTH
 	ld a, $1
 	call FillBoxCGB
-	call ApplyAttrmap
+	call ApplyAttrMap
 	call ApplyPals
 	ld a, $1
 	ldh [hCGBPalUpdate], a
@@ -892,8 +892,8 @@ _CGB_GamefreakLogo:
 	ld hl, .Palette
 	ld de, wOBPals1 palette 1
 	call LoadHLPaletteIntoDE
-	call WipeAttrmap
-	call ApplyAttrmap
+	call WipeAttrMap
+	call ApplyAttrMap
 	call ApplyPals
 	ret
 
@@ -906,8 +906,8 @@ _CGB_PlayerOrMonFrontpicPals:
 	ld bc, wTempMonDVs
 	call GetPlayerOrMonPalettePointer
 	call LoadPalette_White_Col1_Col2_Black
-	call WipeAttrmap
-	call ApplyAttrmap
+	call WipeAttrMap
+	call ApplyAttrMap
 	call ApplyPals
 	ret
 
@@ -916,8 +916,8 @@ _CGB1e:
 	ld a, [wCurPartySpecies]
 	call GetMonPalettePointer
 	call LoadPalette_White_Col1_Col2_Black
-	call WipeAttrmap
-	call ApplyAttrmap
+	call WipeAttrMap
+	call ApplyAttrMap
 	ret
 
 _CGB_TradeTube:
@@ -932,7 +932,7 @@ _CGB_TradeTube:
 	ld a, PREDEFPAL_TRADE_TUBE
 	call GetPredefPal
 	call LoadHLPaletteIntoDE
-	call WipeAttrmap
+	call WipeAttrMap
 	ret
 
 _CGB_TrainerOrMonFrontpicPals:
@@ -941,8 +941,8 @@ _CGB_TrainerOrMonFrontpicPals:
 	ld bc, wTempMonDVs
 	call GetFrontpicPalettePointer
 	call LoadPalette_White_Col1_Col2_Black
-	call WipeAttrmap
-	call ApplyAttrmap
+	call WipeAttrMap
+	call ApplyAttrMap
 	call ApplyPals
 	ret
 
@@ -953,28 +953,28 @@ _CGB_MysteryGift:
 	ld a, BANK(wBGPals1)
 	call FarCopyWRAM
 	call ApplyPals
-	call WipeAttrmap
-	hlcoord 3, 7, wAttrmap
+	call WipeAttrMap
+	hlcoord 3, 7, wAttrMap
 	lb bc, 8, 14
 	ld a, $1
 	call FillBoxCGB
-	hlcoord 1, 5, wAttrmap
+	hlcoord 1, 5, wAttrMap
 	lb bc, 1, 18
 	ld a, $1
 	call FillBoxCGB
-	hlcoord 1, 16, wAttrmap
+	hlcoord 1, 16, wAttrMap
 	lb bc, 1, 18
 	ld a, $1
 	call FillBoxCGB
-	hlcoord 0, 0, wAttrmap
+	hlcoord 0, 0, wAttrMap
 	lb bc, 17, 2
 	ld a, $1
 	call FillBoxCGB
-	hlcoord 18, 5, wAttrmap
+	hlcoord 18, 5, wAttrMap
 	lb bc, 12, 1
 	ld a, $1
 	call FillBoxCGB
-	call ApplyAttrmap
+	call ApplyAttrMap
 	ret
 
 .Palettes:

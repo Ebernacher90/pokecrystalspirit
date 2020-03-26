@@ -2,12 +2,14 @@ INCLUDE "data/trainers/party_pointers.asm"
 
 Trainers:
 ; Trainer data structure:
-; - db "NAME@", TRAINERTYPE_* constant
+; - db "NAME@", TRAINERTYPE_* constants |ed together
 ; - 1 to 6 Pokémon:
-;    * for TRAINERTYPE_NORMAL:     db level, species
-;    * for TRAINERTYPE_MOVES:      db level, species, 4 moves
-;    * for TRAINERTYPE_ITEM:       db level, species, item
-;    * for TRAINERTYPE_ITEM_MOVES: db level, species, item, 4 moves
+;	 * in all cases:			   db level, species
+;    * with TRAINERTYPE_NICKNAME:  db "NICKNAME@"
+;    * with TRAINERTYPE_DVS:       db atk|def dv, spd|spc dv
+;    * with TRAINERTYPE_ITEM:      db item
+;    * with TRAINERTYPE_MOVES:	   db move 1, move 2, move 3, move 4
+;	 (TRAINERTYPE_ITE_MOVES is just TRAINERTYPE_ITEM | TRAINERTYPE_MOVES)
 ; - db -1 ; end
 
 FalknerGroup:
@@ -75,18 +77,21 @@ ClairGroup:
 
 Rival1Group:
 	; RIVAL1 (1)
-	db "?@", TRAINERTYPE_NORMAL
-	db  5, CHIKORITA
+	db "?@", TRAINERTYPE_NICKNAME | TRAINERTYPE_DVS
+	db 6, RATTATA,		"Ratti@",	$6A, $AA
+	db 10, CHIKORITA,	"Megi@",	$FA, $AA
 	db -1 ; end
 
 	; RIVAL1 (2)
 	db "?@", TRAINERTYPE_NORMAL
-	db  5, CYNDAQUIL
+	db 6, RATTATA
+	db 10, CYNDAQUIL
 	db -1 ; end
 
 	; RIVAL1 (3)
 	db "?@", TRAINERTYPE_NORMAL
-	db  5, TOTODILE
+	db 6, RATTATA
+	db 10, TOTODILE
 	db -1 ; end
 
 	; RIVAL1 (4)
@@ -3494,4 +3499,11 @@ MysticalmanGroup:
 	db 23, DROWZEE,    DREAM_EATER, HYPNOSIS, DISABLE, CONFUSION
 	db 23, HAUNTER,    LICK, HYPNOSIS, MEAN_LOOK, CURSE
 	db 25, ELECTRODE,  SCREECH, SONICBOOM, THUNDER, ROLLOUT
+	db -1 ; end
+	
+AquaGruntGroup:
+	; AquaGrunt (1)
+	db "SAHIT@", TRAINERTYPE_NORMAL
+	db 25, RATICATE
+	db 27, GOLBAT
 	db -1 ; end

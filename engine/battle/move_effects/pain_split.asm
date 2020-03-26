@@ -32,7 +32,7 @@ BattleCommand_PainSplit:
 	farcall _UpdateBattleHUDs
 
 	ld hl, SharedPainText
-	jp StdBattleTextbox
+	jp StdBattleTextBox
 
 .PlayerShareHP:
 	ld a, [hld]

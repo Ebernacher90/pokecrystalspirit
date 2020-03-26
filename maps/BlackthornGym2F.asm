@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const BLACKTHORNGYM2F_COOLTRAINER_M
 	const BLACKTHORNGYM2F_COOLTRAINER_F
 	const BLACKTHORNGYM2F_BOULDER1
@@ -29,15 +29,15 @@ BlackthornGym2F_MapScripts:
 
 .Boulder1:
 	disappear BLACKTHORNGYM2F_BOULDER1
-	sjump .Fall
+	jump .Fall
 
 .Boulder2:
 	disappear BLACKTHORNGYM2F_BOULDER2
-	sjump .Fall
+	jump .Fall
 
 .Boulder3:
 	disappear BLACKTHORNGYM2F_BOULDER3
-	sjump .Fall
+	jump .Fall
 
 .Fall:
 	pause 30

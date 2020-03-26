@@ -6,7 +6,7 @@ Unreferenced_Function547::
 	ret nz
 	ld c, a
 	ld a, [wLYOverrides]
-	ldh [c], a
+	ld [$ff00+c], a
 	ret
 
 LCD::
@@ -25,7 +25,7 @@ LCD::
 	ldh a, [hLCDCPointer]
 	ld c, a
 	ld a, b
-	ldh [c], a
+	ld [$ff00+c], a
 	pop bc
 
 .done
@@ -46,7 +46,7 @@ DisableLCD::
 	ld b, a
 
 ; Disable VBlank
-	res VBLANK, a
+	res 0, a ; vblank
 	ldh [rIE], a
 
 .wait

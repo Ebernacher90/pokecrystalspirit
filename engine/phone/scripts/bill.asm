@@ -4,24 +4,24 @@ BillPhoneCalleeScript:
 	checktime NITE
 	iftrue .nitegreet
 	farwritetext BillPhoneMornGreetingText
-	promptbutton
-	sjump .main
+	buttonsound
+	jump .main
 
 .daygreet
 	farwritetext BillPhoneDayGreetingText
-	promptbutton
-	sjump .main
+	buttonsound
+	jump .main
 
 .nitegreet
 	farwritetext BillPhoneNiteGreetingText
-	promptbutton
-	sjump .main
+	buttonsound
+	jump .main
 
 .main
 	farwritetext BillPhoneGenericText
-	promptbutton
-	readvar VAR_BOXSPACE
-	getnum STRING_BUFFER_3
+	buttonsound
+	checkcode VAR_BOXSPACE
+	vartomem MEM_BUFFER_0
 	ifequal 0, .full
 	ifless PARTY_LENGTH, .nearlyfull
 	farwritetext BillPhoneNotFullText

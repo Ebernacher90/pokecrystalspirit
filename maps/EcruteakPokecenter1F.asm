@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const ECRUTEAKPOKECENTER1F_NURSE
 	const ECRUTEAKPOKECENTER1F_POKEFAN_M
 	const ECRUTEAKPOKECENTER1F_COOLTRAINER_F
@@ -13,7 +13,7 @@ EcruteakPokecenter1F_MapScripts:
 	db 0 ; callbacks
 
 .MeetBill:
-	prioritysjump .BillActivatesTimeCapsule
+	priorityjump .BillActivatesTimeCapsule
 	end
 
 .DummyScene:
@@ -38,8 +38,8 @@ EcruteakPokecenter1F_MapScripts:
 	pause 10
 	opentext
 	writetext EcruteakPokecenter1F_BillText1
-	promptbutton
-	sjump .PointlessJump
+	buttonsound
+	jump .PointlessJump
 
 .PointlessJump:
 	writetext EcruteakPokecenter1F_BillText2

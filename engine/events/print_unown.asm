@@ -1,5 +1,5 @@
-UNOWNSTAMP_BOLD_A EQU "♂" ; $ef
-UNOWNSTAMP_BOLD_B EQU "♀" ; $f5
+UNOWNSTAMP_BOLD_A EQUS "\"♂\"" ; $ef
+UNOWNSTAMP_BOLD_B EQUS "\"♀\"" ; $f5
 
 _UnownPrinter:
 	ld a, [wUnownDex]
@@ -15,7 +15,7 @@ _UnownPrinter:
 	set NO_TEXT_SCROLL, a
 	ld [wOptions], a
 	call ClearBGPalettes
-	call ClearTilemap
+	call ClearTileMap
 
 	ld de, UnownDexATile
 	ld hl, vTiles0 tile UNOWNSTAMP_BOLD_A
@@ -29,15 +29,15 @@ _UnownPrinter:
 
 	hlcoord 0, 0
 	lb bc, 3, 18
-	call Textbox
+	call TextBox
 
 	hlcoord 0, 5
 	lb bc, 7, 7
-	call Textbox
+	call TextBox
 
 	hlcoord 0, 14
 	lb bc, 2, 18
-	call Textbox
+	call TextBox
 
 	hlcoord 1, 2
 	ld de, AlphRuinsStampString

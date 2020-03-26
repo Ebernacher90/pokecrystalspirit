@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const VIOLETNICKNAMESPEECHHOUSE_TEACHER
 	const VIOLETNICKNAMESPEECHHOUSE_LASS
 	const VIOLETNICKNAMESPEECHHOUSE_BIRD

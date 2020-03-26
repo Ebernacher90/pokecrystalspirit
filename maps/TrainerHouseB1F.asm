@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const TRAINERHOUSEB1F_RECEPTIONIST
 	const TRAINERHOUSEB1F_CHRIS
 
@@ -17,17 +17,17 @@ TrainerHouseReceptionistScript:
 	checkflag ENGINE_FOUGHT_IN_TRAINER_HALL_TODAY
 	iftrue .FoughtTooManyTimes
 	writetext TrainerHouseB1FIntroText
-	promptbutton
+	buttonsound
 	special TrainerHouse
 	iffalse .GetCal3Name
-	gettrainername STRING_BUFFER_3, CAL, CAL2
-	sjump .GotName
+	trainertotext CAL, CAL2, MEM_BUFFER_0
+	jump .GotName
 
 .GetCal3Name:
-	gettrainername STRING_BUFFER_3, CAL, CAL3
+	trainertotext CAL, CAL3, MEM_BUFFER_0
 .GotName:
 	writetext TrainerHouseB1FYourOpponentIsText
-	promptbutton
+	buttonsound
 	writetext TrainerHouseB1FAskWantToBattleText
 	yesorno
 	iffalse .Declined

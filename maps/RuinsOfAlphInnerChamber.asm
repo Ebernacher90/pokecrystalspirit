@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const RUINSOFALPHINNERCHAMBER_FISHER
 	const RUINSOFALPHINNERCHAMBER_TEACHER
 	const RUINSOFALPHINNERCHAMBER_GRAMPS
@@ -14,7 +14,7 @@ RuinsOfAlphInnerChamber_MapScripts:
 	end
 
 .UnownAppear:
-	prioritysjump .StrangePresenceScript
+	priorityjump .StrangePresenceScript
 	end
 
 .StrangePresenceScript:

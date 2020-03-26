@@ -4,7 +4,7 @@ frame: MACRO
 	db \1
 x = \2
 if _NARG > 2
-rept _NARG - 2
+rept _NARG + -2
 x = x | (1 << (\3 + 1))
 	shift
 endr
@@ -15,20 +15,20 @@ ENDM
 	enum_start $fc
 
 	enum delanim_command ; $fc
-delanim: MACRO
-; Removes the object from the screen, as opposed to `endanim` which just stops all motion
+delanim: MACRO ; used for oam
 	db delanim_command
 ENDM
 
-	enum dowait_command ; $fd
-dowait: MACRO
-	db dowait_command
-	db \1 ; frames
+	enum dorepeat_command ; $fd
+dorepeat: MACRO
+	db dorepeat_command
+	db \1 ; #
 ENDM
 
-	enum dorestart_command ; $fe
-dorestart: MACRO
-	db dorestart_command
+	enum setrepeat_command ; $fe
+setrepeat: MACRO
+	db setrepeat_command
+	db \1 ; #
 ENDM
 
 	enum endanim_command ; $ff
@@ -36,18 +36,9 @@ endanim: MACRO
 	db endanim_command
 ENDM
 
+__enum__ = $fe
 
-; Used for pic animations
-__enum__ = $fd
-
-	enum dorepeat_command ; $fd
-dorepeat: MACRO
-	db dorepeat_command
-	db \1 ; command offset to jump to
-ENDM
-
-	enum setrepeat_command ; $fe
-setrepeat: MACRO
-	db setrepeat_command
-	db \1 ; amount of times to repeat
+	enum dorestart_command ; $fe
+dorestart: MACRO ; used for oam
+	db dorestart_command
 ENDM

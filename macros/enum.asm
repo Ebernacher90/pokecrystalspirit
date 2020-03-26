@@ -9,12 +9,12 @@ endc
 if _NARG >= 2
 __enumdir__ = \2
 else
-__enumdir__ = 1
+__enumdir__ = +1
 endc
 ENDM
 
 enum: MACRO
-\1 EQU __enum__
+\1 = __enum__
 __enum__ = __enum__ + __enumdir__
 ENDM
 

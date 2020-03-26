@@ -96,7 +96,7 @@ _SlotMachine:
 
 .InitGFX:
 	call ClearBGPalettes
-	call ClearTilemap
+	call ClearTileMap
 	call ClearSprites
 	ld de, MUSIC_NONE
 	call PlayMusic
@@ -261,7 +261,7 @@ Unreferenced_Function9282c:
 	ld a, [hl]
 	xor %00100000
 	ld [hli], a ; tile id
-rept SPRITEOAMSTRUCT_LENGTH - 1
+rept SPRITEOAMSTRUCT_LENGTH + -1
 	inc hl
 endr
 	dec c
@@ -1139,7 +1139,7 @@ ReelAction_InitGolem:
 	push af
 	depixel 12, 13
 	ld a, SPRITE_ANIM_INDEX_SLOTS_GOLEM
-	call InitSpriteAnimStruct
+	call _InitSpriteAnimStruct
 	ld hl, SPRITEANIMSTRUCT_0E
 	add hl, bc
 	pop af
@@ -1200,7 +1200,7 @@ ReelAction_InitChansey:
 	push bc
 	depixel 12, 0
 	ld a, SPRITE_ANIM_INDEX_SLOTS_CHANSEY
-	call InitSpriteAnimStruct
+	call _InitSpriteAnimStruct
 	pop bc
 	xor a
 	ld [wSlotsDelay], a
@@ -1707,7 +1707,7 @@ Slots_TurnLightsOnOrOff:
 
 Slots_AskBet:
 .loop
-	ld hl, .SlotsBetHowManyCoinsText
+	ld hl, .Text_BetHowManyCoins
 	call PrintText
 	ld hl, .MenuHeader
 	call LoadMenuHeader
@@ -1727,7 +1727,7 @@ Slots_AskBet:
 	ld a, [hl]
 	cp c
 	jr nc, .Start
-	ld hl, .SlotsNotEnoughCoinsText
+	ld hl, .Text_NotEnoughCoins
 	call PrintText
 	jr .loop
 
@@ -1742,21 +1742,24 @@ Slots_AskBet:
 	call WaitSFX
 	ld de, SFX_PAY_DAY
 	call PlaySFX
-	ld hl, .SlotsStartText
+	ld hl, .Text_Start
 	call PrintText
 	and a
 	ret
 
-.SlotsBetHowManyCoinsText:
-	text_far _SlotsBetHowManyCoinsText
+.Text_BetHowManyCoins:
+	; Bet how many coins?
+	text_far UnknownText_0x1c5049
 	text_end
 
-.SlotsStartText:
-	text_far _SlotsStartText
+.Text_Start:
+	; Start!
+	text_far UnknownText_0x1c505e
 	text_end
 
-.SlotsNotEnoughCoinsText:
-	text_far _SlotsNotEnoughCoinsText
+.Text_NotEnoughCoins:
+	; Not enough coins.
+	text_far UnknownText_0x1c5066
 	text_end
 
 .MenuHeader:
@@ -1777,16 +1780,16 @@ Slots_AskPlayAgain:
 	ld a, [hli]
 	or [hl]
 	jr nz, .you_have_coins
-	ld hl, .SlotsRanOutOfCoinsText
+	ld hl, .Text_OutOfCoins
 	call PrintText
 	ld c, 60
 	call DelayFrames
 	jr .exit_slots
 
 .you_have_coins
-	ld hl, .SlotsPlayAgainText
+	ld hl, .Text_PlayAgain
 	call PrintText
-	call LoadMenuTextbox
+	call LoadMenuTextBox
 	lb bc, 14, 12
 	call PlaceYesNoBox
 	ld a, [wMenuCursorY]
@@ -1801,12 +1804,12 @@ Slots_AskPlayAgain:
 	scf
 	ret
 
-.SlotsRanOutOfCoinsText:
-	text_far _SlotsRanOutOfCoinsText
+.Text_OutOfCoins:
+	text_far UnknownText_0x1c5079
 	text_end
 
-.SlotsPlayAgainText:
-	text_far _SlotsPlayAgainText
+.Text_PlayAgain:
+	text_far UnknownText_0x1c5092
 	text_end
 
 Slots_GetPayout:
@@ -1846,7 +1849,7 @@ Slots_PayoutText:
 	ld a, [wSlotMatched]
 	cp SLOTS_NO_MATCH
 	jr nz, .MatchedSomething
-	ld hl, .SlotsDarnText
+	ld hl, .Text_Darn
 	call PrintText
 	farcall StubbedTrainerRankings_EndSlotsWinStreak
 	ret
@@ -1896,18 +1899,20 @@ Slots_PayoutText:
 	ldcoord_a 3, 14
 	hlcoord 18, 17
 	ld [hl], "▼"
-	ld hl, .SlotsLinedUpText
+	ld hl, .Text_LinedUpWonCoins
 rept 4
 	inc bc
 endr
 	ret
 
-.SlotsLinedUpText:
-	text_far _SlotsLinedUpText
+.Text_LinedUpWonCoins:
+	; lined up! Won @  coins!
+	text_far UnknownText_0x1c509f
 	text_end
 
-.SlotsDarnText:
-	text_far _SlotsDarnText
+.Text_Darn:
+	; Darn!
+	text_far UnknownText_0x1c50bb
 	text_end
 
 .LinedUpSevens:
@@ -2120,7 +2125,7 @@ Slots_AnimateChansey:
 	push bc
 	depixel 12, 13, 0, 4
 	ld a, SPRITE_ANIM_INDEX_SLOTS_EGG
-	call InitSpriteAnimStruct
+	call _InitSpriteAnimStruct
 	pop bc
 	ret
 

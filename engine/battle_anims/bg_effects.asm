@@ -10,7 +10,7 @@
 
 ExecuteBGEffects:
 	ld hl, wActiveBGEffects
-	ld e, NUM_BG_EFFECTS
+	ld e, 5
 .loop
 	ld a, [hl]
 	and a
@@ -23,7 +23,7 @@ ExecuteBGEffects:
 	pop de
 	pop hl
 .next
-	ld bc, BG_EFFECT_STRUCT_LENGTH
+	ld bc, 4
 	add hl, bc
 	dec e
 	jr nz, .loop
@@ -31,12 +31,12 @@ ExecuteBGEffects:
 
 QueueBGEffect:
 	ld hl, wActiveBGEffects
-	ld e, NUM_BG_EFFECTS
+	ld e, 5
 .loop
 	ld a, [hl]
 	and a
 	jr z, .load
-	ld bc, BG_EFFECT_STRUCT_LENGTH
+	ld bc, 4
 	add hl, bc
 	dec e
 	jr nz, .loop
@@ -416,7 +416,7 @@ BattleBGEffect_BattlerObj_1Row:
 .zero
 	call BGEffect_CheckFlyDigStatus
 	jr z, .not_flying_digging
-	ld hl, wLastAnimObjectIndex
+	ld hl, wNumActiveBattleAnims
 	inc [hl]
 	call EndBattleBGEffect
 	ret
@@ -440,7 +440,7 @@ BattleBGEffect_BattlerObj_1Row:
 	ld a, 8 * TILE_WIDTH
 	ld [wBattleObjectTempYCoord], a
 	xor a
-	ld [wBattleObjectTempParam], a
+	ld [wBattleObjectTemp0b], a
 	call _QueueBattleAnimation
 	pop bc
 	ret
@@ -483,7 +483,7 @@ BattleBGEffect_BattlerObj_2Row:
 .zero
 	call BGEffect_CheckFlyDigStatus
 	jr z, .not_flying_digging
-	ld hl, wLastAnimObjectIndex
+	ld hl, wNumActiveBattleAnims
 	inc [hl]
 	call EndBattleBGEffect
 	ret
@@ -507,7 +507,7 @@ BattleBGEffect_BattlerObj_2Row:
 	ld a, 8 * TILE_WIDTH
 	ld [wBattleObjectTempYCoord], a
 	xor a
-	ld [wBattleObjectTempParam], a
+	ld [wBattleObjectTemp0b], a
 	call _QueueBattleAnimation
 	pop bc
 	ret
@@ -1417,7 +1417,7 @@ BattleBGEffect_Tackle:
 	ldh [hLYOverrideEnd], a
 	ld hl, BG_EFFECT_STRUCT_03
 	add hl, bc
-	ld [hl], 0
+	ld [hl], $0
 	call BGEffect_CheckBattleTurn
 	jr nz, .player_side
 	ld a, 2
@@ -1451,10 +1451,10 @@ BattleBGEffect_25:
 	ldh [hLYOverrideEnd], a
 	ld hl, BG_EFFECT_STRUCT_03
 	add hl, bc
-	ld [hl], 0
+	ld [hl], $0
 	call BGEffect_CheckBattleTurn
 	jr nz, .player_side
-	ld a, 2
+	ld a,  2
 	jr .okay
 
 .player_side
@@ -1473,7 +1473,7 @@ Tackle_BGEffect25_2d_one:
 	ld a, [hl]
 	cp -8
 	jr z, .reached_limit
-	cp 8
+	cp  8
 	jr nz, .finish
 .reached_limit
 	call BattleBGEffects_IncrementJumptable

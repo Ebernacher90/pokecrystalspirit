@@ -5,7 +5,7 @@ _Diploma:
 
 PlaceDiplomaOnScreen:
 	call ClearBGPalettes
-	call ClearTilemap
+	call ClearTileMap
 	call ClearSprites
 	call DisableLCD
 	ld hl, DiplomaGFX
@@ -86,5 +86,3 @@ INCBIN "gfx/diploma/page1.tilemap"
 
 DiplomaPage2Tilemap:
 INCBIN "gfx/diploma/page2.tilemap"
-
-	ret ; unused

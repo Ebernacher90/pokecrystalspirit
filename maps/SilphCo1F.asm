@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const SILPHCO1F_RECEPTIONIST
 	const SILPHCO1F_OFFICER
 
@@ -16,7 +16,7 @@ SilphCoOfficerScript:
 	checkevent EVENT_GOT_UP_GRADE
 	iftrue .GotUpGrade
 	writetext SilphCoOfficerText
-	promptbutton
+	buttonsound
 	verbosegiveitem UP_GRADE
 	iffalse .NoRoom
 	setevent EVENT_GOT_UP_GRADE

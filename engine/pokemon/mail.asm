@@ -307,7 +307,7 @@ _PlayerMailBoxMenu:
 
 .nomail
 	ld hl, .EmptyMailboxText
-	jp MenuTextboxBackup
+	jp MenuTextBoxBackup
 
 .EmptyMailboxText:
 	text_far _EmptyMailboxText
@@ -428,8 +428,8 @@ MailboxPC:
 	jp CloseSubmenu
 
 .PutInPack:
-	ld hl, .MailMessageLostText
-	call MenuTextbox
+	ld hl, .MessageLostText
+	call MenuTextBox
 	call YesNoBox
 	call ExitMenu
 	ret c
@@ -441,27 +441,27 @@ MailboxPC:
 	ld hl, wNumItems
 	call ReceiveItem
 	jr c, .put_in_bag
-	ld hl, .MailPackFullText
-	jp MenuTextboxBackup
+	ld hl, .PackFullText
+	jp MenuTextBoxBackup
 
 .put_in_bag
 	ld a, [wMenuSelection]
 	dec a
 	ld b, a
 	call DeleteMailFromPC
-	ld hl, .MailClearedPutAwayText
-	jp MenuTextboxBackup
+	ld hl, .PutAwayText
+	jp MenuTextBoxBackup
 
-.MailClearedPutAwayText:
-	text_far _MailClearedPutAwayText
+.PutAwayText:
+	text_far ClearedMailPutAwayText
 	text_end
 
-.MailPackFullText:
-	text_far _MailPackFullText
+.PackFullText:
+	text_far MailPackFullText
 	text_end
 
-.MailMessageLostText:
-	text_far _MailMessageLostText
+.MessageLostText:
+	text_far MailMessageLostText
 	text_end
 
 .GetMailType:
@@ -500,12 +500,12 @@ MailboxPC:
 	ld a, [hl]
 	and a
 	jr z, .attach_mail
-	ld hl, .MailAlreadyHoldingItemText
+	ld hl, .HoldingMailText
 	call PrintText
 	jr .try_again
 
 .egg
-	ld hl, .MailEggText
+	ld hl, .EggText
 	call PrintText
 	jr .try_again
 
@@ -514,22 +514,22 @@ MailboxPC:
 	dec a
 	ld b, a
 	call MoveMailFromPCToParty
-	ld hl, .MailMovedFromBoxText
+	ld hl, .MailMovedText
 	call PrintText
 
 .exit2
 	jp CloseSubmenu
 
-.MailAlreadyHoldingItemText:
-	text_far _MailAlreadyHoldingItemText
+.HoldingMailText:
+	text_far MailAlreadyHoldingItemText
 	text_end
 
-.MailEggText:
-	text_far _MailEggText
+.EggText:
+	text_far MailEggText
 	text_end
 
-.MailMovedFromBoxText:
-	text_far _MailMovedFromBoxText
+.MailMovedText:
+	text_far MailMovedFromBoxText
 	text_end
 
 .Cancel:
@@ -543,8 +543,8 @@ MailboxPC:
 
 .TopMenuData:
 	db SCROLLINGMENU_DISPLAY_ARROWS ; flags
-	db 4, 0 ; rows, columns
-	db SCROLLINGMENU_ITEMS_NORMAL ; item format
+	db 4, 0 ; rows/columns?
+	db 1 ; horizontal spacing?
 	dbw 0, wMailboxCount ; text pointer
 	dba MailboxPC_PrintMailAuthor
 	dba NULL

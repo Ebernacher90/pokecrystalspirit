@@ -259,7 +259,7 @@ TilesetChampionsRoomAnim:
 TilesetLighthouseAnim:
 TilesetPlayersRoomAnim:
 TilesetPokeComCenterAnim:
-TilesetBattleTowerInsideAnim:
+TilesetBattleTowerAnim:
 TilesetRuinsOfAlphAnim:
 TilesetRadioTowerAnim:
 TilesetUndergroundAnim:
@@ -268,6 +268,10 @@ TilesetHoOhWordRoomAnim:
 TilesetKabutoWordRoomAnim:
 TilesetOmanyteWordRoomAnim:
 TilesetAerodactylWordRoomAnim:
+TilesetMuseumAnim:
+TilesetUnderground1Anim:
+TilesetGate1Anim:
+TilesetMoblinsCaveAnim:
 	dw NULL,  WaitTileAnimation
 	dw NULL,  WaitTileAnimation
 	dw NULL,  WaitTileAnimation
@@ -638,8 +642,9 @@ AnimateFlowerTile:
 	ld e, a
 	ldh a, [hCGB]
 	and 1
-	add e
 
+	add e
+	
 	swap a
 	ld e, a
 	ld d, 0

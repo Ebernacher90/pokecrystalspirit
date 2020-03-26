@@ -812,4 +812,112 @@ KantoGrassWildMons:
 	db 42, GOLBAT
 	db 42, GOLBAT
 
+	map_id SAFARI_ZONE_BETA
+	db 10 percent, 10 percent, 10 percent ; encounter rates: morn/day/nite
+	; morn
+	db 85, RHYDON
+	db 84, CROBAT
+	db 84, POLITOED
+	db 84, TANGELA
+	db 84, SLOWKING
+	db 83, SNORLAX
+	db 83, EXEGGUTOR
+	; day
+	db 87, RHYDON
+	db 88, BLISSEY
+	db 87, AZUMARILL
+	db 87, DRAGONITE
+	db 86, ELECTABUZZ
+	db 86, MAGMAR
+	db 85, MAGCARGO
+	; nite
+	db 87, GENGAR
+	db 86, MISDREAVUS
+	db 86, MR__MIME
+	db 87, ALAKAZAM
+	db 87, GOLEM
+	db 87, MACHAMP
+	db 86, TYRANITAR
+
+	map_id POWER_PLANT_2F
+	db 8 percent, 8 percent, 8 percent ; encounter rates: morn/day/nite
+	; morn
+	db 50, MAGNEMITE
+	db 52, MAGNETON
+	db 49, VOLTORB
+	db 51, ELECTRODE
+	db 48, PICHU
+	db 52, PIKACHU
+	db 55, RAICHU
+	; day
+	db 51, MAGNETON
+	db 50, ELECTRODE
+	db 53, RAICHU
+	db 56, ELECTABUZZ
+	db 53, ELEKID
+	db 51, PIKACHU
+	db 47, PICHU
+	; nite
+	db 46, ZUBAT
+	db 50, GOLBAT
+	db 54, CROBAT
+	db 58, ELECTABUZZ
+	db 56, ELECTRODE
+	db 57, MAGNETON
+	db 50, HAUNTER
+
+	map_id CERULEAN_CAVE_1F
+	db 11 percent, 11 percent, 11 percent ; encounter rates: morn/day/nite
+	; morn
+	db 75, GRAVELER
+	db 73, PARASECT
+	db 76, GOLBAT
+	db 74, DITTO
+	db 72, GLOOM
+	db 72, WEEPINBELL
+	db 78, CROBAT
+	; day
+	db 77, GRAVELER
+	db 75, PARASECT
+	db 78, GOLBAT
+	db 76, DITTO
+	db 74, GLOOM
+	db 74, WEEPINBELL
+	db 80, CROBAT
+	; nite
+	db 75, GRAVELER
+	db 73, PARASECT
+	db 76, GOLBAT
+	db 74, DITTO
+	db 72, GLOOM
+	db 72, WEEPINBELL
+	db 78, CROBAT
+
+	map_id CERULEAN_CAVE_2F
+	db 11 percent, 11 percent, 11 percent ; encounter rates: morn/day/nite
+	; morn
+	db 72, RHYHORN
+	db 82, RHYDON
+	db 78, SANDSLASH
+	db 77, VILEPLUME
+	db 77, VICTREEBEL
+	db 79, GOLEM
+	db 81, CROBAT
+	; day
+	db 75, RHYHORN
+	db 85, RHYDON
+	db 81, SANDSLASH
+	db 80, VILEPLUME
+	db 80, VICTREEBEL
+	db 82, GOLEM
+	db 84, CROBAT
+	; nite
+	db 72, RHYHORN
+	db 82, RHYDON
+	db 78, SANDSLASH
+	db 77, VILEPLUME
+	db 77, VICTREEBEL
+	db 79, GOLEM
+	db 81, CROBAT
+
 	db -1 ; end

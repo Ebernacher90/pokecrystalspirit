@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const TINTOWER1F_SUICUNE
 	const TINTOWER1F_RAIKOU
 	const TINTOWER1F_ENTEI
@@ -20,7 +20,7 @@ TinTower1F_MapScripts:
 	callback MAPCALLBACK_TILES, .StairsCallback
 
 .FaceSuicune:
-	prioritysjump .SuicuneBattle
+	priorityjump .SuicuneBattle
 	end
 
 .DummyScene:
@@ -46,20 +46,20 @@ TinTower1F_MapScripts:
 	checkevent EVENT_FOUGHT_SUICUNE
 	iftrue .FoughtSuicune
 	appear TINTOWER1F_SUICUNE
-	setval RAIKOU
+	writebyte RAIKOU
 	special MonCheck
 	iftrue .NoRaikou
 	appear TINTOWER1F_RAIKOU
-	sjump .CheckEntei
+	jump .CheckEntei
 
 .NoRaikou:
 	disappear TINTOWER1F_RAIKOU
 .CheckEntei:
-	setval ENTEI
+	writebyte ENTEI
 	special MonCheck
 	iftrue .NoEntei
 	appear TINTOWER1F_ENTEI
-	sjump .BeastsDone
+	jump .BeastsDone
 
 .NoEntei:
 	disappear TINTOWER1F_ENTEI
@@ -84,7 +84,7 @@ TinTower1F_MapScripts:
 .SuicuneBattle:
 	applymovement PLAYER, TinTowerPlayerMovement1
 	pause 15
-	setval RAIKOU
+	writebyte RAIKOU
 	special MonCheck
 	iftrue .Next1 ; if player caught Raikou, he doesn't appear in Tin Tower
 	applymovement TINTOWER1F_RAIKOU, TinTowerRaikouMovement1
@@ -97,7 +97,7 @@ TinTower1F_MapScripts:
 	playsound SFX_EXIT_BUILDING
 	waitsfx
 .Next1:
-	setval ENTEI
+	writebyte ENTEI
 	special MonCheck
 	iftrue .Next2 ; if player caught Entei, he doesn't appear in Tin Tower
 	applymovement TINTOWER1F_ENTEI, TinTowerEnteiMovement1
@@ -117,7 +117,7 @@ TinTower1F_MapScripts:
 	cry SUICUNE
 	pause 20
 	loadwildmon SUICUNE, 40
-	loadvar VAR_BATTLETYPE, BATTLETYPE_SUICUNE
+	writecode VAR_BATTLETYPE, BATTLETYPE_SUICUNE
 	startbattle
 	dontrestartmapmusic
 	disappear TINTOWER1F_SUICUNE
@@ -192,7 +192,7 @@ TinTower1FSage5Script:
 	checkevent EVENT_GOT_RAINBOW_WING
 	iftrue .GotRainbowWing
 	writetext TinTower1FSage5Text1
-	promptbutton
+	buttonsound
 	verbosegiveitem RAINBOW_WING
 	closetext
 	refreshscreen

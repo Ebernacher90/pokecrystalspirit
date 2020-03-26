@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const TRADECENTER_CHRIS1
 	const TRADECENTER_CHRIS2
 
@@ -11,7 +11,7 @@ TradeCenter_MapScripts:
 	callback MAPCALLBACK_OBJECTS, .SetWhichChris
 
 .InitializeTradeCenter:
-	prioritysjump .InitializeAndPreparePokecenter2F
+	priorityjump .InitializeAndPreparePokecenter2F
 	end
 
 .DummyScene:

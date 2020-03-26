@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const DAYOFWEEKSIBLINGSHOUSE_POKEDEX
 
 DayOfWeekSiblingsHouse_MapScripts:

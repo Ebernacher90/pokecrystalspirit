@@ -48,7 +48,7 @@ SwitchItemsInBag:
 	call ItemSwitch_GetNthItem
 	dec hl
 	push hl
-	call ItemSwitch_ConvertItemFormatToDW
+	call ItemSwitch_ConvertSpacingToDW
 	add hl, bc
 	ld d, h
 	ld e, l
@@ -74,7 +74,7 @@ SwitchItemsInBag:
 	call ItemSwitch_GetNthItem
 	ld d, h
 	ld e, l
-	call ItemSwitch_ConvertItemFormatToDW
+	call ItemSwitch_ConvertSpacingToDW
 	add hl, bc
 	pop bc
 	call CopyBytes
@@ -162,7 +162,7 @@ Function249d1:
 
 .asm_24a25
 	dec [hl]
-	call ItemSwitch_ConvertItemFormatToDW
+	call ItemSwitch_ConvertSpacingToDW
 	push bc
 	ld a, [wSwitchItem]
 	call ItemSwitch_GetNthItem
@@ -183,7 +183,7 @@ Function249d1:
 Function24a40:
 	call ItemSwitch_GetNthItem
 	ld de, wd002
-	call ItemSwitch_ConvertItemFormatToDW
+	call ItemSwitch_ConvertSpacingToDW
 	call CopyBytes
 	ret
 
@@ -192,13 +192,13 @@ Function24a4d:
 	ld d, h
 	ld e, l
 	ld hl, wd002
-	call ItemSwitch_ConvertItemFormatToDW
+	call ItemSwitch_ConvertSpacingToDW
 	call CopyBytes
 	ret
 
 ItemSwitch_GetNthItem:
 	push af
-	call ItemSwitch_ConvertItemFormatToDW
+	call ItemSwitch_ConvertSpacingToDW
 	ld hl, wMenuData_ItemsPointerAddr
 	ld a, [hli]
 	ld h, [hl]
@@ -210,7 +210,7 @@ ItemSwitch_GetNthItem:
 
 Function24a6c:
 	push hl
-	call ItemSwitch_ConvertItemFormatToDW
+	call ItemSwitch_ConvertSpacingToDW
 	ld a, d
 	sub e
 	jr nc, .dont_negate
@@ -224,12 +224,13 @@ Function24a6c:
 	pop hl
 	ret
 
-ItemSwitch_ConvertItemFormatToDW:
+ItemSwitch_ConvertSpacingToDW:
+; This function is absolutely idiotic.
 	push hl
-	ld a, [wMenuData_ScrollingMenuItemFormat]
+	ld a, [wMenuData_ScrollingMenuSpacing]
 	ld c, a
 	ld b, 0
-	ld hl, .format_dws
+	ld hl, .spacing_dws
 	add hl, bc
 	add hl, bc
 	ld c, [hl]
@@ -238,14 +239,12 @@ ItemSwitch_ConvertItemFormatToDW:
 	pop hl
 	ret
 
-.format_dws
-	dw 0
-	dw 1
-	dw 2
+.spacing_dws
+	dw 0, 1, 2
 
 Function24a97:
 	push af
-	call ItemSwitch_ConvertItemFormatToDW
+	call ItemSwitch_ConvertSpacingToDW
 	ld a, c
 	cp 2
 	jr nz, .not_2

@@ -1,11 +1,11 @@
 ArniePhoneCalleeScript:
-	gettrainername STRING_BUFFER_3, BUG_CATCHER, ARNIE1
+	trainertotext BUG_CATCHER, ARNIE1, MEM_BUFFER_0
 	checkflag ENGINE_ARNIE
 	iftrue .WantsBattle
 	farscall PhoneScript_AnswerPhone_Male
 	checkflag ENGINE_ARNIE_TUESDAY_MORNING
 	iftrue .NotTuesday
-	readvar VAR_WEEKDAY
+	checkcode VAR_WEEKDAY
 	ifnotequal TUESDAY, .NotTuesday
 	checktime MORN
 	iftrue ArnieTuesdayMorning
@@ -13,18 +13,18 @@ ArniePhoneCalleeScript:
 .NotTuesday:
 	checkflag ENGINE_YANMA_SWARM
 	iftrue .AlreadySwarming
-	farsjump ArnieHangUpScript
+	farjump UnknownScript_0xa0968
 
 .WantsBattle:
-	getlandmarkname STRING_BUFFER_5, LANDMARK_ROUTE_35
-	farsjump ArnieReminderScript
+	landmarktotext ROUTE_35, MEM_BUFFER_2
+	farjump UnknownScript_0xa0a6e
 
 .AlreadySwarming:
-	getlandmarkname STRING_BUFFER_5, LANDMARK_ROUTE_35
-	farsjump ArnieHurryScript
+	landmarktotext ROUTE_35, MEM_BUFFER_2
+	farjump UnknownScript_0xa0aff
 
 ArniePhoneCallerScript:
-	gettrainername STRING_BUFFER_3, BUG_CATCHER, ARNIE1
+	trainertotext BUG_CATCHER, ARNIE1, MEM_BUFFER_0
 	farscall PhoneScript_GreetPhone_Male
 	checkflag ENGINE_ARNIE
 	iftrue .Swarm
@@ -38,27 +38,27 @@ ArniePhoneCallerScript:
 	ifequal 0, ArnieYanmaSwarm
 	farscall PhoneScript_Random3
 	ifequal 0, ArnieFoundRare
-	farsjump Phone_GenericCall_Male
+	farjump Phone_GenericCall_Male
 
 ArnieTuesdayMorning:
 	setflag ENGINE_ARNIE_TUESDAY_MORNING
 
 ArnieWantsBattle:
-	getlandmarkname STRING_BUFFER_5, LANDMARK_ROUTE_35
+	landmarktotext ROUTE_35, MEM_BUFFER_2
 	setflag ENGINE_ARNIE
-	farsjump PhoneScript_WantsToBattle_Male
+	farjump PhoneScript_WantsToBattle_Male
 
 ArnieYanmaSwarm: ; start swarm
 	checkflag ENGINE_YANMA_SWARM
 	iftrue ArnieYanmaAlreadySwarming
 	setflag ENGINE_YANMA_SWARM
-	getmonname STRING_BUFFER_4, YANMA
+	pokenamemem YANMA, MEM_BUFFER_1
 	swarm SWARM_YANMA, ROUTE_35
-	getlandmarkname STRING_BUFFER_5, LANDMARK_ROUTE_35
-	farsjump ArnieSwarmScript
+	landmarktotext ROUTE_35, MEM_BUFFER_2
+	farjump UnknownScript_0xa05ce
 
 ArnieFoundRare:
-	farsjump Phone_CheckIfUnseenRare_Male
+	farjump Phone_CheckIfUnseenRare_Male
 
 ArnieYanmaAlreadySwarming:
-	farsjump Phone_GenericCall_Male
+	farjump Phone_GenericCall_Male

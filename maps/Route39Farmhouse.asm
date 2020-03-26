@@ -1,6 +1,4 @@
-ROUTE39FARMHOUSE_MILK_PRICE EQU 500
-
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const ROUTE39FARMHOUSE_POKEFAN_M
 	const ROUTE39FARMHOUSE_POKEFAN_F
 
@@ -27,16 +25,16 @@ FarmerMScript_SellMilk:
 	special PlaceMoneyTopRight
 	yesorno
 	iffalse FarmerMScript_NoSale
-	checkmoney YOUR_MONEY, ROUTE39FARMHOUSE_MILK_PRICE
+	checkmoney YOUR_MONEY, 500
 	ifequal HAVE_LESS, FarmerMScript_NoMoney
 	giveitem MOOMOO_MILK
 	iffalse FarmerMScript_NoRoom
-	takemoney YOUR_MONEY, ROUTE39FARMHOUSE_MILK_PRICE
+	takemoney YOUR_MONEY, 500
 	special PlaceMoneyTopRight
 	waitsfx
 	playsound SFX_TRANSACTION
 	writetext FarmerMText_GotMilk
-	promptbutton
+	buttonsound
 	itemnotify
 	closetext
 	end
@@ -79,7 +77,7 @@ PokefanF_SnoreFarmer:
 
 FarmerFScript_GiveSnore:
 	writetext FarmerFText_HealedMiltank
-	promptbutton
+	buttonsound
 	verbosegiveitem TM_SNORE
 	iffalse FarmerFScript_NoRoomForSnore
 	setevent EVENT_GOT_TM13_SNORE_FROM_MOOMOO_FARM

@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const DRAGONSDENB1F_POKE_BALL1
 	const DRAGONSDENB1F_CLAIR
 	const DRAGONSDENB1F_SILVER
@@ -30,7 +30,7 @@ DragonsDenB1F_MapScripts:
 	return
 
 .CheckDay:
-	readvar VAR_WEEKDAY
+	checkcode VAR_WEEKDAY
 	ifequal TUESDAY, .AppearSilver
 	ifequal THURSDAY, .AppearSilver
 	disappear DRAGONSDENB1F_SILVER
@@ -52,21 +52,21 @@ DragonsDenB1F_ClairScene:
 	applymovement DRAGONSDENB1F_CLAIR, MovementDragonsDen_ClairWalksToYou
 	opentext
 	writetext ClairText_GiveDragonbreathDragonDen
-	promptbutton
+	buttonsound
 	giveitem TM_DRAGONBREATH
 	iffalse .BagFull
-	getitemname STRING_BUFFER_3, TM_DRAGONBREATH
+	itemtotext TM_DRAGONBREATH, MEM_BUFFER_0
 	writetext NotifyReceiveDragonbreath
 	playsound SFX_ITEM
 	waitsfx
 	itemnotify
 	setevent EVENT_GOT_TM24_DRAGONBREATH
 	writetext ClairText_DescribeDragonbreathDragonDen
-	promptbutton
+	buttonsound
 	writetext ClairText_WhatsTheMatterDragonDen
 	waitbutton
 	closetext
-	sjump .FinishClair
+	jump .FinishClair
 
 .BagFull:
 	writetext ClairText_NoRoom
@@ -132,7 +132,7 @@ DragonsDenB1FDragonFangScript:
 	iffalse .BagFull
 	disappear DRAGONSDENB1F_POKE_BALL1
 	opentext
-	getitemname STRING_BUFFER_3, DRAGON_FANG
+	itemtotext DRAGON_FANG, MEM_BUFFER_0
 	writetext Text_FoundDragonFang
 	playsound SFX_ITEM
 	waitsfx
@@ -142,9 +142,9 @@ DragonsDenB1FDragonFangScript:
 
 .BagFull:
 	opentext
-	getitemname STRING_BUFFER_3, DRAGON_FANG
+	itemtotext DRAGON_FANG, MEM_BUFFER_0
 	writetext Text_FoundDragonFang
-	promptbutton
+	buttonsound
 	writetext Text_NoRoomForDragonFang
 	waitbutton
 	closetext

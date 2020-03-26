@@ -12,7 +12,7 @@ CelebiShrineEvent:
 	call LoadCelebiGFX
 	depixel 0, 10, 7, 0
 	ld a, SPRITE_ANIM_INDEX_CELEBI
-	call InitSpriteAnimStruct
+	call _InitSpriteAnimStruct
 	ld hl, SPRITEANIMSTRUCT_TILE_ID
 	add hl, bc
 	ld [hl], SPECIALCELEBIEVENT_CELEBI
@@ -57,7 +57,7 @@ CelebiShrineEvent:
 	ld c, 4
 .OAMloop:
 	ld [hli], a ; tile id
-rept SPRITEOAMSTRUCT_LENGTH - 1
+rept SPRITEOAMSTRUCT_LENGTH + -1
 	inc hl
 endr
 	inc a
@@ -110,7 +110,7 @@ CelebiEvent_SpawnLeaf:
 	ld d, a
 	ld e, $0
 	ld a, SPRITE_ANIM_INDEX_FLY_LEAF ; fly land
-	call InitSpriteAnimStruct
+	call _InitSpriteAnimStruct
 	ld hl, SPRITEANIMSTRUCT_TILE_ID
 	add hl, bc
 	ld [hl], $80

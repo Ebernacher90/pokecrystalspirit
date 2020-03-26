@@ -1,6 +1,6 @@
 QueueBattleAnimation:
 	ld hl, wActiveAnimObjects
-	ld e, NUM_ANIM_OBJECTS
+	ld e, 10
 .loop
 	ld a, [hl]
 	and a
@@ -15,7 +15,7 @@ QueueBattleAnimation:
 .done
 	ld c, l
 	ld b, h
-	ld hl, wLastAnimObjectIndex
+	ld hl, wNumActiveBattleAnims
 	inc [hl]
 	call InitBattleAnimation
 	ret
@@ -38,7 +38,7 @@ endr
 	ld d, h
 	ld hl, BATTLEANIMSTRUCT_INDEX
 	add hl, bc
-	ld a, [wLastAnimObjectIndex]
+	ld a, [wNumActiveBattleAnims]
 	ld [hli], a ; Index
 	ld a, [de]
 	inc de
@@ -65,8 +65,8 @@ endr
 	xor a
 	ld [hli], a ; X Offset
 	ld [hli], a ; Y Offset
-	ld a, [wBattleObjectTempParam]
-	ld [hli], a ; Param
+	ld a, [wBattleObjectTemp0b]
+	ld [hli], a ; 0b
 	xor a
 	ld [hli], a ; 0c
 	dec a
@@ -80,36 +80,32 @@ endr
 BattleAnimOAMUpdate:
 	call InitBattleAnimBuffer
 	call GetBattleAnimFrame
-	cp dowait_command
+	cp -3
 	jp z, .done
-	cp delanim_command
+	cp -4
 	jp z, .delete
-
 	push af
 	ld hl, wBattleAnimTempOAMFlags
-	ld a, [wBattleAnimTempFrameOAMFlags]
+	ld a, [wBattleAnimTempAddSubFlags]
 	xor [hl]
-	and PRIORITY | Y_FLIP | X_FLIP
+	and $e0
 	ld [hl], a
 	pop af
-
 	push bc
 	call GetBattleAnimOAMPointer
 	ld a, [wBattleAnimTempTileID]
-	add [hl] ; tile offset
+	add [hl]
 	ld [wBattleAnimTempTileID], a
 	inc hl
-	ld a, [hli] ; oam data length
+	ld a, [hli]
 	ld c, a
-	ld a, [hli] ; oam data pointer
+	ld a, [hli]
 	ld h, [hl]
 	ld l, a
 	ld a, [wBattleAnimOAMPointerLo]
 	ld e, a
 	ld d, HIGH(wVirtualOAM)
-
 .loop
-	; Y Coord
 	ld a, [wBattleAnimTempYCoord]
 	ld b, a
 	ld a, [wBattleAnimTempYOffset]
@@ -118,17 +114,16 @@ BattleAnimOAMUpdate:
 	push hl
 	ld a, [hl]
 	ld hl, wBattleAnimTempOAMFlags
-	bit OAM_Y_FLIP, [hl]
+	bit 6, [hl]
 	jr z, .no_yflip
 	add $8
 	xor $ff
 	inc a
+
 .no_yflip
 	pop hl
 	add b
 	ld [de], a
-
-	; X Coord
 	inc hl
 	inc de
 	ld a, [wBattleAnimTempXCoord]
@@ -139,47 +134,43 @@ BattleAnimOAMUpdate:
 	push hl
 	ld a, [hl]
 	ld hl, wBattleAnimTempOAMFlags
-	bit OAM_X_FLIP, [hl]
+	bit 5, [hl]
 	jr z, .no_xflip
 	add $8
 	xor $ff
 	inc a
+
 .no_xflip
 	pop hl
 	add b
 	ld [de], a
-
-	; Tile ID
 	inc hl
 	inc de
 	ld a, [wBattleAnimTempTileID]
 	add BATTLEANIM_BASE_TILE
 	add [hl]
 	ld [de], a
-
-	; Attributes
 	inc hl
 	inc de
 	ld a, [wBattleAnimTempOAMFlags]
 	ld b, a
 	ld a, [hl]
 	xor b
-	and PRIORITY | Y_FLIP | X_FLIP
+	and $e0
 	ld b, a
 	ld a, [hl]
-	and OBP_NUM
+	and $10
 	or b
 	ld b, a
 	ld a, [wBattleAnimTempPalette]
-	and PALETTE_MASK | VRAM_BANK_1
+	and $f
 	or b
 	ld [de], a
-
 	inc hl
 	inc de
 	ld a, e
 	ld [wBattleAnimOAMPointerLo], a
-	cp LOW(wVirtualOAMEnd)
+	cp $a0
 	jr nc, .exit_set_carry
 	dec c
 	jr nz, .loop
@@ -202,11 +193,10 @@ InitBattleAnimBuffer:
 	ld hl, BATTLEANIMSTRUCT_01
 	add hl, bc
 	ld a, [hl]
-
-	and PRIORITY
+	and %10000000
 	ld [wBattleAnimTempOAMFlags], a
 	xor a
-	ld [wBattleAnimTempFrameOAMFlags], a
+	ld [wBattleAnimTempAddSubFlags], a
 	ld hl, BATTLEANIMSTRUCT_PALETTE
 	add hl, bc
 	ld a, [hl]
@@ -227,18 +217,15 @@ InitBattleAnimBuffer:
 	ld [wBattleAnimTempXOffset], a
 	ld a, [hli]
 	ld [wBattleAnimTempYOffset], a
-
 	ldh a, [hBattleTurn]
 	and a
 	ret z
-
 	ld hl, BATTLEANIMSTRUCT_01
 	add hl, bc
 	ld a, [hl]
 	ld [wBattleAnimTempOAMFlags], a
 	bit 0, [hl]
 	ret z
-
 	ld hl, BATTLEANIMSTRUCT_XCOORD
 	add hl, bc
 	ld a, [hli]

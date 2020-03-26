@@ -13,7 +13,7 @@ RuinsOfAlphHoOhChamber_MapScripts:
 	end
 
 .OpenWall:
-	prioritysjump .WallOpenScript
+	priorityjump .WallOpenScript
 	end
 
 .DummyScene:
@@ -48,7 +48,7 @@ RuinsOfAlphHoOhChamber_MapScripts:
 
 RuinsOfAlphHoOhChamberPuzzle:
 	refreshscreen
-	setval UNOWNPUZZLE_HO_OH
+	writebyte UNOWNPUZZLE_HO_OH
 	special UnownPuzzle
 	closetext
 	iftrue .PuzzleComplete
@@ -82,7 +82,7 @@ RuinsOfAlphHoOhChamberDescriptionSign:
 RuinsOfAlphHoOhChamberWallPatternLeft:
 	opentext
 	writetext RuinsOfAlphHoOhChamberWallPatternLeftText
-	setval UNOWNWORDS_HO_OH
+	writebyte UNOWNWORDS_HO_OH
 	special DisplayUnownWords
 	closetext
 	end
@@ -92,7 +92,7 @@ RuinsOfAlphHoOhChamberWallPatternRight:
 	iftrue .WallOpen
 	opentext
 	writetext RuinsOfAlphHoOhChamberWallPatternRightText
-	setval UNOWNWORDS_HO_OH
+	writebyte UNOWNWORDS_HO_OH
 	special DisplayUnownWords
 	closetext
 	end

@@ -31,7 +31,7 @@ LinkTextbox2:
 	pop hl
 	pop bc
 
-	ld de, wAttrmap - wTilemap
+	ld de, wAttrMap - wTileMap
 	add hl, de
 	inc b
 	inc b

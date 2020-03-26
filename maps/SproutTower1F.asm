@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const SPROUTTOWER1F_SAGE1
 	const SPROUTTOWER1F_SAGE2
 	const SPROUTTOWER1F_GRANNY

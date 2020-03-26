@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const ROCKTUNNEL1F_POKE_BALL1
 	const ROCKTUNNEL1F_POKE_BALL2
 
@@ -11,7 +11,7 @@ RockTunnel1FElixer:
 	itemball ELIXER
 
 RockTunnel1FTMSteelWing:
-	itemball TM_STEEL_WING
+	itemball METAL_COAT
 
 RockTunnel1FHiddenXAccuracy:
 	hiddenitem X_ACCURACY, EVENT_ROCK_TUNNEL_1F_HIDDEN_X_ACCURACY

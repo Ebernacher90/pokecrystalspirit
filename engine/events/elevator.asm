@@ -28,7 +28,7 @@ Elevator::
 
 .LoadFloors:
 	ld de, wCurElevator
-	ld bc, wElevatorDataEnd - wElevatorData
+	ld bc, 4
 	ld hl, wElevatorPointer
 	ld a, [hli]
 	ld h, [hl]
@@ -104,18 +104,18 @@ Elevator_GoToFloor:
 	ld l, a
 	inc hl
 	pop af
-	ld bc, wElevatorDataEnd - wElevatorData
+	ld bc, 4
 	call AddNTimes
 	inc hl
 	ld de, wBackupWarpNumber
 	ld a, [wElevatorPointerBank]
-	ld bc, wElevatorDataEnd - wElevatorData - 1
+	ld bc, 3
 	call FarCopyBytes
 	ret
 
 Elevator_AskWhichFloor:
 	call LoadStandardMenuHeader
-	ld hl, AskFloorElevatorText
+	ld hl, Elevator_WhichFloorText
 	call PrintText
 	call Elevator_GetCurrentFloorText
 	ld hl, Elevator_MenuHeader
@@ -137,8 +137,9 @@ Elevator_AskWhichFloor:
 	scf
 	ret
 
-AskFloorElevatorText:
-	text_far _AskFloorElevatorText
+Elevator_WhichFloorText:
+	; Which floor?
+	text_far UnknownText_0x1bd2bc
 	text_end
 
 Elevator_GetCurrentFloorText:
@@ -149,7 +150,7 @@ Elevator_GetCurrentFloorText:
 	hlcoord 0, 0
 	ld b, 4
 	ld c, 8
-	call Textbox
+	call TextBox
 	hlcoord 1, 2
 	ld de, Elevator_CurrentFloorText
 	call PlaceString
@@ -183,7 +184,7 @@ Elevator_MenuHeader:
 Elevator_MenuData:
 	db SCROLLINGMENU_DISPLAY_ARROWS ; flags
 	db 4, 0 ; rows, columns
-	db SCROLLINGMENU_ITEMS_NORMAL ; item format
+	db 1 ; horizontal spacing
 	dbw 0, wCurElevator
 	dba GetElevatorFloorStrings
 	dba NULL

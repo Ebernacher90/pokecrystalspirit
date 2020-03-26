@@ -10,7 +10,7 @@ DeleteMapObject::
 	push af
 	ld h, b
 	ld l, c
-	ld bc, OBJECT_LENGTH
+	ld bc, OBJECT_STRUCT_LENGTH
 	xor a
 	call ByteFill
 	pop af
@@ -121,7 +121,7 @@ Function437b:
 	call ObjectMovementReset
 	ld hl, OBJECT_FLAGS2
 	add hl, bc
-	bit OBJ_FLAGS2_5, [hl]
+	bit 5, [hl]
 	jr nz, .bit5
 .one
 	call MapObjectMovementPattern
@@ -430,7 +430,7 @@ RestoreDefaultMovement:
 	ret
 
 .ok
-	ld a, SPRITEMOVEDATA_STANDING_DOWN
+	ld a, SPRITEMOVEFN_STANDING
 	ret
 
 ClearObjectMovementByteIndex:
@@ -1836,7 +1836,7 @@ Function5000: ; unscripted?
 	ret
 
 GetMovementByte:
-	ld hl, wMovementDataBank
+	ld hl, wMovementDataPointer
 	call _GetMovementByte
 	ret
 
@@ -2082,11 +2082,11 @@ DespawnEmote:
 	jr z, .next
 	push bc
 	xor a
-	ld bc, OBJECT_LENGTH
+	ld bc, OBJECT_STRUCT_LENGTH
 	call ByteFill
 	pop bc
 .next
-	ld hl, OBJECT_LENGTH
+	ld hl, OBJECT_STRUCT_LENGTH
 	add hl, de
 	ld d, h
 	ld e, l
@@ -2149,7 +2149,7 @@ Function55e0::
 	jr z, .ok
 	call Function565c
 .ok
-	ld hl, OBJECT_LENGTH
+	ld hl, OBJECT_STRUCT_LENGTH
 	add hl, bc
 	ld b, h
 	ld c, l
@@ -2205,7 +2205,7 @@ Function5645:
 .loop
 	ldh [hMapObjectIndexBuffer], a
 	call SetFacing_Standing
-	ld hl, OBJECT_LENGTH
+	ld hl, OBJECT_STRUCT_LENGTH
 	add hl, bc
 	ld b, h
 	ld c, l
@@ -2380,6 +2380,10 @@ Function56cd:
 	push bc
 	call Coord2Tile
 	pop bc
+	ld c, a
+	push bc
+	call Coord2Tile
+	pop bc
 ; NPCs disappear if standing on tile $60-$7f (or $e0-$ff),
 ; since those IDs are for text characters and textbox frames.
 	ld a, [hl]
@@ -2421,7 +2425,7 @@ HandleNPCStep::
 	jr z, .next
 	call Function437b
 .next
-	ld hl, OBJECT_LENGTH
+	ld hl, OBJECT_STRUCT_LENGTH
 	add hl, bc
 	ld b, h
 	ld c, l
@@ -2466,7 +2470,7 @@ RefreshPlayerSprite:
 	jr ContinueSpawnFacing
 
 SpawnInFacingDown:
-	ld a, DOWN
+	ld a, 0
 ContinueSpawnFacing:
 	ld bc, wPlayerStruct
 	call SetSpriteDirection
@@ -2582,7 +2586,7 @@ Function587a:
 	add hl, bc
 	set OBJ_FLAGS2_5, [hl]
 .next
-	ld hl, OBJECT_LENGTH
+	ld hl, OBJECT_STRUCT_LENGTH
 	add hl, bc
 	ld b, h
 	ld c, l
@@ -2625,7 +2629,7 @@ Function58b9::
 	add hl, bc
 	res OBJ_FLAGS2_5, [hl]
 .next
-	ld hl, OBJECT_LENGTH
+	ld hl, OBJECT_STRUCT_LENGTH
 	add hl, bc
 	ld b, h
 	ld c, l
@@ -2750,7 +2754,7 @@ ApplyBGMapAnchorToObjects:
 	add e
 	ld [hl], a
 .skip
-	ld hl, OBJECT_LENGTH
+	ld hl, OBJECT_STRUCT_LENGTH
 	add hl, bc
 	ld b, h
 	ld c, l
@@ -2809,7 +2813,7 @@ InitSprites:
 	jr .add
 
 .skip
-	ld hl, OBJECT_LENGTH
+	ld hl, OBJECT_STRUCT_LENGTH
 	add hl, bc
 	ld b, h
 	ld c, l
@@ -2817,7 +2821,7 @@ InitSprites:
 	jr .next
 
 .add
-	ld hl, OBJECT_LENGTH
+	ld hl, OBJECT_STRUCT_LENGTH
 	add hl, bc
 	ld b, h
 	ld c, l

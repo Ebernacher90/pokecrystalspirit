@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const FASTSHIPCABINS_SE_SSE_CAPTAINSCABIN_CAPTAIN
 	const FASTSHIPCABINS_SE_SSE_CAPTAINSCABIN_GENTLEMAN
 	const FASTSHIPCABINS_SE_SSE_CAPTAINSCABIN_TWIN1
@@ -65,7 +65,7 @@ SSAquaGranddaughterBefore:
 	writetext SSAquaGranddaughterWasPlayingMText
 	waitbutton
 	closetext
-	sjump .cont
+	jump .cont
 
 .PlayerIsFemale:
 	opentext
@@ -77,10 +77,10 @@ SSAquaGranddaughterBefore:
 	applymovement FASTSHIPCABINS_SE_SSE_CAPTAINSCABIN_GENTLEMAN, MovementData_0x76010
 	opentext
 	writetext SSAquaEntertainedGranddaughterText
-	promptbutton
+	buttonsound
 	setevent EVENT_VERMILION_PORT_SAILOR_AT_GANGWAY
 	setmapscene FAST_SHIP_1F, SCENE_DEFAULT
-	sjump SSAquaMetalCoatAndDocking
+	jump SSAquaMetalCoatAndDocking
 
 SSAquaGrandpa:
 	faceplayer
@@ -97,7 +97,7 @@ SSAquaGrandpa:
 
 SSAquaMetalCoatAndDocking:
 	writetext SSAquaGrandpaHaveThisText
-	promptbutton
+	buttonsound
 	verbosegiveitem METAL_COAT
 	iffalse .NoRoom
 	setevent EVENT_GOT_METAL_COAT_FROM_GRANDPA_ON_SS_AQUA
@@ -116,7 +116,7 @@ SSAquaMetalCoatAndDocking:
 
 SSAquaFoundGranddaughter:
 	writetext SSAquaGrandpaHaveThisText
-	promptbutton
+	buttonsound
 	verbosegiveitem METAL_COAT
 	iffalse .NoRoom
 	setevent EVENT_GOT_METAL_COAT_FROM_GRANDPA_ON_SS_AQUA

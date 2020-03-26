@@ -109,7 +109,7 @@ DoNextFrameForFirst16Sprites:
 .done
 	ret
 
-_InitSpriteAnimStruct::
+InitSpriteAnimStruct::
 ; Initialize animation a at pixel x=e, y=d
 ; Find if there's any room in the wSpriteAnimationStructs array, which is 10x16
 	push de
@@ -315,8 +315,8 @@ UpdateAnimFrame:
 AddOrSubtractY:
 	push hl
 	ld a, [hl]
-	ld hl, wCurSpriteOAMFlags
-	bit OAM_Y_FLIP, [hl]
+	ld hl, wCurSpriteAddSubFlags
+	bit 6, [hl]
 	jr z, .ok
 	; 8 - a
 	add $8
@@ -330,8 +330,8 @@ AddOrSubtractY:
 AddOrSubtractX:
 	push hl
 	ld a, [hl]
-	ld hl, wCurSpriteOAMFlags
-	bit OAM_X_FLIP, [hl]
+	ld hl, wCurSpriteAddSubFlags
+	bit 5, [hl] ; x flip
 	jr z, .ok
 	; 8 - a
 	add $8
@@ -343,20 +343,20 @@ AddOrSubtractX:
 	ret
 
 GetSpriteOAMAttr:
-	ld a, [wCurSpriteOAMFlags]
+	ld a, [wCurSpriteAddSubFlags]
 	ld b, a
 	ld a, [hl]
 	xor b
-	and PRIORITY | Y_FLIP | X_FLIP
+	and $e0
 	ld b, a
 	ld a, [hl]
-	and $ff ^ (PRIORITY | Y_FLIP | X_FLIP)
+	and $1f
 	or b
 	ret
 
 InitSpriteAnimBuffer:
 	xor a
-	ld [wCurSpriteOAMFlags], a
+	ld [wCurSpriteAddSubFlags], a
 	ld hl, SPRITEANIMSTRUCT_TILE_ID
 	add hl, bc
 	ld a, [hli]
@@ -436,7 +436,7 @@ GetSpriteAnimFrame:
 	push af
 	ld a, [hl]
 	push hl
-	and $ff ^ (Y_FLIP << 1 | X_FLIP << 1)
+	and $3f
 	ld hl, SPRITEANIMSTRUCT_DURATIONOFFSET
 	add hl, bc
 	add [hl]
@@ -446,9 +446,9 @@ GetSpriteAnimFrame:
 	pop hl
 .okay
 	ld a, [hl]
-	and Y_FLIP << 1 | X_FLIP << 1 ; The << 1 is compensated in the "frame" macro
+	and $c0
 	srl a
-	ld [wCurSpriteOAMFlags], a
+	ld [wCurSpriteAddSubFlags], a
 	pop af
 	ret
 

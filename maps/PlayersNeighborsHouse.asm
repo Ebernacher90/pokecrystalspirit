@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const PLAYERSNEIGHBORSHOUSE_COOLTRAINER_F
 	const PLAYERSNEIGHBORSHOUSE_POKEFAN_F
 
@@ -45,35 +45,42 @@ PlayersNeighborsHouseRadioScript:
 	end
 
 PlayersNeighborsDaughterText:
-	text "PIKACHU is an"
-	line "evolved #MON."
+	text "PIKACHU ist ein"
+	line "entwickeltes"
+	cont "#MON."
 
-	para "I was amazed by"
-	line "PROF.ELM's find-"
-	cont "ings."
+	para "Ich war erstaunt"
+	line "über PROF. LIND'S"
+	cont "forschungen."
 
-	para "He's so famous for"
-	line "his research on"
-	cont "#MON evolution."
+	para "Er ist ein sehr"
+	line "fleissiger #-"
+	cont "MON Forscher."
 
-	para "…sigh…"
+	para "…ach…"
 
-	para "I wish I could be"
-	line "a researcher like"
-	cont "him…"
+	para "Ich wünschte, ich"
+	line "könnte ein so"
+	cont "guter #MON"
+	
+	para "Forscher wie er"
+	line "sein. Was würde"
+	cont "ich dafür geben!"
 	done
 
 PlayersNeighborText:
-	text "My daughter is"
-	line "adamant about"
+	text "Meine Tochter"
+	line "ist noch sehr"
+	cont "jung und sie"
 
-	para "becoming PROF."
-	line "ELM's assistant."
+	para "will ein PROF."
+	line "wie, Lind werden."
 
-	para "She really loves"
-	line "#MON!"
+	para "Sie liebt über"
+	line "alles #MON!"
 
-	para "But then, so do I!"
+	para "Ich bin stolz"
+	line "auf sie!"
 	done
 
 PlayerNeighborRadioText1:

@@ -237,7 +237,7 @@ _ShowLinkBattleParticipants:
 	hlcoord 2, 3
 	ld b, 9
 	ld c, 14
-	call Textbox
+	call TextBox
 	hlcoord 4, 5
 	ld de, wPlayerName
 	call PlaceString

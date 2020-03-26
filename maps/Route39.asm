@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const ROUTE39_SAILOR
 	const ROUTE39_POKEFAN_M
 	const ROUTE39_POKEFAN_F1
@@ -27,7 +27,7 @@ TrainerPokefanmDerek:
 	trainer POKEFANM, DEREK1, EVENT_BEAT_POKEFANM_DEREK, PokefanmDerekSeenText, PokefanmDerekBeatenText, 0, .Script
 
 .Script:
-	loadvar VAR_CALLERID, PHONE_POKEFANM_DEREK
+	writecode VAR_CALLERID, PHONE_POKEFANM_DEREK
 	endifjustbattled
 	opentext
 	checkflag ENGINE_DEREK_HAS_NUGGET
@@ -39,10 +39,10 @@ TrainerPokefanmDerek:
 	checkevent EVENT_DEREK_ASKED_FOR_PHONE_NUMBER
 	iftrue .AskedAlready
 	writetext PokefanMDerekText_NotBragging
-	promptbutton
+	buttonsound
 	setevent EVENT_DEREK_ASKED_FOR_PHONE_NUMBER
 	scall .AskNumber1
-	sjump .AskForNumber
+	jump .AskForNumber
 
 .AskedAlready:
 	scall .AskNumber2
@@ -50,19 +50,19 @@ TrainerPokefanmDerek:
 	askforphonenumber PHONE_POKEFANM_DEREK
 	ifequal PHONE_CONTACTS_FULL, .PhoneFull
 	ifequal PHONE_CONTACT_REFUSED, .NumberDeclined
-	gettrainername STRING_BUFFER_3, POKEFANM, DEREK1
+	trainertotext POKEFANM, DEREK1, MEM_BUFFER_0
 	scall .RegisteredNumber
-	sjump .NumberAccepted
+	jump .NumberAccepted
 
 .HasNugget:
 	scall .Gift
 	verbosegiveitem NUGGET
 	iffalse .NoRoom
 	clearflag ENGINE_DEREK_HAS_NUGGET
-	sjump .NumberAccepted
+	jump .NumberAccepted
 
 .NoRoom:
-	sjump .PackFull
+	jump .PackFull
 
 .WantsPikachu:
 	writetext PokefanMDerekPikachuIsItText

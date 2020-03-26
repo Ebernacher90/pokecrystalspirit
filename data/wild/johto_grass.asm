@@ -1194,7 +1194,7 @@ JohtoGrassWildMons:
 	db 10 percent, 10 percent, 10 percent ; encounter rates: morn/day/nite
 	; morn
 	db 2, PIDGEY
-	db 2, SENTRET
+	db 2, MUNCHLAX
 	db 3, PIDGEY
 	db 3, SENTRET
 	db 2, RATTATA
@@ -1202,7 +1202,7 @@ JohtoGrassWildMons:
 	db 3, HOPPIP
 	; day
 	db 2, PIDGEY
-	db 2, SENTRET
+	db 2, MUNCHLAX
 	db 3, PIDGEY
 	db 3, SENTRET
 	db 2, RATTATA
@@ -1212,7 +1212,7 @@ JohtoGrassWildMons:
 	db 2, HOOTHOOT
 	db 2, RATTATA
 	db 3, HOOTHOOT
-	db 3, RATTATA
+	db 3, MUNCHLAX
 	db 2, RATTATA
 	db 3, HOOTHOOT
 	db 3, HOOTHOOT
@@ -1648,5 +1648,32 @@ JohtoGrassWildMons:
 	db 40, GOLBAT
 	db 44, GOLBAT
 	db 44, GOLBAT
+	
+	map_id FANTASTIC_IDYLL
+	db 10 percent, 10 percent, 10 percent ; encouter rates: morn/day/nite
+	; morn
+	db 20, MUNCHLAX
+	db 21, PONYTA
+	db 19, DODUO
+	db 17, EKANS
+	db 18, TANGELA
+	db 15, POLIWAG
+	db 13, PSYDUCK
+	; day
+	db 20, MUNCHLAX
+	db 21, PONYTA
+	db 19, DODUO
+	db 17, EKANS
+	db 18, TANGELA
+	db 15, POLIWAG
+	db 13, PSYDUCK
+	; nite
+	db 20, MUNCHLAX
+	db 21, PONYTA
+	db 19, DODUO
+	db 17, EKANS
+	db 18, TANGELA
+	db 15, POLIWAG
+	db 13, PSYDUCK
 
 	db -1 ; end

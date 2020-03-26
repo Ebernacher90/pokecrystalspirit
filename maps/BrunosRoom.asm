@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const BRUNOSROOM_BRUNO
 
 BrunosRoom_MapScripts:
@@ -10,7 +10,7 @@ BrunosRoom_MapScripts:
 	callback MAPCALLBACK_TILES, .BrunosRoomDoors
 
 .LockDoor:
-	prioritysjump .BrunosDoorLocksBehindYou
+	priorityjump .BrunosDoorLocksBehindYou
 	end
 
 .DummyScene:

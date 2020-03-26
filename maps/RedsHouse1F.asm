@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const REDSHOUSE1F_REDS_MOM
 
 RedsHouse1F_MapScripts:

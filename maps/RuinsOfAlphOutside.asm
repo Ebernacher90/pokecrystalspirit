@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const RUINSOFALPHOUTSIDE_YOUNGSTER1
 	const RUINSOFALPHOUTSIDE_SCIENTIST
 	const RUINSOFALPHOUTSIDE_FISHER
@@ -24,12 +24,12 @@ RuinsOfAlphOutside_MapScripts:
 	iftrue .NoScientist
 	checkevent EVENT_MADE_UNOWN_APPEAR_IN_RUINS
 	iftrue .MaybeScientist
-	sjump .NoScientist
+	jump .NoScientist
 
 .MaybeScientist:
-	readvar VAR_UNOWNCOUNT
+	checkcode VAR_UNOWNCOUNT
 	ifgreater 2, .YesScientist
-	sjump .NoScientist
+	jump .NoScientist
 
 .YesScientist:
 	appear RUINSOFALPHOUTSIDE_SCIENTIST
@@ -44,12 +44,12 @@ RuinsOfAlphOutside_MapScripts:
 RuinsOfAlphOutsideScientistScene1:
 	turnobject RUINSOFALPHOUTSIDE_SCIENTIST, UP
 	turnobject PLAYER, DOWN
-	sjump RuinsOfAlphOutsideScientistSceneContinue
+	jump RuinsOfAlphOutsideScientistSceneContinue
 
 RuinsOfAlphOutsideScientistScene2:
 	turnobject RUINSOFALPHOUTSIDE_SCIENTIST, LEFT
 	turnobject PLAYER, RIGHT
-	sjump RuinsOfAlphOutsideScientistSceneContinue
+	jump RuinsOfAlphOutsideScientistSceneContinue
 
 RuinsOfAlphOutsideScientistScript:
 	faceplayer
@@ -75,7 +75,7 @@ RuinsOfAlphOutsideFisherScript:
 	iftrue .Next
 	setevent EVENT_TALKED_TO_RUINS_COWARD
 	writetext RuinsOfAlphOutsideFisherText1
-	promptbutton
+	buttonsound
 .Next:
 	writetext RuinsOfAlphOutsideFisherText2
 	waitbutton

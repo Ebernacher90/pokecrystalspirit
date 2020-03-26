@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const ICEPATH1F_POKE_BALL1
 	const ICEPATH1F_POKE_BALL2
 	const ICEPATH1F_POKE_BALL3

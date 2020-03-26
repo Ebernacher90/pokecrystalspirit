@@ -117,7 +117,7 @@ GeneratePartyMonStats:
 	and a
 	jr nz, .randomlygeneratemoves
 	ld de, wEnemyMonMoves
-rept NUM_MOVES - 1
+rept NUM_MOVES + -1
 	ld a, [de]
 	inc de
 	ld [hli], a
@@ -128,11 +128,11 @@ endr
 
 .randomlygeneratemoves
 	xor a
-rept NUM_MOVES - 1
+rept NUM_MOVES + -1
 	ld [hli], a
 endr
 	ld [hl], a
-	ld [wEvolutionOldSpecies], a
+	ld [wBuffer1], a
 	predef FillMoves
 
 .next
@@ -1782,7 +1782,7 @@ GivePoke::
 	ld a, b
 	and a
 	ret z
-	ld hl, WasSentToBillsPCText
+	ld hl, TextJump_WasSentToBillsPC
 	call PrintText
 	ld a, BANK(sBoxMonNicknames)
 	call GetSRAMBank
@@ -1800,8 +1800,9 @@ GivePoke::
 	ld b, $2
 	ret
 
-WasSentToBillsPCText:
-	text_far _WasSentToBillsPCText
+TextJump_WasSentToBillsPC:
+	; was sent to BILL's PC.
+	text_far Text_WasSentToBillsPC
 	text_end
 
 InitNickname:

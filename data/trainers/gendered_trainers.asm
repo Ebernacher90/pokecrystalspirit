@@ -26,6 +26,7 @@ MaleTrainers:
 	db SAGE
 	db BIKER
 	db SCIENTIST
+	db AQUA_GRUNT
 .End
 
 FemaleTrainers:

@@ -1,7 +1,7 @@
 DisplayUsedMoveText:
 ; battle command 03
 	ld hl, UsedMoveText
-	call BattleTextbox
+	call BattleTextBox
 	jp WaitBGMap
 
 UsedMoveText:
@@ -41,7 +41,7 @@ UsedMoveText:
 .grammar
 	call GetMoveGrammar ; convert move id to grammar index
 
-; everything except 'CheckObedience' made redundant in localization
+; everything except 'instead' made redundant in localization
 
 	; check obedience
 	ld a, [wAlreadyDisobeyed]

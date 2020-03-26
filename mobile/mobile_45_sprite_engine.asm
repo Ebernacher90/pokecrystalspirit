@@ -1,7 +1,7 @@
 Function115d99:
-	ld de, MobileDialingGFX
+	ld de, GFX_11601a
 	ld hl, vTiles0 tile $60
-	lb bc, BANK(MobileDialingGFX), 20
+	lb bc, BANK(GFX_11601a), 20
 	call Get2bpp
 	xor a
 	ld [wc305], a
@@ -307,13 +307,13 @@ Unknown_116005:
 	dsprite   2, 0,   0, 0, $62, $01
 	dsprite   2, 0,   1, 0, $63, $01
 
-MobileDialingGFX::
-INCBIN "gfx/mobile/dialing.2bpp"
+GFX_11601a::
+INCBIN "gfx/unknown/11601a.2bpp"
 
 Function11615a:
 	xor a
 	ld [wc30d], a
-	ld [wc319], a
+	ld [$c319], a
 	ld [wc310], a
 	ld [wc311], a
 	ld [wc312], a
@@ -341,7 +341,7 @@ Function11619d:
 	ld a, [wc30d]
 	and a
 	ret z
-	ld a, [wc319]
+	ld a, [$c319]
 	cp $2
 	jr c, .asm_1161b4
 	ld a, $a0
@@ -354,7 +354,7 @@ Function11619d:
 	ret
 
 Function1161b8:
-	ld a, [wc319]
+	ld a, [$c319]
 	ld e, a
 	ld d, 0
 	ld hl, .Jumptable
@@ -381,9 +381,9 @@ Function1161d5:
 	ld a, $6
 	ldh [rSVBK], a
 
-	ld hl, PichuBorderMobileTilemapAttrmap
+	ld hl, Unknown_117356
 	ld de, wDecompressScratch
-	ld bc, 32 * 12 * 2
+	ld bc, $0300
 	call CopyBytes
 
 	di
@@ -479,9 +479,9 @@ Function1161d5:
 	ld [wMusicFadeID], a
 	ld a, d
 	ld [wMusicFadeID + 1], a
-	ld a, [wc319]
+	ld a, [$c319]
 	inc a
-	ld [wc319], a
+	ld [$c319], a
 	ret
 
 MenuHeader_11628c:
@@ -492,18 +492,18 @@ MenuHeader_11628c:
 
 Function116294:
 	farcall Function170d02
-	ld a, [wc319]
+	ld a, [$c319]
 	inc a
-	ld [wc319], a
+	ld [$c319], a
 	ldh a, [rSVBK]
 	push af
 	ld a, $5
 	ldh [rSVBK], a
 	ld hl, wBGPals1 palette 6
-	ld de, wc320
+	ld de, $c320
 	ld bc, 2 palettes
 	call CopyBytes
-	ld hl, PichuBorderMobileBGPalettes
+	ld hl, Palette_11734e
 	ld de, wBGPals1 palette 7
 	ld bc, 1 palettes
 	call CopyBytes
@@ -516,14 +516,14 @@ Function116294:
 
 Function1162cb:
 	farcall Function170cc6
-	ld a, [wc319]
+	ld a, [$c319]
 	inc a
-	ld [wc319], a
+	ld [$c319], a
 	ldh a, [rSVBK]
 	push af
 	ld a, $5
 	ldh [rSVBK], a
-	ld hl, PichuBorderMobileOBPalettes
+	ld hl, Palette_11730e
 	ld de, wOBPals1 + 2 palettes
 	ld bc, 6 palettes
 	call CopyBytes
@@ -654,7 +654,7 @@ Function11636e:
 	xor a
 	ld [wMusicFadeID + 1], a
 	xor a
-	ld [wc319], a
+	ld [$c319], a
 	ld [wc30d], a
 	ret
 
@@ -691,7 +691,7 @@ Function1163c0:
 	ldh [rSVBK], a
 	farcall ReloadMapPart
 	ld a, [wLinkMode]
-	cp LINK_MOBILE
+	cp $4
 	jr z, .asm_11642a
 	ld a, $8
 	ld [wMusicFade], a
@@ -711,7 +711,7 @@ Function1163c0:
 
 .asm_116439
 	xor a
-	ld [wc319], a
+	ld [$c319], a
 	ld [wc30d], a
 	ret
 
@@ -727,7 +727,7 @@ Function116441:
 	xor a
 	ld [wMusicFadeID + 1], a
 	xor a
-	ld [wc319], a
+	ld [$c319], a
 	ld [wc30d], a
 	ret
 

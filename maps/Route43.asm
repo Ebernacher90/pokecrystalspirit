@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const ROUTE43_SUPER_NERD1
 	const ROUTE43_SUPER_NERD2
 	const ROUTE43_SUPER_NERD3
@@ -50,7 +50,7 @@ TrainerPokemaniacBrent:
 	trainer POKEMANIAC, BRENT1, EVENT_BEAT_POKEMANIAC_BRENT, PokemaniacBrentSeenText, PokemaniacBrentBeatenText, 0, .Script
 
 .Script:
-	loadvar VAR_CALLERID, PHONE_POKEMANIAC_BRENT
+	writecode VAR_CALLERID, PHONE_POKEMANIAC_BRENT
 	endifjustbattled
 	opentext
 	checkflag ENGINE_BRENT
@@ -60,10 +60,10 @@ TrainerPokemaniacBrent:
 	checkevent EVENT_BRENT_ASKED_FOR_PHONE_NUMBER
 	iftrue .AskedAlready
 	writetext PokemaniacBrentAfterBattleText
-	promptbutton
+	buttonsound
 	setevent EVENT_BRENT_ASKED_FOR_PHONE_NUMBER
 	scall .AskNumber1
-	sjump .AskForNumber
+	jump .AskForNumber
 
 .AskedAlready:
 	scall .AskNumber2
@@ -71,14 +71,14 @@ TrainerPokemaniacBrent:
 	askforphonenumber PHONE_POKEMANIAC_BRENT
 	ifequal PHONE_CONTACTS_FULL, .PhoneFull
 	ifequal PHONE_CONTACT_REFUSED, .NumberDeclined
-	gettrainername STRING_BUFFER_3, POKEMANIAC, BRENT1
+	trainertotext POKEMANIAC, BRENT1, MEM_BUFFER_0
 	scall .RegisteredNumber
-	sjump .NumberAccepted
+	jump .NumberAccepted
 
 .WantsBattle:
 	scall .Rematch
 	winlosstext PokemaniacBrentBeatenText, 0
-	readmem wBrentFightCount
+	copybytetovar wBrentFightCount
 	ifequal 3, .Fight3
 	ifequal 2, .Fight2
 	ifequal 1, .Fight1
@@ -96,7 +96,7 @@ TrainerPokemaniacBrent:
 	loadtrainer POKEMANIAC, BRENT1
 	startbattle
 	reloadmapafterbattle
-	loadmem wBrentFightCount, 1
+	loadvar wBrentFightCount, 1
 	clearflag ENGINE_BRENT
 	end
 
@@ -104,7 +104,7 @@ TrainerPokemaniacBrent:
 	loadtrainer POKEMANIAC, BRENT2
 	startbattle
 	reloadmapafterbattle
-	loadmem wBrentFightCount, 2
+	loadvar wBrentFightCount, 2
 	clearflag ENGINE_BRENT
 	end
 
@@ -112,7 +112,7 @@ TrainerPokemaniacBrent:
 	loadtrainer POKEMANIAC, BRENT3
 	startbattle
 	reloadmapafterbattle
-	loadmem wBrentFightCount, 3
+	loadvar wBrentFightCount, 3
 	clearflag ENGINE_BRENT
 	end
 
@@ -177,7 +177,7 @@ TrainerPicnickerTiffany:
 	trainer PICNICKER, TIFFANY3, EVENT_BEAT_PICNICKER_TIFFANY, PicnickerTiffanySeenText, PicnickerTiffanyBeatenText, 0, .Script
 
 .Script:
-	loadvar VAR_CALLERID, PHONE_PICNICKER_TIFFANY
+	writecode VAR_CALLERID, PHONE_PICNICKER_TIFFANY
 	endifjustbattled
 	opentext
 	checkflag ENGINE_TIFFANY
@@ -191,10 +191,10 @@ TrainerPicnickerTiffany:
 	checkevent EVENT_TIFFANY_ASKED_FOR_PHONE_NUMBER
 	iftrue .AskedAlready
 	writetext PicnickerTiffanyWantsPicnicText
-	promptbutton
+	buttonsound
 	setevent EVENT_TIFFANY_ASKED_FOR_PHONE_NUMBER
 	scall .AskNumber1
-	sjump .AskForNumber
+	jump .AskForNumber
 
 .AskedAlready:
 	scall .AskNumber2
@@ -202,14 +202,14 @@ TrainerPicnickerTiffany:
 	askforphonenumber PHONE_PICNICKER_TIFFANY
 	ifequal PHONE_CONTACTS_FULL, .PhoneFull
 	ifequal PHONE_CONTACT_REFUSED, .NumberDeclined
-	gettrainername STRING_BUFFER_3, PICNICKER, TIFFANY3
+	trainertotext PICNICKER, TIFFANY3, MEM_BUFFER_0
 	scall .RegisteredNumber
-	sjump .NumberAccepted
+	jump .NumberAccepted
 
 .WantsBattle:
 	scall .Rematch
 	winlosstext PicnickerTiffanyBeatenText, 0
-	readmem wTiffanyFightCount
+	copybytetovar wTiffanyFightCount
 	ifequal 3, .Fight3
 	ifequal 2, .Fight2
 	ifequal 1, .Fight1
@@ -227,7 +227,7 @@ TrainerPicnickerTiffany:
 	loadtrainer PICNICKER, TIFFANY3
 	startbattle
 	reloadmapafterbattle
-	loadmem wTiffanyFightCount, 1
+	loadvar wTiffanyFightCount, 1
 	clearflag ENGINE_TIFFANY
 	end
 
@@ -235,7 +235,7 @@ TrainerPicnickerTiffany:
 	loadtrainer PICNICKER, TIFFANY1
 	startbattle
 	reloadmapafterbattle
-	loadmem wTiffanyFightCount, 2
+	loadvar wTiffanyFightCount, 2
 	clearflag ENGINE_TIFFANY
 	end
 
@@ -243,7 +243,7 @@ TrainerPicnickerTiffany:
 	loadtrainer PICNICKER, TIFFANY2
 	startbattle
 	reloadmapafterbattle
-	loadmem wTiffanyFightCount, 3
+	loadvar wTiffanyFightCount, 3
 	clearflag ENGINE_TIFFANY
 	end
 
@@ -260,10 +260,10 @@ TrainerPicnickerTiffany:
 	iffalse .NoRoom
 	clearflag ENGINE_TIFFANY_HAS_PINK_BOW
 	setevent EVENT_TIFFANY_GAVE_PINK_BOW
-	sjump .NumberAccepted
+	jump .NumberAccepted
 
 .NoRoom:
-	sjump .PackFull
+	jump .PackFull
 
 .NoClefairy:
 	writetext PicnickerTiffanyClefairyText

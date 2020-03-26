@@ -38,7 +38,7 @@ _tgt = 0
 endc
 
 if "\1" == "north"
-_blk = \3_WIDTH * (\3_HEIGHT - 3) + _src
+_blk = \3_WIDTH * (\3_HEIGHT + -3) + _src
 _map = _tgt
 _win = (\3_WIDTH + 6) * \3_HEIGHT + 1
 _y = \3_HEIGHT * 2 - 1
@@ -60,9 +60,9 @@ _len = \3_WIDTH
 endc
 
 elif "\1" == "west"
-_blk = (\3_WIDTH * _src) + \3_WIDTH - 3
+_blk = (\3_WIDTH * _src) + \3_WIDTH + -3
 _map = (CURRENT_MAP_WIDTH + 6) * _tgt
-_win = (\3_WIDTH + 6) * 2 - 6
+_win = (\3_WIDTH + 6) * 2 + -6
 _y = (\4) * -2
 _x = \3_WIDTH * 2 - 1
 _len = CURRENT_MAP_HEIGHT + 3 - (\4)
@@ -116,9 +116,13 @@ ENDM
 	map_attributes CianwoodCity, CIANWOOD_CITY, $35, EAST
 	connection east, Route41, ROUTE_41, 0
 
-	map_attributes GoldenrodCity, GOLDENROD_CITY, $35, NORTH | SOUTH
+	map_attributes GoldenrodCity, GOLDENROD_CITY, $35, NORTH | SOUTH |  WEST
 	connection north, Route35, ROUTE_35, 5
 	connection south, Route34, ROUTE_34, 5
+	connection west, GlobalTerminalOutside, GLOBAL_TERMINAL_OUTSIDE, 2
+	
+	map_attributes GlobalTerminalOutside, GLOBAL_TERMINAL_OUTSIDE, $35, EAST
+	connection east, GoldenrodCity, GOLDENROD_CITY, -2
 
 	map_attributes OlivineCity, OLIVINE_CITY, $35, NORTH | WEST
 	connection north, Route39, ROUTE_39, 5
@@ -694,3 +698,16 @@ ENDM
 	map_attributes Route30BerryHouse, ROUTE_30_BERRY_HOUSE, $00, 0
 	map_attributes MrPokemonsHouse, MR_POKEMONS_HOUSE, $00, 0
 	map_attributes Route31VioletGate, ROUTE_31_VIOLET_GATE, $00, 0
+	map_attributes GlobalTerminal1F, GLOBAL_TERMINAL_1F, $00, 0
+	map_attributes PowerPlant1F, POWER_PLANT_1F, $00, 0
+	map_attributes PowerPlant2F, POWER_PLANT_2F, $00, 0
+	map_attributes CeruleanCave1F, CERULEAN_CAVE_1F, $00, 0
+	map_attributes CeruleanCave2F, CERULEAN_CAVE_2F, $00, 0
+	map_attributes PewterMuseum1F, PEWTER_MUSEUM_1F, $00, 0
+	map_attributes PewterMuseum2F, PEWTER_MUSEUM_2F, $00, 0
+	map_attributes OlivineCave1F, OLIVINE_CAVE_1F, $00, 0
+	map_attributes OlivineCaveB1F, OLIVINE_CAVE_B1F, $00, 0
+	map_attributes MoblinsHideout, MOBLINS_HIDEOUT, $2F, 0
+	map_attributes FantasticIdyll, FANTASTIC_IDYLL, $0A, 0
+	map_attributes UndergroundPathRoute7, UNDERGROUND_PATH_ROUTE_7, $0A, 0
+	map_attributes UndergroundPathWestEast, UNDERGROUND_PATH_WEST_EAST, $01, 0

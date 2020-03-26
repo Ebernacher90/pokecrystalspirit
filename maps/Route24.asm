@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const ROUTE24_ROCKET
 
 Route24_MapScripts:
@@ -13,7 +13,7 @@ Route24RocketScript:
 	writetext Route24RocketSeenText
 	waitbutton
 	closetext
-	winlosstext Route24RocketBeatenText, -1
+	winlosstext Route24RocketBeatenText, 0
 	loadtrainer GRUNTM, GRUNTM_31
 	startbattle
 	dontrestartmapmusic
@@ -21,7 +21,7 @@ Route24RocketScript:
 	playmusic MUSIC_ROCKET_ENCOUNTER
 	opentext
 	writetext Route24RocketAfterBattleText
-	promptbutton
+	buttonsound
 	special FadeOutMusic
 	writetext Route24RocketDisappearsText
 	waitbutton

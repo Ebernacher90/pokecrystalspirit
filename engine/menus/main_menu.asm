@@ -1,5 +1,5 @@
-MobileMenuGFX:
-INCBIN "gfx/mobile/mobile_menu.2bpp"
+GFX_49c0c:
+INCBIN "gfx/unknown/049c0c.2bpp"
 
 MainMenu:
 	xor a
@@ -18,7 +18,7 @@ MainMenu:
 	call MainMenuJoypadLoop
 	call CloseWindow
 	jr c, .quit
-	call ClearTilemap
+	call ClearTileMap
 	ld a, [wMenuSelection]
 	ld hl, .Jumptable
 	rst JumpTable
@@ -41,12 +41,12 @@ MainMenu:
 	dw .Strings
 
 .Strings:
-	db "CONTINUE@"
-	db "NEW GAME@"
-	db "OPTION@"
-	db "MYSTERY GIFT@"
-	db "MOBILE@"
-	db "MOBILE STUDIUM@"
+	db "Weiter@"
+	db "Neues Spiel@"
+	db "Optionen@"
+	db "Geheimgeschen@"
+	db "Mobile@"
+	db "Mobile Studium@"
 
 .Jumptable:
 	dw MainMenu_Continue
@@ -56,86 +56,86 @@ MainMenu:
 	dw MainMenu_Mobile
 	dw MainMenu_MobileStudium
 
-CONTINUE       EQU 0
-NEW_GAME       EQU 1
-OPTION         EQU 2
-MYSTERY_GIFT   EQU 3
-MOBILE         EQU 4
-MOBILE_STUDIUM EQU 5
+WEITER          EQU 0
+NEUES_SPIEL     EQU 1
+OPTIONEN        EQU 2
+GEHEIMGESCHEN   EQU 3
+MOBILE          EQU 4
+MOBILE_STUDIUM  EQU 5
 
 MainMenuItems:
 
 NewGameMenu:
 	db 2
-	db NEW_GAME
-	db OPTION
+	db NEUES_SPIEL
+	db OPTIONEN
 	db -1
 
 ContinueMenu:
 	db 3
-	db CONTINUE
-	db NEW_GAME
-	db OPTION
+	db WEITER
+	db NEUES_SPIEL
+	db OPTIONEN
 	db -1
 
 MobileMysteryMenu:
 	db 5
-	db CONTINUE
-	db NEW_GAME
-	db OPTION
-	db MYSTERY_GIFT
+	db WEITER
+	db NEUES_SPIEL
+	db OPTIONEN
+	db GEHEIMGESCHEN
 	db MOBILE
 	db -1
 
 MobileMenu:
 	db 4
-	db CONTINUE
-	db NEW_GAME
-	db OPTION
+	db WEITER
+	db NEUES_SPIEL
+	db OPTIONEN
 	db MOBILE
 	db -1
 
 MobileStudiumMenu:
 	db 5
-	db CONTINUE
-	db NEW_GAME
-	db OPTION
+	db WEITER
+	db NEUES_SPIEL
+	db OPTIONEN
 	db MOBILE
 	db MOBILE_STUDIUM
 	db -1
 
 MysteryMobileStudiumMenu:
 	db 6
-	db CONTINUE
-	db NEW_GAME
-	db OPTION
-	db MYSTERY_GIFT
+	db WEITER
+	db NEUES_SPIEL
+	db OPTIONEN
+	db GEHEIMGESCHEN
 	db MOBILE
 	db MOBILE_STUDIUM
 	db -1
 
 MysteryMenu:
 	db 4
-	db CONTINUE
-	db NEW_GAME
-	db OPTION
-	db MYSTERY_GIFT
+	db WEITER
+	db NEUES_SPIEL
+	db OPTIONEN
+	db GEHEIMGESCHEN
 	db -1
 
 MysteryStudiumMenu:
 	db 5
-	db CONTINUE
-	db NEW_GAME
-	db OPTION
-	db MYSTERY_GIFT
+	db WEITER
+	db NEUES_SPIEL
+	db OPTIONEN
+	db GEHEIMGESCHEN
 	db MOBILE_STUDIUM
 	db -1
 
 StudiumMenu:
 	db 4
-	db CONTINUE
-	db NEW_GAME
-	db OPTION
+	db WEITER
+	db NEUES_SPIEL
+	db OPTIONEN
 	db MOBILE_STUDIUM
 	db -1
 
@@ -237,11 +237,11 @@ MainMenu_PrintCurrentTimeAndDay:
 	hlcoord 0, 14
 	ld b, 2
 	ld c, 18
-	call Textbox
+	call TextBox
 	ret
 
 .TimeFail:
-	call SpeechTextbox
+	call SpeechTextBox
 	ret
 
 .PlaceTime:
@@ -280,8 +280,9 @@ MainMenu_PrintCurrentTimeAndDay:
 .TimeNotSet:
 	db "TIME NOT SET@"
 
-.MainMenuTimeUnknownText:
-	text_far _MainMenuTimeUnknownText
+.UnusedText:
+	; Clock time unknown
+	text_far UnknownText_0x1c5182
 	text_end
 
 .PlaceCurrentDay:
@@ -313,7 +314,7 @@ MainMenu_PrintCurrentTimeAndDay:
 Function49ed0:
 	xor a
 	ldh [hMapAnims], a
-	call ClearTilemap
+	call ClearTileMap
 	call LoadFontsExtra
 	call LoadStandardFont
 	call ClearWindowData

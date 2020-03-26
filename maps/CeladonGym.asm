@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const CELADONGYM_ERIKA
 	const CELADONGYM_LASS1
 	const CELADONGYM_LASS2
@@ -37,7 +37,7 @@ CeladonGymErikaScript:
 	checkevent EVENT_GOT_TM19_GIGA_DRAIN
 	iftrue .GotGigaDrain
 	writetext ErikaExplainTMText
-	promptbutton
+	buttonsound
 	verbosegiveitem TM_GIGA_DRAIN
 	iffalse .GotGigaDrain
 	setevent EVENT_GOT_TM19_GIGA_DRAIN
@@ -107,7 +107,7 @@ CeladonGymStatue:
 	iftrue .Beaten
 	jumpstd gymstatue1
 .Beaten:
-	gettrainername STRING_BUFFER_4, ERIKA, ERIKA1
+	trainertotext ERIKA, ERIKA1, MEM_BUFFER_1
 	jumpstd gymstatue2
 
 ErikaBeforeBattleText:

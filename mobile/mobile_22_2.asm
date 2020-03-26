@@ -284,7 +284,7 @@ Function8b4a4:
 	push bc
 	push de
 	call Function8b4d8
-	call Textbox
+	call TextBox
 	pop de
 	pop bc
 	call Function8b4cc
@@ -406,7 +406,7 @@ Function8b539:
 
 Function8b555:
 .loop
-	ld hl, EnterNewPasscodeText
+	ld hl, UnknownText_0x8b5ce
 	call PrintText
 	ld bc, wd017
 	call Function8b45c
@@ -417,12 +417,12 @@ Function8b555:
 	ld bc, wd017
 	call Function8b664
 	jr nz, .asm_8b57c
-	ld hl, FourZerosInvalidText
+	ld hl, UnknownText_0x8b5e2
 	call PrintText
 	jr .loop
 
 .asm_8b57c
-	ld hl, ConfirmPasscodeText
+	ld hl, UnknownText_0x8b5d3
 	call PrintText
 	ld bc, wd013
 	call Function8b45c
@@ -434,7 +434,7 @@ Function8b555:
 	call Function89448
 	ld bc, wd013
 	call Function8b493
-	ld hl, PasscodesNotSameText
+	ld hl, UnknownText_0x8b5d8
 	call PrintText
 	jr .asm_8b57c
 
@@ -448,7 +448,7 @@ Function8b555:
 	call Function89448
 	ld bc, wd013
 	call Function8b493
-	ld hl, PasscodeSetText
+	ld hl, UnknownText_0x8b5dd
 	call PrintText
 	and a
 .asm_8b5c8
@@ -457,24 +457,29 @@ Function8b555:
 	pop af
 	ret
 
-EnterNewPasscodeText:
-	text_far _EnterNewPasscodeText
+UnknownText_0x8b5ce:
+	; Please enter any four-digit number.
+	text_far UnknownText_0x1bc187
 	text_end
 
-ConfirmPasscodeText:
-	text_far _ConfirmPasscodeText
+UnknownText_0x8b5d3:
+	; Enter the same number to confirm.
+	text_far UnknownText_0x1bc1ac
 	text_end
 
-PasscodesNotSameText:
-	text_far _PasscodesNotSameText
+UnknownText_0x8b5d8:
+	; That's not the same number.
+	text_far UnknownText_0x1bc1cf
 	text_end
 
-PasscodeSetText:
-	text_far _PasscodeSetText
+UnknownText_0x8b5dd:
+	; Your PASSCODE has been set. Enter this number next time to open the CARD FOLDER.
+	text_far UnknownText_0x1bc1eb
 	text_end
 
-FourZerosInvalidText:
-	text_far _FourZerosInvalidText
+UnknownText_0x8b5e2:
+	; 0000 is invalid!
+	text_far UnknownText_0x1bc23e
 	text_end
 
 Function8b5e7:
@@ -489,7 +494,7 @@ Function8b5e7:
 	ld e, $0
 	call Function89c44
 .asm_8b602
-	ld hl, EnterPasscodeText
+	ld hl, UnknownText_0x8b642
 	call PrintText
 	ld bc, wd013
 	call Function8b45c
@@ -502,7 +507,7 @@ Function8b5e7:
 	call Function8b3a4
 	call CloseSRAM
 	jr z, .asm_8b635
-	ld hl, IncorrectPasscodeText
+	ld hl, UnknownText_0x8b647
 	call PrintText
 	ld bc, wd013
 	call Function8b36c
@@ -517,17 +522,19 @@ Function8b5e7:
 	pop af
 	ret
 
-EnterPasscodeText:
-	text_far _EnterPasscodeText
+UnknownText_0x8b642:
+	; Enter the CARD FOLDER PASSCODE.
+	text_far UnknownText_0x1bc251
 	text_end
 
-IncorrectPasscodeText:
-	text_far _IncorrectPasscodeText
+UnknownText_0x8b647:
+	; Incorrect PASSCODE!
+	text_far UnknownText_0x1bc272
 	text_end
 
 UnknownText_0x8b64c:
 	; CARD FOLDER open.@ @
-	text_far _CardFolderOpenText
+	text_far UnknownText_0x1bc288
 	text_asm
 	ld de, SFX_TWINKLE
 	call PlaySFX
@@ -569,20 +576,20 @@ Function8b677:
 	ret
 
 Function8b690:
-	ld hl, MobileCardListGFX
+	ld hl, GFX_17afa5 + $514
 	ld de, vTiles2
-	ld bc, $16 tiles
-	ld a, BANK(MobileCardListGFX)
+	ld bc, $160
+	ld a, BANK(GFX_17afa5)
 	call FarCopyBytes
-	ld hl, MobileCardListGFX tile $15
+	ld hl, GFX_17afa5 + $514 + $160 - $10
 	ld de, vTiles2 tile $61
-	ld bc, 1 tiles
-	ld a, BANK(MobileCardListGFX)
+	ld bc, $10
+	ld a, BANK(GFX_17afa5)
 	call FarCopyBytes
-	ld hl, MobileCardListGFX tile $16
+	ld hl, GFX_17afa5 + $514 + $160
 	ld de, vTiles0 tile $ee
-	ld bc, 1 tiles
-	ld a, BANK(MobileCardListGFX)
+	ld bc, $10
+	ld a, BANK(GFX_17afa5)
 	call FarCopyBytes
 	ret
 
@@ -615,11 +622,11 @@ Palette_8b6d5:
 	RGB 00, 00, 00
 
 Function8b6ed:
-	hlcoord 0, 0, wAttrmap
+	hlcoord 0, 0, wAttrMap
 	ld bc, $012c
 	xor a
 	call ByteFill
-	hlcoord 0, 14, wAttrmap
+	hlcoord 0, 14, wAttrMap
 	ld bc, $0050
 	ld a, $7
 	call ByteFill
@@ -675,7 +682,7 @@ Function8b73e:
 	ret
 
 Function8b744:
-	ld de, wAttrmap - wTilemap
+	ld de, wAttrMap - wTileMap
 	add hl, de
 	inc b
 	inc b
@@ -743,10 +750,10 @@ Function8b788:
 	ret
 
 Function8b79e:
-	hlcoord 0, 1, wAttrmap
+	hlcoord 0, 1, wAttrMap
 	ld a, $1
 	ld [hli], a
-	hlcoord 9, 1, wAttrmap
+	hlcoord 9, 1, wAttrMap
 	ld e, $b
 .asm_8b7a9
 	ld a, $2
@@ -876,8 +883,8 @@ MenuHeader_0x8b867:
 
 MenuData_0x8b870:
 	db SCROLLINGMENU_ENABLE_FUNCTION3 | SCROLLINGMENU_DISPLAY_ARROWS | SCROLLINGMENU_ENABLE_RIGHT | SCROLLINGMENU_ENABLE_LEFT ; flags
-	db 5, 3 ; rows, columns
-	db SCROLLINGMENU_ITEMS_NORMAL ; item format
+	db 5 ; items
+	db 3, 1
 	dbw 0, wd002
 	dba Function8b880
 	dba Function8b88c
@@ -933,7 +940,7 @@ Function8b8c8:
 	hlcoord 0, 14
 	ld b, $2
 	ld c, $12
-	call Textbox
+	call TextBox
 	ld a, [wd033]
 	ld b, 0
 	ld c, a

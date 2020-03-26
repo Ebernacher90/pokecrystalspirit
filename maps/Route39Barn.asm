@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const ROUTE39BARN_TWIN1
 	const ROUTE39BARN_TWIN2
 	const ROUTE39BARN_MOOMOO
@@ -49,9 +49,9 @@ MoomooScript:
 	checkevent EVENT_HEALED_MOOMOO
 	iftrue .HappyCow
 	writetext MoomooWeakMooText
-	setval MILTANK
+	writebyte MILTANK
 	special PlaySlowCry
-	promptbutton
+	buttonsound
 	writetext Route39BarnItsCryIsWeakText
 	checkevent EVENT_TALKED_TO_FARMER_ABOUT_MOOMOO
 	iftrue .GiveBerry
@@ -60,16 +60,16 @@ MoomooScript:
 	end
 
 .GiveBerry:
-	promptbutton
+	buttonsound
 	writetext Route39BarnAskGiveBerryText
 	yesorno
 	iffalse .Refused
 	checkitem BERRY
 	iffalse .NoBerriesInBag
 	takeitem BERRY
-	readmem wMooMooBerries
-	addval 1
-	writemem wMooMooBerries
+	copybytetovar wMooMooBerries
+	addvar 1
+	copyvartobyte wMooMooBerries
 	ifequal 3, .ThreeBerries
 	ifequal 5, .FiveBerries
 	ifequal 7, .SevenBerries
@@ -80,7 +80,7 @@ MoomooScript:
 
 .ThreeBerries:
 	writetext Route39BarnGaveBerryText
-	promptbutton
+	buttonsound
 	writetext Route39BarnLittleHealthierText
 	waitbutton
 	closetext
@@ -88,7 +88,7 @@ MoomooScript:
 
 .FiveBerries:
 	writetext Route39BarnGaveBerryText
-	promptbutton
+	buttonsound
 	writetext Route39BarnQuiteHealthyText
 	waitbutton
 	closetext
@@ -98,7 +98,7 @@ MoomooScript:
 	playmusic MUSIC_HEAL
 	writetext Route39BarnGaveBerryText
 	pause 60
-	promptbutton
+	buttonsound
 	special RestartMapMusic
 	writetext Route39BarnTotallyHealthyText
 	waitbutton

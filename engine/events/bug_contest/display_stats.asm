@@ -1,6 +1,6 @@
 DisplayCaughtContestMonStats:
 	call ClearBGPalettes
-	call ClearTilemap
+	call ClearTileMap
 	call ClearSprites
 	call LoadFontsBattleExtra
 
@@ -12,12 +12,12 @@ DisplayCaughtContestMonStats:
 	hlcoord 0, 0
 	ld b, 4
 	ld c, 13
-	call Textbox
+	call TextBox
 
 	hlcoord 0, 6
 	ld b, 4
 	ld c, 13
-	call Textbox
+	call TextBox
 
 	hlcoord 2, 0
 	ld de, .Stock
@@ -67,7 +67,7 @@ DisplayCaughtContestMonStats:
 	ld de, wEnemyMonMaxHP
 	call PrintNum
 
-	ld hl, ContestAskSwitchText
+	ld hl, SwitchMonText
 	call PrintText
 
 	pop af
@@ -86,17 +86,19 @@ DisplayCaughtContestMonStats:
 .This:
 	db " THIS <PKMN>  @"
 
-ContestAskSwitchText:
-	text_far _ContestAskSwitchText
+SwitchMonText:
+	; Switch #MON?
+	text_far UnknownText_0x1c10cf
 	text_end
 
 DisplayAlreadyCaughtText:
 	call GetPokemonName
-	ld hl, .ContestAlreadyCaughtText
+	ld hl, .AlreadyCaughtText
 	jp PrintText
 
-.ContestAlreadyCaughtText:
-	text_far _ContestAlreadyCaughtText
+.AlreadyCaughtText:
+	; You already caught a @ .
+	text_far UnknownText_0x1c10dd
 	text_end
 
 DummyPredef2F:

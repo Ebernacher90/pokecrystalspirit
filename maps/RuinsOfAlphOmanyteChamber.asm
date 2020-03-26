@@ -13,7 +13,7 @@ RuinsOfAlphOmanyteChamber_MapScripts:
 	end
 
 .OpenWall:
-	prioritysjump .WallOpenScript
+	priorityjump .WallOpenScript
 	end
 
 .DummyScene:
@@ -48,7 +48,7 @@ RuinsOfAlphOmanyteChamber_MapScripts:
 
 RuinsOfAlphOmanyteChamberPuzzle:
 	refreshscreen
-	setval UNOWNPUZZLE_OMANYTE
+	writebyte UNOWNPUZZLE_OMANYTE
 	special UnownPuzzle
 	closetext
 	iftrue .PuzzleComplete
@@ -82,7 +82,7 @@ RuinsOfAlphOmanyteChamberDescriptionSign:
 RuinsOfAlphOmanyteChamberWallPatternLeft:
 	opentext
 	writetext RuinsOfAlphOmanyteChamberWallPatternLeftText
-	setval UNOWNWORDS_WATER
+	writebyte UNOWNWORDS_WATER
 	special DisplayUnownWords
 	closetext
 	end
@@ -92,7 +92,7 @@ RuinsOfAlphOmanyteChamberWallPatternRight:
 	iftrue .WallOpen
 	opentext
 	writetext RuinsOfAlphOmanyteChamberWallPatternRightText
-	setval UNOWNWORDS_WATER
+	writebyte UNOWNWORDS_WATER
 	special DisplayUnownWords
 	closetext
 	end

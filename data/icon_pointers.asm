@@ -21,9 +21,18 @@ IconPointers:
 	dw BlobIcon
 	dw SerpentIcon
 	dw VoltorbIcon
-	dw SquirtleIcon
 	dw BulbasaurIcon
+	dw IvysaurIcon
+	dw VenusaurIcon
 	dw CharmanderIcon
+	dw CharmeleonIcon
+	dw CharizardIcon
+	dw SquirtleIcon
+	dw WartortleIcon
+	dw BlastoiseIcon
+	dw CaterpieIcon
+	dw MetapodIcon
+	dw ButterfreeIcon
 	dw CaterpillarIcon
 	dw UnownIcon
 	dw GeodudeIcon
@@ -33,9 +42,20 @@ IconPointers:
 	dw MothIcon
 	dw BatIcon
 	dw SnorlaxIcon
+	dw MunchlaxIcon
+	dw ChikoritaIcon
+	dw BayleefIcon
+	dw MeganiumIcon
+	dw CyndaquilIcon
+	dw QuilavaIcon
+	dw TyphloisonIcon
+	dw TotodileIcon
+	dw CroconawIcon
+	dw FeraligatrIcon
 	dw HoOhIcon
 	dw LugiaIcon
 	dw GyaradosIcon
 	dw SlowpokeIcon
 	dw SudowoodoIcon
 	dw BigmonIcon
+	dw CelebiIcon

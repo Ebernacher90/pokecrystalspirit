@@ -24,65 +24,65 @@ IrwinRumorScript:
 	checkflag ENGINE_PLAINBADGE
 	iftrue .PlainBadge
 	farwritetext IrwinCalledRightAwayText
-	promptbutton
-	sjump PhoneScript_HangUpText_Male
+	buttonsound
+	jump PhoneScript_HangupText_Male
 
 .PlainBadge:
-	farwritetext IrwinPlainBadgeGossipText
-	promptbutton
-	sjump PhoneScript_HangUpText_Male
+	farwritetext UnknownText_0x64099
+	buttonsound
+	jump PhoneScript_HangupText_Male
 
 .JasmineReturned:
-	farwritetext IrwinJasmineReturnedGossipText
-	promptbutton
-	sjump PhoneScript_HangUpText_Male
+	farwritetext UnknownText_0x640e6
+	buttonsound
+	jump PhoneScript_HangupText_Male
 
 .RocketHideout:
-	farwritetext IrwinRocketHideoutGossipText
-	promptbutton
-	sjump PhoneScript_HangUpText_Male
+	farwritetext UnknownText_0x6416d
+	buttonsound
+	jump PhoneScript_HangupText_Male
 
 .RadioTower:
-	farwritetext IrwinRadioTowerGossipText
-	promptbutton
-	sjump PhoneScript_HangUpText_Male
+	farwritetext UnknownText_0x641e8
+	buttonsound
+	jump PhoneScript_HangupText_Male
 
 .RisingBadge:
-	farwritetext IrwinRisingBadgeGossipText
-	promptbutton
-	sjump PhoneScript_HangUpText_Male
+	farwritetext UnknownText_0x64247
+	buttonsound
+	jump PhoneScript_HangupText_Male
 
 .EliteFour:
-	farwritetext IrwinEliteFourGossipText
-	promptbutton
-	sjump PhoneScript_HangUpText_Male
+	farwritetext UnknownText_0x642bb
+	buttonsound
+	jump PhoneScript_HangupText_Male
 
 .VermilionCity:
-	farwritetext IrwinVermilionCityGossipText
-	promptbutton
-	sjump PhoneScript_HangUpText_Male
+	farwritetext UnknownText_0x643d4
+	buttonsound
+	jump PhoneScript_HangupText_Male
 
 .TrainPass:
-	farwritetext IrwinTrainPassGossipText
-	promptbutton
-	sjump PhoneScript_HangUpText_Male
+	farwritetext UnknownText_0x64448
+	buttonsound
+	jump PhoneScript_HangupText_Male
 
 .Snorlax:
-	farwritetext IrwinSnorlaxGossipText
-	promptbutton
-	sjump PhoneScript_HangUpText_Male
+	farwritetext UnknownText_0x6455b
+	buttonsound
+	jump PhoneScript_HangupText_Male
 
 .MtSilver:
-	farwritetext IrwinMtSilverGossipText
-	promptbutton
-	sjump PhoneScript_HangUpText_Male
+	farwritetext UnknownText_0x645ff
+	buttonsound
+	jump PhoneScript_HangupText_Male
 
 .FogBadge:
-	farwritetext IrwinFogBadgeGossipText
-	promptbutton
-	sjump PhoneScript_HangUpText_Male
+	farwritetext UnknownText_0x646df
+	buttonsound
+	jump PhoneScript_HangupText_Male
 
 .MarshBadge:
-	farwritetext IrwinMarshBadgeGossipText
-	promptbutton
-	sjump PhoneScript_HangUpText_Male
+	farwritetext UnknownText_0x647d8
+	buttonsound
+	jump PhoneScript_HangupText_Male

@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const ROUTE31_FISHER
 	const ROUTE31_YOUNGSTER
 	const ROUTE31_BUG_CATCHER
@@ -26,7 +26,7 @@ TrainerBugCatcherWade1:
 	trainer BUG_CATCHER, WADE1, EVENT_BEAT_BUG_CATCHER_WADE, BugCatcherWade1SeenText, BugCatcherWade1BeatenText, 0, .Script
 
 .Script:
-	loadvar VAR_CALLERID, PHONE_BUG_CATCHER_WADE
+	writecode VAR_CALLERID, PHONE_BUG_CATCHER_WADE
 	endifjustbattled
 	opentext
 	checkflag ENGINE_WADE
@@ -41,7 +41,7 @@ TrainerBugCatcherWade1:
 	waitbutton
 	setevent EVENT_WADE_ASKED_FOR_PHONE_NUMBER
 	scall .AskPhoneNumberSTD
-	sjump .Continue
+	jump .Continue
 
 .AskAgain:
 	scall .AskAgainSTD
@@ -49,14 +49,14 @@ TrainerBugCatcherWade1:
 	askforphonenumber PHONE_BUG_CATCHER_WADE
 	ifequal PHONE_CONTACTS_FULL, .PhoneFullSTD
 	ifequal PHONE_CONTACT_REFUSED, .DeclinedNumberSTD
-	gettrainername STRING_BUFFER_3, BUG_CATCHER, WADE1
+	trainertotext BUG_CATCHER, WADE1, MEM_BUFFER_0
 	scall .RegisterNumberSTD
-	sjump .AcceptedNumberSTD
+	jump .AcceptedNumberSTD
 
 .WadeRematch:
 	scall .RematchSTD
 	winlosstext BugCatcherWade1BeatenText, 0
-	readmem wWadeFightCount
+	copybytetovar wWadeFightCount
 	ifequal 4, .Fight4
 	ifequal 3, .Fight3
 	ifequal 2, .Fight2
@@ -78,7 +78,7 @@ TrainerBugCatcherWade1:
 	loadtrainer BUG_CATCHER, WADE1
 	startbattle
 	reloadmapafterbattle
-	loadmem wWadeFightCount, 1
+	loadvar wWadeFightCount, 1
 	clearflag ENGINE_WADE
 	end
 
@@ -86,7 +86,7 @@ TrainerBugCatcherWade1:
 	loadtrainer BUG_CATCHER, WADE2
 	startbattle
 	reloadmapafterbattle
-	loadmem wWadeFightCount, 2
+	loadvar wWadeFightCount, 2
 	clearflag ENGINE_WADE
 	end
 
@@ -94,7 +94,7 @@ TrainerBugCatcherWade1:
 	loadtrainer BUG_CATCHER, WADE3
 	startbattle
 	reloadmapafterbattle
-	loadmem wWadeFightCount, 3
+	loadvar wWadeFightCount, 3
 	clearflag ENGINE_WADE
 	end
 
@@ -102,7 +102,7 @@ TrainerBugCatcherWade1:
 	loadtrainer BUG_CATCHER, WADE4
 	startbattle
 	reloadmapafterbattle
-	loadmem wWadeFightCount, 4
+	loadvar wWadeFightCount, 4
 	clearflag ENGINE_WADE
 	end
 
@@ -126,23 +126,23 @@ TrainerBugCatcherWade1:
 .Berry:
 	verbosegiveitem BERRY
 	iffalse .PackFull
-	sjump .Done
+	jump .Done
 .Psncureberry:
 	verbosegiveitem PSNCUREBERRY
 	iffalse .PackFull
-	sjump .Done
+	jump .Done
 .Przcureberry:
 	verbosegiveitem PRZCUREBERRY
 	iffalse .PackFull
-	sjump .Done
+	jump .Done
 .BitterBerry:
 	verbosegiveitem BITTER_BERRY
 	iffalse .PackFull
 .Done:
 	clearflag ENGINE_WADE_HAS_ITEM
-	sjump .AcceptedNumberSTD
+	jump .AcceptedNumberSTD
 .PackFull:
-	sjump .PackFullSTD
+	jump .PackFullSTD
 
 .AskPhoneNumberSTD:
 	jumpstd asknumber1m
@@ -194,7 +194,7 @@ Route31MailRecipientScript:
 
 .TryGiveKenya:
 	writetext Text_Route31SleepyManGotMail
-	promptbutton
+	buttonsound
 	checkpokemail ReceivedSpearowMailText
 	ifequal POKEMAIL_WRONG_MAIL, .WrongMail
 	ifequal POKEMAIL_REFUSED, .Refused
@@ -202,9 +202,9 @@ Route31MailRecipientScript:
 	ifequal POKEMAIL_LAST_MON, .LastMon
 	; POKEMAIL_CORRECT
 	writetext Text_Route31HandOverMailMon
-	promptbutton
+	buttonsound
 	writetext Text_Route31ReadingMail
-	promptbutton
+	buttonsound
 	setevent EVENT_GAVE_KENYA
 	verbosegiveitem TM_NIGHTMARE
 	iffalse .NoRoomForItems

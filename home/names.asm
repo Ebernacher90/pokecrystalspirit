@@ -125,10 +125,10 @@ GetPokemonName::
 	ld e, a
 	ld h, 0
 	ld l, a
-	add hl, hl
-	add hl, hl
-	add hl, de
-	add hl, hl
+	add hl, hl ; hl = hl * 4
+	add hl, hl ; hl = hl * 4
+	add hl, de ; hl = (hl*4) + de
+	add hl, hl ; hl = (5*hl) + (5*hl)
 	ld de, PokemonNames
 	add hl, de
 
@@ -185,13 +185,13 @@ GetTMHMName::
 
 	ld hl, .HMText
 	ld bc, .HMTextEnd - .HMText
-	jr .copy
+	jr .asm_34a1
 
 .TM:
 	ld hl, .TMText
 	ld bc, .TMTextEnd - .TMText
 
-.copy
+.asm_34a1
 	ld de, wStringBuffer1
 	call CopyBytes
 
@@ -205,20 +205,20 @@ GetTMHMName::
 ; HM numbers start from 51, not 1
 	pop af
 	ld a, c
-	jr c, .not_hm
+	jr c, .asm_34b9
 	sub NUM_TMS
-.not_hm
+.asm_34b9
 
 ; Divide and mod by 10 to get the top and bottom digits respectively
 	ld b, "0"
 .mod10
 	sub 10
-	jr c, .done_mod
+	jr c, .asm_34c2
 	inc b
 	jr .mod10
-
-.done_mod
+.asm_34c2
 	add 10
+
 	push af
 	ld a, b
 	ld [de], a

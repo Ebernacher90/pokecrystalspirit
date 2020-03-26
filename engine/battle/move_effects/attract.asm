@@ -17,7 +17,7 @@ BattleCommand_Attract:
 
 ; 'fell in love!'
 	ld hl, FellInLoveText
-	jp StdBattleTextbox
+	jp StdBattleTextBox
 
 .failed
 	jp FailMove

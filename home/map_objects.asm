@@ -80,7 +80,7 @@ GetPlayerStandingTile::
 CheckOnWater::
 	ld a, [wPlayerStandingTile]
 	call GetTileCollision
-	sub WATER_TILE
+	sub WATERTILE
 	ret z
 	and a
 	ret
@@ -202,7 +202,7 @@ CheckStandingOnEntrance::
 GetMapObject::
 ; Return the location of map object a in bc.
 	ld hl, wMapObjects
-	ld bc, MAPOBJECT_LENGTH
+	ld bc, OBJECT_LENGTH
 	call AddNTimes
 	ld b, h
 	ld c, l
@@ -358,7 +358,7 @@ CopyPlayerObjectTemplate::
 	ld [de], a
 	inc de
 	pop hl
-	ld bc, MAPOBJECT_LENGTH - 1
+	ld bc, OBJECT_LENGTH - 1
 	call CopyBytes
 	ret
 
@@ -370,7 +370,7 @@ Unreferenced_Function19b8:
 	push af
 	ld [hl], -1
 	inc hl
-	ld bc, MAPOBJECT_LENGTH - 1
+	ld bc, OBJECT_LENGTH - 1
 	xor a
 	call ByteFill
 	pop af
@@ -395,11 +395,11 @@ LoadMovementDataPointer::
 ; Load the movement data pointer for object a.
 	ld [wMovementObject], a
 	ldh a, [hROMBank]
-	ld [wMovementDataBank], a
+	ld [wMovementDataPointer], a
 	ld a, l
-	ld [wMovementDataAddress], a
+	ld [wMovementDataPointer + 1], a
 	ld a, h
-	ld [wMovementDataAddress + 1], a
+	ld [wMovementDataPointer + 2], a
 	ld a, [wMovementObject]
 	call CheckObjectVisibility
 	ret c
@@ -424,7 +424,7 @@ FindFirstEmptyObjectStruct::
 	push bc
 	push de
 	ld hl, wObjectStructs
-	ld de, OBJECT_LENGTH
+	ld de, OBJECT_STRUCT_LENGTH
 	ld c, NUM_OBJECT_STRUCTS
 .loop
 	ld a, [hl]
@@ -594,7 +594,7 @@ UpdateSprites::
 	ret
 
 GetObjectStruct::
-	ld bc, OBJECT_LENGTH
+	ld bc, OBJECT_STRUCT_LENGTH
 	ld hl, wObjectStructs
 	call AddNTimes
 	ld b, h

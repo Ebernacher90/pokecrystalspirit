@@ -79,7 +79,7 @@ Pokedex:
 InitPokedex:
 	call ClearBGPalettes
 	call ClearSprites
-	call ClearTilemap
+	call ClearTileMap
 	call Pokedex_LoadGFX
 
 	ld hl, wPokedexDataStart
@@ -168,7 +168,7 @@ Pokedex_GetLandmark:
 	ld c, a
 	call GetWorldMapLocation
 
-	cp LANDMARK_SPECIAL
+	cp SPECIAL_MAP
 	jr nz, .load
 
 	ld a, [wBackupMapGroup]
@@ -219,7 +219,7 @@ Pokedex_InitMainScreen:
 	ldh [hBGMapMode], a
 	call ClearSprites
 	xor a
-	hlcoord 0, 0, wAttrmap
+	hlcoord 0, 0, wAttrMap
 	ld bc, SCREEN_HEIGHT * SCREEN_WIDTH
 	call ByteFill
 	farcall DrawPokedexListWindow
@@ -464,12 +464,8 @@ DexEntryScreen_MenuActionJumptable:
 	ret
 
 .Cry:
-	call Pokedex_GetSelectedMon
-	ld a, [wTempSpecies]
-	call GetCryIndex
-	ld e, c
-	ld d, b
-	call PlayCry
+	ld a, [wCurPartySpecies]
+	call PlayMonCry
 	ret
 
 .Print:
@@ -718,7 +714,7 @@ Pokedex_InitSearchResultsScreen:
 	xor a
 	ldh [hBGMapMode], a
 	xor a
-	hlcoord 0, 0, wAttrmap
+	hlcoord 0, 0, wAttrMap
 	ld bc, SCREEN_WIDTH * SCREEN_HEIGHT
 	call ByteFill
 	call Pokedex_SetBGMapMode4

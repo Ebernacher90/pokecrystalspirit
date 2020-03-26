@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const ROUTE46_POKEFAN_M
 	const ROUTE46_YOUNGSTER
 	const ROUTE46_LASS
@@ -26,7 +26,7 @@ TrainerPicnickerErin1:
 	trainer PICNICKER, ERIN1, EVENT_BEAT_PICNICKER_ERIN, PicnickerErin1SeenText, PicnickerErin1BeatenText, 0, .Script
 
 .Script:
-	loadvar VAR_CALLERID, PHONE_PICNICKER_ERIN
+	writecode VAR_CALLERID, PHONE_PICNICKER_ERIN
 	endifjustbattled
 	opentext
 	checkflag ENGINE_ERIN
@@ -36,10 +36,10 @@ TrainerPicnickerErin1:
 	checkevent EVENT_ERIN_ASKED_FOR_PHONE_NUMBER
 	iftrue .AskedAlready
 	writetext PicnickerErinAfterBattleText
-	promptbutton
+	buttonsound
 	setevent EVENT_ERIN_ASKED_FOR_PHONE_NUMBER
 	scall Route46AskNumber1F
-	sjump .AskForNumber
+	jump .AskForNumber
 
 .AskedAlready:
 	scall Route46AskNumber2F
@@ -47,14 +47,14 @@ TrainerPicnickerErin1:
 	askforphonenumber PHONE_PICNICKER_ERIN
 	ifequal PHONE_CONTACTS_FULL, Route46PhoneFullF
 	ifequal PHONE_CONTACT_REFUSED, Route46NumberDeclinedF
-	gettrainername STRING_BUFFER_3, PICNICKER, ERIN1
+	trainertotext PICNICKER, ERIN1, MEM_BUFFER_0
 	scall Route46RegisteredNumberF
-	sjump Route46NumberAcceptedF
+	jump Route46NumberAcceptedF
 
 .WantsBattle:
 	scall Route46RematchF
 	winlosstext PicnickerErin1BeatenText, 0
-	readmem wErinFightCount
+	copybytetovar wErinFightCount
 	ifequal 2, .Fight2
 	ifequal 1, .Fight1
 	ifequal 0, .LoadFight0
@@ -68,7 +68,7 @@ TrainerPicnickerErin1:
 	loadtrainer PICNICKER, ERIN1
 	startbattle
 	reloadmapafterbattle
-	loadmem wErinFightCount, 1
+	loadvar wErinFightCount, 1
 	clearflag ENGINE_ERIN
 	end
 
@@ -76,7 +76,7 @@ TrainerPicnickerErin1:
 	loadtrainer PICNICKER, ERIN2
 	startbattle
 	reloadmapafterbattle
-	loadmem wErinFightCount, 2
+	loadvar wErinFightCount, 2
 	clearflag ENGINE_ERIN
 	end
 
@@ -93,7 +93,7 @@ TrainerPicnickerErin1:
 	verbosegiveitem CALCIUM
 	iffalse ErinNoRoomForCalcium
 	setevent EVENT_GOT_CALCIUM_FROM_ERIN
-	sjump Route46NumberAcceptedF
+	jump Route46NumberAcceptedF
 
 .GotCalciumAlready:
 	end
@@ -106,7 +106,7 @@ TrainerPicnickerErin1:
 	iffalse ErinNoRoomForCalcium
 	clearevent EVENT_ERIN_CALCIUM
 	setevent EVENT_GOT_CALCIUM_FROM_ERIN
-	sjump Route46NumberAcceptedF
+	jump Route46NumberAcceptedF
 
 Route46AskNumber1F:
 	jumpstd asknumber1f

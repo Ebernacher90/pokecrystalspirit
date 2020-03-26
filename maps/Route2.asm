@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const ROUTE2_BUG_CATCHER1
 	const ROUTE2_BUG_CATCHER2
 	const ROUTE2_BUG_CATCHER3

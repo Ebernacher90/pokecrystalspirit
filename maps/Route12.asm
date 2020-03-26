@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const ROUTE12_FISHER1
 	const ROUTE12_FISHER2
 	const ROUTE12_FISHER3

@@ -1,6 +1,6 @@
 	db CORSOLA ; 222
 
-	db  55,  55,  85,  35,  65,  85
+	db  65,  55,  95,  35,  65,  95
 	;   hp  atk  def  spd  sat  sdf
 
 	db WATER, ROCK ; type
@@ -12,7 +12,7 @@
 	db 20 ; step cycles to hatch
 	db 5 ; unknown 2
 	INCBIN "gfx/pokemon/corsola/front.dimensions"
-	dw NULL, NULL ; unused (beta front/back pics)
+	db 0, 0, 0, 0 ; padding
 	db GROWTH_FAST ; growth rate
 	dn EGG_WATER_1, EGG_WATER_3 ; egg groups
 

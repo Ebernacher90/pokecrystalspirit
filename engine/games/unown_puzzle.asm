@@ -9,13 +9,13 @@ _UnownPuzzle:
 	ld a, $1
 	ldh [hInMenu], a
 	call ClearBGPalettes
-	call ClearTilemap
+	call ClearTileMap
 	call ClearSprites
 	xor a
 	ldh [hBGMapMode], a
 	call DisableLCD
-	ld hl, wUnownPuzzle ; includes wPuzzlePieces
-	ld bc, wUnownPuzzleEnd - wUnownPuzzle
+	ld hl, wc608 ; includes wPuzzlePieces
+	ld bc, wc7e8 - wc608
 	xor a
 	call ByteFill
 	ld hl, UnownPuzzleCursorGFX
@@ -83,7 +83,7 @@ _UnownPuzzle:
 	pop af
 	ldh [hInMenu], a
 	call ClearBGPalettes
-	call ClearTilemap
+	call ClearTileMap
 	call ClearSprites
 	ld a, LCDC_DEFAULT
 	ldh [rLCDC], a

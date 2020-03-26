@@ -53,11 +53,13 @@ CheckBadge:
 	call CheckEngineFlag
 	ret nc
 	ld hl, .BadgeRequiredText
-	call MenuTextboxBackup ; push text to queue
+	call MenuTextBoxBackup ; push text to queue
 	scf
 	ret
 
 .BadgeRequiredText:
+	; Sorry! A new BADGE
+	; is required.
 	text_far _BadgeRequiredText
 	text_end
 
@@ -106,12 +108,13 @@ CheckPartyMove:
 	ret
 
 FieldMoveFailed:
-	ld hl, .CantUseItemText
-	call MenuTextboxBackup
+	ld hl, .CantUseHere
+	call MenuTextBoxBackup
 	ret
 
-.CantUseItemText:
-	text_far _CantUseItemText
+.CantUseHere:
+	; Can't use that here.
+	text_far UnknownText_0x1c05c8
 	text_end
 
 CutFunction:
@@ -153,17 +156,19 @@ CutFunction:
 	ret
 
 .FailCut:
-	ld hl, CutNothingText
-	call MenuTextboxBackup
+	ld hl, Text_NothingToCut
+	call MenuTextBoxBackup
 	ld a, $80
 	ret
 
-UseCutText:
-	text_far _UseCutText
+Text_UsedCut:
+	; used CUT!
+	text_far UnknownText_0x1c05dd
 	text_end
 
-CutNothingText:
-	text_far _CutNothingText
+Text_NothingToCut:
+	; There's nothing to CUT here.
+	text_far UnknownText_0x1c05ec
 	text_end
 
 CheckMapForSomethingToCut:
@@ -207,7 +212,7 @@ Script_CutFromMenu:
 
 Script_Cut:
 	callasm GetPartyNick
-	writetext UseCutText
+	writetext Text_UsedCut
 	reloadmappart
 	callasm CutDownTreeOrGrass
 	closetext
@@ -273,7 +278,7 @@ CheckOverworldTileArrays:
 
 INCLUDE "data/events/field_move_blocks.asm"
 
-FlashFunction:
+OWFlash:
 	call .CheckUseFlash
 	and $7f
 	ld [wFieldMoveSucceeded], a
@@ -312,13 +317,13 @@ UseFlash:
 Script_UseFlash:
 	reloadmappart
 	special UpdateTimePals
-	writetext UseFlashTextScript
+	writetext UnknownText_0xc8f3
 	callasm BlindingFlash
 	closetext
 	end
 
-UseFlashTextScript:
-	text_far _BlindingFlashText
+UnknownText_0xc8f3:
+	text_far UnknownText_0x1c0609
 	text_asm
 	call WaitSFX
 	ld de, SFX_FLASH
@@ -360,7 +365,7 @@ SurfFunction:
 	jr z, .alreadyfail
 	call GetFacingTileCoord
 	call GetTileCollision
-	cp WATER_TILE
+	cp WATERTILE
 	jr nz, .cannotsurf
 	call CheckDirection
 	jr c, .cannotsurf
@@ -389,13 +394,13 @@ SurfFunction:
 
 .FailSurf:
 	ld hl, CantSurfText
-	call MenuTextboxBackup
+	call MenuTextBoxBackup
 	ld a, $80
 	ret
 
 .AlreadySurfing:
 	ld hl, AlreadySurfingText
-	call MenuTextboxBackup
+	call MenuTextBoxBackup
 	ld a, $80
 	ret
 
@@ -409,8 +414,8 @@ UsedSurfScript:
 
 	callasm .empty_fn ; empty function
 
-	readmem wBuffer2
-	writevar VAR_MOVEMENT
+	copybytetovar wBuffer2
+	writevarcode VAR_MOVEMENT
 
 	special ReplaceKrisSprite
 	special PlayMapMusic
@@ -495,9 +500,9 @@ TrySurfOW::
 	jr z, .quit
 
 ; Must be facing water.
-	ld a, [wFacingTileID]
+	ld a, [wEngineBuffer1]
 	call GetTileCollision
-	cp WATER_TILE
+	cp WATERTILE
 	jr nz, .quit
 
 ; Check tile permissions.
@@ -540,6 +545,7 @@ AskSurfScript:
 	end
 
 AskSurfText:
+	; The water is calm. Want to SURF?
 	text_far _AskSurfText
 	text_end
 
@@ -617,8 +623,8 @@ FlyFunction:
 	callasm FlyFromAnim
 	farscall Script_AbortBugContest
 	special WarpToSpawnPoint
-	callasm SkipUpdateMapSprites
-	loadvar VAR_MOVEMENT, PLAYER_NORMAL
+	callasm DelayLoadingNewSprites
+	writecode VAR_MOVEMENT, PLAYER_NORMAL
 	newloadmap MAPSETUP_FLY
 	callasm FlyToAnim
 	special WaitSFX
@@ -677,7 +683,7 @@ Script_WaterfallFromMenu:
 
 Script_UsedWaterfall:
 	callasm GetPartyNick
-	writetext .UseWaterfallText
+	writetext .Text_UsedWaterfall
 	waitbutton
 	closetext
 	playsound SFX_BUBBLEBEAM
@@ -702,8 +708,9 @@ Script_UsedWaterfall:
 	turn_waterfall UP
 	step_end
 
-.UseWaterfallText:
-	text_far _UseWaterfallText
+.Text_UsedWaterfall:
+	; used WATERFALL!
+	text_far UnknownText_0x1c068e
 	text_end
 
 TryWaterfallOW::
@@ -729,22 +736,24 @@ TryWaterfallOW::
 	ret
 
 Script_CantDoWaterfall:
-	jumptext .HugeWaterfallText
+	jumptext .Text_CantDoWaterfall
 
-.HugeWaterfallText:
-	text_far _HugeWaterfallText
+.Text_CantDoWaterfall:
+	; Wow, it's a huge waterfall.
+	text_far UnknownText_0x1c06a3
 	text_end
 
 Script_AskWaterfall:
 	opentext
-	writetext .AskWaterfallText
+	writetext .AskUseWaterfall
 	yesorno
 	iftrue Script_UsedWaterfall
 	closetext
 	end
 
-.AskWaterfallText:
-	text_far _AskWaterfallText
+.AskUseWaterfall:
+	; Do you want to use WATERFALL?
+	text_far UnknownText_0x1c06bf
 	text_end
 
 EscapeRopeFunction:
@@ -820,8 +829,8 @@ dig_incave
 	ld a, [wBuffer2]
 	cp $2
 	jr nz, .failescaperope
-	ld hl, .CantUseDigText
-	call MenuTextbox
+	ld hl, .Text_CantUseHere
+	call MenuTextBox
 	call WaitPressAorB_BlinkCursor
 	call CloseWindow
 
@@ -829,28 +838,31 @@ dig_incave
 	ld a, $80
 	ret
 
-.UseDigText:
-	text_far _UseDigText
+.Text_UsedDig:
+	; used DIG!
+	text_far UnknownText_0x1c06de
 	text_end
 
-.UseEscapeRopeText:
-	text_far _UseEscapeRopeText
+.Text_UsedEscapeRope:
+	; used an ESCAPE ROPE.
+	text_far UnknownText_0x1c06ed
 	text_end
 
-.CantUseDigText:
-	text_far _CantUseDigText
+.Text_CantUseHere:
+	; Can't use that here.
+	text_far UnknownText_0x1c0705
 	text_end
 
 .UsedEscapeRopeScript:
 	reloadmappart
 	special UpdateTimePals
-	writetext .UseEscapeRopeText
-	sjump .UsedDigOrEscapeRopeScript
+	writetext .Text_UsedEscapeRope
+	jump .UsedDigOrEscapeRopeScript
 
 .UsedDigScript:
 	reloadmappart
 	special UpdateTimePals
-	writetext .UseDigText
+	writetext .Text_UsedDig
 
 .UsedDigOrEscapeRopeScript:
 	waitbutton
@@ -859,7 +871,7 @@ dig_incave
 	applymovement PLAYER, .DigOut
 	farscall Script_AbortBugContest
 	special WarpToSpawnPoint
-	loadvar VAR_MOVEMENT, PLAYER_NORMAL
+	writecode VAR_MOVEMENT, PLAYER_NORMAL
 	newloadmap MAPSETUP_DOOR
 	playsound SFX_WARP_FROM
 	applymovement PLAYER, .DigReturn
@@ -920,23 +932,25 @@ TeleportFunction:
 	ret
 
 .FailTeleport:
-	ld hl, .CantUseTeleportText
-	call MenuTextboxBackup
+	ld hl, .Text_CantUseHere
+	call MenuTextBoxBackup
 	ld a, $80
 	ret
 
-.TeleportReturnText:
-	text_far _TeleportReturnText
+.Text_ReturnToLastMonCenter:
+	; Return to the last #MON CENTER.
+	text_far UnknownText_0x1c071a
 	text_end
 
-.CantUseTeleportText:
-	text_far _CantUseTeleportText
+.Text_CantUseHere:
+	; Can't use that here.
+	text_far UnknownText_0x1c073b
 	text_end
 
 .TeleportScript:
 	reloadmappart
 	special UpdateTimePals
-	writetext .TeleportReturnText
+	writetext .Text_ReturnToLastMonCenter
 	pause 60
 	reloadmappart
 	closetext
@@ -944,7 +958,7 @@ TeleportFunction:
 	applymovement PLAYER, .TeleportFrom
 	farscall Script_AbortBugContest
 	special WarpToSpawnPoint
-	loadvar VAR_MOVEMENT, PLAYER_NORMAL
+	writecode VAR_MOVEMENT, PLAYER_NORMAL
 	newloadmap MAPSETUP_TELEPORT
 	playsound SFX_WARP_FROM
 	applymovement PLAYER, .TeleportTo
@@ -972,13 +986,13 @@ StrengthFunction:
 	jr .UseStrength
 
 .Unreferenced_AlreadyUsing:
-	ld hl, .AlreadyUsingStrengthText
-	call MenuTextboxBackup
+	ld hl, .JumpText
+	call MenuTextBoxBackup
 	ld a, $80
 	ret
 
-.AlreadyUsingStrengthText:
-	text_far _AlreadyUsingStrengthText
+.JumpText:
+	text_far UnknownText_0x1c0751
 	text_end
 
 .Failed:
@@ -1010,52 +1024,55 @@ Script_StrengthFromMenu:
 
 Script_UsedStrength:
 	callasm SetStrengthFlag
-	writetext .UseStrengthText
-	readmem wBuffer6
+	writetext .UsedStrength
+	copybytetovar wBuffer6
 	cry 0
 	pause 3
-	writetext .MoveBoulderText
+	writetext .StrengthAllowedItToMoveBoulders
 	closetext
 	end
 
-.UseStrengthText:
-	text_far _UseStrengthText
+.UsedStrength:
+	text_far UnknownText_0x1c0774
 	text_end
 
-.MoveBoulderText:
-	text_far _MoveBoulderText
+.StrengthAllowedItToMoveBoulders:
+	text_far UnknownText_0x1c0788
 	text_end
 
 AskStrengthScript:
 	callasm TryStrengthOW
 	iffalse .AskStrength
 	ifequal $1, .DontMeetRequirements
-	sjump .AlreadyUsedStrength
+	jump .AlreadyUsedStrength
 
 .DontMeetRequirements:
-	jumptext BouldersMayMoveText
+	jumptext UnknownText_0xcd73
 
 .AlreadyUsedStrength:
-	jumptext BouldersMoveText
+	jumptext UnknownText_0xcd6e
 
 .AskStrength:
 	opentext
-	writetext AskStrengthText
+	writetext UnknownText_0xcd69
 	yesorno
 	iftrue Script_UsedStrength
 	closetext
 	end
 
-AskStrengthText:
-	text_far _AskStrengthText
+UnknownText_0xcd69:
+	; A #MON may be able to move this. Want to use STRENGTH?
+	text_far UnknownText_0x1c07a0
 	text_end
 
-BouldersMoveText:
-	text_far _BouldersMoveText
+UnknownText_0xcd6e:
+	; Boulders may now be moved!
+	text_far UnknownText_0x1c07d8
 	text_end
 
-BouldersMayMoveText:
-	text_far _BouldersMayMoveText
+UnknownText_0xcd73:
+	; A #MON may be able to move this.
+	text_far UnknownText_0x1c07f4
 	text_end
 
 TryStrengthOW:
@@ -1129,8 +1146,9 @@ Jumptable_cdae:
 	ld a, $80
 	ret
 
-UseWhirlpoolText:
-	text_far _UseWhirlpoolText
+Text_UsedWhirlpool:
+	; used WHIRLPOOL!
+	text_far UnknownText_0x1c0816
 	text_end
 
 TryWhirlpoolMenu:
@@ -1168,7 +1186,7 @@ Script_WhirlpoolFromMenu:
 
 Script_UsedWhirlpool:
 	callasm GetPartyNick
-	writetext UseWhirlpoolText
+	writetext Text_UsedWhirlpool
 	reloadmappart
 	callasm DisappearWhirlpool
 	closetext
@@ -1214,22 +1232,22 @@ TryWhirlpoolOW::
 	ret
 
 Script_MightyWhirlpool:
-	jumptext .MayPassWhirlpoolText
+	jumptext .MightyWhirlpoolText
 
-.MayPassWhirlpoolText:
-	text_far _MayPassWhirlpoolText
+.MightyWhirlpoolText:
+	text_far UnknownText_0x1c082b
 	text_end
 
 Script_AskWhirlpoolOW:
 	opentext
-	writetext AskWhirlpoolText
+	writetext UnknownText_0xce78
 	yesorno
 	iftrue Script_UsedWhirlpool
 	closetext
 	end
 
-AskWhirlpoolText:
-	text_far _AskWhirlpoolText
+UnknownText_0xce78:
+	text_far UnknownText_0x1c0864
 	text_end
 
 HeadbuttFunction:
@@ -1253,12 +1271,14 @@ TryHeadbuttFromMenu:
 	ld a, $80
 	ret
 
-UseHeadbuttText:
-	text_far _UseHeadbuttText
+UnknownText_0xce9d:
+	; did a HEADBUTT!
+	text_far UnknownText_0x1c0897
 	text_end
 
-HeadbuttNothingText:
-	text_far _HeadbuttNothingText
+UnknownText_0xcea2:
+	; Nope. Nothing…
+	text_far UnknownText_0x1c08ac
 	text_end
 
 HeadbuttFromMenuScript:
@@ -1267,7 +1287,7 @@ HeadbuttFromMenuScript:
 
 HeadbuttScript:
 	callasm GetPartyNick
-	writetext UseHeadbuttText
+	writetext UnknownText_0xce9d
 
 	reloadmappart
 	callasm ShakeHeadbuttTree
@@ -1281,7 +1301,7 @@ HeadbuttScript:
 	end
 
 .no_battle
-	writetext HeadbuttNothingText
+	writetext UnknownText_0xcea2
 	waitbutton
 	closetext
 	end
@@ -1303,14 +1323,15 @@ TryHeadbuttOW::
 
 AskHeadbuttScript:
 	opentext
-	writetext AskHeadbuttText
+	writetext UnknownText_0xcee6
 	yesorno
 	iftrue HeadbuttScript
 	closetext
 	end
 
-AskHeadbuttText:
-	text_far _AskHeadbuttText
+UnknownText_0xcee6:
+	; A #MON could be in this tree. Want to HEADBUTT it?
+	text_far UnknownText_0x1c08bc
 	text_end
 
 RockSmashFunction:
@@ -1364,16 +1385,16 @@ RockSmashFromMenuScript:
 
 RockSmashScript:
 	callasm GetPartyNick
-	writetext UseRockSmashText
+	writetext UnknownText_0xcf58
 	closetext
 	special WaitSFX
 	playsound SFX_STRENGTH
 	earthquake 84
-	applymovementlasttalked MovementData_0xcf55
+	applymovement2 MovementData_0xcf55
 	disappear -2
 
 	callasm RockMonEncounter
-	readmem wTempWildMonSpecies
+	copybytetovar wTempWildMonSpecies
 	iffalse .done
 	randomwildmon
 	startbattle
@@ -1385,8 +1406,8 @@ MovementData_0xcf55:
 	rock_smash 10
 	step_end
 
-UseRockSmashText:
-	text_far _UseRockSmashText
+UnknownText_0xcf58:
+	text_far UnknownText_0x1c08f0
 	text_end
 
 AskRockSmashScript:
@@ -1394,20 +1415,22 @@ AskRockSmashScript:
 	ifequal 1, .no
 
 	opentext
-	writetext AskRockSmashText
+	writetext UnknownText_0xcf77
 	yesorno
 	iftrue RockSmashScript
 	closetext
 	end
 .no
-	jumptext MaySmashText
+	jumptext UnknownText_0xcf72
 
-MaySmashText:
-	text_far _MaySmashText
+UnknownText_0xcf72:
+	; Maybe a #MON can break this.
+	text_far UnknownText_0x1c0906
 	text_end
 
-AskRockSmashText:
-	text_far _AskRockSmashText
+UnknownText_0xcf77:
+	; This rock looks breakable. Want to use ROCK SMASH?
+	text_far UnknownText_0x1c0924
 	text_end
 
 HasRockSmash:
@@ -1453,7 +1476,7 @@ FishFunction:
 	jr z, .fail
 	call GetFacingTileCoord
 	call GetTileCollision
-	cp WATER_TILE
+	cp WATERTILE
 	jr z, .facingwater
 .fail
 	ld a, $3
@@ -1516,12 +1539,12 @@ FishFunction:
 
 Script_NotEvenANibble:
 	scall Script_FishCastRod
-	writetext RodNothingText
-	sjump Script_NotEvenANibble_FallThrough
+	writetext UnknownText_0xd0a9
+	jump Script_NotEvenANibble_FallThrough
 
 Script_NotEvenANibble2:
 	scall Script_FishCastRod
-	writetext RodNothingText
+	writetext UnknownText_0xd0a9
 
 Script_NotEvenANibble_FallThrough:
 	loademote EMOTE_SHADOW
@@ -1534,7 +1557,7 @@ Script_GotABite:
 	callasm Fishing_CheckFacingUp
 	iffalse .NotFacingUp
 	applymovement PLAYER, .Movement_FacingUp
-	sjump .FightTheHookedPokemon
+	jump .FightTheHookedPokemon
 
 .NotFacingUp:
 	applymovement PLAYER, .Movement_NotFacingUp
@@ -1542,7 +1565,7 @@ Script_GotABite:
 .FightTheHookedPokemon:
 	pause 40
 	applymovement PLAYER, .Movement_RestoreRod
-	writetext RodBiteText
+	writetext UnknownText_0xd0a4
 	callasm PutTheRodAway
 	closetext
 	randomwildmon
@@ -1586,7 +1609,7 @@ Fishing_CheckFacingUp:
 
 Script_FishCastRod:
 	reloadmappart
-	loadmem hBGMapMode, $0
+	loadvar hBGMapMode, $0
 	special UpdateTimePals
 	loademote EMOTE_ROD
 	callasm LoadFishingGFX
@@ -1608,16 +1631,19 @@ PutTheRodAway:
 	call ReplaceKrisSprite
 	ret
 
-RodBiteText:
-	text_far _RodBiteText
+UnknownText_0xd0a4:
+	; Oh! A bite!
+	text_far UnknownText_0x1c0958
 	text_end
 
-RodNothingText:
-	text_far _RodNothingText
+UnknownText_0xd0a9:
+	; Not even a nibble!
+	text_far UnknownText_0x1c0965
 	text_end
 
-UnusedNothingHereText: ; unused
-	text_far _UnusedNothingHereText
+UnknownText_0xd0ae: ; unused
+	; Looks like there's nothing here.
+	text_far UnknownText_0x1c0979
 	text_end
 
 BikeFunction:
@@ -1697,8 +1723,8 @@ BikeFunction:
 
 .ok
 	call GetPlayerStandingTile
-	and $f ; lo nybble only
-	jr nz, .nope ; not FLOOR_TILE
+	and WALLTILE | WATERTILE ; can't use our bike in a wall or on water
+	jr nz, .nope
 	xor a
 	ret
 
@@ -1709,15 +1735,15 @@ BikeFunction:
 Script_GetOnBike:
 	reloadmappart
 	special UpdateTimePals
-	loadvar VAR_MOVEMENT, PLAYER_BIKE
-	writetext GotOnBikeText
+	writecode VAR_MOVEMENT, PLAYER_BIKE
+	writetext GotOnTheBikeText
 	waitbutton
 	closetext
 	special ReplaceKrisSprite
 	end
 
 Script_GetOnBike_Register:
-	loadvar VAR_MOVEMENT, PLAYER_BIKE
+	writecode VAR_MOVEMENT, PLAYER_BIKE
 	closetext
 	special ReplaceKrisSprite
 	end
@@ -1729,8 +1755,8 @@ Script_GetOnBike_Register:
 Script_GetOffBike:
 	reloadmappart
 	special UpdateTimePals
-	loadvar VAR_MOVEMENT, PLAYER_NORMAL
-	writetext GotOffBikeText
+	writecode VAR_MOVEMENT, PLAYER_NORMAL
+	writetext GotOffTheBikeText
 	waitbutton
 
 FinishGettingOffBike:
@@ -1740,8 +1766,8 @@ FinishGettingOffBike:
 	end
 
 Script_GetOffBike_Register:
-	loadvar VAR_MOVEMENT, PLAYER_NORMAL
-	sjump FinishGettingOffBike
+	writecode VAR_MOVEMENT, PLAYER_NORMAL
+	jump FinishGettingOffBike
 
 Script_CantGetOffBike:
 	writetext .CantGetOffBikeText
@@ -1750,15 +1776,18 @@ Script_CantGetOffBike:
 	end
 
 .CantGetOffBikeText:
-	text_far _CantGetOffBikeText
+	; You can't get off here!
+	text_far UnknownText_0x1c099a
 	text_end
 
-GotOnBikeText:
-	text_far _GotOnBikeText
+GotOnTheBikeText:
+	; got on the @ .
+	text_far UnknownText_0x1c09b2
 	text_end
 
-GotOffBikeText:
-	text_far _GotOffBikeText
+GotOffTheBikeText:
+	; got off the @ .
+	text_far UnknownText_0x1c09c7
 	text_end
 
 TryCutOW::
@@ -1785,7 +1814,7 @@ TryCutOW::
 
 AskCutScript:
 	opentext
-	writetext AskCutText
+	writetext UnknownText_0xd1c8
 	yesorno
 	iffalse .script_d1b8
 	callasm .CheckMap
@@ -1803,13 +1832,13 @@ AskCutScript:
 	ld [wScriptVar], a
 	ret
 
-AskCutText:
-	text_far _AskCutText
+UnknownText_0xd1c8:
+	text_far UnknownText_0x1c09dd
 	text_end
 
 CantCutScript:
-	jumptext CanCutText
+	jumptext UnknownText_0xd1d0
 
-CanCutText:
-	text_far _CanCutText
+UnknownText_0xd1d0:
+	text_far UnknownText_0x1c0a05
 	text_end

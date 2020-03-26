@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const VERMILIONGYM_SURGE
 	const VERMILIONGYM_GENTLEMAN
 	const VERMILIONGYM_ROCKER
@@ -99,7 +99,7 @@ VermilionGymStatue:
 	iftrue .Beaten
 	jumpstd gymstatue1
 .Beaten:
-	gettrainername STRING_BUFFER_4, LT_SURGE, LT_SURGE1
+	trainertotext LT_SURGE, LT_SURGE1, MEM_BUFFER_1
 	jumpstd gymstatue2
 
 LtSurgeIntroText:

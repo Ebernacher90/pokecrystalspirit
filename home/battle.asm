@@ -1,38 +1,3 @@
-GetPartyParamLocation::
-; Get the location of parameter a from wCurPartyMon in hl
-	push bc
-	ld hl, wPartyMons
-	ld c, a
-	ld b, 0
-	add hl, bc
-	ld a, [wCurPartyMon]
-	call GetPartyLocation
-	pop bc
-	ret
-
-GetPartyLocation::
-; Add the length of a PartyMon struct to hl a times.
-	ld bc, PARTYMON_STRUCT_LENGTH
-	jp AddNTimes
-
-Unreferenced_GetDexNumber::
-; Probably used in gen 1 to convert index number to dex number
-; Not required in gen 2 because index number == dex number
-	push hl
-	ld a, b
-	dec a
-	ld b, 0
-	add hl, bc
-	ld hl, BaseData + BASE_DEX_NO
-	ld bc, BASE_DATA_SIZE
-	call AddNTimes
-	ld a, BANK(BaseData)
-	call GetFarHalfword
-	ld b, l
-	ld c, h
-	pop hl
-	ret
-
 UserPartyAttr::
 	push af
 	ldh a, [hBattleTurn]
@@ -56,7 +21,7 @@ OpponentPartyAttr::
 	jr OTPartyAttr
 
 BattlePartyAttr::
-; Get attribute a from the party struct of the active battle mon.
+; Get attribute a from the party struct of the active battle mon. 
 	push bc
 	ld c, a
 	ld b, 0
@@ -190,18 +155,18 @@ MobileTextBorder::
 	ld [hl], $5f ; bottom
 	ret
 
-BattleTextbox::
+BattleTextBox::
 ; Open a textbox and print text at hl.
 	push hl
-	call SpeechTextbox
+	call SpeechTextBox
 	call MobileTextBorder
 	call UpdateSprites
 	call ApplyTilemap
 	pop hl
-	call PrintTextboxText
+	call PrintTextBoxText
 	ret
 
-StdBattleTextbox::
+StdBattleTextBox::
 ; Open a textbox and print battle text at 20:hl.
 
 	ldh a, [hROMBank]
@@ -210,7 +175,7 @@ StdBattleTextbox::
 	ld a, BANK(BattleText)
 	rst Bankswitch
 
-	call BattleTextbox
+	call BattleTextBox
 
 	pop af
 	rst Bankswitch
@@ -258,23 +223,4 @@ GetBattleAnimByte::
 	pop hl
 
 	ld a, [wBattleAnimByte]
-	ret
-
-PushLYOverrides::
-	ldh a, [hLCDCPointer]
-	and a
-	ret z
-
-	ld a, LOW(wLYOverridesBackup)
-	ld [wRequested2bppSource], a
-	ld a, HIGH(wLYOverridesBackup)
-	ld [wRequested2bppSource + 1], a
-
-	ld a, LOW(wLYOverrides)
-	ld [wRequested2bppDest], a
-	ld a, HIGH(wLYOverrides)
-	ld [wRequested2bppDest + 1], a
-
-	ld a, (wLYOverridesEnd - wLYOverrides) / 16
-	ld [wRequested2bpp], a
 	ret

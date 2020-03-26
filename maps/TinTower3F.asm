@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const TINTOWER3F_POKE_BALL
 
 TinTower3F_MapScripts:

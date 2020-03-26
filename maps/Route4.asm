@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const ROUTE4_YOUNGSTER
 	const ROUTE4_LASS1
 	const ROUTE4_LASS2
@@ -121,8 +121,9 @@ MtMoonSquareSignText:
 Route4_MapEvents:
 	db 0, 0 ; filler
 
-	db 1 ; warp events
+	db 2 ; warp events
 	warp_event  2,  5, MOUNT_MOON, 2
+	warp_event 36,  3, CERULEAN_CAVE_1F, 1
 
 	db 0 ; coord events
 

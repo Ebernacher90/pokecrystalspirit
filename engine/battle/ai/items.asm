@@ -281,12 +281,20 @@ AI_Items:
 	dbw X_DEFEND,     .XDefend
 	dbw X_SPEED,      .XSpeed
 	dbw X_SPECIAL,    .XSpecial
+	dbw SWEET_HEART,  .SweetHeart
+	dbw LAVA_COOKIE,  .LavaCookie
 	db -1 ; end
 
 .FullHeal:
 	call .Status
 	jp c, .DontUse
 	call EnemyUsedFullHeal
+	jp .Use
+	
+.LavaCookie:
+	call .Status
+	jp c, .DontUse
+	call EnemyUsedLavaCookie
 	jp .Use
 
 .Status:
@@ -395,6 +403,13 @@ AI_Items:
 	jp c, .DontUse
 	ld b, 20
 	call EnemyUsedPotion
+	jp .Use
+
+.SweetHeart
+	call .HealItem
+	jp c, .DontUse
+	ld b, 20
+	call EnemyUsedSweetHeart
 	jp .Use
 
 .asm_382ae ; This appears to be unused
@@ -538,6 +553,12 @@ EnemyUsedFullHeal:
 	call AI_HealStatus
 	ld a, FULL_HEAL
 	jp PrintText_UsedItemOn_AND_AIUpdateHUD
+	
+EnemyUsedLavaCookie:
+	call AIUsedItemSound
+	call AI_HealStatus
+	ld a, LAVA_COOKIE
+	jp PrintText_UsedItemOn_AND_AIUpdateHUD
 
 EnemyUsedMaxPotion:
 	ld a, MAX_POTION
@@ -576,6 +597,11 @@ FullRestoreContinue:
 
 EnemyUsedPotion:
 	ld a, POTION
+	ld b, 20
+	jr EnemyPotionContinue
+	
+EnemyUsedSweetHeart:
+	ld a, SWEET_HEART
 	ld b, 20
 	jr EnemyPotionContinue
 
@@ -687,7 +713,7 @@ AI_Switch:
 	pop af
 
 	jr c, .skiptext
-	ld hl, EnemyWithdrewText
+	ld hl, TextJump_EnemyWithdrew
 	call PrintText
 
 .skiptext
@@ -707,8 +733,8 @@ AI_Switch:
 	scf
 	ret
 
-EnemyWithdrewText:
-	text_far _EnemyWithdrewText
+TextJump_EnemyWithdrew:
+	text_far Text_EnemyWithdrew
 	text_end
 
 Function384d5: ; This appears to be unused
@@ -725,14 +751,10 @@ AI_HealStatus:
 	xor a
 	ld [hl], a
 	ld [wEnemyMonStatus], a
-	; Bug: this should reset SUBSTATUS_NIGHTMARE
-	; Uncomment the 2 lines below to fix
+	; Bug: this should reset SUBSTATUS_NIGHTMARE too
+	; Uncomment the lines below to fix
 	; ld hl, wEnemySubStatus1
 	; res SUBSTATUS_NIGHTMARE, [hl]
-	; Bug: this should reset SUBSTATUS_CONFUSED
-	; Uncomment the 2 lines below to fix
-	; ld hl, wEnemySubStatus3
-	; res SUBSTATUS_CONFUSED, [hl]
 	ld hl, wEnemySubStatus5
 	res SUBSTATUS_TOXIC, [hl]
 	ret
@@ -828,9 +850,9 @@ PrintText_UsedItemOn:
 	ld de, wMonOrItemNameBuffer
 	ld bc, ITEM_NAME_LENGTH
 	call CopyBytes
-	ld hl, EnemyUsedOnText
+	ld hl, TextJump_EnemyUsedOn
 	jp PrintText
 
-EnemyUsedOnText:
-	text_far _EnemyUsedOnText
+TextJump_EnemyUsedOn:
+	text_far Text_EnemyUsedOn
 	text_end

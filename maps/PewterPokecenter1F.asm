@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const PEWTERPOKECENTER1F_NURSE
 	const PEWTERPOKECENTER1F_TEACHER
 	const PEWTERPOKECENTER1F_JIGGLYPUFF

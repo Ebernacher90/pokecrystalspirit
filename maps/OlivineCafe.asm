@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const OLIVINECAFE_SAILOR1
 	const OLIVINECAFE_FISHING_GURU
 	const OLIVINECAFE_SAILOR2
@@ -14,7 +14,7 @@ OlivineCafeStrengthSailorScript:
 	checkevent EVENT_GOT_HM04_STRENGTH
 	iftrue .GotStrength
 	writetext OlivineCafeStrengthSailorText
-	promptbutton
+	buttonsound
 	verbosegiveitem HM_STRENGTH
 	setevent EVENT_GOT_HM04_STRENGTH
 .GotStrength:

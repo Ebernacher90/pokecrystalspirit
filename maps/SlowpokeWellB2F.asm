@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const SLOWPOKEWELLB2F_GYM_GUY
 	const SLOWPOKEWELLB2F_POKE_BALL
 
@@ -13,7 +13,7 @@ SlowpokeWellB2FGymGuyScript:
 	checkevent EVENT_GOT_KINGS_ROCK_IN_SLOWPOKE_WELL
 	iftrue .GotKingsRock
 	writetext SlowpokeWellB2FGymGuyText
-	promptbutton
+	buttonsound
 	verbosegiveitem KINGS_ROCK
 	iffalse .NoRoom
 	setevent EVENT_GOT_KINGS_ROCK_IN_SLOWPOKE_WELL

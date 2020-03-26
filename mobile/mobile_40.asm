@@ -1,3 +1,5 @@
+SECTION "mobile_40", ROMX
+
 Function100000:
 ; d: 1 or 2
 ; e: bank
@@ -57,8 +59,8 @@ SetRAMStateForMobile:
 	ld bc, $65
 	call ByteFill
 	xor a
-	ld hl, wMobileWRAM
-	ld bc, wMobileWRAMEnd - wMobileWRAM
+	ld hl, wc300
+	ld bc, $100
 	call ByteFill
 	ldh a, [rIE]
 	ld [wBGMapBuffer], a
@@ -77,7 +79,7 @@ EnableMobile:
 	call DoubleSpeed
 	xor a
 	ldh [rIF], a
-	ld a, IE_DEFAULT
+	ld a, 1 << VBLANK | 1 << LCD_STAT | 1 << TIMER | 1 << SERIAL
 	ldh [rIE], a
 	xor a
 	ldh [hMapAnims], a
@@ -160,7 +162,7 @@ Function1000fa:
 	xor a
 	ldh [rIF], a
 	ldh a, [rIE]
-	and $1f ^ (1 << SERIAL | 1 << TIMER)
+	and $13
 	ldh [rIE], a
 	xor a
 	ldh [hMobileReceive], a
@@ -195,7 +197,7 @@ Function100144:
 	ret z
 	res 2, [hl]
 	res 6, [hl]
-	farcall HDMATransferTilemapToWRAMBank3
+	farcall HDMATransferTileMapToWRAMBank3
 	ret
 
 Function100163:
@@ -270,11 +272,11 @@ Function10016f:
 	ld de, 0
 
 .asm_1001d7
-	ld [wMobileErrorCodeBuffer], a
+	ld [wc300], a
 	ld a, d
-	ld [wMobileErrorCodeBuffer + 2], a
+	ld [wc302], a
 	ld a, e
-	ld [wMobileErrorCodeBuffer + 1], a
+	ld [wc301], a
 	call Function10020b
 	ret
 
@@ -293,11 +295,11 @@ Function10016f:
 
 .asm_1001f5
 	ld a, [wcd2c]
-	ld [wMobileErrorCodeBuffer], a
+	ld [wc300], a
 	ld a, [wcd2d]
-	ld [wMobileErrorCodeBuffer + 2], a
+	ld [wc302], a
 	ld a, [wcd2d]
-	ld [wMobileErrorCodeBuffer + 1], a
+	ld [wc301], a
 	call Function10020b
 	ret
 
@@ -430,7 +432,7 @@ Function100320:
 	ret
 
 Function100327:
-	farcall HDMATransferTilemapToWRAMBank3
+	farcall HDMATransferTileMapToWRAMBank3
 	ret
 
 Function10032e:
@@ -1089,9 +1091,9 @@ Function1006dc:
 	ld [de], a
 	ret
 
-MobileBattleResetTimer:
-	ld a, BANK(sMobileBattleTimer)
-	ld hl, sMobileBattleTimer
+Function1006fd:
+	ld a, $04
+	ld hl, $a800
 	call GetSRAMBank
 	xor a
 	ld [hli], a
@@ -1100,13 +1102,13 @@ MobileBattleResetTimer:
 	call CloseSRAM
 	ret
 
-MobileBattleFixTimer:
-	ld a, BANK(sMobileBattleTimer)
-	ld hl, sMobileBattleTimer
+Function10070d:
+	ld a, $04
+	ld hl, $a800
 	call GetSRAMBank
-	xor a ; MOBILE_BATTLE_ALLOWED_SECONDS
+	xor a
 	ld [hli], a
-	ld a, MOBILE_BATTLE_ALLOWED_MINUTES
+	ld a, $0a
 	ld [hli], a
 	xor a
 	ld [hli], a
@@ -1123,8 +1125,8 @@ Function100720:
 	ld [wcd73], a
 	ldh a, [hSeconds]
 	ld [wcd74], a
-	ld a, BANK(sMobileBattleTimer)
-	ld hl, sMobileBattleTimer
+	ld a, $04
+	ld hl, $a800
 	call GetSRAMBank
 	ld a, [hli]
 	ld [wcd6c], a
@@ -1272,7 +1274,7 @@ Function100826:
 .asm_100830
 	ld [hld], a
 	ccf
-	ld a, [wcd70]
+	ld a, [wBGMapBufferPtrs]
 	adc [hl]
 	sub $3c
 	jr nc, .asm_10083c
@@ -1333,11 +1335,9 @@ String_10088e:
 String_10089f:
 	db "　むせいげん@"
 
-MobileBattleGetRemainingTime:
-; Calculates the difference between 10 minutes and sMobileBattleTimer
-; Returns minutes in c and seconds in b
-	ld a, BANK(sMobileBattleTimer)
-	ld hl, sMobileBattleTimer
+Function1008a6:
+	ld a, $04
+	ld hl, $a800
 	call GetSRAMBank
 	ld a, [hli]
 	ld [wStringBuffer2], a
@@ -1348,25 +1348,26 @@ MobileBattleGetRemainingTime:
 	call CloseSRAM
 	ld a, [wStringBuffer2 + 2]
 	ld b, a
-	ld a, MOBILE_BATTLE_ALLOWED_SECONDS
+	ld a, 0
 	sub b
-	jr nc, .no_carry_seconds
-	add 60
-.no_carry_seconds
+	jr nc, .asm_1008c8
+	add $3c
+
+.asm_1008c8
 	ld b, a
 	ld a, [wStringBuffer2 + 1]
 	ld c, a
-	ld a, MOBILE_BATTLE_ALLOWED_MINUTES
+	ld a, $0a
 	sbc c
 	ld c, a
-	jr c, .fail
+	jr c, .asm_1008da
 	ld a, [wStringBuffer2]
 	and a
-	jr nz, .fail
+	jr nz, .asm_1008da
 	ret
 
-.fail
-	call MobileBattleFixTimer
+.asm_1008da
+	call Function10070d
 	ld c, 0
 	ret
 
@@ -1395,7 +1396,7 @@ Function100902:
 	hlcoord 3, 10
 	ld b, $01
 	ld c, $0b
-	call Textbox
+	call TextBox
 	ld a, [wcd6d]
 	ld c, a
 	ld a, $0a
@@ -1436,7 +1437,7 @@ Function100970:
 	hlcoord 0, 0
 	ld de, w3_dc00
 	call Function1009a5
-	hlcoord 0, 0, wAttrmap
+	hlcoord 0, 0, wAttrMap
 	ld de, w3_dd68
 	call Function1009a5
 	call Function1009d2
@@ -1450,7 +1451,7 @@ Function100989:
 	call Function1009ae
 	farcall ReloadMapPart
 	ld hl, w3_dd68
-	decoord 0, 0, wAttrmap
+	decoord 0, 0, wAttrMap
 	call Function1009a5
 	ret
 
@@ -1467,7 +1468,7 @@ Function1009ae:
 	ldh [rSVBK], a
 
 	ld hl, w3_d800
-	decoord 0, 0, wAttrmap
+	decoord 0, 0, wAttrMap
 	ld c, SCREEN_WIDTH
 	ld b, SCREEN_HEIGHT
 .loop_row
@@ -1681,13 +1682,16 @@ Function100ae7:
 	ld [wcd2b], a
 	ret
 
-pushc
-setcharmap ascii
+
+SECTION "tetsuji", ROMX
+
+	charmap " ", $20 ; revert to ascii
 
 Unknown_100b0a:
 	db "tetsuji", 0
 
-popc
+
+SECTION "bank40_2", ROMX
 
 Function100b12:
 	call Function100dd8
@@ -1715,7 +1719,7 @@ Function100b45:
 	call Mobile_SetOverworldDelay
 	farcall MobileMenuJoypad
 	push bc
-	farcall HDMATransferTilemapToWRAMBank3
+	farcall HDMATransferTileMapToWRAMBank3
 	call Function100e2d
 	pop bc
 	jr c, .asm_100b6b
@@ -1773,7 +1777,7 @@ MobileMoveSelectionScreen:
 	call Mobile_SetOverworldDelay
 	farcall MobileMenuJoypad
 	push bc
-	farcall HDMATransferTilemapToWRAMBank3
+	farcall HDMATransferTileMapToWRAMBank3
 	call Function100e2d
 	pop bc
 	jr c, .b_button
@@ -1856,15 +1860,15 @@ MobileMoveSelectionScreen:
 	ld hl, BattleText_TheresNoPPLeftForThisMove
 
 .print_text
-	call StdBattleTextbox
-	call SafeLoadTempTilemapToTilemap
+	call StdBattleTextBox
+	call Call_LoadTempTileMapToTileMap
 	jp .GetMoveSelection
 
 Function100c74:
 	hlcoord 0, 8
 	ld b, 8
 	ld c, 8
-	call Textbox
+	call TextBox
 	ld hl, wBattleMonMoves
 	ld de, wListMoves_MoveIndicesBuffer
 	ld bc, NUM_MOVES
@@ -1904,7 +1908,7 @@ Mobile_PartyMenuSelect:
 	farcall MobileMenuJoypad
 	push bc
 	farcall PlaySpriteAnimations
-	farcall HDMATransferTilemapToWRAMBank3
+	farcall HDMATransferTileMapToWRAMBank3
 	call MobileComms_CheckInactivityTimer
 	pop bc
 	jr c, .done
@@ -1957,7 +1961,7 @@ MobileBattleMonMenu:
 	farcall MobileMenuJoypad
 	push bc
 	farcall PlaySpriteAnimations
-	farcall HDMATransferTilemapToWRAMBank3
+	farcall HDMATransferTileMapToWRAMBank3
 	call MobileComms_CheckInactivityTimer
 	pop bc
 	jr c, .asm_100d54
@@ -2653,9 +2657,9 @@ LoadSelectedPartiesForColosseum:
 	ret
 
 Function1011f1:
-	ld a, BANK(s4_a60c)
+	ld a, $04
 	call GetSRAMBank
-	ld a, [s4_a60c]
+	ld a, [$a60c]
 	ld [wdc41], a
 	call CloseSRAM
 	ld hl, wdc41
@@ -2918,7 +2922,7 @@ Function1013c0:
 	ret
 
 Function1013d6:
-	farcall HDMATransferAttrmapAndTilemapToWRAMBank3
+	farcall HDMATransferAttrMapAndTileMapToWRAMBank3
 	ret
 
 Function1013dd:
@@ -3276,46 +3280,46 @@ Function10162a:
 	ld [wMobileCommsJumptableIndex], a
 	ret
 
-MobileCopyTransferData:
-	ld de, wMobileTransferData
+Function101635:
+	ld de, wc608
 	ld bc, $1e0
 	call FarCopyWRAM
 	ret
 
-MobileCopyTransferData2:
-	ld hl, wMobileTransferData
+Function10163f:
+	ld hl, wc608
 	ld bc, $1e0
 	call FarCopyWRAM
 	ret
 
 Function101649:
-	ld a, BANK(w5_d800)
+	ld a, $05
 	ld hl, w5_d800
-	call MobileCopyTransferData
-	ld a, BANK(w5_da00)
+	call Function101635
+	ld a, $05
 	ld de, w5_da00
-	call MobileCopyTransferData2
+	call Function10163f
 	ret
 
 Function10165a:
-	ld a, BANK(w5_da00)
+	ld a, $05
 	ld hl, w5_da00
-	call MobileCopyTransferData
+	call Function101635
 	ret
 
 Function101663:
-	ld a, BANK(w5_dc00)
+	ld a, $05
 	ld hl, w5_d800
-	call MobileCopyTransferData
-	ld a, BANK(w5_dc00)
+	call Function101635
+	ld a, $05
 	ld de, w5_dc00
-	call MobileCopyTransferData2
+	call Function10163f
 	ret
 
 Unreferenced_Function101674:
-	ld a, BANK(w5_dc00)
+	ld a, $05
 	ld hl, w5_dc00
-	call MobileCopyTransferData
+	call Function101635
 	ret
 
 Function10167d:
@@ -3452,7 +3456,7 @@ Function10174c:
 	ld a, e
 	ld [wcd3b], a
 	ld a, d
-	ld [wBattleTowerRoomMenu2JumptableIndex], a
+	ld [wcd3c], a
 	ld a, c
 	ld [wcd40], a
 	ld a, b
@@ -3612,8 +3616,10 @@ Function101826:
 	ld [wcd2b], a
 	ret
 
-pushc
-setcharmap ascii
+
+SECTION "ascii 10186f", ROMX
+
+	charmap " ", $20 ; revert to ascii
 
 Unknown_10186f:
 	db .end - @
@@ -3630,7 +3636,8 @@ Unknown_101895:
 	db $19, $67, $10, $01, "limit_crystal"
 .end	db 0
 
-popc
+
+SECTION "bank40_3", ROMX
 
 Function1018a8:
 	ld hl, wccb5
@@ -3781,11 +3788,11 @@ _StartMobileBattle:
 	ld [wdc5f], a
 	ld [wdc60], a
 	farcall BlankScreen
-	call SpeechTextbox
+	call SpeechTextBox
 	farcall Function100846
 	ld c, 120
 	call DelayFrames
-	farcall ClearTilemap
+	farcall ClearTileMap
 	call .CopyOTDetails
 	call StartMobileBattle
 	ld a, [wcd2b]
@@ -4734,14 +4741,14 @@ Function102142:
 	call Function10218d
 	call Function102180
 	ld hl, UnknownText_0x1021d1
-	call MenuTextbox
+	call MenuTextBox
 	ld de, SFX_LEVEL_UP
 	call PlaySFX
 	call JoyWaitAorB
 	call ExitMenu
 	call Function10219f
 	ld hl, UnknownText_0x1021d6
-	call MenuTextbox
+	call MenuTextBox
 	call YesNoBox
 	call ExitMenu
 	jr c, .asm_10217c
@@ -4807,7 +4814,7 @@ UnknownText_0x1021db:
 	text_end
 
 Function1021e0:
-	call MenuTextbox
+	call MenuTextBox
 	call JoyWaitAorB
 	call ExitMenu
 	ret
@@ -4907,14 +4914,14 @@ Function102274:
 
 Function102283:
 	ld a, $01
-	ld [wAttrmapEnd], a
+	ld [wAttrMapEnd], a
 	ld hl, wcd4b
 	set 0, [hl]
 	ret
 
 Function10228e:
 	xor a
-	ld [wAttrmapEnd], a
+	ld [wAttrMapEnd], a
 	ld hl, wcd4b
 	res 0, [hl]
 	ret
@@ -4945,7 +4952,7 @@ Function102298:
 .asm_1022c1
 	call Function10304f
 	ld a, $01
-	ld [wAttrmapEnd], a
+	ld [wAttrMapEnd], a
 	ret
 
 Function1022ca:
@@ -6207,7 +6214,6 @@ Function102bdc:
 	ld bc, MON_LEVEL
 	add hl, bc
 	ld a, [hl]
-	cp MAX_LEVEL + 1
 	jr nc, .asm_102c05
 	and a
 	ret
@@ -6415,10 +6421,10 @@ Function102d9a:
 	ld bc, SCREEN_WIDTH * SCREEN_HEIGHT
 	call ByteFill
 	ld a, $07
-	hlcoord 0, 0, wAttrmap
+	hlcoord 0, 0, wAttrMap
 	ld bc, SCREEN_WIDTH * SCREEN_HEIGHT
 	call ByteFill
-	farcall HDMATransferAttrmapAndTilemapToWRAMBank3
+	farcall HDMATransferAttrMapAndTileMapToWRAMBank3
 	ret
 
 Function102db7:
@@ -6439,16 +6445,16 @@ Function102dc3:
 
 Function102dd3:
 	call DisableLCD
-	ld de, MobileTradeLightsGFX
+	ld de, GFX_1032a2
 	ld hl, vTiles0
-	lb bc, BANK(MobileTradeLightsGFX), 4
+	lb bc, BANK(GFX_1032a2), 4
 	call Get2bpp
 	farcall __LoadTradeScreenBorder
 	call EnableLCD
 	ret
 
 Function102dec:
-	ld hl, MobileTradeLightsPalettes
+	ld hl, Palettes_1032e2
 	ld de, wOBPals1
 	ld bc, 4 palettes
 	ld a, $05
@@ -6465,11 +6471,11 @@ Function102e07:
 	ld a, [wBattleMode]
 	and a
 	jr z, .link_battle
-	call Textbox
+	call TextBox
 	jr .okay
 
 .link_battle
-; the next three operations are pointless
+; this is idiotic
 	hlcoord 3, 10
 	ld b,  1
 	ld c, 11
@@ -6566,7 +6572,7 @@ Function102ea8:
 	ld [wNamedObjectIndexBuffer], a
 	call GetPokemonName
 	ld hl, UnknownText_0x102ee2
-	call PrintTextboxText
+	call PrintTextBoxText
 	ret
 
 UnknownText_0x102ee2:
@@ -6691,7 +6697,7 @@ String_10302e:
 
 Function10304f:
 	xor a
-	ld [wAttrmapEnd], a
+	ld [wAttrMapEnd], a
 	ld [wcf42], a
 	ld [wcf44], a
 	ld [wcf45], a
@@ -6699,7 +6705,7 @@ Function10304f:
 
 Function10305d:
 	nop
-	ld a, [wAttrmapEnd]
+	ld a, [wAttrMapEnd]
 	and a
 	ret z
 	call Function10307f
@@ -6890,11 +6896,29 @@ Unknown_10327a:
 	db $00, $00, $03, $02
 	db $00, $00, $01, $03
 
-MobileTradeLightsGFX:
-INCBIN "gfx/mobile/mobile_trade_lights.2bpp"
+GFX_1032a2:
+INCBIN "gfx/unknown/1032a2.2bpp"
 
-MobileTradeLightsPalettes:
-INCLUDE "gfx/mobile/mobile_trade_lights.pal"
+Palettes_1032e2:
+	RGB  0,  0,  0
+	RGB 31, 31,  7
+	RGB 20, 31,  6
+	RGB 13, 20, 16
+
+	RGB  0,  0,  0
+	RGB  7, 11, 17
+	RGB  0,  0,  0
+	RGB  0,  0,  0
+
+	RGB  0,  0,  0
+	RGB 31, 24,  4
+	RGB 25, 12,  0
+	RGB 31,  7,  4
+
+	RGB  0,  0,  0
+	RGB 25,  0,  0
+	RGB  0,  0,  0
+	RGB  0,  0,  0
 
 Function103302:
 	call Function103309
@@ -6908,10 +6932,10 @@ Function103309:
 	ld bc, 10
 	xor a
 	call ByteFill
-	ld a, BANK(s4_a60c)
+	ld a, $04
 	call GetSRAMBank
 	ld a, [wdc41]
-	ld [s4_a60c], a
+	ld [$a60c], a
 	ld [wBuffer1], a
 	call CloseSRAM
 	call Function1035c6
@@ -6940,7 +6964,7 @@ Function103309:
 	ld [wd1ee], a
 	call Function1034be
 	call UpdateSprites
-	farcall HDMATransferAttrmapAndTilemapToWRAMBank3
+	farcall HDMATransferAttrMapAndTileMapToWRAMBank3
 	ld a, $01
 	ld [wd1f0], a
 	call Function10339a
@@ -6953,17 +6977,17 @@ Function103362:
 	call Function1033af
 	call Function10339a
 	call Function10342c
-	farcall HDMATransferTilemapToWRAMBank3
+	farcall HDMATransferTileMapToWRAMBank3
 	ld a, [wBuffer2]
 	bit 7, a
 	jr z, .asm_103362
 	ld hl, wBuffer2
 	bit 6, [hl]
 	jr z, .asm_103398
-	ld a, BANK(s4_a60c)
+	ld a, $04
 	call GetSRAMBank
 	ld a, [wBuffer1]
-	ld [s4_a60c], a
+	ld [$a60c], a
 	ld [wdc41], a
 	call CloseSRAM
 	xor a
@@ -7161,7 +7185,7 @@ Function1034e0:
 	push hl
 	call ClearBox
 	pop hl
-	ld bc, wAttrmap - wTilemap
+	ld bc, wAttrMap - wTileMap
 	add hl, bc
 	pop bc
 	ld a, $06
@@ -7418,7 +7442,7 @@ Function103700:
 	ld hl, wSwarmFlags
 	bit SWARMFLAGS_MOBILE_4_F, [hl]
 	jr z, .asm_10370f
-	farcall MobileBattleGetRemainingTime
+	farcall Function1008a6
 
 .asm_10370f
 	ld a, c
@@ -7525,7 +7549,7 @@ Function10378c:
 	ld a, c
 	and a
 	ret z
-	farcall MobileBattleResetTimer
+	farcall Function1006fd
 	ret
 
 .failed_to_save
@@ -7539,7 +7563,7 @@ Function10378c:
 	ret
 
 Function1037c2:
-	call MobileCheckRemainingBattleTime
+	call Function103823
 	jr c, .nope
 	ld a, [wdc5f]
 	and a
@@ -7563,12 +7587,12 @@ UnknownText_0x1037e6:
 	text_end
 
 Function1037eb:
-	call MobileCheckRemainingBattleTime
+	call Function103823
 	jr nc, .asm_103807
-	ld hl, MobileBattleLessThanOneMinuteLeftText
+	ld hl, UnknownText_0x103819
 	call PrintText
 	call JoyWaitAorB
-	ld hl, MobileBattleNoTimeLeftForLinkingText
+	ld hl, UnknownText_0x10381e
 	call PrintText
 	call JoyWaitAorB
 	xor a
@@ -7588,29 +7612,28 @@ Function1037eb:
 	ld [wScriptVar], a
 	ret
 
-MobileBattleLessThanOneMinuteLeftText:
-	text_far _MobileBattleLessThanOneMinuteLeftText
+UnknownText_0x103819:
+	text_far UnknownText_0x1c44c0
 	text_end
 
-MobileBattleNoTimeLeftForLinkingText:
-	text_far _MobileBattleNoTimeLeftForLinkingText
+UnknownText_0x10381e:
+	text_far UnknownText_0x1c44e7
 	text_end
 
-MobileCheckRemainingBattleTime:
-; Returns carry if less than one minute remains
+Function103823:
 	farcall Mobile_AlwaysReturnNotCarry
 	bit 7, c
-	jr nz, .ok
-	farcall MobileBattleGetRemainingTime
+	jr nz, .asm_103838
+	farcall Function1008a6
 	ld a, c
-	cp 1
-	jr c, .fail
+	cp $01
+	jr c, .asm_10383a
 
-.ok
+.asm_103838
 	xor a
 	ret
 
-.fail
+.asm_10383a
 	scf
 	ret
 
@@ -7649,7 +7672,7 @@ Function10387b:
 	farcall Mobile_AlwaysReturnNotCarry
 	bit 7, c
 	ret nz
-	farcall MobileBattleGetRemainingTime
+	farcall Function1008a6
 	ld a, c
 	ld [wStringBuffer2], a
 	ld hl, UnknownText_0x103898

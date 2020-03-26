@@ -18,7 +18,7 @@ Function16d42e:
 Function16d43b:
 	call LoadStandardMenuHeader
 	call ClearBGPalettes
-	call ClearTilemap
+	call ClearTileMap
 	call ClearSprites
 	farcall __LoadTradeScreenBorder ; useless to farcall
 	farcall Function16d42e ; useless to farcall
@@ -48,7 +48,7 @@ _LinkTextbox:
 	pop hl
 	pop bc
 
-	ld de, wAttrmap - wTilemap
+	ld de, wAttrMap - wTileMap
 	add hl, de
 	inc b
 	inc b
@@ -240,7 +240,7 @@ LinkTradeMenu:
 	ret
 
 .loop2
-	call UpdateTimeAndPals
+	call RTC
 	call .TryAnims
 	ret c
 	ld a, [w2DMenuFlags1]

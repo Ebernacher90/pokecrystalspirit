@@ -1,6 +1,6 @@
 	db QWILFISH ; 211
 
-	db  65,  95,  75,  85,  55,  55
+	db  65,  95,  85,  85,  55,  55
 	;   hp  atk  def  spd  sat  sdf
 
 	db WATER, POISON ; type
@@ -12,7 +12,7 @@
 	db 20 ; step cycles to hatch
 	db 5 ; unknown 2
 	INCBIN "gfx/pokemon/qwilfish/front.dimensions"
-	dw NULL, NULL ; unused (beta front/back pics)
+	db 0, 0, 0, 0 ; padding
 	db GROWTH_MEDIUM_FAST ; growth rate
 	dn EGG_WATER_2, EGG_WATER_2 ; egg groups
 

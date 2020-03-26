@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const VIRIDIANGYM_BLUE
 	const VIRIDIANGYM_GYM_GUY
 
@@ -58,7 +58,7 @@ ViridianGymStatue:
 	jumpstd gymstatue1
 
 .Beaten:
-	gettrainername STRING_BUFFER_4, BLUE, BLUE1
+	trainertotext BLUE, BLUE1, MEM_BUFFER_1
 	jumpstd gymstatue2
 
 LeaderBlueBeforeText:

@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const ROUTE36_YOUNGSTER1
 	const ROUTE36_YOUNGSTER2
 	const ROUTE36_WEIRD_TREE
@@ -24,7 +24,7 @@ Route36_MapScripts:
 	end
 
 .ArthurCallback:
-	readvar VAR_WEEKDAY
+	checkcode VAR_WEEKDAY
 	ifequal THURSDAY, .ArthurAppears
 	disappear ROUTE36_ARTHUR
 	return
@@ -106,7 +106,7 @@ Route36FloriaScript:
 	waitbutton
 	closetext
 	clearevent EVENT_FLORIA_AT_FLOWER_SHOP
-	readvar VAR_FACING
+	checkcode VAR_FACING
 	ifequal UP, .Up
 	applymovement ROUTE36_FLORIA, FloriaMovement1
 	disappear ROUTE36_FLORIA
@@ -137,7 +137,7 @@ Route36RockSmashGuyScript:
 
 .ClearedSudowoodo:
 	writetext RockSmashGuyText2
-	promptbutton
+	buttonsound
 	verbosegiveitem TM_ROCK_SMASH
 	iffalse .NoRoomForTM
 	setevent EVENT_GOT_TM08_ROCK_SMASH
@@ -168,7 +168,7 @@ TrainerSchoolboyAlan1:
 	trainer SCHOOLBOY, ALAN1, EVENT_BEAT_SCHOOLBOY_ALAN, SchoolboyAlan1SeenText, SchoolboyAlan1BeatenText, 0, .Script
 
 .Script:
-	loadvar VAR_CALLERID, PHONE_SCHOOLBOY_ALAN
+	writecode VAR_CALLERID, PHONE_SCHOOLBOY_ALAN
 	endifjustbattled
 	opentext
 	checkflag ENGINE_ALAN
@@ -179,11 +179,11 @@ TrainerSchoolboyAlan1:
 	iftrue .NumberAccepted
 	checkevent EVENT_ALAN_ASKED_FOR_PHONE_NUMBER
 	iftrue .AskAgainForPhoneNumber
-	writetext SchoolboyAlanBooksText
-	promptbutton
+	writetext UnknownText_0x1947aa
+	buttonsound
 	setevent EVENT_ALAN_ASKED_FOR_PHONE_NUMBER
 	scall .AskNumber1
-	sjump .ContinueAskForPhoneNumber
+	jump .ContinueAskForPhoneNumber
 
 .AskAgainForPhoneNumber:
 	scall .AskNumber2
@@ -191,14 +191,14 @@ TrainerSchoolboyAlan1:
 	askforphonenumber PHONE_SCHOOLBOY_ALAN
 	ifequal PHONE_CONTACTS_FULL, .PhoneFull
 	ifequal PHONE_CONTACT_REFUSED, .NumberDeclined
-	gettrainername STRING_BUFFER_3, SCHOOLBOY, ALAN1
+	trainertotext SCHOOLBOY, ALAN1, MEM_BUFFER_0
 	scall .RegisteredNumber
-	sjump .NumberAccepted
+	jump .NumberAccepted
 
 .ChooseRematch:
 	scall .Rematch
 	winlosstext SchoolboyAlan1BeatenText, 0
-	readmem wAlanFightCount
+	copybytetovar wAlanFightCount
 	ifequal 4, .Fight4
 	ifequal 3, .Fight3
 	ifequal 2, .Fight2
@@ -220,7 +220,7 @@ TrainerSchoolboyAlan1:
 	loadtrainer SCHOOLBOY, ALAN1
 	startbattle
 	reloadmapafterbattle
-	loadmem wAlanFightCount, 1
+	loadvar wAlanFightCount, 1
 	clearflag ENGINE_ALAN
 	end
 
@@ -228,7 +228,7 @@ TrainerSchoolboyAlan1:
 	loadtrainer SCHOOLBOY, ALAN2
 	startbattle
 	reloadmapafterbattle
-	loadmem wAlanFightCount, 2
+	loadvar wAlanFightCount, 2
 	clearflag ENGINE_ALAN
 	end
 
@@ -236,7 +236,7 @@ TrainerSchoolboyAlan1:
 	loadtrainer SCHOOLBOY, ALAN3
 	startbattle
 	reloadmapafterbattle
-	loadmem wAlanFightCount, 3
+	loadvar wAlanFightCount, 3
 	clearflag ENGINE_ALAN
 	end
 
@@ -244,7 +244,7 @@ TrainerSchoolboyAlan1:
 	loadtrainer SCHOOLBOY, ALAN4
 	startbattle
 	reloadmapafterbattle
-	loadmem wAlanFightCount, 4
+	loadvar wAlanFightCount, 4
 	clearflag ENGINE_ALAN
 	end
 
@@ -261,10 +261,10 @@ TrainerSchoolboyAlan1:
 	iffalse .BagFull
 	clearflag ENGINE_ALAN_HAS_FIRE_STONE
 	setevent EVENT_ALAN_GAVE_FIRE_STONE
-	sjump .NumberAccepted
+	jump .NumberAccepted
 
 .BagFull:
-	sjump .PackFull
+	jump .PackFull
 
 .AskNumber1:
 	jumpstd asknumber1m
@@ -318,16 +318,16 @@ ArthurScript:
 	opentext
 	checkevent EVENT_GOT_HARD_STONE_FROM_ARTHUR
 	iftrue .AlreadyGotStone
-	readvar VAR_WEEKDAY
+	checkcode VAR_WEEKDAY
 	ifnotequal THURSDAY, ArthurNotThursdayScript
 	checkevent EVENT_MET_ARTHUR_OF_THURSDAY
 	iftrue .MetArthur
 	writetext MeetArthurText
-	promptbutton
+	buttonsound
 	setevent EVENT_MET_ARTHUR_OF_THURSDAY
 .MetArthur:
 	writetext ArthurGivesGiftText
-	promptbutton
+	buttonsound
 	verbosegiveitem HARD_STONE
 	iffalse .BagFull
 	setevent EVENT_GOT_HARD_STONE_FROM_ARTHUR
@@ -489,7 +489,7 @@ RockSmashGuyText2:
 	cont "have this."
 	done
 
-UnusedReceivedTM08Text:
+UnknownText_0x19451a:
 	text "<PLAYER> received"
 	line "TM08."
 	done
@@ -509,7 +509,7 @@ RockSmashGuyText3:
 	cont "smash 'em up!"
 	done
 
-UnusedOddTreeText:
+UnknownText_0x1945b8:
 	text "An odd tree is"
 	line "blocking the way"
 	cont "to GOLDENROD CITY."
@@ -570,7 +570,7 @@ SchoolboyAlan1BeatenText:
 	line "error?"
 	done
 
-SchoolboyAlanBooksText:
+UnknownText_0x1947aa:
 	text "Darn. I study five"
 	line "hours a day too."
 

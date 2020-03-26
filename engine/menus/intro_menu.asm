@@ -39,10 +39,10 @@ PrintDayOfWeek:
 .Day:
 	db "DAY@"
 
-NewGame_ClearTilemapEtc:
+NewGame_ClearTileMapEtc:
 	xor a
 	ldh [hMapAnims], a
-	call ClearTilemap
+	call ClearTileMap
 	call LoadFontsExtra
 	call LoadStandardFont
 	call ClearWindowData
@@ -62,7 +62,7 @@ NewGame:
 	xor a
 	ld [wDebugFlags], a
 	call ResetWRAM
-	call NewGame_ClearTilemapEtc
+	call NewGame_ClearTileMapEtc
 	call AreYouABoyOrAreYouAGirl
 	call OakSpeech
 	call InitializeWorld
@@ -151,7 +151,7 @@ _ResetWRAM:
 	ld hl, wNumBalls
 	call .InitList
 
-	ld hl, wNumPCItems
+	ld hl, wPCItems
 	call .InitList
 
 	xor a
@@ -359,7 +359,7 @@ Continue:
 	call ClearBGPalettes
 	call Continue_MobileAdapterMenu
 	call CloseWindow
-	call ClearTilemap
+	call ClearTileMap
 	ld c, 20
 	call DelayFrames
 	farcall JumpRoamMons
@@ -627,7 +627,7 @@ Continue_DisplayGameTime:
 OakSpeech:
 	farcall InitClock
 	call RotateFourPalettesLeft
-	call ClearTilemap
+	call ClearTileMap
 
 	ld de, MUSIC_ROUTE_30
 	call PlayMusic
@@ -647,7 +647,7 @@ OakSpeech:
 	ld hl, OakText1
 	call PrintText
 	call RotateThreePalettesRight
-	call ClearTilemap
+	call ClearTileMap
 
 	ld a, WOOPER
 	ld [wCurSpecies], a
@@ -670,7 +670,7 @@ OakSpeech:
 	ld hl, OakText4
 	call PrintText
 	call RotateThreePalettesRight
-	call ClearTilemap
+	call ClearTileMap
 
 	xor a
 	ld [wCurPartySpecies], a
@@ -685,7 +685,7 @@ OakSpeech:
 	ld hl, OakText5
 	call PrintText
 	call RotateThreePalettesRight
-	call ClearTilemap
+	call ClearTileMap
 
 	xor a
 	ld [wCurPartySpecies], a
@@ -752,7 +752,7 @@ NamePlayer:
 	farcall NamingScreen
 
 	call RotateThreePalettesRight
-	call ClearTilemap
+	call ClearTileMap
 
 	call LoadFontsExtra
 	call WaitBGMap
@@ -848,7 +848,7 @@ ShrinkPlayer:
 	call DelayFrames
 
 	call RotateThreePalettesRight
-	call ClearTilemap
+	call ClearTileMap
 	ret
 
 Intro_RotatePalettesLeftFrontpic:
@@ -956,8 +956,6 @@ CrystalIntroSequence:
 	callfar Copyright_GFPresents
 	jr c, StartTitleScreen
 	farcall CrystalIntro
-
-	; fallthrough
 
 StartTitleScreen:
 	ldh a, [rSVBK]
@@ -1280,7 +1278,7 @@ Unreferenced_Function639b:
 	ld e, a
 	ld d, [hl]
 	ld a, SPRITE_ANIM_INDEX_GS_TITLE_TRAIL
-	call InitSpriteAnimStruct
+	call _InitSpriteAnimStruct
 	ret
 
 .Data63ca:
@@ -1293,7 +1291,7 @@ Unreferenced_Function639b:
 	db  0 * 8,      0 * 8, 11 * 8 + 4, 11 * 8
 
 Copyright:
-	call ClearTilemap
+	call ClearTileMap
 	call LoadFontsExtra
 	ld de, CopyrightGFX
 	ld hl, vTiles2 tile $60
@@ -1322,7 +1320,7 @@ GameInit::
 	farcall TryLoadSaveData
 	call ClearWindowData
 	call ClearBGPalettes
-	call ClearTilemap
+	call ClearTileMap
 	ld a, HIGH(vBGMap0)
 	ldh [hBGMapAddress + 1], a
 	xor a ; LOW(vBGMap0)

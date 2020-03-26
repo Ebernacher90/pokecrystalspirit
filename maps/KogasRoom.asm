@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const KOGASROOM_KOGA
 
 KogasRoom_MapScripts:
@@ -10,7 +10,7 @@ KogasRoom_MapScripts:
 	callback MAPCALLBACK_TILES, .KogasRoomDoors
 
 .LockDoor:
-	prioritysjump .KogasDoorLocksBehindYou
+	priorityjump .KogasDoorLocksBehindYou
 	end
 
 .DummyScene:

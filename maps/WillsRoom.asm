@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const WILLSROOM_WILL
 
 WillsRoom_MapScripts:
@@ -10,7 +10,7 @@ WillsRoom_MapScripts:
 	callback MAPCALLBACK_TILES, .WillsRoomDoors
 
 .LockDoor:
-	prioritysjump .WillsDoorLocksBehindYou
+	priorityjump .WillsDoorLocksBehindYou
 	end
 
 .DummyScene:

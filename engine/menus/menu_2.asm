@@ -30,19 +30,19 @@ PlaceMenuItemQuantity:
 PlaceMoneyTopRight:
 	ld hl, MenuHeader_0x24b15
 	call CopyMenuHeader
-	jr PlaceMoneyTextbox
+	jr PlaceMoneyTextBox
 
 PlaceMoneyBottomLeft:
 	ld hl, MenuHeader_0x24b1d
 	call CopyMenuHeader
-	jr PlaceMoneyTextbox
+	jr PlaceMoneyTextBox
 
 PlaceMoneyAtTopLeftOfTextbox:
 	ld hl, MenuHeader_0x24b15
 	lb de, 0, 11
 	call OffsetMenuHeader
 
-PlaceMoneyTextbox:
+PlaceMoneyTextBox:
 	call MenuBox
 	call MenuBoxCoord2Tile
 	ld de, SCREEN_WIDTH + 1
@@ -69,7 +69,7 @@ DisplayCoinCaseBalance:
 	hlcoord 11, 0
 	ld b, 1
 	ld c, 7
-	call Textbox
+	call TextBox
 	hlcoord 12, 0
 	ld de, CoinString
 	call PlaceString
@@ -86,7 +86,7 @@ DisplayMoneyAndCoinBalance:
 	hlcoord 5, 0
 	ld b, 3
 	ld c, 13
-	call Textbox
+	call TextBox
 	hlcoord 6, 1
 	ld de, MoneyString
 	call PlaceString
@@ -119,7 +119,7 @@ Unreferenced_Function24b8f:
 	hlcoord 0, 0
 	ld b, 3
 	ld c, 7
-	call Textbox
+	call TextBox
 	hlcoord 1, 1
 	ld de, wSafariTimeRemaining
 	lb bc, 2, 3
@@ -147,7 +147,7 @@ StartMenu_DrawBugContestStatusBox:
 	hlcoord 0, 0
 	ld b, 5
 	ld c, 17
-	call Textbox
+	call TextBox
 	ret
 
 StartMenu_PrintBugContestStatus:
@@ -161,7 +161,7 @@ StartMenu_PrintBugContestStatus:
 	call PlaceString
 	hlcoord 8, 5
 	ld de, wParkBallsRemaining
-	lb bc, PRINTNUM_LEFTALIGN | 1, 2
+	lb bc, PRINTNUM_RIGHTALIGN | 1, 2
 	call PrintNum
 	hlcoord 1, 1
 	ld de, .CAUGHT
@@ -187,7 +187,7 @@ StartMenu_PrintBugContestStatus:
 	ld l, c
 	inc hl
 	ld c, 3
-	call Print8BitNumLeftAlign
+	call Print8BitNumRightAlign
 
 .skip_level
 	pop af

@@ -7,7 +7,7 @@ PlaceWaitingText::
 	and a
 	jr z, .notinbattle
 
-	call Textbox
+	call TextBox
 	jr .proceed
 
 .notinbattle

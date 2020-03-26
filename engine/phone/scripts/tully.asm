@@ -1,5 +1,5 @@
 TullyPhoneCalleeScript:
-	gettrainername STRING_BUFFER_3, FISHER, TULLY1
+	trainertotext FISHER, TULLY1, MEM_BUFFER_0
 	checkflag ENGINE_TULLY
 	iftrue .WantsBattle
 	farscall PhoneScript_AnswerPhone_Male
@@ -7,24 +7,24 @@ TullyPhoneCalleeScript:
 	iftrue .NotSunday
 	checkflag ENGINE_TULLY_HAS_WATER_STONE
 	iftrue .WaterStone
-	readvar VAR_WEEKDAY
+	checkcode VAR_WEEKDAY
 	ifnotequal SUNDAY, .NotSunday
 	checktime NITE
 	iftrue TullySundayNight
 
 .NotSunday:
-	farsjump TullyNoItemScript
+	farjump UnknownScript_0xa0990
 
 .WantsBattle:
-	getlandmarkname STRING_BUFFER_5, LANDMARK_ROUTE_42
-	farsjump TullyForwardScript
+	landmarktotext ROUTE_42, MEM_BUFFER_2
+	farjump UnknownScript_0xa0a82
 
 .WaterStone:
-	getlandmarkname STRING_BUFFER_5, LANDMARK_ROUTE_42
-	farsjump TullyHurryScript
+	landmarktotext ROUTE_42, MEM_BUFFER_2
+	farjump UnknownScript_0xa0add
 
 TullyPhoneCallerScript:
-	gettrainername STRING_BUFFER_3, FISHER, TULLY1
+	trainertotext FISHER, TULLY1, MEM_BUFFER_0
 	farscall PhoneScript_GreetPhone_Male
 	checkflag ENGINE_TULLY
 	iftrue .Generic
@@ -44,17 +44,17 @@ TullyPhoneCallerScript:
 	ifequal 0, TullyFoundWaterStone
 
 .Generic:
-	farsjump Phone_GenericCall_Male
+	farjump Phone_GenericCall_Male
 
 TullySundayNight:
 	setflag ENGINE_TULLY_SUNDAY_NIGHT
 
 TullyWantsBattle:
-	getlandmarkname STRING_BUFFER_5, LANDMARK_ROUTE_42
+	landmarktotext ROUTE_42, MEM_BUFFER_2
 	setflag ENGINE_TULLY
-	farsjump PhoneScript_WantsToBattle_Male
+	farjump PhoneScript_WantsToBattle_Male
 
 TullyFoundWaterStone:
 	setflag ENGINE_TULLY_HAS_WATER_STONE
-	getlandmarkname STRING_BUFFER_5, LANDMARK_ROUTE_42
-	farsjump PhoneScript_FoundItem_Male
+	landmarktotext ROUTE_42, MEM_BUFFER_2
+	farjump PhoneScript_FoundItem_Male

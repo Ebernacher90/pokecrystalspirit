@@ -61,7 +61,7 @@ CopyTilemapAtOnce::
 	jr .CopyTilemapAtOnce
 
 ; unused
-	farcall HDMATransferAttrmapAndTilemapToWRAMBank3
+	farcall HDMATransferAttrMapAndTileMapToWRAMBank3
 	ret
 
 .CopyTilemapAtOnce:
@@ -83,7 +83,7 @@ CopyTilemapAtOnce::
 	di
 	ld a, BANK(vTiles3)
 	ldh [rVBK], a
-	hlcoord 0, 0, wAttrmap
+	hlcoord 0, 0, wAttrMap
 	call .StackPointerMagic
 	ld a, BANK(vTiles0)
 	ldh [rVBK], a
@@ -119,7 +119,7 @@ rept SCREEN_WIDTH / 2
 	pop de
 ; if in v/hblank, wait until not in v/hblank
 .loop\@
-	ldh a, [c]
+	ld a, [$ff00+c]
 	and b
 	jr nz, .loop\@
 ; load BGMap0
@@ -216,21 +216,3 @@ GetSGBLayout::
 
 .sgb
 	predef_jump LoadSGBLayout
-
-SetHPPal::
-; Set palette for hp bar pixel length e at hl.
-	call GetHPPal
-	ld [hl], d
-	ret
-
-GetHPPal::
-; Get palette for hp bar pixel length e in d.
-	ld d, HP_GREEN
-	ld a, e
-	cp (HP_BAR_LENGTH_PX * 50 / 100) ; 24
-	ret nc
-	inc d ; HP_YELLOW
-	cp (HP_BAR_LENGTH_PX * 21 / 100) ; 10
-	ret nc
-	inc d ; HP_RED
-	ret

@@ -1,31 +1,31 @@
 FruitTreeScript::
 	callasm GetCurTreeFruit
 	opentext
-	readmem wCurFruit
-	getitemname STRING_BUFFER_3, USE_SCRIPT_VAR
+	copybytetovar wCurFruit
+	itemtotext USE_SCRIPT_VAR, MEM_BUFFER_0
 	writetext FruitBearingTreeText
-	promptbutton
+	buttonsound
 	callasm TryResetFruitTrees
 	callasm CheckFruitTree
 	iffalse .fruit
 	writetext NothingHereText
 	waitbutton
-	sjump .end
+	jump .end
 
 .fruit
 	writetext HeyItsFruitText
-	readmem wCurFruit
+	copybytetovar wCurFruit
 	giveitem ITEM_FROM_MEM
 	iffalse .packisfull
-	promptbutton
+	buttonsound
 	writetext ObtainedFruitText
 	callasm PickedFruitTree
 	specialsound
 	itemnotify
-	sjump .end
+	jump .end
 
 .packisfull
-	promptbutton
+	buttonsound
 	writetext FruitPackIsFullText
 	waitbutton
 

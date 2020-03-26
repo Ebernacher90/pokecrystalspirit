@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const DANCETHEATRE_KIMONO_GIRL1
 	const DANCETHEATRE_KIMONO_GIRL2
 	const DANCETHEATRE_KIMONO_GIRL3
@@ -73,7 +73,7 @@ DanceTheaterSurfGuy:
 	faceplayer
 	opentext
 	writetext SurfGuyNeverLeftAScratchText
-	promptbutton
+	buttonsound
 	checkevent EVENT_GOT_HM03_SURF
 	iftrue SurfGuyAlreadyGaveSurf
 	checkevent EVENT_BEAT_KIMONO_GIRL_NAOKO
@@ -86,7 +86,7 @@ DanceTheaterSurfGuy:
 	iffalse .KimonoGirlsUndefeated
 	checkevent EVENT_BEAT_KIMONO_GIRL_MIKI
 	iffalse .KimonoGirlsUndefeated
-	sjump .GetSurf
+	jump .GetSurf
 
 .KimonoGirlsUndefeated:
 	checkflag ENGINE_PLAYER_IS_FEMALE
@@ -104,7 +104,7 @@ DanceTheaterSurfGuy:
 
 .GetSurf:
 	writetext SurfGuyLikeADanceText
-	promptbutton
+	buttonsound
 	verbosegiveitem HM_SURF
 	setevent EVENT_GOT_HM03_SURF
 	writetext SurfGuySurfExplanationText

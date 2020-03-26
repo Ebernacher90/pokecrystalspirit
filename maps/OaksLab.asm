@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const OAKSLAB_OAK
 	const OAKSLAB_SCIENTIST1
 	const OAKSLAB_SCIENTIST2
@@ -20,13 +20,13 @@ Oak:
 	checkevent EVENT_TALKED_TO_OAK_IN_KANTO
 	iftrue .CheckBadges
 	writetext OakWelcomeKantoText
-	promptbutton
+	buttonsound
 	setevent EVENT_TALKED_TO_OAK_IN_KANTO
 .CheckBadges:
-	readvar VAR_BADGES
+	checkcode VAR_BADGES
 	ifequal NUM_BADGES, .OpenMtSilver
 	ifequal NUM_JOHTO_BADGES, .Complain
-	sjump .AhGood
+	jump .AhGood
 
 .CheckPokedex:
 	writetext OakLabDexCheckText
@@ -39,19 +39,19 @@ Oak:
 
 .OpenMtSilver:
 	writetext OakOpenMtSilverText
-	promptbutton
+	buttonsound
 	setevent EVENT_OPENED_MT_SILVER
-	sjump .CheckPokedex
+	jump .CheckPokedex
 
 .Complain:
 	writetext OakNoKantoBadgesText
-	promptbutton
-	sjump .CheckPokedex
+	buttonsound
+	jump .CheckPokedex
 
 .AhGood:
 	writetext OakYesKantoBadgesText
-	promptbutton
-	sjump .CheckPokedex
+	buttonsound
+	jump .CheckPokedex
 
 OaksAssistant1Script:
 	jumptextfaceplayer OaksAssistant1Text

@@ -1,11 +1,11 @@
 AnthonyPhoneCalleeScript:
-	gettrainername STRING_BUFFER_3, HIKER, ANTHONY2
+	trainertotext HIKER, ANTHONY2, MEM_BUFFER_0
 	checkflag ENGINE_ANTHONY
 	iftrue .WantsBattle
 	farscall PhoneScript_AnswerPhone_Male
 	checkflag ENGINE_ANTHONY_FRIDAY_NIGHT
 	iftrue .NotFriday
-	readvar VAR_WEEKDAY
+	checkcode VAR_WEEKDAY
 	ifnotequal FRIDAY, .NotFriday
 	checktime NITE
 	iftrue AnthonyFridayNight
@@ -13,18 +13,18 @@ AnthonyPhoneCalleeScript:
 .NotFriday:
 	checkflag ENGINE_DUNSPARCE_SWARM
 	iftrue .AlreadySwarming
-	farsjump AnthonyHangUpScript
+	farjump UnknownScript_0xa0950
 
 .WantsBattle:
-	getlandmarkname STRING_BUFFER_5, LANDMARK_ROUTE_33
-	farsjump AnthonyReminderScript
+	landmarktotext ROUTE_33, MEM_BUFFER_2
+	farjump UnknownScript_0xa0a5f
 
 .AlreadySwarming:
-	getlandmarkname STRING_BUFFER_5, LANDMARK_ROUTE_33
-	farsjump AnthonyHurryScript
+	landmarktotext ROUTE_33, MEM_BUFFER_2
+	farjump UnknownScript_0xa0afa
 
 AnthonyPhoneCallerScript:
-	gettrainername STRING_BUFFER_3, HIKER, ANTHONY2
+	trainertotext HIKER, ANTHONY2, MEM_BUFFER_0
 	farscall PhoneScript_GreetPhone_Male
 	checkflag ENGINE_FLYPOINT_GOLDENROD
 	iffalse .TriesSwarm
@@ -38,24 +38,24 @@ AnthonyPhoneCallerScript:
 .TriesSwarm:
 	farscall PhoneScript_Random5
 	ifequal 0, AnthonyTriesDunsparceSwarm
-	farsjump Phone_GenericCall_Male
+	farjump Phone_GenericCall_Male
 
 AnthonyFridayNight:
 	setflag ENGINE_ANTHONY_FRIDAY_NIGHT
 
 AnthonyWantsBattle:
-	getlandmarkname STRING_BUFFER_5, LANDMARK_ROUTE_33
+	landmarktotext ROUTE_33, MEM_BUFFER_2
 	setflag ENGINE_ANTHONY
-	farsjump PhoneScript_WantsToBattle_Male
+	farjump PhoneScript_WantsToBattle_Male
 
 AnthonyTriesDunsparceSwarm:
 	checkflag ENGINE_DUNSPARCE_SWARM
 	iftrue .Generic
 	setflag ENGINE_DUNSPARCE_SWARM
-	getmonname STRING_BUFFER_4, DUNSPARCE
+	pokenamemem DUNSPARCE, MEM_BUFFER_1
 	swarm SWARM_DUNSPARCE, DARK_CAVE_VIOLET_ENTRANCE
-	getlandmarkname STRING_BUFFER_5, LANDMARK_DARK_CAVE
-	farsjump AnthonySwarmScript
+	landmarktotext DARK_CAVE, MEM_BUFFER_2
+	farjump UnknownScript_0xa05de
 
 .Generic:
-	farsjump Phone_GenericCall_Male
+	farjump Phone_GenericCall_Male

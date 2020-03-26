@@ -24,6 +24,7 @@ Landmarks:
 	landmark  52, 112, Route34Name
 	landmark  52,  92, GoldenrodCityName
 	landmark  50,  92, RadioTowerName
+	landmark  44,  92, GlobalTerminalName
 	landmark  52,  76, Route35Name
 	landmark  52,  60, NationalParkName
 	landmark  64,  60, Route36Name
@@ -37,6 +38,8 @@ Landmarks:
 	landmark  38,  62, LighthouseName
 	landmark  28,  56, BattleTowerName
 	landmark  28,  64, Route40Name
+	landmark  28,  68, OlivineCaveName
+	landmark  30,  68, FantasticIdyllName
 	landmark  28,  92, WhirlIslandsName
 	landmark  28, 100, Route41Name
 	landmark  20, 100, CianwoodCityName
@@ -58,6 +61,7 @@ Landmarks:
 	landmark  52,  76, ViridianCityName
 	landmark  52,  64, Route2Name
 	landmark  52,  52, PewterCityName
+	landmark  51,  51, PewterMuseumName
 	landmark  64,  52, Route3Name
 	landmark  76,  52, MtMoonName
 	landmark  88,  52, Route4Name
@@ -102,6 +106,9 @@ Landmarks:
 	landmark  12, 100, TohjoFallsName
 	landmark  20,  68, Route28Name
 	landmark 140, 116, FastShipName
+	landmark  88,  44, CeruleanCaveName
+	landmark  90,  70, UndergroundPathRoute7Name
+	landmark  92, 108, SafariZoneName
 
 NewBarkTownName:     db "NEW BARK¯TOWN@"
 CherrygroveCityName: db "CHERRYGROVE¯CITY@"
@@ -132,6 +139,8 @@ NotApplicableName:   db "N/A@" ; "オバケやしき" ("HAUNTED HOUSE") in Japan
 PalletTownName:      db "PALLET TOWN@"
 ViridianCityName:    db "VIRIDIAN¯CITY@"
 PewterCityName:      db "PEWTER CITY@"
+PewterMuseumName:    db "PEWTER¯MUSEUM@"
+CeruleanCaveName:    db "CERULEAN¯CAVE@"
 CeruleanCityName:    db "CERULEAN¯CITY@"
 LavenderTownName:    db "LAVENDER¯TOWN@"
 VermilionCityName:   db "VERMILION¯CITY@"
@@ -144,11 +153,10 @@ VictoryRoadName:     db "VICTORY¯ROAD@"
 MtMoonName:          db "MT.MOON@"
 RockTunnelName:      db "ROCK TUNNEL@"
 LavRadioTowerName:   db "LAV¯RADIO TOWER@"
-SilphCoName:         db "SILPH CO.@"
-SafariZoneName:      db "SAFARI ZONE@"
+SilphCoName:         db "SILPH¯CO.@"
+SafariZoneName:      db "SAFARI¯ZONE@"
 SeafoamIslandsName:  db "SEAFOAM¯ISLANDS@"
 PokemonMansionName:  db "#MON¯MANSION@"
-CeruleanCaveName:    db "CERULEAN¯CAVE@"
 Route1Name:          db "ROUTE 1@"
 Route2Name:          db "ROUTE 2@"
 Route3Name:          db "ROUTE 3@"
@@ -156,6 +164,7 @@ Route4Name:          db "ROUTE 4@"
 Route5Name:          db "ROUTE 5@"
 Route6Name:          db "ROUTE 6@"
 Route7Name:          db "ROUTE 7@"
+UndergroundPathRoute7Name: db "UNDERGROUND¯PATH ROUTE7"
 Route8Name:          db "ROUTE 8@"
 Route9Name:          db "ROUTE 9@"
 Route10Name:         db "ROUTE 10@"
@@ -189,6 +198,8 @@ Route37Name:         db "ROUTE 37@"
 Route38Name:         db "ROUTE 38@"
 Route39Name:         db "ROUTE 39@"
 Route40Name:         db "ROUTE 40@"
+OlivineCaveName:     db "OLIVINE¯CAVE@"
+FantasticIdyllName:  db "FANTASTIC¯IDYLL@"
 Route41Name:         db "ROUTE 41@"
 Route42Name:         db "ROUTE 42@"
 Route43Name:         db "ROUTE 43@"
@@ -205,3 +216,4 @@ TohjoFallsName:      db "TOHJO FALLS@"
 UndergroundName:     db "UNDERGROUND@"
 BattleTowerName:     db "BATTLE¯TOWER@"
 SpecialMapName:      db "SPECIAL@"
+GlobalTerminalName:  db "GLOBAL¯TERMINAL@"

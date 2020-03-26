@@ -30,7 +30,7 @@
 	const FIRE_STONE   ; 16
 	const THUNDERSTONE ; 17
 	const WATER_STONE  ; 18
-	const ITEM_19      ; 19
+	const BIG_NUGGET   ; 19
 	const HP_UP        ; 1a
 	const PROTEIN      ; 1b
 	const IRON         ; 1c
@@ -50,12 +50,12 @@
 	const SUPER_REPEL  ; 2a
 	const MAX_REPEL    ; 2b
 	const DIRE_HIT     ; 2c
-	const ITEM_2D      ; 2d
+	const SWEET_HEART  ; 2d
 	const FRESH_WATER  ; 2e
 	const SODA_POP     ; 2f
 	const LEMONADE     ; 30
 	const X_ATTACK     ; 31
-	const ITEM_32      ; 32
+	const LAVA_COOKIE  ; 32
 	const X_DEFEND     ; 33
 	const X_SPEED      ; 34
 	const X_SPECIAL    ; 35
@@ -95,7 +95,7 @@
 	const BIG_MUSHROOM ; 57
 	const SILVERPOWDER ; 58
 	const BLU_APRICORN ; 59
-	const ITEM_5A      ; 5a
+	const DUSK_BALL    ; 5a
 	const AMULET_COIN  ; 5b
 	const YLW_APRICORN ; 5c
 	const GRN_APRICORN ; 5d
@@ -103,7 +103,7 @@
 	const MYSTIC_WATER ; 5f
 	const TWISTEDSPOON ; 60
 	const WHT_APRICORN ; 61
-	const BLACKBELT_I  ; 62
+	const BLACKBELT    ; 62
 	const BLK_APRICORN ; 63
 	const ITEM_64      ; 64
 	const PNK_APRICORN ; 65
@@ -199,7 +199,7 @@
 
 add_tm: MACRO
 if !DEF(TM01)
-TM01 EQU const_value
+TM01 = const_value
 	enum_start 1
 endc
 	define _\@_1, "TM_\1"
@@ -260,11 +260,11 @@ ENDM
 	add_tm FIRE_PUNCH   ; f0
 	add_tm FURY_CUTTER  ; f1
 	add_tm NIGHTMARE    ; f2
-NUM_TMS EQU const_value - TM01 - 2 ; discount ITEM_C3 and ITEM_DC
+NUM_TMS = const_value - TM01 - 2 ; discount ITEM_C3 and ITEM_DC
 
 add_hm: MACRO
 if !DEF(HM01)
-HM01 EQU const_value
+HM01 = const_value
 endc
 	define _\@_1, "HM_\1"
 	const _\@_1
@@ -278,7 +278,7 @@ ENDM
 	add_hm FLASH        ; f7
 	add_hm WHIRLPOOL    ; f8
 	add_hm WATERFALL    ; f9
-NUM_HMS EQU const_value - HM01
+NUM_HMS = const_value - HM01
 
 add_mt: MACRO
 	enum \1_TMNUM
@@ -287,7 +287,7 @@ ENDM
 	add_mt FLAMETHROWER
 	add_mt THUNDERBOLT
 	add_mt ICE_BEAM
-NUM_TM_HM_TUTOR EQU __enum__ - 1
+NUM_TM_HM_TUTOR = __enum__ + -1
 
 	const ITEM_FA       ; fa
 

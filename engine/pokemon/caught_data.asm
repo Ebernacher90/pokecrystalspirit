@@ -76,7 +76,7 @@ CheckPartyFullAfterContest:
 	call GetPartyLocation
 	ld a, [hl]
 	and CAUGHT_GENDER_MASK
-	ld b, LANDMARK_NATIONAL_PARK
+	ld b, NATIONAL_PARK
 	or b
 	ld [hl], a
 	xor a
@@ -136,7 +136,7 @@ CheckPartyFullAfterContest:
 	ld hl, sBoxMon1CaughtLocation
 	ld a, [hl]
 	and CAUGHT_GENDER_MASK
-	ld b, LANDMARK_NATIONAL_PARK
+	ld b, NATIONAL_PARK
 	or b
 	ld [hl], a
 	call CloseSRAM
@@ -152,12 +152,13 @@ CheckPartyFullAfterContest:
 	ret
 
 GiveANickname_YesNo:
-	ld hl, CaughtAskNicknameText
+	ld hl, TextJump_GiveANickname
 	call PrintText
 	jp YesNoBox
 
-CaughtAskNicknameText:
-	text_far _CaughtAskNicknameText
+TextJump_GiveANickname:
+	; Give a nickname to the @  you received?
+	text_far UnknownText_0x1c12fc
 	text_end
 
 SetCaughtData:
@@ -226,7 +227,7 @@ SetGiftPartyMonCaughtData:
 SetGiftMonCaughtData:
 	xor a
 	ld [hli], a
-	ld a, LANDMARK_GIFT
+	ld a, GIFT_LOCATION
 	rrc b
 	or b
 	ld [hl], a

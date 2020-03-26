@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const TEAMROCKETBASEB3F_LANCE
 	const TEAMROCKETBASEB3F_ROCKET1
 	const TEAMROCKETBASEB3F_MOLTRES
@@ -25,7 +25,7 @@ TeamRocketBaseB3F_MapScripts:
 	callback MAPCALLBACK_TILES, .CheckGiovanniDoor
 
 .LanceGetsPassword:
-	prioritysjump LanceGetPasswordScript
+	priorityjump LanceGetPasswordScript
 	end
 
 .DummyScene1:
@@ -86,7 +86,7 @@ TeamRocketBaseB3FRocketScript:
 
 RocketBaseBossLeft:
 	applymovement PLAYER, MovementData_0x6e133
-	sjump RocketBaseBoss
+	jump RocketBaseBoss
 
 RocketBaseBossRight:
 	applymovement PLAYER, MovementData_0x6e13a
@@ -180,7 +180,7 @@ TeamRocketBaseB3FLockedDoor:
 	iffalse .NeedsPassword
 	checkevent EVENT_LEARNED_RATICATE_TAIL
 	iffalse .NeedsPassword
-	sjump .OpenSesame
+	jump .OpenSesame
 
 .NeedsPassword:
 	writetext TeamRocketBaseB3FLockedDoorNeedsPasswordText

@@ -1,8 +1,8 @@
 NAMINGSCREEN_CURSOR     EQU $7e
 
-NAMINGSCREEN_BORDER     EQU "■" ; $60
-NAMINGSCREEN_MIDDLELINE EQU "→" ; $eb
-NAMINGSCREEN_UNDERLINE  EQU "<DOT>" ; $f2
+NAMINGSCREEN_BORDER     EQUS "\"■\"" ; $d7
+NAMINGSCREEN_MIDDLELINE EQUS "\"→\"" ; $eb
+NAMINGSCREEN_UNDERLINE  EQUS "\"<DOT>\"" ; $d9
 
 _NamingScreen:
 	call DisableSpriteUpdates
@@ -167,7 +167,7 @@ NamingScreen:
 	ld [hl], a
 	depixel 4, 4, 4, 0
 	ld a, SPRITE_ANIM_INDEX_RED_WALK
-	call InitSpriteAnimStruct
+	call _InitSpriteAnimStruct
 	ld hl, SPRITEANIMSTRUCT_FRAMESET_ID
 	add hl, bc
 	ld [hl], $0
@@ -219,7 +219,7 @@ NamingScreen:
 .not_kris
 	ld a, b
 	depixel 4, 4, 4, 0
-	call InitSpriteAnimStruct
+	call _InitSpriteAnimStruct
 	ret
 
 .StoreMonIconParams:
@@ -385,7 +385,7 @@ NamingScreenJoypadLoop:
 	ld d, 8 * 8
 .got_cursor_position
 	ld a, SPRITE_ANIM_INDEX_NAMING_SCREEN_CURSOR
-	call InitSpriteAnimStruct
+	call _InitSpriteAnimStruct
 	ld a, c
 	ld [wNamingScreenCursorObjectPointer], a
 	ld a, b
@@ -851,7 +851,7 @@ LoadNamingScreenGFX:
 	lb bc, BANK(NamingScreenGFX_UnderLine), 1
 	call Get1bpp
 
-	ld de, vTiles2 tile NAMINGSCREEN_BORDER
+	ld de, vTiles0 tile NAMINGSCREEN_BORDER
 	ld hl, NamingScreenGFX_Border
 	ld bc, 1 tiles
 	ld a, BANK(NamingScreenGFX_Border)
@@ -940,7 +940,7 @@ _ComposeMailMessage:
 	; init mail icon
 	depixel 3, 2
 	ld a, SPRITE_ANIM_INDEX_PARTY_MON
-	call InitSpriteAnimStruct
+	call _InitSpriteAnimStruct
 
 	ld hl, SPRITEANIMSTRUCT_ANIM_SEQ_ID
 	add hl, bc
@@ -1068,7 +1068,7 @@ INCBIN "gfx/icons/mail_big.2bpp"
 .init_blinking_cursor
 	depixel 9, 2
 	ld a, SPRITE_ANIM_INDEX_COMPOSE_MAIL_CURSOR
-	call InitSpriteAnimStruct
+	call _InitSpriteAnimStruct
 	ld a, c
 	ld [wNamingScreenCursorObjectPointer], a
 	ld a, b

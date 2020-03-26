@@ -107,6 +107,9 @@
 	const MUSIC_SUICUNE_BATTLE               ; 64
 	const MUSIC_BATTLE_TOWER_LOBBY           ; 65
 	const MUSIC_MOBILE_CENTER                ; 66
+	const MUSIC_ROUTE_47                     ; 67
+	const MUSIC_SEVENNATIONARMY              ; 68
+	const MUSIC_LOSTWOODS					 ; 69
 
 ; GetMapMusic picks music for this value (see home/map.asm)
 MUSIC_MAHOGANY_MART EQU $64

@@ -1,6 +1,6 @@
 	db BELLOSSOM ; 182
 
-	db  75,  80,  85,  50,  90, 100
+	db  75,  80,  95,  50,  90, 100
 	;   hp  atk  def  spd  sat  sdf
 
 	db GRASS, GRASS ; type
@@ -12,7 +12,7 @@
 	db 20 ; step cycles to hatch
 	db 5 ; unknown 2
 	INCBIN "gfx/pokemon/bellossom/front.dimensions"
-	dw NULL, NULL ; unused (beta front/back pics)
+	db 0, 0, 0, 0 ; padding
 	db GROWTH_MEDIUM_SLOW ; growth rate
 	dn EGG_PLANT, EGG_PLANT ; egg groups
 

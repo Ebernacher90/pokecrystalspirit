@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const OLIVINEGOODRODHOUSE_FISHING_GURU
 
 OlivineGoodRodHouse_MapScripts:
@@ -15,7 +15,7 @@ GoodRodGuru:
 	yesorno
 	iffalse .DontWantIt
 	writetext GiveGoodRodText
-	promptbutton
+	buttonsound
 	verbosegiveitem GOOD_ROD
 	writetext GaveGoodRodText
 	waitbutton

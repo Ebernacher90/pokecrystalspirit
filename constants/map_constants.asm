@@ -143,8 +143,8 @@ ENDM
 	map_const UNDERGROUND_PATH,                             3, 14 ; 86
 	map_const ROCK_TUNNEL_1F,                              15, 18 ; 87
 	map_const ROCK_TUNNEL_B1F,                             15, 18 ; 88
-	map_const SAFARI_ZONE_FUCHSIA_GATE_BETA,                5,  4 ; 89
-	map_const SAFARI_ZONE_BETA,                            10, 18 ; 90
+	map_const SAFARI_ZONE_FUCHSIA_GATE_BETA,                 8,  8 ; 89
+	map_const SAFARI_ZONE_BETA,                            25, 30 ; 90
 	map_const VICTORY_ROAD,                                10, 36 ; 91
 
 	newgroup                                                      ;  4
@@ -194,7 +194,7 @@ ENDM
 	map_const CERULEAN_MART,                                6,  4 ;  7
 	map_const ROUTE_10_POKECENTER_1F,                       5,  4 ;  8
 	map_const ROUTE_10_POKECENTER_2F_BETA,                  8,  4 ;  9
-	map_const POWER_PLANT,                                 10,  9 ; 10
+	map_const POWER_PLANT,                                 12,  9 ; 10
 	map_const BILLS_HOUSE,                                  4,  4 ; 11
 	map_const ROUTE_4,                                     20,  9 ; 12
 	map_const ROUTE_9,                                     30,  9 ; 13
@@ -202,6 +202,10 @@ ENDM
 	map_const ROUTE_24,                                    10,  9 ; 15
 	map_const ROUTE_25,                                    30,  9 ; 16
 	map_const CERULEAN_CITY,                               20, 18 ; 17
+	map_const POWER_PLANT_1F,                               4,  4 ; 18
+	map_const POWER_PLANT_2F,                              20, 15 ; 19
+    map_const CERULEAN_CAVE_1F,                            20, 15 ; 20
+	map_const CERULEAN_CAVE_2F,                            25, 20 ; 21
 
 	newgroup                                                      ;  8
 
@@ -304,6 +308,8 @@ ENDM
 	map_const PEWTER_POKECENTER_1F,                         5,  4 ;  6
 	map_const PEWTER_POKECENTER_2F_BETA,                    8,  4 ;  7
 	map_const PEWTER_SNOOZE_SPEECH_HOUSE,                   4,  4 ;  8
+    map_const PEWTER_MUSEUM_1F,                            10,  4 ;  9
+	map_const PEWTER_MUSEUM_2F,                             7,  4 ; 10
 
 	newgroup                                                      ; 15
 
@@ -408,6 +414,8 @@ ENDM
 	map_const ROUTE_16_GATE,                                5,  4 ; 24
 	map_const ROUTE_7_SAFFRON_GATE,                         5,  4 ; 25
 	map_const ROUTE_17_ROUTE_18_GATE,                       5,  4 ; 26
+	map_const UNDERGROUND_PATH_ROUTE_7,                     4,  4 ; 27
+	map_const UNDERGROUND_PATH_WEST_EAST,                  25,  4 ; 28
 
 	newgroup                                                      ; 22
 
@@ -427,6 +435,10 @@ ENDM
 	map_const BATTLE_TOWER_HALLWAY,                        11,  2 ; 14
 	map_const ROUTE_40_BATTLE_TOWER_GATE,                   5,  4 ; 15
 	map_const BATTLE_TOWER_OUTSIDE,                        10, 14 ; 16
+	map_const OLIVINE_CAVE_1F,                              6,  6 ; 17
+	map_const OLIVINE_CAVE_B1F,                            15,  8 ; 18
+	map_const MOBLINS_HIDEOUT,							   15,  8 ; 19
+    map_const FANTASTIC_IDYLL,                              9,  9 ; 20
 
 	newgroup                                                      ; 23
 
@@ -451,7 +463,7 @@ ENDM
 	map_const ROUTE_29,                                    30,  9 ;  3
 	map_const NEW_BARK_TOWN,                               10,  9 ;  4
 	map_const ELMS_LAB,                                     5,  6 ;  5
-	map_const PLAYERS_HOUSE_1F,                             5,  4 ;  6
+	map_const PLAYERS_HOUSE_1F,                             9,  7 ;  6
 	map_const PLAYERS_HOUSE_2F,                             4,  3 ;  7
 	map_const PLAYERS_NEIGHBORS_HOUSE,                      4,  4 ;  8
 	map_const ELMS_HOUSE,                                   4,  4 ;  9
@@ -491,3 +503,8 @@ ENDM
 	map_const ROUTE_30_BERRY_HOUSE,                         4,  4 ;  9
 	map_const MR_POKEMONS_HOUSE,                            4,  4 ; 10
 	map_const ROUTE_31_VIOLET_GATE,                         5,  4 ; 11
+	
+	newgroup                                                      ; 27
+	
+	map_const GLOBAL_TERMINAL_OUTSIDE,                     10, 13 ;  3
+	map_const GLOBAL_TERMINAL_1F,                           9,  6 ;  4

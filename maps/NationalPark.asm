@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const NATIONALPARK_LASS1
 	const NATIONALPARK_POKEFAN_F1
 	const NATIONALPARK_TEACHER1
@@ -31,7 +31,7 @@ NationalParkTeacher1Script:
 	checkevent EVENT_GOT_QUICK_CLAW
 	iftrue .GotQuickClaw
 	writetext NationalParkTeacher1Text
-	promptbutton
+	buttonsound
 	verbosegiveitem QUICK_CLAW
 	iffalse .NoRoom
 	setevent EVENT_GOT_QUICK_CLAW
@@ -73,7 +73,7 @@ TrainerSchoolboyJack1:
 	trainer SCHOOLBOY, JACK1, EVENT_BEAT_SCHOOLBOY_JACK, SchoolboyJack1SeenText, SchoolboyJack1BeatenText, 0, .Script
 
 .Script:
-	loadvar VAR_CALLERID, PHONE_SCHOOLBOY_JACK
+	writecode VAR_CALLERID, PHONE_SCHOOLBOY_JACK
 	endifjustbattled
 	opentext
 	checkflag ENGINE_JACK
@@ -82,11 +82,11 @@ TrainerSchoolboyJack1:
 	iftrue .NumberAccepted
 	checkevent EVENT_JACK_ASKED_FOR_PHONE_NUMBER
 	iftrue .AskAgain
-	writetext SchoolboyJackTradeMonText
-	promptbutton
+	writetext UnknownText_0x5c4f3
+	buttonsound
 	setevent EVENT_JACK_ASKED_FOR_PHONE_NUMBER
 	scall .AskNumber1
-	sjump .RequestNumber
+	jump .RequestNumber
 
 .AskAgain:
 	scall .AskNumber2
@@ -94,14 +94,14 @@ TrainerSchoolboyJack1:
 	askforphonenumber PHONE_SCHOOLBOY_JACK
 	ifequal PHONE_CONTACTS_FULL, .PhoneFull
 	ifequal PHONE_CONTACT_REFUSED, .NumberDeclined
-	gettrainername STRING_BUFFER_3, SCHOOLBOY, JACK1
+	trainertotext SCHOOLBOY, JACK1, MEM_BUFFER_0
 	scall .RegisteredNumber
-	sjump .NumberAccepted
+	jump .NumberAccepted
 
 .Rematch:
 	scall .RematchStd
 	winlosstext SchoolboyJack1BeatenText, 0
-	readmem wJackFightCount
+	copybytetovar wJackFightCount
 	ifequal 4, .Fight4
 	ifequal 3, .Fight3
 	ifequal 2, .Fight2
@@ -123,7 +123,7 @@ TrainerSchoolboyJack1:
 	loadtrainer SCHOOLBOY, JACK1
 	startbattle
 	reloadmapafterbattle
-	loadmem wJackFightCount, 1
+	loadvar wJackFightCount, 1
 	clearflag ENGINE_JACK
 	end
 
@@ -131,7 +131,7 @@ TrainerSchoolboyJack1:
 	loadtrainer SCHOOLBOY, JACK2
 	startbattle
 	reloadmapafterbattle
-	loadmem wJackFightCount, 2
+	loadvar wJackFightCount, 2
 	clearflag ENGINE_JACK
 	end
 
@@ -139,7 +139,7 @@ TrainerSchoolboyJack1:
 	loadtrainer SCHOOLBOY, JACK3
 	startbattle
 	reloadmapafterbattle
-	loadmem wJackFightCount, 3
+	loadvar wJackFightCount, 3
 	clearflag ENGINE_JACK
 	end
 
@@ -147,7 +147,7 @@ TrainerSchoolboyJack1:
 	loadtrainer SCHOOLBOY, JACK4
 	startbattle
 	reloadmapafterbattle
-	loadmem wJackFightCount, 4
+	loadvar wJackFightCount, 4
 	clearflag ENGINE_JACK
 	end
 
@@ -201,7 +201,7 @@ TrainerPokefanfBeverly1:
 	trainer POKEFANF, BEVERLY1, EVENT_BEAT_POKEFANF_BEVERLY, PokefanfBeverly1SeenText, PokefanfBeverly1BeatenText, 0, .Script
 
 .Script:
-	loadvar VAR_CALLERID, PHONE_POKEFAN_BEVERLY
+	writecode VAR_CALLERID, PHONE_POKEFAN_BEVERLY
 	endifjustbattled
 	opentext
 	checkflag ENGINE_BEVERLY_HAS_NUGGET
@@ -212,11 +212,11 @@ TrainerPokefanfBeverly1:
 	iffalse .NoMarill
 	checkevent EVENT_BEVERLY_ASKED_FOR_PHONE_NUMBER
 	iftrue .AskAgain
-	writetext PokefanBeverlyCuteMonText
-	promptbutton
+	writetext UnknownText_0x5c5bd
+	buttonsound
 	setevent EVENT_BEVERLY_ASKED_FOR_PHONE_NUMBER
 	scall .AskNumber1
-	sjump .RequestNumber
+	jump .RequestNumber
 
 .AskAgain:
 	scall .AskNumber2
@@ -224,22 +224,22 @@ TrainerPokefanfBeverly1:
 	askforphonenumber PHONE_POKEFAN_BEVERLY
 	ifequal PHONE_CONTACTS_FULL, .PhoneFull
 	ifequal PHONE_CONTACT_REFUSED, .NumberDeclined
-	gettrainername STRING_BUFFER_3, POKEFANF, BEVERLY1
+	trainertotext POKEFANF, BEVERLY1, MEM_BUFFER_0
 	scall .RegisteredNumber
-	sjump .NumberAccepted
+	jump .NumberAccepted
 
 .GiveNugget:
 	scall .Gift
 	verbosegiveitem NUGGET
 	iffalse .NoRoom
 	clearflag ENGINE_BEVERLY_HAS_NUGGET
-	sjump .NumberAccepted
+	jump .NumberAccepted
 
 .NoRoom:
-	sjump .PackFull
+	jump .PackFull
 
 .NoMarill:
-	writetext PokefanFBeverlyMarillFriendText
+	writetext UnknownText_0x5c68a
 	waitbutton
 	closetext
 	end
@@ -405,7 +405,7 @@ SchoolboyJack1BeatenText:
 	text "Wha-wha-what?"
 	done
 
-SchoolboyJackTradeMonText:
+UnknownText_0x5c4f3:
 	text "There is a lot"
 	line "to learn."
 
@@ -432,7 +432,7 @@ PokefanfBeverly1BeatenText:
 	line "pride, but…"
 	done
 
-PokefanBeverlyCuteMonText:
+UnknownText_0x5c5bd:
 	text "I must say, your"
 	line "#MON are quite"
 	cont "cute, too."
@@ -459,7 +459,7 @@ PokefanmWilliamAfterBattleText:
 	line "being most lovely."
 	done
 
-PokefanFBeverlyMarillFriendText:
+UnknownText_0x5c68a:
 	text "My friend keeps a"
 	line "MARILL!"
 

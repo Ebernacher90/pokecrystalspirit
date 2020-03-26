@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const ROUTE43MAHOGANYGATE_OFFICER
 
 Route43MahoganyGate_MapScripts:

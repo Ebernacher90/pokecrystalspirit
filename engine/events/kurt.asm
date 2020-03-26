@@ -1,19 +1,21 @@
 Kurt_PrintTextWhichApricorn:
-	ld hl, .WhichApricornText
+	ld hl, .Text
 	call PrintText
 	ret
 
-.WhichApricornText:
-	text_far _WhichApricornText
+.Text:
+	; Which APRICORN should I use?
+	text_far UnknownText_0x1bc06b
 	text_end
 
 Kurt_PrintTextHowMany:
-	ld hl, .HowManyShouldIMakeText
+	ld hl, .Text
 	call PrintText
 	ret
 
-.HowManyShouldIMakeText:
-	text_far _HowManyShouldIMakeText
+.Text:
+	; How many should I make?
+	text_far UnknownText_0x1bc089
 	text_end
 
 SelectApricornForKurt:
@@ -85,8 +87,8 @@ Kurt_SelectApricorn:
 
 .MenuData:
 	db SCROLLINGMENU_DISPLAY_ARROWS ; flags
-	db 4, 7 ; rows, columns
-	db SCROLLINGMENU_ITEMS_NORMAL ; item format
+	db 4, 7
+	db 1
 	dbw 0, wBuffer1
 	dba .Name
 	dba .Quantity

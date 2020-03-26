@@ -1,5 +1,3 @@
-HALLOFFAME_COLON EQU $63
-
 HallOfFame::
 	call HallOfFame_FadeOutMusic
 	ld a, [wStatusFlags]
@@ -449,17 +447,17 @@ DisplayHOFMon:
 	ld bc, MON_NAME_LENGTH - 1
 	call CopyBytes
 	ld a, "@"
-	ld [wStringBuffer2 + MON_NAME_LENGTH - 1], a
+	ld [wStringBuffer2 + 10], a
 	hlcoord 0, 0
 	ld bc, SCREEN_WIDTH * SCREEN_HEIGHT
 	ld a, " "
 	call ByteFill
 	hlcoord 0, 0
 	lb bc, 3, SCREEN_WIDTH - 2
-	call Textbox
+	call TextBox
 	hlcoord 0, 12
 	lb bc, 4, SCREEN_WIDTH - 2
-	call Textbox
+	call TextBox
 	ld a, [wTempMonSpecies]
 	ld [wCurPartySpecies], a
 	ld [wDeciramBuffer], a
@@ -518,10 +516,6 @@ DisplayHOFMon:
 
 HOF_AnimatePlayerPic:
 	call ClearBGPalettes
-	ld hl, vTiles2 tile HALLOFFAME_COLON
-	ld de, FontExtra + 13 tiles ; "<COLON>"
-	lb bc, BANK(FontExtra), 1
-	call Request2bpp
 	hlcoord 0, 0
 	ld bc, SCREEN_WIDTH * SCREEN_HEIGHT
 	ld a, " "
@@ -567,10 +561,10 @@ HOF_AnimatePlayerPic:
 	ldh [hBGMapMode], a
 	hlcoord 0, 2
 	lb bc, 8, 9
-	call Textbox
+	call TextBox
 	hlcoord 0, 12
 	lb bc, 4, 18
-	call Textbox
+	call TextBox
 	hlcoord 2, 4
 	ld de, wPlayerName
 	call PlaceString
@@ -591,7 +585,7 @@ HOF_AnimatePlayerPic:
 	ld de, wGameTimeHours
 	lb bc, 2, 3
 	call PrintNum
-	ld [hl], HALLOFFAME_COLON
+	ld [hl], "<COLON>"
 	inc hl
 	ld de, wGameTimeMinutes
 	lb bc, PRINTNUM_LEADINGZEROS | 1, 2

@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const MRPOKEMONSHOUSE_GENTLEMAN
 	const MRPOKEMONSHOUSE_OAK
 
@@ -10,7 +10,7 @@ MrPokemonsHouse_MapScripts:
 	db 0 ; callbacks
 
 .MeetMrPokemon:
-	prioritysjump .MrPokemonEvent
+	priorityjump .MrPokemonEvent
 	end
 
 .DummyScene:
@@ -26,7 +26,7 @@ MrPokemonsHouse_MapScripts:
 	applymovement PLAYER, MrPokemonsHouse_PlayerWalksToMrPokemon
 	opentext
 	writetext MrPokemonIntroText2
-	promptbutton
+	buttonsound
 	waitsfx
 	giveitem MYSTERY_EGG
 	writetext MrPokemonsHouse_GotEggText
@@ -36,16 +36,16 @@ MrPokemonsHouse_MapScripts:
 	setevent EVENT_GOT_MYSTERY_EGG_FROM_MR_POKEMON
 	blackoutmod CHERRYGROVE_CITY
 	writetext MrPokemonIntroText3
-	promptbutton
+	buttonsound
 	turnobject MRPOKEMONSHOUSE_GENTLEMAN, RIGHT
 	writetext MrPokemonIntroText4
-	promptbutton
+	buttonsound
 	turnobject MRPOKEMONSHOUSE_GENTLEMAN, DOWN
 	turnobject MRPOKEMONSHOUSE_OAK, LEFT
 	writetext MrPokemonIntroText5
 	waitbutton
 	closetext
-	sjump MrPokemonsHouse_OakScript
+	jump MrPokemonsHouse_OakScript
 
 MrPokemonsHouse_MrPokemonScript:
 	faceplayer
@@ -72,7 +72,7 @@ MrPokemonsHouse_MrPokemonScript:
 	verbosegiveitem EXP_SHARE
 	iffalse .full
 	takeitem RED_SCALE
-	sjump .AlwaysNewDiscoveries
+	jump .AlwaysNewDiscoveries
 
 .refused
 	writetext MrPokemonText_Disappointed
@@ -87,7 +87,7 @@ MrPokemonsHouse_OakScript:
 	turnobject PLAYER, RIGHT
 	opentext
 	writetext MrPokemonsHouse_OakText1
-	promptbutton
+	buttonsound
 	waitsfx
 	writetext MrPokemonsHouse_GetDexText
 	playsound SFX_ITEM

@@ -80,7 +80,7 @@ BattleCommand_Spite:
 	ld a, d
 	ld [wDeciramBuffer], a
 	ld hl, SpiteEffectText
-	jp StdBattleTextbox
+	jp StdBattleTextBox
 
 .failed
 	jp PrintDidntAffect2

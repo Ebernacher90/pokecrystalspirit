@@ -1,6 +1,6 @@
 	db PIKACHU ; 025
 
-	db  35,  55,  30,  90,  50,  40
+	db  35,  55,  40,  90,  50,  50
 	;   hp  atk  def  spd  sat  sdf
 
 	db ELECTRIC, ELECTRIC ; type
@@ -12,7 +12,7 @@
 	db 10 ; step cycles to hatch
 	db 5 ; unknown 2
 	INCBIN "gfx/pokemon/pikachu/front.dimensions"
-	dw NULL, NULL ; unused (beta front/back pics)
+	db 0, 0, 0, 0 ; padding
 	db GROWTH_MEDIUM_FAST ; growth rate
 	dn EGG_GROUND, EGG_FAIRY ; egg groups
 

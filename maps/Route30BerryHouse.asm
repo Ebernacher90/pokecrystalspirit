@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const ROUTE30BERRYHOUSE_POKEFAN_M
 
 Route30BerryHouse_MapScripts:
@@ -12,7 +12,7 @@ Route30BerryHousePokefanMScript:
 	checkevent EVENT_GOT_BERRY_FROM_ROUTE_30_HOUSE
 	iftrue .GotBerry
 	writetext Route30BerrySpeechHouseMonEatBerriesText
-	promptbutton
+	buttonsound
 	verbosegiveitem BERRY
 	iffalse .NoRoom
 	setevent EVENT_GOT_BERRY_FROM_ROUTE_30_HOUSE

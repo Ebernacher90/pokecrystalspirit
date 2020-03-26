@@ -34,7 +34,7 @@ Tilesets::
 	tileset TilesetLighthouse
 	tileset TilesetPlayersRoom
 	tileset TilesetPokeComCenter
-	tileset TilesetBattleTowerInside
+	tileset TilesetBattleTower
 	tileset TilesetTower
 	tileset TilesetCave
 	tileset TilesetPark
@@ -49,3 +49,7 @@ Tilesets::
 	tileset TilesetKabutoWordRoom
 	tileset TilesetOmanyteWordRoom
 	tileset TilesetAerodactylWordRoom
+	tileset TilesetMuseum
+	tileset TilesetUnderground1
+	tileset TilesetGate1
+	tileset TilesetMoblinsCave

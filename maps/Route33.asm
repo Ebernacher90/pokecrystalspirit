@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const ROUTE33_POKEFAN_M
 	const ROUTE33_LASS
 	const ROUTE33_FRUIT_TREE
@@ -15,7 +15,7 @@ TrainerHikerAnthony:
 	trainer HIKER, ANTHONY2, EVENT_BEAT_HIKER_ANTHONY, HikerAnthony2SeenText, HikerAnthony2BeatenText, 0, .Script
 
 .Script:
-	loadvar VAR_CALLERID, PHONE_HIKER_ANTHONY
+	writecode VAR_CALLERID, PHONE_HIKER_ANTHONY
 	endifjustbattled
 	opentext
 	checkflag ENGINE_ANTHONY
@@ -27,10 +27,10 @@ TrainerHikerAnthony:
 	checkevent EVENT_ANTHONY_ASKED_FOR_PHONE_NUMBER
 	iftrue .AskAgain
 	writetext HikerAnthony2AfterText
-	promptbutton
+	buttonsound
 	setevent EVENT_ANTHONY_ASKED_FOR_PHONE_NUMBER
 	scall .AskNumber1
-	sjump .AskForPhoneNumber
+	jump .AskForPhoneNumber
 
 .AskAgain:
 	scall .AskNumber2
@@ -38,14 +38,14 @@ TrainerHikerAnthony:
 	askforphonenumber PHONE_HIKER_ANTHONY
 	ifequal PHONE_CONTACTS_FULL, .PhoneFull
 	ifequal PHONE_CONTACT_REFUSED, .NumberDeclined
-	gettrainername STRING_BUFFER_3, HIKER, ANTHONY2
+	trainertotext HIKER, ANTHONY2, MEM_BUFFER_0
 	scall .RegisteredNumber
-	sjump .NumberAccepted
+	jump .NumberAccepted
 
 .Rematch:
 	scall .RematchStd
 	winlosstext HikerAnthony2BeatenText, 0
-	readmem wAnthonyFightCount
+	copybytetovar wAnthonyFightCount
 	ifequal 4, .Fight4
 	ifequal 3, .Fight3
 	ifequal 2, .Fight2
@@ -67,7 +67,7 @@ TrainerHikerAnthony:
 	loadtrainer HIKER, ANTHONY2
 	startbattle
 	reloadmapafterbattle
-	loadmem wAnthonyFightCount, 1
+	loadvar wAnthonyFightCount, 1
 	clearflag ENGINE_ANTHONY
 	end
 
@@ -75,7 +75,7 @@ TrainerHikerAnthony:
 	loadtrainer HIKER, ANTHONY1
 	startbattle
 	reloadmapafterbattle
-	loadmem wAnthonyFightCount, 2
+	loadvar wAnthonyFightCount, 2
 	clearflag ENGINE_ANTHONY
 	end
 
@@ -83,7 +83,7 @@ TrainerHikerAnthony:
 	loadtrainer HIKER, ANTHONY3
 	startbattle
 	reloadmapafterbattle
-	loadmem wAnthonyFightCount, 3
+	loadvar wAnthonyFightCount, 3
 	clearflag ENGINE_ANTHONY
 	end
 
@@ -91,7 +91,7 @@ TrainerHikerAnthony:
 	loadtrainer HIKER, ANTHONY4
 	startbattle
 	reloadmapafterbattle
-	loadmem wAnthonyFightCount, 4
+	loadvar wAnthonyFightCount, 4
 	clearflag ENGINE_ANTHONY
 	end
 

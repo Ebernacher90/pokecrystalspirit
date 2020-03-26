@@ -1,24 +1,24 @@
 BethPhoneCalleeScript:
-	gettrainername STRING_BUFFER_3, COOLTRAINERF, BETH1
+	trainertotext COOLTRAINERF, BETH1, MEM_BUFFER_0
 	checkflag ENGINE_BETH
 	iftrue .WantsBattle
 	farscall PhoneScript_AnswerPhone_Female
 	checkflag ENGINE_BETH_FRIDAY_AFTERNOON
 	iftrue .NotFriday
-	readvar VAR_WEEKDAY
+	checkcode VAR_WEEKDAY
 	ifnotequal FRIDAY, .NotFriday
 	checktime DAY
 	iftrue BethFridayAfternoon
 
 .NotFriday:
-	farsjump BethHangUpScript
+	farjump UnknownScript_0xa0918
 
 .WantsBattle:
-	getlandmarkname STRING_BUFFER_5, LANDMARK_ROUTE_26
-	farsjump BethBattleReminderScript
+	landmarktotext ROUTE_26, MEM_BUFFER_2
+	farjump BethBattleReminderScript
 
 BethPhoneCallerScript:
-	gettrainername STRING_BUFFER_3, COOLTRAINERF, BETH1
+	trainertotext COOLTRAINERF, BETH1, MEM_BUFFER_0
 	farscall PhoneScript_GreetPhone_Female
 	checkflag ENGINE_BETH
 	iftrue .Generic
@@ -28,12 +28,12 @@ BethPhoneCallerScript:
 	ifequal 0, BethWantsBattle
 
 .Generic:
-	farsjump Phone_GenericCall_Female
+	farjump Phone_GenericCall_Female
 
 BethFridayAfternoon:
 	setflag ENGINE_BETH_FRIDAY_AFTERNOON
 
 BethWantsBattle:
-	getlandmarkname STRING_BUFFER_5, LANDMARK_ROUTE_26
+	landmarktotext ROUTE_26, MEM_BUFFER_2
 	setflag ENGINE_BETH
-	farsjump PhoneScript_WantsToBattle_Female
+	farjump PhoneScript_WantsToBattle_Female

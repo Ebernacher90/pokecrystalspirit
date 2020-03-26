@@ -34,7 +34,7 @@ NPCTrade::
 	ld b, SET_FLAG
 	call TradeFlagAction
 
-	ld hl, NPCTradeCableText
+	ld hl, ConnectLinkCableText
 	call PrintText
 
 	call DoNPCTrade
@@ -405,38 +405,39 @@ PrintTradeText:
 TradeTexts:
 ; entries correspond to TRADE_DIALOG_* × TRADE_DIALOGSET_* constants
 ; TRADE_DIALOG_INTRO
-	dw NPCTradeIntroText1
-	dw NPCTradeIntroText2
-	dw NPCTradeIntroText2
-	dw NPCTradeIntroText3
+	dw TradeIntroText1
+	dw TradeIntroText2
+	dw TradeIntroText3
+	dw TradeIntroText4
 ; TRADE_DIALOG_CANCEL
-	dw NPCTradeCancelText1
-	dw NPCTradeCancelText2
-	dw NPCTradeCancelText2
-	dw NPCTradeCancelText3
+	dw TradeCancelText1
+	dw TradeCancelText2
+	dw TradeCancelText3
+	dw TradeCancelText4
 ; TRADE_DIALOG_WRONG
-	dw NPCTradeWrongText1
-	dw NPCTradeWrongText2
-	dw NPCTradeWrongText2
-	dw NPCTradeWrongText3
+	dw TradeWrongText1
+	dw TradeWrongText2
+	dw TradeWrongText3
+	dw TradeWrongText4
 ; TRADE_DIALOG_COMPLETE
-	dw NPCTradeCompleteText1
-	dw NPCTradeCompleteText2
-	dw NPCTradeCompleteText4
-	dw NPCTradeCompleteText3
+	dw TradeCompleteText1
+	dw TradeCompleteText2
+	dw TradeCompleteText3
+	dw TradeCompleteText4
 ; TRADE_DIALOG_AFTER
-	dw NPCTradeAfterText1
-	dw NPCTradeAfterText2
-	dw NPCTradeAfterText4
-	dw NPCTradeAfterText3
+	dw TradeAfterText1
+	dw TradeAfterText2
+	dw TradeAfterText3
+	dw TradeAfterText4
 
-NPCTradeCableText:
-	text_far _NPCTradeCableText
+ConnectLinkCableText:
+	; OK, connect the Game Link Cable.
+	text_far UnknownText_0x1bd407
 	text_end
 
 TradedForText:
 	; traded givemon for getmon
-	text_far Text_NPCTraded
+	text_far UnknownText_0x1bd429
 	text_asm
 	ld de, MUSIC_NONE
 	call PlayMusic
@@ -445,73 +446,95 @@ TradedForText:
 	ret
 
 .done
-	text_far _NPCTradeFanfareText
+	; sound_dex_fanfare_80_109
+	; text_pause
+	text_far UnknownText_0x1bd445
 	text_end
 
-NPCTradeIntroText1:
-	text_far _NPCTradeIntroText1
+TradeIntroText1:
+	; I collect #MON. Do you have @ ? Want to trade it for my @ ?
+	text_far UnknownText_0x1bd449
 	text_end
 
-NPCTradeCancelText1:
-	text_far _NPCTradeCancelText1
+TradeCancelText1:
+	; You don't want to trade? Aww…
+	text_far UnknownText_0x1bd48c
 	text_end
 
-NPCTradeWrongText1:
-	text_far _NPCTradeWrongText1
+TradeWrongText1:
+	; Huh? That's not @ .  What a letdown…
+	text_far UnknownText_0x1bd4aa
 	text_end
 
-NPCTradeCompleteText1:
-	text_far _NPCTradeCompleteText1
+TradeCompleteText1:
+	; Yay! I got myself @ ! Thanks!
+	text_far UnknownText_0x1bd4d2
 	text_end
 
-NPCTradeAfterText1:
-	text_far _NPCTradeAfterText1
+TradeAfterText1:
+	; Hi, how's my old @  doing?
+	text_far UnknownText_0x1bd4f4
 	text_end
 
-NPCTradeIntroText2:
-	text_far _NPCTradeIntroText2
+TradeIntroText2:
+TradeIntroText3:
+	; Hi, I'm looking for this #MON. If you have @ , would you trade it for my @ ?
+	text_far UnknownText_0x1bd512
 	text_end
 
-NPCTradeCancelText2:
-	text_far _NPCTradeCancelText2
+TradeCancelText2:
+TradeCancelText3:
+	; You don't have one either? Gee, that's really disappointing…
+	text_far UnknownText_0x1bd565
 	text_end
 
-NPCTradeWrongText2:
-	text_far _NPCTradeWrongText2
+TradeWrongText2:
+TradeWrongText3:
+	; You don't have @ ? That's too bad, then.
+	text_far UnknownText_0x1bd5a1
 	text_end
 
-NPCTradeCompleteText2:
-	text_far _NPCTradeCompleteText2
+TradeCompleteText2:
+	; Great! Thank you! I finally got @ .
+	text_far UnknownText_0x1bd5cc
 	text_end
 
-NPCTradeAfterText2:
-	text_far _NPCTradeAfterText2
+TradeAfterText2:
+	; Hi! The @ you traded me is doing great!
+	text_far UnknownText_0x1bd5f4
 	text_end
 
-NPCTradeIntroText3:
-	text_far _NPCTradeIntroText3
+TradeIntroText4:
+	; 's cute, but I don't have it. Do you have @ ? Want to trade it for my @ ?
+	text_far UnknownText_0x1bd621
 	text_end
 
-NPCTradeCancelText3:
-	text_far _NPCTradeCancelText3
+TradeCancelText4:
+	; You don't want to trade? Oh, darn…
+	text_far UnknownText_0x1bd673
 	text_end
 
-NPCTradeWrongText3:
-	text_far _NPCTradeWrongText3
+TradeWrongText4:
+	; That's not @ . Please trade with me if you get one.
+	text_far UnknownText_0x1bd696
 	text_end
 
-NPCTradeCompleteText3:
-	text_far _NPCTradeCompleteText3
+TradeCompleteText4:
+	; Wow! Thank you! I always wanted @ !
+	text_far UnknownText_0x1bd6cd
 	text_end
 
-NPCTradeAfterText3:
-	text_far _NPCTradeAfterText3
+TradeAfterText4:
+	; How is that @  I traded you doing? Your @ 's so cute!
+	text_far UnknownText_0x1bd6f5
 	text_end
 
-NPCTradeCompleteText4:
-	text_far _NPCTradeCompleteText4
+TradeCompleteText3:
+	; Uh? What happened?
+	text_far UnknownText_0x1bd731
 	text_end
 
-NPCTradeAfterText4:
-	text_far _NPCTradeAfterText4
+TradeAfterText3:
+	; Trading is so odd… I still have a lot to learn about it.
+	text_far UnknownText_0x1bd745
 	text_end

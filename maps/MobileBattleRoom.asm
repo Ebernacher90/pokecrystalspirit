@@ -6,7 +6,7 @@ MobileBattleRoom_MapScripts:
 	db 0 ; callbacks
 
 .InitializeMobileBattleRoom:
-	prioritysjump .InitializeAndPreparePokecenter2F
+	priorityjump .InitializeAndPreparePokecenter2F
 	end
 
 .DummyScene:
@@ -25,7 +25,7 @@ MobileBattleRoomConsoleScript:
 	iffalse .false
 	ifequal $1, .one_
 	ifequal $2, .two_
-	sjump .false
+	jump .false
 
 .one_
 	writetext MobileBattleRoom_HealText

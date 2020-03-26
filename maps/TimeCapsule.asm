@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const TIMECAPSULE_CHRIS1
 	const TIMECAPSULE_CHRIS2
 
@@ -11,7 +11,7 @@ TimeCapsule_MapScripts:
 	callback MAPCALLBACK_OBJECTS, .SetWhichChris
 
 .InitializeTimeCapsule:
-	prioritysjump .InitializeAndPreparePokecenter2F
+	priorityjump .InitializeAndPreparePokecenter2F
 	end
 
 .DummyScene:

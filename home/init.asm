@@ -1,12 +1,12 @@
 Reset::
 	di
-	call InitSound
+	call MapSetup_Sound_Off
 	xor a
 	ldh [hMapAnims], a
 	call ClearPalettes
 	xor a
 	ldh [rIF], a
-	ld a, 1 << VBLANK
+	ld a, 1 ; VBlank int
 	ldh [rIE], a
 	ei
 
@@ -154,7 +154,7 @@ Init::
 
 	xor a
 	ldh [rIF], a
-	ld a, IE_DEFAULT
+	ld a, %1111 ; VBlank, LCDStat, Timer, Serial interrupts
 	ldh [rIE], a
 	ei
 
@@ -162,7 +162,7 @@ Init::
 
 	predef InitSGBBorder ; SGB init
 
-	call InitSound
+	call MapSetup_Sound_Off
 	xor a
 	ld [wMapMusic], a
 	jp GameInit

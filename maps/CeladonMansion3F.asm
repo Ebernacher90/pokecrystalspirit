@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const CELADONMANSION3F_COOLTRAINER_M
 	const CELADONMANSION3F_GYM_GUY
 	const CELADONMANSION3F_SUPER_NERD
@@ -13,19 +13,19 @@ GameFreakGameDesignerScript:
 	faceplayer
 	opentext
 	writetext GameFreakGameDesignerText
-	readvar VAR_DEXCAUGHT
+	checkcode VAR_DEXCAUGHT
 	ifgreater NUM_POKEMON - 2 - 1, .CompletedPokedex ; ignore Mew and Celebi
 	waitbutton
 	closetext
 	end
 
 .CompletedPokedex:
-	promptbutton
+	buttonsound
 	writetext GameFreakGameDesignerCompletedPokedexText
 	playsound SFX_DEX_FANFARE_230_PLUS
 	waitsfx
 	writetext GameFreakGameDesignerPauseForDiplomaText
-	promptbutton
+	buttonsound
 	special Diploma
 	writetext GameFreakGameDesignerAfterDiplomaText
 	waitbutton

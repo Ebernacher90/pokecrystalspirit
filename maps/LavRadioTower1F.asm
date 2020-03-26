@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const LAVRADIOTOWER1F_RECEPTIONIST
 	const LAVRADIOTOWER1F_OFFICER
 	const LAVRADIOTOWER1F_SUPER_NERD1
@@ -33,8 +33,8 @@ LavRadioTower1FGentlemanScript:
 
 .ReturnedMachinePart:
 	writetext LavRadioTower1FGentlemanText_ReturnedMachinePart
-	promptbutton
-	getstring STRING_BUFFER_4, .expncardname
+	buttonsound
+	stringtotext .expncardname, MEM_BUFFER_1
 	scall .receiveitem
 	setflag ENGINE_EXPN_CARD
 .GotExpnCard:

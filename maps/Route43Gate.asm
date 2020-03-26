@@ -1,6 +1,6 @@
 ROUTE43GATE_TOLL EQU 1000
 
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const ROUTE43GATE_OFFICER
 	const ROUTE43GATE_ROCKET1
 	const ROUTE43GATE_ROCKET2
@@ -14,7 +14,7 @@ Route43Gate_MapScripts:
 	callback MAPCALLBACK_NEWMAP, .CheckIfRockets
 
 .RocketShakedown:
-	prioritysjump .RocketTakeover
+	priorityjump .RocketTakeover
 	end
 
 .DummyScene:
@@ -32,7 +32,7 @@ Route43Gate_MapScripts:
 
 .RocketTakeover:
 	playmusic MUSIC_ROCKET_ENCOUNTER
-	readvar VAR_FACING
+	checkcode VAR_FACING
 	ifequal DOWN, RocketScript_Southbound
 	ifequal UP, RocketScript_Northbound
 	setscene SCENE_FINISHED
@@ -47,23 +47,23 @@ RocketScript_Southbound:
 	applymovement ROUTE43GATE_ROCKET1, Rocket1Script_BlocksYouSouth
 	opentext
 	writetext RocketText_TollFee
-	promptbutton
+	buttonsound
 	checkmoney YOUR_MONEY, ROUTE43GATE_TOLL - 1
 	ifequal HAVE_MORE, RocketScript_TollSouth
-	sjump RocketScript_YoureBrokeSouth
+	jump RocketScript_YoureBrokeSouth
 
 RocketScript_TollSouth:
 	takemoney YOUR_MONEY, ROUTE43GATE_TOLL
 	writetext RocketText_ThankYou
-	sjump RocketScript_ShakeDownSouth
+	jump RocketScript_ShakeDownSouth
 
 RocketScript_YoureBrokeSouth:
 	takemoney YOUR_MONEY, ROUTE43GATE_TOLL
 	writetext RocketText_AllYouGot
-	sjump RocketScript_ShakeDownSouth
+	jump RocketScript_ShakeDownSouth
 
 RocketScript_ShakeDownSouth:
-	promptbutton
+	buttonsound
 	closetext
 	applymovement ROUTE43GATE_ROCKET1, Rocket1Script_LetsYouPassSouth
 	applymovement ROUTE43GATE_ROCKET2, Rocket2Script_LetsYouPassSouth
@@ -79,23 +79,23 @@ RocketScript_Northbound:
 	applymovement ROUTE43GATE_ROCKET2, Rocket2Script_BlocksYouNorth
 	opentext
 	writetext RocketText_TollFee
-	promptbutton
+	buttonsound
 	checkmoney YOUR_MONEY, ROUTE43GATE_TOLL - 1
 	ifequal HAVE_MORE, RocketScript_TollNorth
-	sjump RocketScript_YoureBrokeNorth
+	jump RocketScript_YoureBrokeNorth
 
 RocketScript_TollNorth:
 	takemoney YOUR_MONEY, ROUTE43GATE_TOLL
 	writetext RocketText_ThankYou
-	sjump RocketScript_ShakeDownNorth
+	jump RocketScript_ShakeDownNorth
 
 RocketScript_YoureBrokeNorth:
 	takemoney YOUR_MONEY, ROUTE43GATE_TOLL
 	writetext RocketText_AllYouGot
-	sjump RocketScript_ShakeDownNorth
+	jump RocketScript_ShakeDownNorth
 
 RocketScript_ShakeDownNorth:
-	promptbutton
+	buttonsound
 	closetext
 	applymovement ROUTE43GATE_ROCKET2, Rocket2Script_LetsYouPassNorth
 	applymovement ROUTE43GATE_ROCKET1, Rocket1Script_LetsYouPassNorth
@@ -112,7 +112,7 @@ OfficerScript_GuardWithSludgeBomb:
 	checkevent EVENT_GOT_TM36_SLUDGE_BOMB
 	iftrue .GotSludgeBomb
 	writetext OfficerText_FoundTM
-	promptbutton
+	buttonsound
 	verbosegiveitem TM_SLUDGE_BOMB
 	iffalse .NoRoomForSludgeBomb
 	setevent EVENT_GOT_TM36_SLUDGE_BOMB

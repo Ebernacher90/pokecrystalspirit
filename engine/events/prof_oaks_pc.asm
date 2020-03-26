@@ -1,6 +1,6 @@
 ProfOaksPC:
 	ld hl, OakPCText1
-	call MenuTextbox
+	call MenuTextBox
 	call YesNoBox
 	jr c, .shutdown
 	call ProfOaksPCBoot ; player chose "yes"?
@@ -70,7 +70,7 @@ Rate:
 	ld bc, ITEM_NAME_LENGTH
 	call ByteFill
 	pop hl
-	lb bc, PRINTNUM_LEFTALIGN | 1, 3
+	lb bc, PRINTNUM_RIGHTALIGN | 1, 3
 	call PrintNum
 	ret
 

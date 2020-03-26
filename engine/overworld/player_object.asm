@@ -5,11 +5,11 @@ BlankScreen:
 	call ClearBGPalettes
 	call ClearSprites
 	hlcoord 0, 0
-	ld bc, wTilemapEnd - wTilemap
+	ld bc, wTileMapEnd - wTileMap
 	ld a, " "
 	call ByteFill
-	hlcoord 0, 0, wAttrmap
-	ld bc, wAttrmapEnd - wAttrmap
+	hlcoord 0, 0, wAttrMap
+	ld bc, wAttrMapEnd - wAttrMap
 	ld a, $7
 	call ByteFill
 	call WaitBGMap2
@@ -122,10 +122,9 @@ RefreshPlayerCoords:
 	ld hl, wPlayerLastMapY
 	ld [hl], e
 	ld e, a
-; the next three lines are useless
 	ld a, [wObjectFollow_Leader]
 	cp $0
-	ret nz
+	ret nz ; wtf
 	ret
 
 CopyObjectStruct::
@@ -133,9 +132,9 @@ CopyObjectStruct::
 	and a
 	ret nz ; masked
 
-	ld hl, wObjectStructs + OBJECT_LENGTH * 1
+	ld hl, wObjectStructs + OBJECT_STRUCT_LENGTH * 1
 	ld a, 1
-	ld de, OBJECT_LENGTH
+	ld de, OBJECT_STRUCT_LENGTH
 .loop
 	ldh [hObjectStructIndexBuffer], a
 	ld a, [hl]
@@ -225,7 +224,7 @@ CopyMapObjectToObjectStruct:
 	ret
 
 InitializeVisibleSprites:
-	ld bc, wMapObjects + MAPOBJECT_LENGTH
+	ld bc, wMapObjects + OBJECT_LENGTH
 	ld a, 1
 .loop
 	ldh [hMapObjectIndexBuffer], a
@@ -272,7 +271,7 @@ InitializeVisibleSprites:
 	jp c, .ret
 
 .next
-	ld hl, MAPOBJECT_LENGTH
+	ld hl, OBJECT_LENGTH
 	add hl, bc
 	ld b, h
 	ld c, l
@@ -312,7 +311,7 @@ CheckObjectEnteringVisibleRange::
 	ld d, a
 	ld a, [wXCoord]
 	ld e, a
-	ld bc, wMapObjects + MAPOBJECT_LENGTH
+	ld bc, wMapObjects + OBJECT_LENGTH
 	ld a, 1
 .loop_v
 	ldh [hMapObjectIndexBuffer], a
@@ -346,7 +345,7 @@ CheckObjectEnteringVisibleRange::
 	pop de
 
 .next_v
-	ld hl, MAPOBJECT_LENGTH
+	ld hl, OBJECT_LENGTH
 	add hl, bc
 	ld b, h
 	ld c, l
@@ -368,7 +367,7 @@ CheckObjectEnteringVisibleRange::
 	ld e, a
 	ld a, [wYCoord]
 	ld d, a
-	ld bc, wMapObjects + MAPOBJECT_LENGTH
+	ld bc, wMapObjects + OBJECT_LENGTH
 	ld a, 1
 .loop_h
 	ldh [hMapObjectIndexBuffer], a
@@ -402,7 +401,7 @@ CheckObjectEnteringVisibleRange::
 	pop de
 
 .next_h
-	ld hl, MAPOBJECT_LENGTH
+	ld hl, OBJECT_LENGTH
 	add hl, bc
 	ld b, h
 	ld c, l
@@ -519,7 +518,7 @@ TrainerWalkToPlayer:
 	call InitMovementBuffer
 	ld a, movement_step_sleep
 	call AppendToMovementBuffer
-	ld a, [wWalkingIntoNPC]
+	ld a, [wd03f]
 	dec a
 	jr z, .TerminateStep
 	ldh a, [hLastTalked]

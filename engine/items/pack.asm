@@ -440,7 +440,7 @@ UseItem:
 	dw .Field   ; ITEMMENU_CLOSE
 
 .Oak:
-	ld hl, OakThisIsntTheTimeText
+	ld hl, Text_ThisIsntTheTime
 	call Pack_PrintTextNoScroll
 	ret
 
@@ -461,7 +461,7 @@ UseItem:
 	ret
 
 .NoPokemon:
-	ld hl, YouDontHaveAMonText
+	ld hl, TextJump_YouDontHaveAMon
 	call Pack_PrintTextNoScroll
 	ret
 
@@ -475,7 +475,7 @@ UseItem:
 	ret
 
 TossMenu:
-	ld hl, AskThrowAwayText
+	ld hl, Text_ThrowAwayHowMany
 	call Pack_PrintTextNoScroll
 	farcall SelectQuantityToToss
 	push af
@@ -483,8 +483,8 @@ TossMenu:
 	pop af
 	jr c, .finish
 	call Pack_GetItemName
-	ld hl, AskQuantityThrowAwayText
-	call MenuTextbox
+	ld hl, Text_ConfirmThrowAway
+	call MenuTextBox
 	call YesNoBox
 	push af
 	call ExitMenu
@@ -494,7 +494,7 @@ TossMenu:
 	ld a, [wCurItemQuantity]
 	call TossItem
 	call Pack_GetItemName
-	ld hl, ThrewAwayText
+	ld hl, Text_ThrewAway
 	call Pack_PrintTextNoScroll
 .finish
 	ret
@@ -547,12 +547,12 @@ RegisterItem:
 	call Pack_GetItemName
 	ld de, SFX_FULL_HEAL
 	call WaitPlaySFX
-	ld hl, RegisteredItemText
+	ld hl, Text_RegisteredItem
 	call Pack_PrintTextNoScroll
 	ret
 
 .cant_register
-	ld hl, CantRegisterText
+	ld hl, Text_CantRegister
 	call Pack_PrintTextNoScroll
 	ret
 
@@ -581,7 +581,7 @@ GiveItem:
 	ld a, [wCurPartySpecies]
 	cp EGG
 	jr nz, .give
-	ld hl, .AnEggCantHoldAnItemText
+	ld hl, .Egg
 	call PrintText
 	jr .loop
 
@@ -611,11 +611,12 @@ GiveItem:
 	ret
 
 .NoPokemon:
-	ld hl, YouDontHaveAMonText
+	ld hl, TextJump_YouDontHaveAMon
 	call Pack_PrintTextNoScroll
 	ret
-.AnEggCantHoldAnItemText:
-	text_far _AnEggCantHoldAnItemText
+.Egg:
+	; An EGG can't hold an item.
+	text_far Text_AnEGGCantHoldAnItem
 	text_end
 
 QuitItemSubmenu:
@@ -734,7 +735,7 @@ BattlePack:
 	xor a
 	ldh [hBGMapMode], a
 	call WaitBGMap_DrawPackGFX
-	ld hl, PackEmptyText
+	ld hl, Text_PackEmptyString
 	call Pack_PrintTextNoScroll
 	call Pack_JumptableNext
 	ret
@@ -850,7 +851,7 @@ TMHMSubmenu:
 	dw .BattleOnly  ; ITEMMENU_CLOSE
 
 .Oak:
-	ld hl, OakThisIsntTheTimeText
+	ld hl, Text_ThisIsntTheTime
 	call Pack_PrintTextNoScroll
 	ret
 
@@ -1297,7 +1298,7 @@ Pack_InterpretJoypad:
 
 .select
 	farcall SwitchItemsInBag
-	ld hl, AskItemMoveText
+	ld hl, Text_MoveItemWhere
 	call Pack_PrintTextNoScroll
 	scf
 	ret
@@ -1326,7 +1327,7 @@ Pack_InterpretJoypad:
 
 Pack_InitGFX:
 	call ClearBGPalettes
-	call ClearTilemap
+	call ClearTileMap
 	call ClearSprites
 	call DisableLCD
 	ld hl, PackMenuGFX
@@ -1357,7 +1358,7 @@ Pack_InitGFX:
 ; Place the textbox for displaying the item description
 	hlcoord 0, SCREEN_HEIGHT - 4 - 2
 	lb bc, 4, SCREEN_WIDTH - 2
-	call Textbox
+	call TextBox
 	call EnableLCD
 	call DrawPackGFX
 	ret
@@ -1464,7 +1465,7 @@ ItemsPocketMenuHeader:
 .MenuData:
 	db STATICMENU_ENABLE_SELECT | STATICMENU_ENABLE_LEFT_RIGHT | STATICMENU_ENABLE_START | STATICMENU_WRAP | STATICMENU_CURSOR ; flags
 	db 5, 8 ; rows, columns
-	db SCROLLINGMENU_ITEMS_QUANTITY ; item format
+	db 2 ; horizontal spacing
 	dbw 0, wNumItems
 	dba PlaceMenuItemName
 	dba PlaceMenuItemQuantity
@@ -1479,7 +1480,7 @@ PC_Mart_ItemsPocketMenuHeader:
 .MenuData:
 	db STATICMENU_ENABLE_SELECT | STATICMENU_ENABLE_LEFT_RIGHT | STATICMENU_ENABLE_START | STATICMENU_WRAP ; flags
 	db 5, 8 ; rows, columns
-	db SCROLLINGMENU_ITEMS_QUANTITY ; item format
+	db 2 ; horizontal spacing
 	dbw 0, wNumItems
 	dba PlaceMenuItemName
 	dba PlaceMenuItemQuantity
@@ -1494,7 +1495,7 @@ KeyItemsPocketMenuHeader:
 .MenuData:
 	db STATICMENU_ENABLE_SELECT | STATICMENU_ENABLE_LEFT_RIGHT | STATICMENU_ENABLE_START | STATICMENU_WRAP | STATICMENU_CURSOR ; flags
 	db 5, 8 ; rows, columns
-	db SCROLLINGMENU_ITEMS_NORMAL ; item format
+	db 1 ; horizontal spacing
 	dbw 0, wNumKeyItems
 	dba PlaceMenuItemName
 	dba PlaceMenuItemQuantity
@@ -1509,7 +1510,7 @@ PC_Mart_KeyItemsPocketMenuHeader:
 .MenuData:
 	db STATICMENU_ENABLE_SELECT | STATICMENU_ENABLE_LEFT_RIGHT | STATICMENU_ENABLE_START | STATICMENU_WRAP ; flags
 	db 5, 8 ; rows, columns
-	db SCROLLINGMENU_ITEMS_NORMAL ; item format
+	db 1 ; horizontal spacing
 	dbw 0, wNumKeyItems
 	dba PlaceMenuItemName
 	dba PlaceMenuItemQuantity
@@ -1524,7 +1525,7 @@ BallsPocketMenuHeader:
 .MenuData:
 	db STATICMENU_ENABLE_SELECT | STATICMENU_ENABLE_LEFT_RIGHT | STATICMENU_ENABLE_START | STATICMENU_WRAP | STATICMENU_CURSOR ; flags
 	db 5, 8 ; rows, columns
-	db SCROLLINGMENU_ITEMS_QUANTITY ; item format
+	db 2 ; horizontal spacing
 	dbw 0, wNumBalls
 	dba PlaceMenuItemName
 	dba PlaceMenuItemQuantity
@@ -1539,54 +1540,66 @@ PC_Mart_BallsPocketMenuHeader:
 .MenuData:
 	db STATICMENU_ENABLE_SELECT | STATICMENU_ENABLE_LEFT_RIGHT | STATICMENU_ENABLE_START | STATICMENU_WRAP ; flags
 	db 5, 8 ; rows, columns
-	db SCROLLINGMENU_ITEMS_QUANTITY ; item format
+	db 2 ; horizontal spacing
 	dbw 0, wNumBalls
 	dba PlaceMenuItemName
 	dba PlaceMenuItemQuantity
 	dba UpdateItemDescription
 
-PackNoItemText:
-	text_far _PackNoItemText
+Text_PackNoItems:
+	; No items.
+	text_far UnknownText_0x1c0b9a
 	text_end
 
-AskThrowAwayText:
-	text_far _AskThrowAwayText
+Text_ThrowAwayHowMany:
+	; Throw away how many?
+	text_far UnknownText_0x1c0ba5
 	text_end
 
-AskQuantityThrowAwayText:
-	text_far _AskQuantityThrowAwayText
+Text_ConfirmThrowAway:
+	; Throw away @ @ (S)?
+	text_far UnknownText_0x1c0bbb
 	text_end
 
-ThrewAwayText:
-	text_far _ThrewAwayText
+Text_ThrewAway:
+	; Threw away @ (S).
+	text_far UnknownText_0x1c0bd8
 	text_end
 
-OakThisIsntTheTimeText:
-	text_far _OakThisIsntTheTimeText
+Text_ThisIsntTheTime:
+	; OAK:  ! This isn't the time to use that!
+	text_far UnknownText_0x1c0bee
 	text_end
 
-YouDontHaveAMonText:
-	text_far _YouDontHaveAMonText
+TextJump_YouDontHaveAMon:
+	; You don't have a #MON!
+	text_far Text_YouDontHaveAMon
 	text_end
 
-RegisteredItemText:
-	text_far _RegisteredItemText
+Text_RegisteredItem:
+	; Registered the @ .
+	text_far UnknownText_0x1c0c2e
 	text_end
 
-CantRegisterText:
-	text_far _CantRegisterText
+Text_CantRegister:
+	; You can't register that item.
+	text_far UnknownText_0x1c0c45
 	text_end
 
-AskItemMoveText:
-	text_far _AskItemMoveText
+Text_MoveItemWhere:
+	; Where should this be moved to?
+	text_far UnknownText_0x1c0c63
 	text_end
 
-PackEmptyText:
-	text_far _PackEmptyText
+Text_PackEmptyString:
+	;
+	text_far UnknownText_0x1c0c83
 	text_end
 
-YouCantUseItInABattleText:
-	text_far _YouCantUseItInABattleText
+TextJump_YouCantUseItInABattle:
+	; Doesn't seem to be used anywhere
+	; "You can't use it in a battle."
+	text_far Text_YouCantUseItInABattle
 	text_end
 
 PackMenuGFX:

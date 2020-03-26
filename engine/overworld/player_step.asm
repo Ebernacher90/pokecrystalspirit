@@ -126,25 +126,25 @@ UpdateOverworldMap:
 .step_down
 	call .ScrollOverworldMapDown
 	call LoadMapPart
-	call ScrollMapDown
+	call ScrollMapUp
 	ret
 
 .step_up
 	call .ScrollOverworldMapUp
 	call LoadMapPart
-	call ScrollMapUp
+	call ScrollMapDown
 	ret
 
 .step_left
 	call .ScrollOverworldMapLeft
 	call LoadMapPart
-	call ScrollMapLeft
+	call ScrollMapRight
 	ret
 
 .step_right
 	call .ScrollOverworldMapRight
 	call LoadMapPart
-	call ScrollMapRight
+	call ScrollMapLeft
 	ret
 
 .ScrollOverworldMapDown:
@@ -164,14 +164,14 @@ UpdateOverworldMap:
 	cp 2 ; was 1
 	jr nz, .done_down
 	ld [hl], 0
-	call .ScrollMapDataDown
+	call .Add6ToOverworldMapAnchor
 .done_down
 	ret
 
-.ScrollMapDataDown:
+.Add6ToOverworldMapAnchor:
 	ld hl, wOverworldMapAnchor
 	ld a, [wMapWidth]
-	add 3 * 2 ; surrounding tiles
+	add 6
 	add [hl]
 	ld [hli], a
 	ret nc
@@ -195,14 +195,14 @@ UpdateOverworldMap:
 	cp -1 ; was 0
 	jr nz, .done_up
 	ld [hl], $1
-	call .ScrollMapDataUp
+	call .Sub6FromOverworldMapAnchor
 .done_up
 	ret
 
-.ScrollMapDataUp:
+.Sub6FromOverworldMapAnchor:
 	ld hl, wOverworldMapAnchor
 	ld a, [wMapWidth]
-	add 3 * 2 ; surrounding tiles
+	add 6
 	ld b, a
 	ld a, [hl]
 	sub b
@@ -227,11 +227,11 @@ UpdateOverworldMap:
 	cp -1
 	jr nz, .done_left
 	ld [hl], 1
-	call .ScrollMapDataLeft
+	call .DecrementwOverworldMapAnchor
 .done_left
 	ret
 
-.ScrollMapDataLeft:
+.DecrementwOverworldMapAnchor:
 	ld hl, wOverworldMapAnchor
 	ld a, [hl]
 	sub 1
@@ -256,11 +256,11 @@ UpdateOverworldMap:
 	cp 2
 	jr nz, .done_right
 	ld [hl], 0
-	call .ScrollMapDataRight
+	call .IncrementwOverworldMapAnchor
 .done_right
 	ret
 
-.ScrollMapDataRight:
+.IncrementwOverworldMapAnchor:
 	ld hl, wOverworldMapAnchor
 	ld a, [hl]
 	add 1

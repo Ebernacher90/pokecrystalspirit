@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const CELADONPOKECENTER1F_NURSE
 	const CELADONPOKECENTER1F_GENTLEMAN
 	const CELADONPOKECENTER1F_PHARMACIST
@@ -26,8 +26,8 @@ CeladonEusine:
 	faceplayer
 	opentext
 	writetext CeladonEusineText1
-	promptbutton
-	setval SUICUNE
+	buttonsound
+	writebyte SUICUNE
 	special MonCheck
 	iffalse .NoSuicune
 	special BeastsCheck
@@ -42,10 +42,10 @@ CeladonEusine:
 	writetext EusineLeavesCeladonText
 	waitbutton
 	closetext
-	readvar VAR_FACING
+	checkcode VAR_FACING
 	ifequal UP, .Location1
 	applymovement CELADONPOKECENTER1F_EUSINE, .Movement1
-	sjump .Continue
+	jump .Continue
 
 .Location1:
 	applymovement CELADONPOKECENTER1F_EUSINE, .Movement2

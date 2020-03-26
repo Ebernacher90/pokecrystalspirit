@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const MOVEDELETERSHOUSE_SUPER_NERD
 
 MoveDeletersHouse_MapScripts:

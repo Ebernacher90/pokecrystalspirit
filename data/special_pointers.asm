@@ -65,7 +65,7 @@ SpecialsPointers::
 	add_special ReloadSpritesNoPalettes ; bank 0
 	add_special ClearBGPalettes ; bank 0
 	add_special UpdateTimePals ; bank 0
-	add_special ClearTilemap ; bank 0
+	add_special ClearTileMap ; bank 0
 	add_special UpdateSprites ; bank 0
 	add_special ReplaceKrisSprite ; $38 ; bank 0
 	add_special GameCornerPrizeMonCheckDex
@@ -108,8 +108,8 @@ SpecialsPointers::
 	add_special LoadUsedSpritesGFX
 	add_special PlaySlowCry
 	add_special SnorlaxAwake ; $60
-	add_special OlderHaircutBrother
 	add_special YoungerHaircutBrother
+	add_special OlderHaircutBrother
 	add_special DaisysGrooming
 	add_special PlayCurMonCry
 	add_special ProfOaksPCBoot

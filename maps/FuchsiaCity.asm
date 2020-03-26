@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const FUCHSIACITY_YOUNGSTER
 	const FUCHSIACITY_POKEFAN_M
 	const FUCHSIACITY_TEACHER
@@ -108,11 +108,12 @@ WardensHomeSignText:
 
 SafariZoneClosedSignText:
 	text "The WARDEN is"
-	line "traveling abroad."
+	line "back from"
+	cont "traveling."
 
 	para "Therefore, the"
 	line "SAFARI ZONE is"
-	cont "closed."
+	cont "now open."
 	done
 
 NoLitteringSignText:
@@ -132,7 +133,7 @@ FuchsiaCity_MapEvents:
 	warp_event 11, 27, BILLS_BROTHERS_HOUSE, 1
 	warp_event 19, 27, FUCHSIA_POKECENTER_1F, 1
 	warp_event 27, 27, SAFARI_ZONE_WARDENS_HOME, 1
-	warp_event 18,  3, SAFARI_ZONE_FUCHSIA_GATE_BETA, 3 ; inaccessible
+	warp_event  17,  3, SAFARI_ZONE_FUCHSIA_GATE_BETA, 3
 	warp_event 37, 22, ROUTE_15_FUCHSIA_GATE, 1
 	warp_event 37, 23, ROUTE_15_FUCHSIA_GATE, 2
 	warp_event  7, 35, ROUTE_19_FUCHSIA_GATE, 1

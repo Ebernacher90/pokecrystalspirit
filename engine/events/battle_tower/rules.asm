@@ -16,12 +16,13 @@ CheckForMobileBattleRules:
 	dw BattleTower_CheckPartyHasThreeMonsThatAreNotEggs
 
 .TextPointers:
-	dw .BTExcuseMeText
-	dw NeedAtLeastThreeMonText
-	dw EggDoesNotQualifyText
+	dw .ExcuseMeText
+	dw JumpText_NeedAtLeastThreeMon
+	dw JumpText_EggDoesNotQualify
 
-.BTExcuseMeText:
-	text_far _BTExcuseMeText
+.ExcuseMeText:
+	; Excuse me!
+	text_far UnknownText_0x1c5937
 	text_end
 
 _CheckForBattleTowerRules:
@@ -48,47 +49,55 @@ _CheckForBattleTowerRules:
 	dw Function_HasPartyAnEgg
 
 .TextPointers:
-	dw ExcuseMeYoureNotReadyText
-	dw OnlyThreeMonMayBeEnteredText
-	dw TheMonMustAllBeDifferentKindsText
-	dw TheMonMustNotHoldTheSameItemsText
-	dw YouCantTakeAnEggText
+	dw JumpText_ExcuseMeYoureNotReady
+	dw JumpText_OnlyThreeMonMayBeEntered
+	dw JumpText_TheMonMustAllBeDifferentKinds
+	dw JumpText_TheMonMustNotHoldTheSameItems
+	dw JumpText_YouCantTakeAnEgg
 
-ExcuseMeYoureNotReadyText:
-	text_far _ExcuseMeYoureNotReadyText
+JumpText_ExcuseMeYoureNotReady:
+	; Excuse me. You're not ready.
+	text_far Text_ExcuseMeYoureNotReady
 	text_end
 
 BattleTower_PleaseReturnWhenReady:
-	ld hl, .BattleTowerReturnWhenReadyText
+	ld hl, .PleaseReturnWhenReady
 	call PrintText
 	ret
 
-.BattleTowerReturnWhenReadyText:
-	text_far _BattleTowerReturnWhenReadyText
+.PleaseReturnWhenReady:
+	; Please return when you're ready.
+	text_far UnknownText_0x1c5962
 	text_end
 
-NeedAtLeastThreeMonText:
-	text_far _NeedAtLeastThreeMonText
+JumpText_NeedAtLeastThreeMon:
+	; You need at least three #MON.
+	text_far UnknownText_0x1c5983
 	text_end
 
-EggDoesNotQualifyText:
-	text_far _EggDoesNotQualifyText
+JumpText_EggDoesNotQualify:
+	; Sorry, an EGG doesn't qualify.
+	text_far UnknownText_0x1c59a3
 	text_end
 
-OnlyThreeMonMayBeEnteredText:
-	text_far _OnlyThreeMonMayBeEnteredText
+JumpText_OnlyThreeMonMayBeEntered:
+	; Only three #MON may be entered.
+	text_far Text_OnlyThreeMonMayBeEntered
 	text_end
 
-TheMonMustAllBeDifferentKindsText:
-	text_far _TheMonMustAllBeDifferentKindsText
+JumpText_TheMonMustAllBeDifferentKinds:
+	; The @  #MON must all be different kinds.
+	text_far Text_TheMonMustAllBeDifferentKinds
 	text_end
 
-TheMonMustNotHoldTheSameItemsText:
-	text_far _TheMonMustNotHoldTheSameItemsText
+JumpText_TheMonMustNotHoldTheSameItems:
+	; The @  #MON must not hold the same items.
+	text_far Text_TheMonMustNotHoldTheSameItems
 	text_end
 
-YouCantTakeAnEggText:
-	text_far _YouCantTakeAnEggText
+JumpText_YouCantTakeAnEgg:
+	; You can't take an EGG!
+	text_far Text_YouCantTakeAnEgg
 	text_end
 
 BattleTower_ExecuteJumptable:
@@ -152,7 +161,7 @@ BattleTower_ExecuteJumptable:
 	call z, .PrintFirstText
 	pop bc
 	call .PrintNthText
-	ld b, 1
+	ld b, $1
 	pop de
 	ret
 
@@ -169,7 +178,7 @@ BattleTower_ExecuteJumptable:
 	call .GetTextPointers
 	inc hl
 	inc hl
-	ld b, 0
+	ld b, $0
 	add hl, bc
 	add hl, bc
 	call .LoadTextPointer
@@ -185,7 +194,7 @@ BattleTower_CheckPartyLengthIs3:
 BattleTower_CheckPartyHasThreeMonsThatAreNotEggs:
 	ld hl, wPartyCount
 	ld a, [hli]
-	ld b, 0
+	ld b, $0
 	ld c, a
 .loop
 	ld a, [hli]

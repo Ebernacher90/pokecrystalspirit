@@ -1,5 +1,5 @@
 WadePhoneCalleeScript:
-	gettrainername STRING_BUFFER_3, BUG_CATCHER, WADE1
+	trainertotext BUG_CATCHER, WADE1, MEM_BUFFER_0
 	checkflag ENGINE_WADE
 	iftrue .WantsBattle
 	farscall PhoneScript_AnswerPhone_Male
@@ -7,7 +7,7 @@ WadePhoneCalleeScript:
 	iftrue .NotTuesday
 	checkflag ENGINE_WADE_HAS_ITEM
 	iftrue .HasItem
-	readvar VAR_WEEKDAY
+	checkcode VAR_WEEKDAY
 	ifnotequal TUESDAY, .NotTuesday
 	checktime NITE
 	iftrue WadeTuesdayNight
@@ -17,33 +17,33 @@ WadePhoneCalleeScript:
 	ifequal 0, .NoContest
 	checkflag ENGINE_DAILY_BUG_CONTEST
 	iftrue .NoContest
-	readvar VAR_WEEKDAY
+	checkcode VAR_WEEKDAY
 	ifequal TUESDAY, .ContestToday
 	ifequal THURSDAY, .ContestToday
 	ifequal SATURDAY, .ContestToday
 
 .NoContest:
-	farsjump WadeNoBerriesScript
+	farjump UnknownScript_0xa0938
 
 .ContestToday:
-	farsjump PhoneScript_BugCatchingContest
+	farjump PhoneScript_BugCatchingContest
 
 .WantsBattle:
-	getlandmarkname STRING_BUFFER_5, LANDMARK_ROUTE_31
-	farsjump WadeQuickBattleScript
+	landmarktotext ROUTE_31, MEM_BUFFER_2
+	farjump UnknownScript_0xa0a50
 
 .HasItem:
-	getlandmarkname STRING_BUFFER_5, LANDMARK_ROUTE_31
-	farsjump WadeComeQuickScript
+	landmarktotext ROUTE_31, MEM_BUFFER_2
+	farjump UnknownScript_0xa0ab5
 
 WadePhoneCallerScript:
-	gettrainername STRING_BUFFER_3, BUG_CATCHER, WADE1
+	trainertotext BUG_CATCHER, WADE1, MEM_BUFFER_0
 	farscall PhoneScript_GreetPhone_Male
 	farscall PhoneScript_Random2
 	ifequal 0, .NoContest
 	checkflag ENGINE_DAILY_BUG_CONTEST
 	iftrue .NoContest
-	readvar VAR_WEEKDAY
+	checkcode VAR_WEEKDAY
 	ifequal TUESDAY, .ContestToday
 	ifequal THURSDAY, .ContestToday
 	ifequal SATURDAY, .ContestToday
@@ -65,25 +65,25 @@ WadePhoneCallerScript:
 .next:
 	farscall PhoneScript_Random3
 	ifequal 0, WadeFoundRare
-	farsjump Phone_GenericCall_Male
+	farjump Phone_GenericCall_Male
 
 .ContestToday:
-	farsjump PhoneScript_BugCatchingContest
+	farjump PhoneScript_BugCatchingContest
 
 WadeTuesdayNight:
 	setflag ENGINE_WADE_TUESDAY_NIGHT
 
 WadeWantsBattle2:
-	getlandmarkname STRING_BUFFER_5, LANDMARK_ROUTE_31
+	landmarktotext ROUTE_31, MEM_BUFFER_2
 	setflag ENGINE_WADE
-	farsjump PhoneScript_WantsToBattle_Male
+	farjump PhoneScript_WantsToBattle_Male
 
 WadeFoundRare:
-	farsjump Phone_CheckIfUnseenRare_Male
+	farjump Phone_CheckIfUnseenRare_Male
 
 WadeHasItem2:
 	setflag ENGINE_WADE_HAS_ITEM
-	getlandmarkname STRING_BUFFER_5, LANDMARK_ROUTE_31
+	landmarktotext ROUTE_31, MEM_BUFFER_2
 	clearevent EVENT_WADE_HAS_BERRY
 	clearevent EVENT_WADE_HAS_PSNCUREBERRY
 	clearevent EVENT_WADE_HAS_PRZCUREBERRY
@@ -96,18 +96,18 @@ WadeHasItem2:
 
 .Berry:
 	setevent EVENT_WADE_HAS_BERRY
-	sjump .FoundBerry
+	jump .FoundBerry
 
 .PsnCureBerry:
 	setevent EVENT_WADE_HAS_PSNCUREBERRY
-	sjump .FoundBerry
+	jump .FoundBerry
 
 .PrzCureBerry:
 	setevent EVENT_WADE_HAS_PRZCUREBERRY
-	sjump .FoundBerry
+	jump .FoundBerry
 
 .Bitterberry:
 	setevent EVENT_WADE_HAS_BITTER_BERRY
 
 .FoundBerry:
-	farsjump PhoneScript_FoundItem_Male
+	farjump PhoneScript_FoundItem_Male

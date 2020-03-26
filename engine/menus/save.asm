@@ -1,10 +1,10 @@
 SaveMenu:
 	call LoadStandardMenuHeader
 	farcall DisplaySaveInfoOnSave
-	call SpeechTextbox
+	call SpeechTextBox
 	call UpdateSprites
 	farcall SaveMenu_CopyTilemapAtOnce
-	ld hl, WouldYouLikeToSaveTheGameText
+	ld hl, Text_WouldYouLikeToSaveTheGame
 	call SaveTheGame_yesorno
 	jr nz, .refused
 	call AskOverwriteSaveFile
@@ -38,8 +38,8 @@ SaveAfterLinkTrade:
 
 ChangeBoxSaveGame:
 	push de
-	ld hl, ChangeBoxSaveText
-	call MenuTextbox
+	ld hl, Text_SaveOnBoxSwitch
+	call MenuTextBox
 	call YesNoBox
 	call ExitMenu
 	jr c, .refused
@@ -115,8 +115,8 @@ MoveMonWOMail_InsertMon_SaveGame:
 	ret
 
 StartMoveMonWOMail_SaveGame:
-	ld hl, MoveMonWOMailSaveText
-	call MenuTextbox
+	ld hl, Text_SaveOnMoveMonWOMail
+	call MenuTextBox
 	call YesNoBox
 	call ExitMenu
 	jr c, .refused
@@ -173,13 +173,13 @@ AskOverwriteSaveFile:
 	jr z, .erase
 	call CompareLoadedAndSavedPlayerID
 	jr z, .yoursavefile
-	ld hl, AnotherSaveFileText
+	ld hl, Text_AnotherSaveFile
 	call SaveTheGame_yesorno
 	jr nz, .refused
 	jr .erase
 
 .yoursavefile
-	ld hl, AlreadyASaveFileText
+	ld hl, Text_AlreadyASaveFile
 	call SaveTheGame_yesorno
 	jr nz, .refused
 	jr .ok
@@ -196,9 +196,9 @@ AskOverwriteSaveFile:
 	ret
 
 SaveTheGame_yesorno:
-	ld b, BANK(WouldYouLikeToSaveTheGameText)
+	ld b, BANK(Text_WouldYouLikeToSaveTheGame)
 	call MapTextbox
-	call LoadMenuTextbox
+	call LoadMenuTextBox
 	lb bc, 0, 7
 	call PlaceYesNoBox
 	ld a, [wMenuCursorY]
@@ -239,7 +239,7 @@ SavedTheGame:
 	ld a, TEXT_DELAY_MED
 	ld [wOptions], a
 	; <PLAYER> saved the game!
-	ld hl, SavedTheGameText
+	ld hl, Text_PlayerSavedTheGame
 	call PrintText
 	; restore the original text speed setting
 	pop af
@@ -336,7 +336,7 @@ SavingDontTurnOffThePower:
 	ld a, TEXT_DELAY_MED
 	ld [wOptions], a
 	; SAVING... DON'T TURN OFF THE POWER.
-	ld hl, SavingDontTurnOffThePowerText
+	ld hl, Text_SavingDontTurnOffThePower
 	call PrintText
 	; Restore the text speed setting
 	pop af
@@ -391,10 +391,11 @@ EraseHallOfFame:
 	jp CloseSRAM
 
 Unreferenced_Function14d18:
-	ld a, BANK(s4_a007)
+; copy .Data to SRA4:a007
+	ld a, 4 ; MBC30 bank used by JP Crystal; inaccessible by MBC3
 	call GetSRAMBank
 	ld hl, .Data
-	ld de, s4_a007
+	ld de, $a007 ; address of MBC30 bank
 	ld bc, .DataEnd - .Data
 	call CopyBytes
 	jp CloseSRAM
@@ -618,7 +619,7 @@ TryLoadSaveFile:
 	push af
 	set NO_TEXT_SCROLL, a
 	ld [wOptions], a
-	ld hl, SaveFileCorruptedText
+	ld hl, Text_SaveFileCorrupted
 	call PrintText
 	pop af
 	ld [wOptions], a
@@ -670,7 +671,7 @@ TryLoadSaveData:
 	ld de, wOptions
 	ld bc, wOptionsEnd - wOptions
 	call CopyBytes
-	call ClearClock
+	call PanicResetClock
 	ret
 
 INCLUDE "data/default_options.asm"
@@ -832,9 +833,9 @@ _SaveData:
 
 	ld hl, wd479
 	ld a, [hli]
-	ld [s4_a60e + 0], a
+	ld [$a60e + 0], a
 	ld a, [hli]
-	ld [s4_a60e + 1], a
+	ld [$a60e + 1], a
 
 	jp CloseSRAM
 
@@ -850,9 +851,9 @@ _LoadData:
 	; (harmlessly) writes the aforementioned wEventFlags to the unused wd479.
 
 	ld hl, wd479
-	ld a, [s4_a60e + 0]
+	ld a, [$a60e + 0]
 	ld [hli], a
-	ld a, [s4_a60e + 1]
+	ld a, [$a60e + 1]
 	ld [hli], a
 
 	jp CloseSRAM
@@ -1094,34 +1095,42 @@ Checksum:
 	jr nz, .loop
 	ret
 
-WouldYouLikeToSaveTheGameText:
-	text_far _WouldYouLikeToSaveTheGameText
+Text_WouldYouLikeToSaveTheGame:
+	; Would you like to save the game?
+	text_far UnknownText_0x1c454b
 	text_end
 
-SavingDontTurnOffThePowerText:
-	text_far _SavingDontTurnOffThePowerText
+Text_SavingDontTurnOffThePower:
+	; SAVING… DON'T TURN OFF THE POWER.
+	text_far UnknownText_0x1c456d
 	text_end
 
-SavedTheGameText:
-	text_far _SavedTheGameText
+Text_PlayerSavedTheGame:
+	; saved the game.
+	text_far UnknownText_0x1c4590
 	text_end
 
-AlreadyASaveFileText:
-	text_far _AlreadyASaveFileText
+Text_AlreadyASaveFile:
+	; There is already a save file. Is it OK to overwrite?
+	text_far UnknownText_0x1c45a3
 	text_end
 
-AnotherSaveFileText:
-	text_far _AnotherSaveFileText
+Text_AnotherSaveFile:
+	; There is another save file. Is it OK to overwrite?
+	text_far UnknownText_0x1c45d9
 	text_end
 
-SaveFileCorruptedText:
-	text_far _SaveFileCorruptedText
+Text_SaveFileCorrupted:
+	; The save file is corrupted!
+	text_far UnknownText_0x1c460d
 	text_end
 
-ChangeBoxSaveText:
-	text_far _ChangeBoxSaveText
+Text_SaveOnBoxSwitch:
+	; When you change a #MON BOX, data will be saved. OK?
+	text_far UnknownText_0x1c462a
 	text_end
 
-MoveMonWOMailSaveText:
-	text_far _MoveMonWOMailSaveText
+Text_SaveOnMoveMonWOMail:
+	; Each time you move a #MON, data will be saved. OK?
+	text_far UnknownText_0x1c465f
 	text_end

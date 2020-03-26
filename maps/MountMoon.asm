@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const MOUNTMOON_SILVER
 
 MountMoon_MapScripts:
@@ -9,7 +9,7 @@ MountMoon_MapScripts:
 	db 0 ; callbacks
 
 .RivalEncounter:
-	prioritysjump .RivalBattle
+	priorityjump .RivalBattle
 	end
 
 .DummyScene:
@@ -36,7 +36,7 @@ MountMoon_MapScripts:
 	startbattle
 	dontrestartmapmusic
 	reloadmapafterbattle
-	sjump .FinishBattle
+	jump .FinishBattle
 
 .Totodile:
 	winlosstext MountMoonSilverTextWin, MountMoonSilverTextLoss
@@ -45,7 +45,7 @@ MountMoon_MapScripts:
 	startbattle
 	dontrestartmapmusic
 	reloadmapafterbattle
-	sjump .FinishBattle
+	jump .FinishBattle
 
 .Chikorita:
 	winlosstext MountMoonSilverTextWin, MountMoonSilverTextLoss
@@ -54,7 +54,7 @@ MountMoon_MapScripts:
 	startbattle
 	dontrestartmapmusic
 	reloadmapafterbattle
-	sjump .FinishBattle
+	jump .FinishBattle
 
 .FinishBattle:
 	playmusic MUSIC_RIVAL_AFTER

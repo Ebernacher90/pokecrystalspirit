@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const ROUTE32POKECENTER1F_NURSE
 	const ROUTE32POKECENTER1F_FISHING_GURU
 	const ROUTE32POKECENTER1F_COOLTRAINER_F
@@ -20,7 +20,7 @@ Route32Pokecenter1FFishingGuruScript:
 	yesorno
 	iffalse .Refused
 	writetext Route32Pokecenter1FFishingGuruText_Yes
-	promptbutton
+	buttonsound
 	verbosegiveitem OLD_ROD
 	writetext Route32Pokecenter1FFishingGuruText_GiveOldRod
 	waitbutton

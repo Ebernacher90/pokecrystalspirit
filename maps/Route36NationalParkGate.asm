@@ -1,4 +1,4 @@
-	object_const_def ; object_event constants
+	const_def 2 ; object constants
 	const ROUTE36NATIONALPARKGATE_OFFICER1
 	const ROUTE36NATIONALPARKGATE_YOUNGSTER1
 	const ROUTE36NATIONALPARKGATE_YOUNGSTER2
@@ -29,7 +29,7 @@ Route36NationalParkGate_MapScripts:
 	end
 
 .LeaveContestEarly:
-	prioritysjump .LeavingContestEarly
+	priorityjump .LeavingContestEarly
 	end
 
 .CheckIfContestRunning:
@@ -45,7 +45,7 @@ Route36NationalParkGate_MapScripts:
 .CheckIfContestAvailable:
 	checkevent EVENT_WARPED_FROM_ROUTE_35_NATIONAL_PARK_GATE
 	iftrue .Return
-	readvar VAR_WEEKDAY
+	checkcode VAR_WEEKDAY
 	ifequal TUESDAY, .SetContestOfficer
 	ifequal THURSDAY, .SetContestOfficer
 	ifequal SATURDAY, .SetContestOfficer
@@ -64,13 +64,13 @@ Route36NationalParkGate_MapScripts:
 .LeavingContestEarly:
 	turnobject PLAYER, UP
 	opentext
-	readvar VAR_CONTESTMINUTES
-	addval 1
-	getnum STRING_BUFFER_3
-	writetext Route36NationalParkGateOfficer1WantToFinishText
+	checkcode VAR_CONTESTMINUTES
+	addvar 1
+	vartomem MEM_BUFFER_0
+	writetext UnknownText_0x6b284
 	yesorno
 	iffalse .GoBackToContest
-	writetext Route36NationalParkGateOfficer1WaitHereForAnnouncementText
+	writetext UnknownText_0x6b2c5
 	waitbutton
 	closetext
 	special FadeBlackQuickly
@@ -78,13 +78,13 @@ Route36NationalParkGate_MapScripts:
 	scall .CopyContestants
 	disappear ROUTE36NATIONALPARKGATE_OFFICER1
 	appear ROUTE36NATIONALPARKGATE_OFFICER2
-	applymovement PLAYER, Route36NationalParkGatePlayerWaitWithContestantsMovement
+	applymovement PLAYER, MovementData_0x6add1
 	pause 15
 	special FadeInQuickly
 	jumpstd bugcontestresults
 
 .GoBackToContest:
-	writetext Route36NationalParkGateOfficer1OkGoFinishText
+	writetext UnknownText_0x6b300
 	waitbutton
 	closetext
 	turnobject PLAYER, LEFT
@@ -139,7 +139,7 @@ Route36NationalParkGate_MapScripts:
 	end
 
 Route36OfficerScriptContest:
-	readvar VAR_WEEKDAY
+	checkcode VAR_WEEKDAY
 	ifequal SUNDAY, _ContestNotOn
 	ifequal MONDAY, _ContestNotOn
 	ifequal WEDNESDAY, _ContestNotOn
@@ -149,23 +149,23 @@ Route36OfficerScriptContest:
 	checkflag ENGINE_DAILY_BUG_CONTEST
 	iftrue Route36Officer_ContestHasConcluded
 	scall Route36ParkGate_DayToText
-	writetext Route36NationalParkGateOfficer1AskToParticipateText
+	writetext UnknownText_0x6add5
 	yesorno
 	iffalse .DecidedNotToJoinContest
-	readvar VAR_PARTYCOUNT
+	checkcode VAR_PARTYCOUNT
 	ifgreater 1, .LeaveMonsWithOfficer
 	special ContestDropOffMons
 	clearevent EVENT_LEFT_MONS_WITH_CONTEST_OFFICER
 .ResumeStartingContest:
 	setflag ENGINE_BUG_CONTEST_TIMER
 	special PlayMapMusic
-	writetext Route36NationalParkGateOfficer1GiveParkBallsText
-	promptbutton
+	writetext UnknownText_0x6ae87
+	buttonsound
 	waitsfx
-	writetext Route36NationalParkGatePlayerReceivedParkBallsText
+	writetext UnknownText_0x6aeb1
 	playsound SFX_ITEM
 	waitsfx
-	writetext Route36NationalParkGateOfficer1ExplainsRulesText
+	writetext UnknownText_0x6aecc
 	waitbutton
 	closetext
 	setflag ENGINE_BUG_CONTEST_TIMER
@@ -179,53 +179,53 @@ Route36OfficerScriptContest:
 	end
 
 .LeaveMonsWithOfficer:
-	readvar VAR_PARTYCOUNT
+	checkcode VAR_PARTYCOUNT
 	ifless PARTY_LENGTH, .ContinueLeavingMons
-	readvar VAR_BOXSPACE
+	checkcode VAR_BOXSPACE
 	ifequal 0, .BoxFull
 .ContinueLeavingMons:
 	special CheckFirstMonIsEgg
 	ifequal TRUE, .FirstMonIsEgg
-	writetext Route36NationalParkGateOfficer1AskToUseFirstMonText
+	writetext UnknownText_0x6afb0
 	yesorno
 	iffalse .RefusedToLeaveMons
 	special ContestDropOffMons
 	iftrue .FirstMonIsFainted
 	setevent EVENT_LEFT_MONS_WITH_CONTEST_OFFICER
-	writetext Route36NationalParkGateOfficer1WellHoldYourMonText
-	promptbutton
-	writetext Route36NationalParkGatePlayersMonLeftWithHelperText
+	writetext UnknownText_0x6b021
+	buttonsound
+	writetext UnknownText_0x6b055
 	playsound SFX_GOT_SAFARI_BALLS
 	waitsfx
-	promptbutton
-	sjump .ResumeStartingContest
+	buttonsound
+	jump .ResumeStartingContest
 
 .DecidedNotToJoinContest:
-	writetext Route36NationalParkGateOfficer1TakePartInFutureText
+	writetext UnknownText_0x6b0c6
 	waitbutton
 	closetext
 	end
 
 .RefusedToLeaveMons:
-	writetext Route36NationalParkGateOfficer1ChooseMonAndComeBackText
+	writetext UnknownText_0x6b081
 	waitbutton
 	closetext
 	end
 
 .FirstMonIsFainted:
-	writetext Route36NationalParkGateOfficer1FirstMonCantBattleText
+	writetext UnknownText_0x6b0f2
 	waitbutton
 	closetext
 	end
 
 .BoxFull:
-	writetext Route36NationalParkGateOfficer1MakeRoomText
+	writetext UnknownText_0x6b166
 	waitbutton
 	closetext
 	end
 
 .FirstMonIsEgg:
-	writetext Route36NationalParkGateOfficer1EggAsFirstMonText
+	writetext UnknownText_0x6b209
 	waitbutton
 	closetext
 	end
@@ -239,14 +239,14 @@ Route36Officer_ContestHasConcluded:
 	iftrue .GoldBerry
 	checkevent EVENT_CONTEST_OFFICER_HAS_BERRY
 	iftrue .Berry
-	writetext Route36NationalParkGateOfficer1ContestIsOverText
+	writetext UnknownText_0x6b32b
 	waitbutton
 	closetext
 	end
 
 .Sunstone:
-	writetext Route36NationalParkGateOfficer1HeresThePrizeText
-	promptbutton
+	writetext UnknownText_0x6b97f
+	buttonsound
 	verbosegiveitem SUN_STONE
 	iffalse .BagFull
 	clearevent EVENT_CONTEST_OFFICER_HAS_SUN_STONE
@@ -254,8 +254,8 @@ Route36Officer_ContestHasConcluded:
 	end
 
 .Everstone:
-	writetext Route36NationalParkGateOfficer1HeresThePrizeText
-	promptbutton
+	writetext UnknownText_0x6b97f
+	buttonsound
 	verbosegiveitem EVERSTONE
 	iffalse .BagFull
 	clearevent EVENT_CONTEST_OFFICER_HAS_EVERSTONE
@@ -263,8 +263,8 @@ Route36Officer_ContestHasConcluded:
 	end
 
 .GoldBerry:
-	writetext Route36NationalParkGateOfficer1HeresThePrizeText
-	promptbutton
+	writetext UnknownText_0x6b97f
+	buttonsound
 	verbosegiveitem GOLD_BERRY
 	iffalse .BagFull
 	clearevent EVENT_CONTEST_OFFICER_HAS_GOLD_BERRY
@@ -272,8 +272,8 @@ Route36Officer_ContestHasConcluded:
 	end
 
 .Berry:
-	writetext Route36NationalParkGateOfficer1HeresThePrizeText
-	promptbutton
+	writetext UnknownText_0x6b97f
+	buttonsound
 	verbosegiveitem BERRY
 	iffalse .BagFull
 	clearevent EVENT_CONTEST_OFFICER_HAS_BERRY
@@ -281,20 +281,20 @@ Route36Officer_ContestHasConcluded:
 	end
 
 .BagFull:
-	writetext Route36NationalParkGateOfficer1WellHoldPrizeText
+	writetext UnknownText_0x6b910
 	waitbutton
 	closetext
 	end
 
 _ContestNotOn:
-	jumptextfaceplayer Route36NationalParkGateOfficer1SomeMonOnlySeenInParkText
+	jumptextfaceplayer UnknownText_0x6b370
 
 Route36NationalParkGateOfficerScript:
 	faceplayer
 	opentext
 	checkflag ENGINE_DAILY_BUG_CONTEST
 	iftrue Route36Officer_ContestHasConcluded
-	writetext Route36NationalParkGateOfficer1SomeMonOnlySeenInParkText
+	writetext UnknownText_0x6b370
 	waitbutton
 	closetext
 	end
@@ -467,13 +467,13 @@ UnusedBugCatchingContestExplanationSign:
 ; duplicate of BugCatchingContestExplanationSign in Route35NationalParkGate.asm
 	jumptext UnusedBugCatchingContestExplanationText
 
-Route36NationalParkGatePlayerWaitWithContestantsMovement:
+MovementData_0x6add1:
 	big_step DOWN
 	big_step RIGHT
 	turn_head UP
 	step_end
 
-Route36NationalParkGateOfficer1AskToParticipateText:
+UnknownText_0x6add5:
 	text "Today's @"
 	text_ram wStringBuffer3
 	text "."
@@ -495,18 +495,18 @@ Route36NationalParkGateOfficer1AskToParticipateText:
 	line "give it a try?"
 	done
 
-Route36NationalParkGateOfficer1GiveParkBallsText:
+UnknownText_0x6ae87:
 	text "Here are the PARK"
 	line "BALLS for the"
 	cont "Contest."
 	done
 
-Route36NationalParkGatePlayerReceivedParkBallsText:
+UnknownText_0x6aeb1:
 	text "<PLAYER> received"
 	line "20 PARK BALLS."
 	done
 
-Route36NationalParkGateOfficer1ExplainsRulesText:
+UnknownText_0x6aecc:
 	text "The person who"
 	line "gets the strong-"
 	cont "est bug #MON"
@@ -530,7 +530,7 @@ Route36NationalParkGateOfficer1ExplainsRulesText:
 	line "find!"
 	done
 
-Route36NationalParkGateOfficer1AskToUseFirstMonText:
+UnknownText_0x6afb0:
 	text "Uh-oh…"
 
 	para "You have more than"
@@ -548,19 +548,19 @@ Route36NationalParkGateOfficer1AskToUseFirstMonText:
 	line "you?"
 	done
 
-Route36NationalParkGateOfficer1WellHoldYourMonText:
+UnknownText_0x6b021:
 	text "Fine, we'll hold"
 	line "your other #MON"
 	cont "while you compete."
 	done
 
-Route36NationalParkGatePlayersMonLeftWithHelperText:
+UnknownText_0x6b055:
 	text "<PLAYER>'s #MON"
 	line "were left with the"
 	cont "CONTEST HELPER."
 	done
 
-Route36NationalParkGateOfficer1ChooseMonAndComeBackText:
+UnknownText_0x6b081:
 	text "Please choose the"
 	line "#MON to be used"
 
@@ -568,13 +568,13 @@ Route36NationalParkGateOfficer1ChooseMonAndComeBackText:
 	line "then come see me."
 	done
 
-Route36NationalParkGateOfficer1TakePartInFutureText:
+UnknownText_0x6b0c6:
 	text "OK. We hope you'll"
 	line "take part in the"
 	cont "future."
 	done
 
-Route36NationalParkGateOfficer1FirstMonCantBattleText:
+UnknownText_0x6b0f2:
 	text "Uh-oh…"
 	line "The first #MON"
 
@@ -588,7 +588,7 @@ Route36NationalParkGateOfficer1FirstMonCantBattleText:
 	line "then come see me."
 	done
 
-Route36NationalParkGateOfficer1MakeRoomText:
+UnknownText_0x6b166:
 	text "Uh-oh…"
 	line "Both your party"
 
@@ -606,7 +606,7 @@ Route36NationalParkGateOfficer1MakeRoomText:
 	line "come see me."
 	done
 
-Route36NationalParkGateOfficer1EggAsFirstMonText:
+UnknownText_0x6b209:
 	text "Uh-oh…"
 	line "You have an EGG as"
 
@@ -620,7 +620,7 @@ Route36NationalParkGateOfficer1EggAsFirstMonText:
 	line "then come see me."
 	done
 
-Route36NationalParkGateOfficer1WantToFinishText:
+UnknownText_0x6b284:
 	text "You still have @"
 	text_ram wStringBuffer3
 	text_start
@@ -630,7 +630,7 @@ Route36NationalParkGateOfficer1WantToFinishText:
 	line "finish now?"
 	done
 
-Route36NationalParkGateOfficer1WaitHereForAnnouncementText:
+UnknownText_0x6b2c5:
 	text "OK. Please wait"
 	line "here for the"
 
@@ -638,13 +638,13 @@ Route36NationalParkGateOfficer1WaitHereForAnnouncementText:
 	line "the winners."
 	done
 
-Route36NationalParkGateOfficer1OkGoFinishText:
+UnknownText_0x6b300:
 	text "OK. Please go back"
 	line "outside and finish"
 	cont "up."
 	done
 
-Route36NationalParkGateOfficer1ContestIsOverText:
+UnknownText_0x6b32b:
 	text "Today's Contest is"
 	line "over. We hope you"
 
@@ -652,7 +652,7 @@ Route36NationalParkGateOfficer1ContestIsOverText:
 	line "in the future."
 	done
 
-Route36NationalParkGateOfficer1SomeMonOnlySeenInParkText:
+UnknownText_0x6b370:
 	text "Some #MON can"
 	line "only be seen in"
 	cont "the PARK."
@@ -829,7 +829,7 @@ UnusedBugCatchingContestExplanationText:
 	line "the contest."
 	done
 
-Route36NationalParkGateOfficer1WellHoldPrizeText:
+UnknownText_0x6b910:
 	text "Uh-oh… Your PACK"
 	line "is full."
 
@@ -841,7 +841,7 @@ Route36NationalParkGateOfficer1WellHoldPrizeText:
 	line "then come see me."
 	done
 
-Route36NationalParkGateOfficer1HeresThePrizeText:
+UnknownText_0x6b97f:
 	text "<PLAYER>?"
 
 	para "Here's the prize"
