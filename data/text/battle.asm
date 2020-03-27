@@ -37,7 +37,12 @@ WildCelebiAppearedText:
 
 WantsToBattleText::
 	text "<ENEMY>"
-	line "wants to battle!"
+	line "möchte kämpfen!"
+	prompt
+
+WantToBattlePluralText::
+	text "<ENEMY>"
+	line "möchten kämpfen!"
 	prompt
 
 BattleText_WildFled:
@@ -175,8 +180,12 @@ GotMoneyForWinningText:
 
 BattleText_EnemyWasDefeated:
 	text "<ENEMY>"
-	line "was defeated!"
+	line "wurde besiegt!"
 	prompt
+
+BattleText_PluralEnemyWereDefeated:
+	text "<ENEMY>"
+	line "wurden besiegt!"
 
 TiedAgainstText:
 	text "Tied against"
@@ -228,13 +237,26 @@ LostAgainstText:
 
 BattleText_EnemyIsAboutToUseWillPlayerChangeMon:
 	text "<ENEMY>"
-	line "is about to use"
+	line "wechselt"
 	cont "@"
 	text_ram wEnemyMonNick
-	text "."
+	text "ein."
 
-	para "Will <PLAYER>"
-	line "change #MON?"
+	para "Möchtest du"
+	line "dein Pokémon"
+	cont "wechseln?"
+	done
+
+BattleText_PluralEnemyAreAboutToUseWillPlayerChangeMon:
+	text "<ENEMY>"
+	line "wechseln"
+	cont "@"
+	text_ram wEnemyMonNick
+	text "ein."
+
+	para "Möchtest du"
+	line "dein Pokémon"
+	cont "wechseln?"
 	done
 
 BattleText_EnemySentOut:
