@@ -263,6 +263,10 @@ CatchingTutorialIntroText:
 	para "wie viele #MON"
 	line "hast du schon"
 	cont "gefangen?"
+	
+	para "Was kein einziges,"
+	line "das kann doch"
+	cont "nicht wahr sein!"
 
 	para "Willst du das ich"
 	line "dir zeige wie man"
