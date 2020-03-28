@@ -31,7 +31,7 @@ KrisNameMenuHeader:
 FemalePlayerNameArray:
 	db "Andrea@"
 	db "Nadine@"
-	db "Annalena@"
+	db "Yasmine@"
 	db "Zoe@"
 	db 2 ; displacement
 	db " NAME @" ; title
