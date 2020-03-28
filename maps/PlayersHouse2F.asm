@@ -4,8 +4,7 @@
 	const PLAYERSHOUSE2F_DOLL_2
 	const PLAYERSHOUSE2F_BIG_DOLL
 	const PLAYERSHOUSE2F_TOWN_MAP
-	const PLAYERSHOUSE2F_POKE_BALL
-
+	
 PlayersHouse2F_MapScripts:
 	db 0 ; scene scripts
 
@@ -132,7 +131,7 @@ PlayersHouse2F_MapEvents:
 	bg_event  5,  1, BGEVENT_READ, PlayersHouseBookshelfScript
 	bg_event  6,  0, BGEVENT_IFSET, PlayersHousePosterScript
 
-	db 6 ; object events
+	db 5 ; object events
 	object_event  4,  2, SPRITE_CONSOLE, SPRITEMOVEDATA_STILL, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, GameConsoleScript, EVENT_PLAYERS_HOUSE_2F_CONSOLE
 	object_event  4,  4, SPRITE_DOLL_1, SPRITEMOVEDATA_STILL, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, Doll1Script, EVENT_PLAYERS_HOUSE_2F_DOLL_1
 	object_event  5,  4, SPRITE_DOLL_2, SPRITEMOVEDATA_STILL, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, Doll2Script, EVENT_PLAYERS_HOUSE_2F_DOLL_2
