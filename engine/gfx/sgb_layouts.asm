@@ -53,6 +53,7 @@ LoadSGBLayout:
 	dw .SGB_TrainerOrMonFrontpicPals
 	dw .SGB_MysteryGift
 	dw .SGB1e
+	dw .SGB_TrainerCard2
 
 .SGB_BattleGrayscale:
 	ld hl, PalPacket_BattleGrayscale
@@ -466,6 +467,11 @@ endr
 	ld a, [hl]
 	ld [wSGBPals + 6], a
 	ld hl, wSGBPals
+	ld de, BlkPacket_9a86
+	ret
+
+.SGB_TrainerCard2:
+	ld hl, PalPacket_GamefreakLogo
 	ld de, BlkPacket_9a86
 	ret
 
