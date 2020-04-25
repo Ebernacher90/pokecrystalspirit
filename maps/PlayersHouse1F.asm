@@ -425,9 +425,8 @@ PlayersHouse1F_MapEvents:
 	warp_event 11, 13, NEW_BARK_TOWN, 2
 	warp_event 17,  0, PLAYERS_HOUSE_2F, 1
 
-	db 3 ; coord events
+	db 2 ; coord events
 	coord_event  9,  4, SCENE_DEFAULT, MeetMomLeftScript
-	coord_event 16,  5, SCENE_DEFAULT, MeetMomRightScript
 	coord_event 17,  4, SCENE_DEFAULT, MeetMomRightScript
 
 	db 4 ; bg events
