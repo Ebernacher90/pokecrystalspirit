@@ -8,9 +8,10 @@
 PlayersHouse2F_MapScripts:
 	db 0 ; scene scripts
 
-	db 2 ; callbacks
+	db 3 ; callbacks
 	callback MAPCALLBACK_NEWMAP, .InitializeRoom
 	callback MAPCALLBACK_TILES, .SetSpawn
+	callback MAPCALLBACK_GRAPHICS, .RenderCarpet
 
 ; unused
 .Null:
@@ -31,7 +32,9 @@ PlayersHouse2F_MapScripts:
 	special ToggleMaptileDecorations
 	return
 
-	db 0, 0, 0 ; filler
+.RenderCarpet:
+	special CoverTilesWithCarpet
+	return
 
 Doll1Script:
 	describedecoration DECODESC_LEFT_DOLL
