@@ -257,56 +257,56 @@ ItemDescriptions:
 	dw TeruSama33Desc
 
 MasterBallDesc:
-	db   "The best BALL. It"
-	next "never misses.@"
+	db   "Der beste Ball."
+	next "Erfolg garantiert!@"
 
 UltraBallDesc:
-	db   "A BALL with a high"
-	next "rate of success.@"
+	db   "Ein Ball mit hoher"
+	next "Erfolgsquote.@"
 
 BrightpowderDesc:
 	db   "Lowers the foe's"
 	next "accuracy. (HOLD)@"
 
 GreatBallDesc:
-	db   "A BALL with a de-"
-	next "cent success rate.@"
+	db   "Ein Ball mit guter"
+	next "Erfolgsquote.@"
 
 PokeBallDesc:
-	db   "An item for catch-"
-	next "ing #MON.@"
+	db   "Damit fängst du"
+	next "#MON.@"
 
 TownMapDesc:
     db   "A map that shows"
     next "your location.@"
     
 BicycleDesc:
-	db   "A collapsible bike"
-	next "for fast movement.@"
+	db   "Ein Klapprad, um"
+	next "schneller zu sein.@"
 
 MoonStoneDesc:
 	db   "Evolves certain"
 	next "kinds of #MON.@"
 
 AntidoteDesc:
-	db   "Cures poisoned"
-	next "#MON.@"
+	db   "Heilt"
+	next "Vergiftungen.@"
 
 BurnHealDesc:
-	db   "Heals burned"
-	next "#MON.@"
+	db   "Heilt"
+	next "Verbrennungen.@"
 
 IceHealDesc:
-	db   "Defrosts frozen"
-	next "#MON.@"
+	db   "Taut #MON"
+	next "wieder auf.@"
 
 AwakeningDesc:
-	db   "Awakens sleeping"
+	db   "Weckt schlafende"
 	next "#MON.@"
 
 ParlyzHealDesc:
-	db   "Heals paralyzed"
-	next "#MON.@"
+	db   "Heilt"
+	next "Paralyse.@"
 
 FullRestoreDesc:
 	db   "Fully restores HP"
@@ -321,20 +321,20 @@ HyperPotionDesc:
 	next "HP by 200.@"
 
 SuperPotionDesc:
-	db   "Restores #MON"
-	next "HP by 50.@"
+	db   "Füllt KP um"
+	next "50 auf.@"
 
 PotionDesc:
-	db   "Restores #MON"
-	next "HP by 20.@"
+	db   "Füllt KP um"
+	next "20 auf.@"
 
 EscapeRopeDesc:
-	db   "Use for escaping"
-	next "from caves, etc.@"
+	db   "Ermöglicht Flucht"
+	next "aus Höhlen, etc.@"
 
 RepelDesc:
-	db   "Repels weak #-"
-	next "MON for 100 steps.@"
+	db   "Hält schwache"
+	next "#MON ab.@"
 
 MaxElixerDesc:
 	db   "Fully restores the"
@@ -357,36 +357,36 @@ BigNuggetDesc:
 	next "Sell very high.@"
 
 HPUpDesc:
-	db   "Raises the HP of"
-	next "one #MON.@"
+	db   "Erhöht KP"
+	next "eines #MON.@"
 
 ProteinDesc:
-	db   "Raises ATTACK of"
-	next "one #MON.@"
+	db   "Erhöht den"
+	next "ANGR-Wert.@"
 
 IronDesc:
-	db   "Raises DEFENSE of"
-	next "one #MON.@"
+	db   "Erhöht den"
+	next "VERT-Wert.@"
 
 CarbosDesc:
-	db   "Raises SPEED of"
-	next "one #MON.@"
+	db   "Erhöht den"
+	next "INIT_Wert.@"
 
 LuckyPunchDesc:
 	db   "Ups critical hit"
 	next "ratio of CHANSEY.@"
 
 CalciumDesc:
-	db   "Ups SPECIAL stats"
-	next "of one #MON.@"
+	db   "Erhöht den"
+	next "SPEZ-WERT.@"
 
 RareCandyDesc:
 	db   "Raises level of a"
 	next "#MON by one.@"
 
 XAccuracyDesc:
-	db   "Raises accuracy."
-	next "(1 BTL)@"
+	db   "Hebt Genauigkeit"
+	next "für 1 Kampf.@"
 
 LeafStoneDesc:
 	db   "Evolves certain"
@@ -401,24 +401,24 @@ NuggetDesc:
 	next "Sell high.@"
 
 PokeDollDesc:
-	db   "Use to escape from"
-	next "a wild #MON.@"
+	db   "Flucht vor wilden"
+	next "#MON.@"
 
 FullHealDesc:
-	db   "Eliminates all"
-	next "status problems.@"
+	db   "Beseitigt alle"
+	next "Statusprobleme.@"
 
 ReviveDesc:
-	db   "Restores a fainted"
-	next "#MON to 1/2 HP.@"
+	db   "Belebt #MON"
+	next "plus halbe KP.@"
 
 MaxReviveDesc:
 	db   "Fully restores a"
 	next "fainted #MON.@"
 
 GuardSpecDesc:
-	db   "Prevents stats"
-	next "reduction. (1 BTL)@"
+	db   "Keine Statusände-"
+	next "rung für 1 Kampf.@"
 
 SuperRepelDesc:
 	db   "Repels weak #-"
@@ -429,8 +429,8 @@ MaxRepelDesc:
 	next "MON for 250 steps.@"
 
 DireHitDesc:
-	db   "Ups critical hit"
-	next "ratio. (1 BTL)@"
+	db   "Hebt Volltreffer-"
+	next "quote für 1 Kampf.@"
 
 SweetHeartDesc:
 	db   "Restores #MON"
@@ -449,28 +449,28 @@ LemonadeDesc:
 	next "HP by 80.@"
 
 XAttackDesc:
-	db   "Raises ATTACK."
-	next "(1 BTL)@"
+	db   "Hebt ANGR-WERT"
+	next "für 1 Kampf.@"
 
 LavaCookieDesc:
 	db   "Eliminates all"
 	next "status problems.@"
 
 XDefendDesc:
-	db   "Raises DEFENSE."
-	next "(1 BTL)@"
+	db   "Hebt VERT-Wert"
+	next "für 1 Kampf.@"
 
 XSpeedDesc:
-	db   "Raises SPEED."
-	next "(1 BTL)@"
+	db   "Hebt INIT-Wert"
+	next "für 1 Kampf.@"
 
 XSpecialDesc:
-	db   "Raises SPECIAL"
-	next "ATTACK. (1 BTL)@"
+	db   "Hebt SPEZ. ANG"
+	next "für 1 Kampf.@"
 
 CoinCaseDesc:
-	db   "Holds up to 9,999"
-	next "game coins.@"
+	db   "Kann bis zu 9,999"
+	next "Münzen aufnehmen.@"
 
 ItemfinderDesc:
 	db   "Checks for unseen"
@@ -485,20 +485,20 @@ ExpShareDesc:
 	next "Points. (HOLD)@"
 
 OldRodDesc:
-	db   "Use by water to"
-	next "fish for #MON.@"
+	db   "Damit kannst du"
+	next "#MON angeln.@"
 
 GoodRodDesc:
-	db   "A good ROD for"
-	next "catching #MON.@"
+	db   "Eine gute Angel"
+	next "zum Fischen.@"
 
 SilverLeafDesc:
 	db   "A strange, silver-"
 	next "colored leaf.@"
 
 SuperRodDesc:
-	db   "The best ROD for"
-	next "catching #MON.@"
+	db   "Die Beste Angel"
+	next "zum Fischen.@"
 
 PPUpDesc:
 	db   "Raises max PP of"
@@ -525,20 +525,20 @@ SecretPotionDesc:
 	next "#MON.@"
 
 SSTicketDesc:
-	db   "A ticket for the"
-	next "S.S.AQUA.@"
+	db   "Ein Ticket für die"
+	next "M.S. AQUA.@"
 
 MysteryEggDesc:
 	db   "An EGG obtained"
 	next "from MR.#MON.@"
 
 ClearBellDesc:
-	db   "Makes a gentle"
-	next "ringing.@"
+	db   "Erzeugt ein"
+	next "angenehmes Läuten.@"
 
 SilverWingDesc:
-	db   "A strange, silver-"
-	next "colored feather.@"
+	db   "Eine seltsame"
+	next "silberne Feder.@"
 
 MoomooMilkDesc:
 	db   "Restores #MON"
@@ -754,8 +754,8 @@ LuckyEggDesc:
 	next "points. (HOLD)@"
 
 CardKeyDesc:
-	db   "Opens shutters in"
-	next "the RADIO TOWER.@"
+	db   "Öffnet die Rollos"
+	next "im Radioturm.@"
 
 MachinePartDesc:
 	db   "A machine part for"
@@ -778,11 +778,11 @@ StarPieceDesc:
 	next "Sell very high.@"
 
 BasementKeyDesc:
-	db   "Opens doors.@"
+	db   "Öffnet Türen.@"
 
 PassDesc:
-	db   "A ticket for the"
-	next "MAGNET TRAIN.@"
+	db   "Ticket für den"
+	next "Magnetzug.@"
 
 TeruSama9Desc:
 	db   "?@"
@@ -865,8 +865,8 @@ HeavyBallDesc:
 	next "ing heavy #MON.@"
 
 FlowerMailDesc:
-	db   "Flower-print MAIL."
-	next "(HOLD)@"
+	db   "Umschlag mit Blu-"
+	next "mendruck. (Tragen)@"
 
 LevelBallDesc:
 	db   "A BALL for lower-"
@@ -931,8 +931,8 @@ GoldBerryDesc:
 	next "item. (30HP, HOLD)@"
 
 SquirtBottleDesc:
-	db   "A bottle used for"
-	next "watering plants.@"
+	db   "Eine Kanne, um"
+	next "Bäume zu wässern.@"
 
 TeruSama23Desc:
 	db   "?@"
@@ -985,8 +985,8 @@ MusicMailDesc:
 	next "(HOLD)@"
 
 MewMailDesc:
-	db   "MEW-print MAIL."
-	next "(HOLD)@"
+	db   "Umschlag mit MEW-"
+	next "Aufdruck (Tragen)@"
 
 TeruSama25Desc:
 	db   "?@"
