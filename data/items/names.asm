@@ -31,7 +31,7 @@ ItemNames::
 	db "Lucky Punch@"
 	db "Kalzium@"
 	db "Sonderbonbon@"
-	db "X-Genauigkeit@"
+	db "X-Treffer@"
 	db "Blattstein@"
 	db "Metallstaub@"
 	db "Nugget@"
