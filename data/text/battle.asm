@@ -240,7 +240,7 @@ BattleText_EnemyIsAboutToUseWillPlayerChangeMon:
 	line "wechselt"
 	cont "@"
 	text_ram wEnemyMonNick
-	text "ein."
+	text " ein."
 
 	para "Möchtest du"
 	line "dein Pokémon"
@@ -252,7 +252,7 @@ BattleText_PluralEnemyAreAboutToUseWillPlayerChangeMon:
 	line "wechseln"
 	cont "@"
 	text_ram wEnemyMonNick
-	text "ein."
+	text " ein."
 
 	para "Möchtest du"
 	line "dein Pokémon"
