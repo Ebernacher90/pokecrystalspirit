@@ -232,7 +232,7 @@ MoveNames::
 	db "Eisenschweif@"
 	db "Metallklaue@"
 	db "Überwurf@"
-	db "morgengrauen@"
+	db "Morgengrauen@"
 	db "Synthese@"
 	db "Mondschein@"
 	db "Kraftreserve@"
