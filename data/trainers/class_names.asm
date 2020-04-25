@@ -65,6 +65,6 @@ TrainerClassNames::
 	db "Pokémon-Trainer@"
 	db "LEADER@"
 	db "Polizist@"
-	db "Rocket-Vorstand@"
+	db "Rocket♀@"
 	db "Mystiker@"
 	db "Aqua Rüpel@"
