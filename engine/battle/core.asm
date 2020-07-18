@@ -154,14 +154,14 @@ GetAutomaticBattleWeather:
 	ld c, a
 .loop
 	ld a, [hli] ; group
-		and a
-		ret z ; end
-		cp b
-		jr nz, .wrong_group
-		cp c
-		jr nz, .wrong_map
-		ld a, [hl] ; weather
-		ret
+	and a
+	ret z ; end
+	cp b
+	jr nz, .wrong_group
+	cp c
+	jr nz, .wrong_map
+	ld a, [hl] ; weather
+	ret
 
 .wrong_group:
 	inc hl ; skip_map
